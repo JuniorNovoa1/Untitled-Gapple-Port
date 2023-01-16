@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				17,
+				24
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "th1ft left0"
+		},
+		{
+			"offsets": [
+				60,
+				-125
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "th1ft down0"
+		},
+		{
+			"offsets": [
+				-10,
+				75
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "th1ft up0"
+		},
+		{
+			"offsets": [
+				-13,
+				9
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "th1ft right0"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "th1ft idle0"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/appleLeak/th1ft",
+	"position": [
+		-550,
+		200
+	],
+	"healthicon": "th1ft",
+	"flip_x": false,
+	"healthbar_colors": [
+		197,
+		231,
+		93
+	],
+	"camera_position": [
+		0,
+		150
+	],
+	"sing_duration": 6.1,
+	"scale": 0.65
+}

@@ -1,0 +1,84 @@
+{
+	"songs": [
+		[
+			"Maze",
+			"bambi-new",
+			[
+				37,
+				191,
+				55
+			]
+		],
+		[
+			"Wireframe",
+			"decdave",
+			[
+				193,
+				0,
+				0
+			]			
+		],
+		[
+			"Ferocious",
+			"garrett-animal",
+			[
+				246,
+				182,
+				4
+			]
+		],
+		[
+			"Apple-Leak",
+			"brob",
+			[
+				37,
+				191,
+				55
+			]
+		],
+		[
+			"OG",
+			"prealpha",
+			[
+				236,
+				236,
+				236
+			]
+		],
+		[
+			"Lore",
+			"guyy",
+			[
+				245,
+				63,
+				108
+			]
+		],
+		[
+			"Rari",
+			"dad",
+			[
+				175,
+				102,
+				206
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"storyName": "Junior's Funny Ports",
+	"weekName": "Junior's Funny Ports",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": true,
+	"weekBefore": "week7",
+	"startUnlocked": true
+}

@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				182,
+				-159
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				20,
+				-240
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-154,
+				48
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-66,
+				-162
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-79,
+				-141
+			],
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "YEA0"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/mrMusic",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "piano-guy",
+	"flip_x": false,
+	"healthbar_colors": [
+		108,
+		60,
+		0
+	],
+	"camera_position": [
+		-250,
+		-250
+	],
+	"sing_duration": 4,
+	"scale": 4
+}

@@ -1,0 +1,281 @@
+{
+	"song": {
+		"events": [
+			[
+				83883.4951456311,
+				[
+					[
+						"Change Character",
+						"dad",
+						"playtime"
+					],
+					[
+						"Character X Pos",
+						"dad",
+						"-110"
+					],
+					[
+						"Character Y Pos",
+						"dad",
+						"220"
+					],
+					[
+						"Play Animation",
+						"garrett pulls out ass",
+						"dad"
+					]
+				]
+			],
+			[
+				157281.553398058,
+				[
+					[
+						"Change Character",
+						"dad",
+						"palooseMen"
+					],
+					[
+						"Character X Pos",
+						"dad",
+						"1400"
+					],
+					[
+						"Character Y Pos",
+						"dad",
+						"840"
+					],
+					[
+						"Change Character",
+						"bf",
+						"3d-bf-flipped"
+					],
+					[
+						"Character X Pos",
+						"bf",
+						"500"
+					],
+					[
+						"Character Y Pos",
+						"bf",
+						"1000"
+					]
+				]
+			],
+			[
+				234174.757281552,
+				[
+					[
+						"Character X Pos",
+						"dad",
+						"425"
+					],
+					[
+						"Character Y Pos",
+						"dad",
+						"300"
+					],
+					[
+						"Change Character",
+						"bf",
+						"3d-bf"
+					],
+					[
+						"Character X Pos",
+						"bf",
+						"1340"
+					],
+					[
+						"Character Y Pos",
+						"bf",
+						"720"
+					]
+				]
+			],
+			[
+				241165.048543688,
+				[
+					[
+						"Change Character",
+						"dad",
+						"garrett-ipad"
+					],
+					[
+						"Character X Pos",
+						"dad",
+						"-180"
+					],
+					[
+						"Character Y Pos",
+						"dad",
+						"300"
+					],
+					[
+						"Change Character",
+						"bf",
+						"bf-ipad"
+					],
+					[
+						"Character X Pos",
+						"bf",
+						"200"
+					],
+					[
+						"Character Y Pos",
+						"bf",
+						"-150"
+					]
+				]
+			],
+			[
+				343689.320388347,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wizard"
+					],
+					[
+						"Character X Pos",
+						"dad",
+						"500"
+					],
+					[
+						"Character Y Pos",
+						"dad",
+						"700"
+					],
+					[
+						"Change Character",
+						"bf",
+						"3d-bf"
+					],
+					[
+						"Character X Pos",
+						"bf",
+						"1650"
+					],
+					[
+						"Character Y Pos",
+						"bf",
+						"1300"
+					]
+				]
+			],
+			[
+				429902.912621356,
+				[
+					[
+						"Change Character",
+						"dad",
+						"piano-guy"
+					],
+					[
+						"Character X Pos",
+						"dad",
+						"800"
+					],
+					[
+						"Character Y Pos",
+						"dad",
+						"1050"
+					]
+				]
+			],
+			[
+				580825.242718444,
+				[
+					[
+						"Change Character",
+						"dad",
+						"pedophile"
+					],
+					[
+						"Character X Pos",
+						"dad",
+						"2250"
+					],
+					[
+						"Character Y Pos",
+						"dad",
+						"675"
+					],
+					[
+						"Change Character",
+						"bf",
+						"3d-bf-flipped"
+					],
+					[
+						"Character X Pos",
+						"bf",
+						"1650"
+					],
+					[
+						"Character Y Pos",
+						"bf",
+						"1300"
+					]
+				]
+			],
+			[
+				651969.486823853,
+				[
+					[
+						"Change Character",
+						"dad",
+						"garrett-angry"
+					],
+					[
+						"Character X Pos",
+						"dad",
+						"400"
+					],
+					[
+						"Character Y Pos",
+						"dad",
+						"835"
+					],
+					[
+						"Change Character",
+						"bf",
+						"3d-bf"
+					]
+				]
+			],
+			[
+				822066.574202492,
+				[
+					[
+						"Change Character",
+						"dad",
+						"garrett-car"
+					],
+					[
+						"Character X Pos",
+						"dad",
+						"250"
+					],
+					[
+						"Character Y Pos",
+						"dad",
+						"850"
+					],
+					[
+						"Change Character",
+						"bf",
+						"3d-bf-flipped"
+					],
+					[
+						"Character X Pos",
+						"bf",
+						"1800"
+					],
+					[
+						"Character Y Pos",
+						"bf",
+						"1000"
+					]
+				]
+			]
+		]
+	}
+}
