@@ -27,13 +27,13 @@ function goodNoteHit(id, noteData, noteType, isSustainNote)
 	end
 end
 
-function noteMiss(id, noteData, noteType, isSustainNote)
+function noteMiss(id, direction, noteType, isSustainNote)
 	if noteType == 'phone' then
 		characterPlayAnim('dad', 'singThrow', true)
 		characterPlayAnim('boyfriend', 'hit', true)
-		cancelTween('TWEEN NOTE '..id) --don't crash please
-		setPropertyFromGroup('playerStrums', id, 'alpha', 0) --instant
-		noteTweenAlpha('TWEEN NOTE '..id, id, 1, 7, 'expoIn')
+		cancelTween('TWEEN NOTE '..direction) --don't crash please
+		setPropertyFromGroup('playerStrums', direction, 'alpha', 0) --instant
+		noteTweenAlpha('TWEEN NOTE '..direction, direction, 1, 7, 'expoIn')
 	end
 end
 
