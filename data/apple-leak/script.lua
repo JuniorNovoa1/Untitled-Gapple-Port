@@ -28,7 +28,7 @@ function onCreatePost()
     	addLuaSprite('iconBandu', false)
 	end
 
-	setProperty('cpuControlled', true) --testing loll
+	--setProperty('cpuControlled', true) --testing loll
 end
 
 function onUpdate()
