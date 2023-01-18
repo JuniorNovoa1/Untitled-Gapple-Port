@@ -2,6 +2,8 @@ local timeSpot = 2;
 local angleRandom = 0;
 local spotLightPart = false;
 local lastSinger = '';
+local bfPos = {};
+local dadPos = {};
 
 function onUpdate()
 	if angleRandom == 6 or angleRandom == 8 and spotLightPart then
@@ -69,6 +71,10 @@ function onStepHit()
 
 		doTweenAlpha('fadeINN', 'blackScreen', 0.6, 1, 'quadInOut')
 		doTweenAlpha('fadeINNSPOT', 'spotLight', 0.7, 1, 'quadInOut')
+		bfPos[0] = getGraphicMidpointX('boyfriend') -getCharacterX('boyfriend') * 0.35;
+		bfPos[1] = getGraphicMidpointY('boyfriend') -getGraphicMidpointY('boyfriend') -175;
+		dadPos[0] = getGraphicMidpointX('dad') -getCharacterX('dad') * 1.35;
+		dadPos[1] = getGraphicMidpointY('dad') -getGraphicMidpointY('dad') -125;
 	end
 
 	if curStep == 1168 then
@@ -97,13 +103,13 @@ end
 
 function updateSpotlight(bfSinging)
 	if bfSinging then
-		doTweenX('moveSpotLightX', 'spotLight', getGraphicMidpointX('boyfriend') -getCharacterX('boyfriend') * 0.475, 0.66, 'circOut')
-		doTweenY('moveSpotLightY', 'spotLight', getGraphicMidpointY('boyfriend') -getGraphicMidpointY('boyfriend') -getCharacterY('boyfriend') * 4.75, 0.66, 'circOut')
+		doTweenX('moveSpotLightX', 'spotLight', bfPos[0], 0.66, 'circOut')
+		doTweenY('moveSpotLightY', 'spotLight', bfPos[1], 0.66, 'circOut')
 	end
 
 	if not bfSinging then
-		doTweenX('moveSpotLightX', 'spotLight', getGraphicMidpointX('dad') -getCharacterX('dad') * 1.5, 0.66, 'circOut')
-		doTweenY('moveSpotLightY', 'spotLight', getGraphicMidpointY('dad') -getGraphicMidpointY('dad') -getCharacterY('dad') * 0.75, 0.66, 'circOut')
+		doTweenX('moveSpotLightX', 'spotLight', dadPos[0], 0.66, 'circOut')
+		doTweenY('moveSpotLightY', 'spotLight', dadPos[1], 0.66, 'circOut')
 	end
 	--[[
 	local curSinger = getProperty('boyfriend.curCharacter');

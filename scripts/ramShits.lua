@@ -20,7 +20,6 @@ function onCreatePost()
 end
 
 function onUpdate()
-
 	--[[
 	if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
 		setProperty('boyfriend.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
