@@ -31,10 +31,6 @@ function onCreatePost()
 end
 
 function onUpdate(elapsed)
-    if getProperty('dad.curCharacter') == 'tunnel-dave' then
-        setProperty('dad.y', getProperty('dad.y') -(math.sin(elapsed) * 0.6));
-    end
-
     if getProperty('dad.curCharacter') == 'badai' then
         --setProperty('dad.angle', getProperty('dad.angle') +elapsed * 50);
     end

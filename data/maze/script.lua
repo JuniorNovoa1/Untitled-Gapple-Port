@@ -13,6 +13,7 @@ function onUpdate()
 	if angleRandom == 2 or angleRandom == 4 and spotLightPart then
 		doTweenAngle('angleSpotlight', 'spotLight', -4, timeSpot, 'expoInOut')
 	end
+
 	if spotLightPart then
 		angleRandom = getRandomInt(0, 128);
 		updateSpotlight(mustHitSection);
@@ -24,11 +25,11 @@ function onStepHit()
 		setProperty('defaultCamZoom', getProperty('defaultCamZoom') + 0.2)
 		cameraFlash('camother', 'FFFFFF', 0.5)
 		doTweenAlpha('fadeINN', 'blackScreen', 0.6, 1, 'quadInOut')
-		fadeOutNotes(0.1)
+		fadeOutNotes(1)
 	end
 
 	if curStep == 510 then
-		fadeInNotes(0.1)
+		fadeInNotes(1)
 	end
 
 	if curStep == 528 then
@@ -43,11 +44,11 @@ function onStepHit()
 	end
 
 	if curStep == 838 then
-		fadeOutNotes(0.1)
+		fadeOutNotes(1)
 	end
 
 	if curStep == 902 then
-		fadeInNotes(0.1)
+		fadeInNotes(1)
 	end
 
 	if curStep == 908 then
@@ -71,9 +72,9 @@ function onStepHit()
 
 		doTweenAlpha('fadeINN', 'blackScreen', 0.6, 1, 'quadInOut')
 		doTweenAlpha('fadeINNSPOT', 'spotLight', 0.7, 1, 'quadInOut')
-		bfPos[0] = getGraphicMidpointX('boyfriend') -getCharacterX('boyfriend') * 0.35;
+		bfPos[0] = getGraphicMidpointX('boyfriend') -getCharacterX('boyfriend') * 0.4;
 		bfPos[1] = getGraphicMidpointY('boyfriend') -getGraphicMidpointY('boyfriend') -175;
-		dadPos[0] = getGraphicMidpointX('dad') -getCharacterX('dad') * 1.35;
+		dadPos[0] = getGraphicMidpointX('dad') -getCharacterX('dad') * 1.225;
 		dadPos[1] = getGraphicMidpointY('dad') -getGraphicMidpointY('dad') -125;
 	end
 
