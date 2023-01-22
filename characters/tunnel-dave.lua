@@ -7,19 +7,12 @@ function onSongStart()
     doTweenY('daveDown', 'dad', originalPos +125, speedAmount / 2, tweenType)
 end
 
-function onUpdate()
-    if not getProperty('dad.curCharacter') == 'tunnel-dave' then
-        cancelTween('daveDown');
-        cancelTween('daveUp');
-    end
-end
-
 function onTweenCompleted(tag)
-    if tag == 'daveDown' then
+    if tag == 'daveDown' and getProperty('dad.curCharacter') == 'tunnel-dave' then
         doTweenY('daveUp', 'dad', originalPos -300, speedAmount + 1.25, tweenType)
     end
 
-    if tag == 'daveUp' then
+    if tag == 'daveUp' and getProperty('dad.curCharacter') == 'tunnel-dave' then
         doTweenY('daveDown', 'dad', originalPos +125, speedAmount, tweenType)
     end
 end
