@@ -26,8 +26,7 @@ function onCreatePost()
 		end
 	end
 
-	--setProperty('boyfriend.singDuration', getProperty('boyfriend.singDuration') * 2.5);
-	--setProperty('dad.singDuration', getProperty('dad.singDuration') * 2.5);
+	setProperty('boyfriend.hasMissAnimations', false);
 end
 
 function onSongStart()
@@ -80,10 +79,6 @@ function onUpdate()
 			setProperty('dad.color', getColorFromHex('FFFFFF'))
 			lastMissAnim = '';
 		end
-		if getProperty('boyfriend.animation.curAnim.name') == singAnims[i + 1]..'miss' then
-			characterDance('boyfriend', true);
-		end
-
 		--hold time shits
 		if getProperty('dad.animation.curAnim.name') == singAnims[i + 1] and keyPressed(keys[i + 1]) then
 			setProperty('dad.holdTimer', 0)
@@ -116,14 +111,20 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 end
 
 function noteMiss(id, direction, noteType, isSustainNote)
-	setProperty('health', getProperty('health') + 0.095)
-	characterPlayAnim('dad', singAnims[direction + 1], true);
-	setProperty('dad.color', getColorFromHex('800080'))
-	lastMissAnim = getProperty('dad.animation.curAnim.name');
+	missShit(direction);
 end
 function noteMissPress(direction)
+	missShit(direction);
+end
+
+function missShit(direction)
 	setProperty('health', getProperty('health') + 0.095)
-	characterPlayAnim('dad', singAnims[direction + 1], true);
-	setProperty('dad.color', getColorFromHex('800080'))
-	lastMissAnim = getProperty('dad.animation.curAnim.name');
+	setProperty('dad.holdTimer', 0)
+	if getProperty('dad.hasMissAnimations') ~= true then
+		characterPlayAnim('dad', singAnims[direction + 1], true);
+		setProperty('dad.color', getColorFromHex('800080'))
+		lastMissAnim = getProperty('dad.animation.curAnim.name');
+	else
+		characterPlayAnim('dad', singAnims[direction + 1]..'miss', true);
+	end
 end
