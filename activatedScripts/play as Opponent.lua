@@ -1,8 +1,11 @@
 --not gonna be used but if u want to use it just add this to the scripts folder
+local regularNotes = {'', 'Alt Animation', 'Hey!'}
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
 local keys = {'left', 'down', 'up', 'right'}
 local lastMissAnim = '';
-local offsetAmount = 200;
+local ratingPos = 215;
+local prevRatingPos = {};
+local dadHasMissAnims = false;
 
 local functionIsHappening = false;
 local prevPosBFX = {};
@@ -13,8 +16,6 @@ local prevSkinsBF = {};
 local prevSkinsDAD = {};
 
 function onCreatePost()
-	--swapNotePos();
-
 	for i = 0, getProperty('unspawnNotes.length') -1 do
 		if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
 			setPropertyFromGroup('unspawnNotes', i, 'mustPress', false)
@@ -22,19 +23,25 @@ function onCreatePost()
 			setPropertyFromGroup('unspawnNotes', i, 'mustPress', true)
 		end
 
-		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Alt Animation' then
+		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == regularNotes[1] or getPropertyFromGroup('unspawnNotes', i, 'noteType') == regularNotes[2] or getPropertyFromGroup('unspawnNotes', i, 'noteType') == regularNotes[3] then
 			setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
 		end
 	end
-	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', getPropertyFromClass('ClientPrefs', 'comboOffset[0]') + offsetAmount)
-	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', getPropertyFromClass('ClientPrefs', 'comboOffset[2]') + offsetAmount)
+	prevRatingPos[0] = getPropertyFromClass('ClientPrefs', 'comboOffset[0]');
+	prevRatingPos[1] = getPropertyFromClass('ClientPrefs', 'comboOffset[2]');
+	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
+	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
+
+	swapNotePos();
+end
+
+function onStartCountdown()
+	swapNoteVariables();
+	--swapNotePos();
 end
 
 function onSongStart()
-	swapNotePos();
 	swapNoteSkins();
-	swapNoteVariables();
-	--swapNotePos(); --opponent on left side
 end
 
 function onUpdate()	
@@ -46,8 +53,11 @@ function onUpdate()
 		setProperty('health', 0)
 	end
 
+	setProperty('boyfriend.hasMissAnimations', false);
+	dadHasMissAnims = getProperty('dad.hasMissAnimations');
+
 	for i = 0, #singAnims do
-		if getProperty('dad.animation.curAnim.name') ~= lastMissAnim then
+		if getProperty('dad.animation.curAnim.name') ~= lastMissAnim and dadHasMissAnims ~= true then
 			setProperty('dad.color', getColorFromHex('FFFFFF'))
 			lastMissAnim = '';
 		end
@@ -95,20 +105,25 @@ function onUpdate()
 			end
 		end
 	end
-
-	setProperty('boyfriend.hasMissAnimations', false);
 end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
-	setProperty('health', getProperty('health') - 0.046)
+	if isSustainNote ~= true then
+		setProperty('health', getProperty('health') - 0.026)
+	else 
+		setProperty('health', getProperty('health') - 0.046)
+	end
 	lastMissAnim = '';
 
 	local urAnus = '';
-	if noteType == 'Alt Animation' then
+	if noteType == regularNotes[2] then
 		urAnus = '-alt'
 	end
-	if noteType == '' or noteType == 'Alt Animation' then
+	if noteType == regularNotes[1] or noteType == regularNotes[2] then
 		characterPlayAnim('dad', singAnims[direction + 1]..urAnus, true);
+	end
+	if noteType == regularNotes[3] then
+		characterPlayAnim('dad', 'hey', true);
 	end
 end
 
@@ -116,11 +131,14 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 	setProperty('boyfriend.holdTimer', 0)
 
 	local urAnus = '';
-	if noteType == 'Alt Animation' then
+	if noteType == regularNotes[2] then
 		urAnus = '-alt'
 	end
-	if noteType == '' or noteType == 'Alt Animation' then
+	if noteType == regularNotes[1] or noteType == regularNotes[2] then
 		characterPlayAnim('boyfriend', singAnims[direction + 1]..urAnus, true);
+	end
+	if noteType == regularNotes[3] then
+		characterPlayAnim('boyfriend', 'hey', true);
 	end
 end
 
@@ -144,8 +162,8 @@ function missShit(direction)
 end
 
 function onDestroy()
-	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', getPropertyFromClass('ClientPrefs', 'comboOffset[0]') - offsetAmount)
-	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', getPropertyFromClass('ClientPrefs', 'comboOffset[2]') - offsetAmount)
+	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
+	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
 end
 
 function swapNoteVariables()
@@ -201,11 +219,11 @@ function swapNoteSkins()
 
 	for i = 0, getProperty('notes.length') -1 do
 		if getPropertyFromGroup('notes', i, 'mustPress') == true then
-			if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'Alt Animation' then
+			if getPropertyFromGroup('notes', i, 'noteType') == regularNotes[1] or getPropertyFromGroup('notes', i, 'noteType') == regularNotes[2] or getPropertyFromGroup('notes', i, 'noteType') == regularNotes[3] then
 				setPropertyFromGroup('notes', i, 'texture', dadskin[getPropertyFromGroup('notes', i, 'noteData')])
 			end
 		else
-			if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'Alt Animation' then
+			if getPropertyFromGroup('notes', i, 'noteType') == regularNotes[1] or getPropertyFromGroup('notes', i, 'noteType') == regularNotes[2] or getPropertyFromGroup('notes', i, 'noteType') == regularNotes[3] then
 				setPropertyFromGroup('notes', i, 'texture', bfskin[getPropertyFromGroup('notes', i, 'noteData')])
 			end
 		end
@@ -213,11 +231,11 @@ function swapNoteSkins()
 
 	for i = 0, getProperty('unspawnNotes.length') -1 do
 		if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
-			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Alt Animation' then
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == regularNotes[1] or getPropertyFromGroup('unspawnNotes', i, 'noteType') == regularNotes[2] or getPropertyFromGroup('unspawnNotes', i, 'noteType') == regularNotes[3] then
 				setPropertyFromGroup('unspawnNotes', i, 'texture', dadskin[getPropertyFromGroup('unspawnNotes', i, 'noteData')])
 			end
 		else
-			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Alt Animation' then
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == regularNotes[1] or getPropertyFromGroup('unspawnNotes', i, 'noteType') == regularNotes[2] or getPropertyFromGroup('unspawnNotes', i, 'noteType') == regularNotes[3] then
 				setPropertyFromGroup('unspawnNotes', i, 'texture', bfskin[getPropertyFromGroup('unspawnNotes', i, 'noteData')])
 			end
 		end
