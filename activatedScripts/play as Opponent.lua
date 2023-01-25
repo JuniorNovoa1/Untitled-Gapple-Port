@@ -2,6 +2,7 @@
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
 local keys = {'left', 'down', 'up', 'right'}
 local lastMissAnim = '';
+local offsetAmount = 150;
 
 function onCreatePost()
 	local bfXpos = {};
@@ -27,6 +28,8 @@ function onCreatePost()
 	end
 
 	setProperty('boyfriend.hasMissAnimations', false);
+	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', getPropertyFromClass('ClientPrefs', 'comboOffset[0]') + offsetAmount)
+	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', getPropertyFromClass('ClientPrefs', 'comboOffset[2]') + offsetAmount)
 end
 
 function onSongStart()
@@ -128,4 +131,9 @@ function missShit(direction)
 	else
 		characterPlayAnim('dad', singAnims[direction + 1]..'miss', true);
 	end
+end
+
+function onDestroy()
+	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', getPropertyFromClass('ClientPrefs', 'comboOffset[0]') - offsetAmount)
+	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', getPropertyFromClass('ClientPrefs', 'comboOffset[2]') - offsetAmount)
 end
