@@ -1,6 +1,7 @@
 --not gonna be used but if u want to use it just add this to the scripts folder
-local bfSingDuration = 0;
-local dadSingDuration = 0;
+local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
+local keys = {'left', 'down', 'up', 'right'}
+local lastMissAnim = '';
 
 function onCreatePost()
 	local bfXpos = {};
@@ -25,10 +26,8 @@ function onCreatePost()
 		end
 	end
 
-	setProperty('boyfriend.singDuration', getProperty('boyfriend.singDuration') * 3);
-	setProperty('dad.singDuration', getProperty('dad.singDuration') * 3);
-	--bfSingDuration = getProperty('boyfriend.singDuration');
-	--dadSingDuration = getProperty('dad.singDuration');
+	--setProperty('boyfriend.singDuration', getProperty('boyfriend.singDuration') * 2.5);
+	--setProperty('dad.singDuration', getProperty('dad.singDuration') * 2.5);
 end
 
 function onSongStart()
@@ -75,9 +74,22 @@ function onUpdate()
 	if getProperty('health') >= 2 then
 		setProperty('health', 0)
 	end
-end
 
-local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
+	for i = 0, #singAnims do
+		if getProperty('dad.animation.curAnim.name') ~= lastMissAnim then
+			setProperty('dad.color', getColorFromHex('FFFFFF'))
+			lastMissAnim = '';
+		end
+		if getProperty('boyfriend.animation.curAnim.name') == singAnims[i + 1]..'-miss' then
+			characterDance('boyfriend', true);
+		end
+
+		--hold time shits
+		if getProperty('dad.animation.curAnim.name') == singAnims[i + 1] and keyPressed(keys[i + 1]) then
+			setProperty('dad.holdTimer', 0)
+		end
+	end
+end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
 	setProperty('health', getProperty('health') - 0.046)
@@ -89,13 +101,11 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 	if noteType == '' or noteType == 'Alt Animation' then
 		characterPlayAnim('dad', singAnims[direction + 1]..urAnus, true);
 	end
-	if noteType == 'custom note type' then
-		--do something
-	end
-	--setProperty('dad.singDuration', getProperty('dad.singDuration') * 1000);
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
+	setProperty('boyfriend.holdTimer', 0)
+
 	local urAnus = '';
 	if noteType == 'Alt Animation' then
 		urAnus = '-alt'
@@ -103,23 +113,25 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if noteType == '' or noteType == 'Alt Animation' then
 		characterPlayAnim('boyfriend', singAnims[direction + 1]..urAnus, true);
 	end
-	if noteType == 'custom note type' then
-		--do something
-	end
-	--setProperty('boyfriend.singDuration', getProperty('boyfriend.singDuration') * 1000);
 end
-
---[[function onBeatHit()
-	if mustHitSection then
-		setProperty('boyfriend.singDuration', bfSingDuration * 2.25);
-	else
-		setProperty('dad.singDuration', dadSingDuration * 2.25);
-	end
-end--]]
 
 function noteMiss(id, direction, noteType, isSustainNote)
 	setProperty('health', getProperty('health') + 0.095)
+	characterPlayAnim('dad', singAnims[direction + 1], true);
+	setProperty('dad.color', getColorFromHex('800080'))
+	runTimer('missdeLOL', 0.5)
+	lastMissAnim = getProperty('dad.animation.curAnim.name');
 end
 function noteMissPress(direction)
 	setProperty('health', getProperty('health') + 0.095)
+	characterPlayAnim('dad', singAnims[direction + 1], true);
+	setProperty('dad.color', getColorFromHex('800080'))
+	runTimer('missdeLOL', 0.25)
+	lastMissAnim = getProperty('dad.animation.curAnim.name');
+end
+
+function onTimerCompleted(tag, loops, loopsLeft)
+	if tag == 'missdeLOL' then
+		setProperty('dad.color', getColorFromHex('FFFFFF'))
+	end
 end
