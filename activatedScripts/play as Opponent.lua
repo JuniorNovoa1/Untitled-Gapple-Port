@@ -80,7 +80,7 @@ function onUpdate()
 			setProperty('dad.color', getColorFromHex('FFFFFF'))
 			lastMissAnim = '';
 		end
-		if getProperty('boyfriend.animation.curAnim.name') == singAnims[i + 1]..'-miss' then
+		if getProperty('boyfriend.animation.curAnim.name') == singAnims[i + 1]..'miss' then
 			characterDance('boyfriend', true);
 		end
 
@@ -119,19 +119,11 @@ function noteMiss(id, direction, noteType, isSustainNote)
 	setProperty('health', getProperty('health') + 0.095)
 	characterPlayAnim('dad', singAnims[direction + 1], true);
 	setProperty('dad.color', getColorFromHex('800080'))
-	runTimer('missdeLOL', 0.5)
 	lastMissAnim = getProperty('dad.animation.curAnim.name');
 end
 function noteMissPress(direction)
 	setProperty('health', getProperty('health') + 0.095)
 	characterPlayAnim('dad', singAnims[direction + 1], true);
 	setProperty('dad.color', getColorFromHex('800080'))
-	runTimer('missdeLOL', 0.25)
 	lastMissAnim = getProperty('dad.animation.curAnim.name');
-end
-
-function onTimerCompleted(tag, loops, loopsLeft)
-	if tag == 'missdeLOL' then
-		setProperty('dad.color', getColorFromHex('FFFFFF'))
-	end
 end
