@@ -4,16 +4,16 @@ local keys = {'left', 'down', 'up', 'right'}
 local lastMissAnim = '';
 local offsetAmount = 200;
 
-function onCreatePost()
-	local bfXpos = {};
-	local dadXpos = {};
+local functionIsHappening = false;
+local prevPosBFX = {};
+local prevPosDADX = {};
+local prevPosBFY = {};
+local prevPosDADY = {};
+local prevSkinsBF = {};
+local prevSkinsDAD = {};
 
-	for i = 0, 3 do
-		bfXpos[i] = getPropertyFromGroup('playerStrums', i, 'x')
-		dadXpos[i] = getPropertyFromGroup('opponentStrums', i, 'x')
-		setPropertyFromGroup('playerStrums', i, 'x', dadXpos[i])
-		setPropertyFromGroup('opponentStrums', i, 'x', bfXpos[i])
-	end
+function onCreatePost()
+	--swapNotePos();
 
 	for i = 0, getProperty('unspawnNotes.length') -1 do
 		if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
@@ -26,46 +26,15 @@ function onCreatePost()
 			setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
 		end
 	end
-
-	setProperty('boyfriend.hasMissAnimations', false);
 	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', getPropertyFromClass('ClientPrefs', 'comboOffset[0]') + offsetAmount)
 	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', getPropertyFromClass('ClientPrefs', 'comboOffset[2]') + offsetAmount)
 end
 
 function onSongStart()
-	local bfskin = {};
-	local dadskin = {};
-
-	for i = 0, 4 do
-		bfskin[i] = getPropertyFromGroup('playerStrums', i, 'texture')
-		dadskin[i] = getPropertyFromGroup('opponentStrums', i, 'texture')
-		setPropertyFromGroup('playerStrums', i, 'texture', dadskin[i])
-		setPropertyFromGroup('opponentStrums', i, 'texture', bfskin[i])
-	end
-
-	for i = 0, getProperty('notes.length') -1 do
-		if getPropertyFromGroup('notes', i, 'mustPress') == true then
-			if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'Alt Animation' then
-				setPropertyFromGroup('notes', i, 'texture', dadskin[getPropertyFromGroup('notes', i, 'noteData')])
-			end
-		else
-			if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'Alt Animation' then
-				setPropertyFromGroup('notes', i, 'texture', bfskin[getPropertyFromGroup('notes', i, 'noteData')])
-			end
-		end
-	end
-
-	for i = 0, getProperty('unspawnNotes.length') -1 do
-		if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
-			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Alt Animation' then
-				setPropertyFromGroup('unspawnNotes', i, 'texture', dadskin[getPropertyFromGroup('unspawnNotes', i, 'noteData')])
-			end
-		else
-			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Alt Animation' then
-				setPropertyFromGroup('unspawnNotes', i, 'texture', bfskin[getPropertyFromGroup('unspawnNotes', i, 'noteData')])
-			end
-		end
-	end
+	swapNotePos();
+	swapNoteSkins();
+	swapNoteVariables();
+	--swapNotePos(); --opponent on left side
 end
 
 function onUpdate()	
@@ -87,6 +56,47 @@ function onUpdate()
 			setProperty('dad.holdTimer', 0)
 		end
 	end
+
+	for i = 0, 4 do
+		local bfnoteX = {};
+		local dadnoteX = {};
+		local bfnoteY = {};
+		local dadnoteY = {};
+		local bfskin = {};
+		local dadskin = {};
+
+		bfnoteX[i] = getPropertyFromGroup('playerStrums', i, 'x')
+		dadnoteX[i] = getPropertyFromGroup('opponentStrums', i, 'x')
+		bfnoteY[i] = getPropertyFromGroup('playerStrums', i, 'y')
+		dadnoteY[i] = getPropertyFromGroup('opponentStrums', i, 'y')
+		bfskin[i] = getPropertyFromGroup('playerStrums', i, 'texture')
+		dadskin[i] = getPropertyFromGroup('opponentStrums', i, 'texture')
+
+		swapNoteVariables();
+
+		if functionIsHappening == false then
+			if bfnoteX[i] ~= prevPosBFX[i] then
+				swapNotePos();
+			end
+			if dadnoteX[i] ~= prevPosDADX[i] then
+				swapNotePos();
+			end
+			if bfnoteY[i] ~= prevPosBFY[i] then
+				swapNotePos();
+			end
+			if dadnoteY[i] ~= prevPosDADY[i] then
+				swapNotePos();
+			end
+			if bfskin[i] ~= prevSkinsBF[i] then
+				swapNoteSkins();
+			end
+			if dadskin[i] ~= prevSkinsBF[i] then
+				swapNoteSkins();
+			end
+		end
+	end
+
+	setProperty('boyfriend.hasMissAnimations', false);
 end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
@@ -136,4 +146,81 @@ end
 function onDestroy()
 	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', getPropertyFromClass('ClientPrefs', 'comboOffset[0]') - offsetAmount)
 	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', getPropertyFromClass('ClientPrefs', 'comboOffset[2]') - offsetAmount)
+end
+
+function swapNoteVariables()
+	local vars = {'alpha', 'visible'};
+	local varsBF = {};
+	local varsDAD = {};
+
+	for i = 0, #vars do
+		varsBF[i] = getPropertyFromGroup('playerStrums', i, vars[i])
+		varsDAD[i] = getPropertyFromGroup('opponentStrums', i, vars[i])
+		setPropertyFromGroup('playerStrums', i, vars[i], varsDAD[i])
+		setPropertyFromGroup('opponentStrums', i, vars[i], varsBF[i])
+	end
+end
+
+function swapNotePos()
+	functionIsHappening = true;
+	local bfXpos = {};
+	local dadXpos = {};
+	local bfYpos = {};
+	local dadYpos = {};
+
+	for i = 0, 3 do
+		bfXpos[i] = getPropertyFromGroup('playerStrums', i, 'x')
+		dadXpos[i] = getPropertyFromGroup('opponentStrums', i, 'x')
+		bfYpos[i] = getPropertyFromGroup('playerStrums', i, 'y')
+		dadYpos[i] = getPropertyFromGroup('opponentStrums', i, 'y')
+		setPropertyFromGroup('playerStrums', i, 'x', dadXpos[i])
+		setPropertyFromGroup('opponentStrums', i, 'x', bfXpos[i])
+		setPropertyFromGroup('playerStrums', i, 'y', dadYpos[i])
+		setPropertyFromGroup('opponentStrums', i, 'y', bfYpos[i])
+		prevPosBFX[i] = bfXpos[i];
+		prevPosDADX[i] = dadXpos[i];
+		prevPosBFY[i] = bfYpos[i];
+		prevPosDADY[i] = dadYpos[i];
+	end
+	functionIsHappening = false;
+end
+
+function swapNoteSkins()
+	functionIsHappening = true;
+	local bfskin = {};
+	local dadskin = {};
+
+	for i = 0, 4 do
+		bfskin[i] = getPropertyFromGroup('playerStrums', i, 'texture')
+		dadskin[i] = getPropertyFromGroup('opponentStrums', i, 'texture')
+		setPropertyFromGroup('playerStrums', i, 'texture', dadskin[i])
+		setPropertyFromGroup('opponentStrums', i, 'texture', bfskin[i])
+		prevSkinsBF[i] = bfskin[i];
+		prevSkinsDAD[i] = dadskin[i];
+	end
+
+	for i = 0, getProperty('notes.length') -1 do
+		if getPropertyFromGroup('notes', i, 'mustPress') == true then
+			if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'Alt Animation' then
+				setPropertyFromGroup('notes', i, 'texture', dadskin[getPropertyFromGroup('notes', i, 'noteData')])
+			end
+		else
+			if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'Alt Animation' then
+				setPropertyFromGroup('notes', i, 'texture', bfskin[getPropertyFromGroup('notes', i, 'noteData')])
+			end
+		end
+	end
+
+	for i = 0, getProperty('unspawnNotes.length') -1 do
+		if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Alt Animation' then
+				setPropertyFromGroup('unspawnNotes', i, 'texture', dadskin[getPropertyFromGroup('unspawnNotes', i, 'noteData')])
+			end
+		else
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Alt Animation' then
+				setPropertyFromGroup('unspawnNotes', i, 'texture', bfskin[getPropertyFromGroup('unspawnNotes', i, 'noteData')])
+			end
+		end
+	end
+	functionIsHappening = false;
 end
