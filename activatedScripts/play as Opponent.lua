@@ -108,7 +108,7 @@ function onUpdate()
 end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
-	if isSustainNote ~= true then
+	if isSustainNote == true then
 		setProperty('health', getProperty('health') - 0.026)
 	else 
 		setProperty('health', getProperty('health') - 0.046)
