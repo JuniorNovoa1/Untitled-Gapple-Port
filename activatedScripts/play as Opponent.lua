@@ -88,6 +88,7 @@ end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
 	setProperty('health', getProperty('health') - 0.046)
+	lastMissAnim = '';
 
 	local urAnus = '';
 	if noteType == 'Alt Animation' then
