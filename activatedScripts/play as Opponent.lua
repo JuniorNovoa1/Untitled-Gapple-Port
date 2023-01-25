@@ -2,7 +2,7 @@
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
 local keys = {'left', 'down', 'up', 'right'}
 local lastMissAnim = '';
-local offsetAmount = 150;
+local offsetAmount = 200;
 
 function onCreatePost()
 	local bfXpos = {};
