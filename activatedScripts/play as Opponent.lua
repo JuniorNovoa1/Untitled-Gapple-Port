@@ -50,7 +50,11 @@ function onSongStart()
 	swapNoteSkins();
 end
 
-function onUpdate()	
+function onUpdate()
+	if getProperty('health') >= 2 and misses == 0 then --mod support sorta
+		setProperty('health', 1.999)
+	end
+
 	if getProperty('health') <= 0 then
 		setProperty('health', 0.001)
 	end
@@ -113,7 +117,18 @@ function onUpdate()
 	end
 end
 
+local dontSpamLuasCalls = false;
+
 function goodNoteHit(id, direction, noteType, isSustainNote)
+	if getProperty('camZooming') == false then
+		setProperty('camZooming', true)
+	end
+	if dontSpamLuasCalls == true then
+		return;
+	end
+	dontSpamLuasCalls = true;
+	callOnLuas('opponentNoteHit', {id, direction, noteType, isSustainNote}) --thank god this exists
+	dontSpamLuasCalls = false;
 	if isSustainNote == true then
 		setProperty('health', getProperty('health') - 0.032)
 	else 
@@ -134,6 +149,12 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
+	if dontSpamLuasCalls == true then
+		return;
+	end
+	dontSpamLuasCalls = true;
+	callOnLuas('goodNoteHit', {id, direction, noteType, isSustainNote}, false, false, 'play as Opponent') --thank god this exists
+	dontSpamLuasCalls = false;
 	setProperty('boyfriend.holdTimer', 0)
 
 	local urAnus = '';
