@@ -27,6 +27,6 @@ end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
 	if no_splashes then
-		setPropertyFromGroup('grpNoteSplashes', getProperty('grpNoteSplashes.length') -1, 'visible', false);
+		removeFromGroup('grpNoteSplashes', getProperty('grpNoteSplashes.length') -1, true); --insta killed
 	end
 end
