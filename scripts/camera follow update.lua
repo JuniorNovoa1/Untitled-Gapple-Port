@@ -16,63 +16,48 @@ function onUpdate() --camera now follows characters!!!!
 		if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
 			moveCam(bfCamIdle[0], bfCamIdle[1]);
 		end
-		if getProperty('boyfriend.animation.curAnim.name') == regAnims[1] then
-			moveCam(bfCamIdle[0] -offsets, bfCamIdle[1]);
-		end
-		if getProperty('boyfriend.animation.curAnim.name') == regAnims[2] then
-			moveCam(bfCamIdle[0], bfCamIdle[1] +offsets);
-		end
-		if getProperty('boyfriend.animation.curAnim.name') == regAnims[3] then
-			moveCam(bfCamIdle[0], bfCamIdle[1] -offsets);
-		end
-		if getProperty('boyfriend.animation.curAnim.name') == regAnims[4] then
-			moveCam(bfCamIdle[0] +offsets, bfCamIdle[1]);
-		end
-		if getProperty('boyfriend.animation.curAnim.name') == altAnims[1] then
-			moveCam(bfCamIdle[0] -offsets, bfCamIdle[1]);
-		end
-		if getProperty('boyfriend.animation.curAnim.name') == altAnims[2] then
-			moveCam(bfCamIdle[0], bfCamIdle[1] +offsets);
-		end
-		if getProperty('boyfriend.animation.curAnim.name') == altAnims[3] then
-			moveCam(bfCamIdle[0], bfCamIdle[1] -offsets);
-		end
-		if getProperty('boyfriend.animation.curAnim.name') == altAnims[4] then
-			moveCam(bfCamIdle[0] +offsets, bfCamIdle[1]);
-		end
 	end
 	if mustHitSection == false then
 		if getProperty('dad.animation.curAnim.name') == 'idle' then
 			moveCam(dadCamIdle[0], dadCamIdle[1]);
 		end
-		if getProperty('dad.animation.curAnim.name') == regAnims[1] then
+	end
+end
+
+function goodNoteHit(id, direction, noteType, isSustainNote)
+	if mustHitSection == true then
+		if direction == 0 then
+			moveCam(bfCamIdle[0] -offsets, bfCamIdle[1]);
+		end
+		if direction == 1 then
+			moveCam(bfCamIdle[0], bfCamIdle[1] +offsets);
+		end
+		if direction == 2 then
+			moveCam(bfCamIdle[0], bfCamIdle[1] -offsets);
+		end
+		if direction == 3 then
+			moveCam(bfCamIdle[0] +offsets, bfCamIdle[1]);
+		end
+	end
+end
+
+function opponentNoteHit(id, direction, noteType, isSustainNote)
+	if mustHitSection == false then
+		if direction == 0 then
 			moveCam(dadCamIdle[0] -offsets, dadCamIdle[1]);
 		end
-		if getProperty('dad.animation.curAnim.name') == regAnims[2] then
+		if direction == 1 then
 			moveCam(dadCamIdle[0], dadCamIdle[1] +offsets);
 		end
-		if getProperty('dad.animation.curAnim.name') == regAnims[3] then
+		if direction == 2 then
 			moveCam(dadCamIdle[0], dadCamIdle[1] -offsets);
 		end
-		if getProperty('dad.animation.curAnim.name') == regAnims[4] then
-			moveCam(dadCamIdle[0] +offsets, dadCamIdle[1]);
-		end
-		if getProperty('dad.animation.curAnim.name') == altAnims[1] then
-			moveCam(dadCamIdle[0] -offsets, dadCamIdle[1]);
-		end
-		if getProperty('dad.animation.curAnim.name') == altAnims[2] then
-			moveCam(dadCamIdle[0], dadCamIdle[1] +offsets);
-		end
-		if getProperty('dad.animation.curAnim.name') == altAnims[3] then
-			moveCam(dadCamIdle[0], dadCamIdle[1] -offsets);
-		end
-		if getProperty('dad.animation.curAnim.name') == altAnims[4] then
+		if direction == 3 then
 			moveCam(dadCamIdle[0] +offsets, dadCamIdle[1]);
 		end
 	end
 end
 
 function moveCam(x, y)
-	setProperty('camFollow.x', x);
-	setProperty('camFollow.y', y);
+	triggerEvent('Camera Follow Pos', ''..x, ''..y) --didn't want to see this stupid shit everywhere
 end
