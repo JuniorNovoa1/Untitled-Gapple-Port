@@ -1,5 +1,5 @@
 local regAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'};
-local altAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'};
+local altAnims = {'singLEFT-alt', 'singDOWN-alt', 'singUP-alt', 'singRIGHT-alt'};
 local bfCamIdle = {};
 local dadCamIdle = {};
 
