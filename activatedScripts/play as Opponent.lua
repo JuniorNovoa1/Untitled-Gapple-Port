@@ -1,4 +1,5 @@
---not gonna be used but if u want to use it just add this to the scripts folder
+local opponentPlay = false; --not gonna be used, but if u want to use this enable this variable
+
 local regularNotes = {'', 'Alt Animation', 'Hey!'}
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
 local keys = {'left', 'down', 'up', 'right'}
@@ -16,6 +17,9 @@ local prevSkinsBF = {};
 local prevSkinsDAD = {};
 
 function onCreatePost()
+	if not opponentPlay then
+		return;
+	end
 	for i = 0, getProperty('unspawnNotes.length') -1 do
 		if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
 			setPropertyFromGroup('unspawnNotes', i, 'mustPress', false)
@@ -51,6 +55,10 @@ function onSongStart()
 end
 
 function onUpdate()
+	if not opponentPlay then
+		return;
+	end
+
 	if getProperty('health') >= 2 and misses == 0 then --mod support sorta
 		setProperty('health', 1.999)
 	end
@@ -120,6 +128,10 @@ end
 local dontSpamLuasCalls = false;
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
+	if not opponentPlay then
+		return;
+	end
+
 	if getProperty('camZooming') == false then
 		setProperty('camZooming', true)
 	end
@@ -149,6 +161,10 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
+	if not opponentPlay then
+		return;
+	end
+
 	if dontSpamLuasCalls == true then
 		return;
 	end
@@ -177,6 +193,10 @@ function noteMissPress(direction)
 end
 
 function missShit(direction)
+	if not opponentPlay then
+		return;
+	end
+
 	setProperty('health', getProperty('health') + 0.095)
 	setProperty('dad.holdTimer', 0)
 	if getProperty('dad.hasMissAnimations') ~= true then
@@ -189,11 +209,19 @@ function missShit(direction)
 end
 
 function onDestroy()
+	if not opponentPlay then
+		return;
+	end
+
 	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
 	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
 end
 
 function swapNoteVariables()
+	if not opponentPlay then
+		return;
+	end
+
 	local vars = {'alpha', 'visible'};
 	local varsBF = {};
 	local varsDAD = {};
@@ -207,6 +235,10 @@ function swapNoteVariables()
 end
 
 function swapNotePos()
+	if not opponentPlay then
+		return;
+	end
+
 	functionIsHappening = true;
 	local bfXpos = {};
 	local dadXpos = {};
@@ -231,6 +263,10 @@ function swapNotePos()
 end
 
 function swapNoteSkins()
+	if not opponentPlay then
+		return;
+	end
+
 	functionIsHappening = true;
 	local bfskin = {};
 	local dadskin = {};
