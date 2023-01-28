@@ -193,9 +193,6 @@ function onStepHit()
 		setProperty('blackScreen.visible', true)
 		setProperty('RUNBITCHSTATIC.visible', false)
 		setProperty('RUNBITCH.visible', true)
-		setProperty('BFLEGS2.visible', true)
-		setProperty('BFLEGS2.flipX', false)
-		reposLegs()
 
 		makeAnimatedLuaSprite('POLICECAR', 'funnyAnimal/palooseCar', getProperty('dad.x'), getProperty('dad.y'))
 		addAnimationByPrefix('POLICECAR', 'run', 'idle0', 24, true)
@@ -207,6 +204,9 @@ function onStepHit()
 
 	if curStep == 11043 then
 		setProperty('blackScreen.visible', false)
+		setProperty('BFLEGS2.visible', true)
+		setProperty('BFLEGS2.flipX', false)
+		reposLegs()
 	end
 
 	if curStep == 11295 then
@@ -242,6 +242,8 @@ function onEvent(n, v1, v2)
 	if n == 'Change Character' then
 		if v2 == 'garrett-car' or v2 == 'garrett-angry' or v2 == 'pedophile' or v2 == '3d-bf' or v2 == '3d-bf-flipped' then			
 			if v2 == 'garrett-angry' then
+				setProperty('PEDOPHILESTATIC.x', 1950)
+				setProperty('PEDOPHILESTATIC.y', 675)
 				setProperty('PEDOPHILESTATIC.visible', true)
 				objectPlayAnimation('PEDOPHILESTATIC', 'hey its the toddler')
 				print('pedophile 2 is now shown')
