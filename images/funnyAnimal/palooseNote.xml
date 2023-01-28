@@ -81,7 +81,7 @@
 	<SubTexture name="green0010" x="324" y="0" width="157" height="156"/>
 	<SubTexture name="green0011" x="162" y="0" width="157" height="156"/>
 
-		<SubTexture name="purple hold end0000" x="0" y="0" width="157" height="156"/>
+	<SubTexture name="purple hold end0000" x="0" y="0" width="157" height="156"/>
 	<SubTexture name="purple hold end0001" x="162" y="0" width="157" height="156"/>
 	<SubTexture name="purple hold end0002" x="324" y="0" width="157" height="156"/>
 	<SubTexture name="purple hold end0003" x="0" y="161" width="157" height="156"/>

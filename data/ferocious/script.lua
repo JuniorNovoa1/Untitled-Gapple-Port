@@ -72,6 +72,7 @@ function onStepHit()
 	daCurstep = curStep;
 	if curStep == 2160 then
 		reposLegs()
+		removeLuaSprite('schoolSTATIC', true)
 		setProperty('RUNBITCH.visible', true)
 		setProperty('BFLEGS2.visible', true)
 		setProperty('defaultCamZoom', 0.75)
@@ -104,6 +105,7 @@ function onStepHit()
 	end
 
 	if curStep == 3310 then
+		removeLuaSprite('Jail', true)
 		setProperty('defaultCamZoom', 0.5)
 		setProperty('blackScreenBG.visible', true)
 		setProperty('Jail.visible', false)
@@ -111,23 +113,63 @@ function onStepHit()
 		setProperty('IPAD.visible', true)
 
 		setProperty('strumLine.y', normalStrumY);
-        noteTweenY('MOVE OPPONENT LEFT NOTE', 0, normalStrumY, 0.1, 'quadInOut')	
-        noteTweenY('MOVE OPPONENT DOWN NOTE', 1, normalStrumY, 0.1, 'quadInOut')
-        noteTweenY('MOVE OPPONENT UP NOTE', 2, normalStrumY, 0.1, 'quadInOut')
-        noteTweenY('MOVE OPPONENT RIGHT NOTE', 3, normalStrumY, 0.1, 'quadInOut')
-        noteTweenY('MOVE PLAYER LEFT NOTE', 4, normalStrumY, 0.1, 'quadInOut')
-        noteTweenY('MOVE PLAYER DOWN NOTE', 5, normalStrumY, 0.1, 'quadInOut')
-        noteTweenY('MOVE PLAYER UP NOTE', 6, normalStrumY, 0.1, 'quadInOut')
-        noteTweenY('MOVE PLAYER RIGHT NOTE', 7, normalStrumY, 0.1, 'quadInOut')
+		for i = 0, 4, 1 do
+			setPropertyFromGroup('opponentStrums', i, 'visible', false)
+		end
+		for i = 0, getProperty('unspawnNotes.length') -1 do
+			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == false then
+				setPropertyFromGroup('unspawnNotes', i, 'visible', false)
+			end
+		end
+		changeNoteSkin(true, 'BEVEL_NOTES')
+		local scaleXY = 0.4;
+		for i = 0, 4, 1 do
+			setPropertyFromGroup('playerStrums', i, 'scale.x', scaleXY)
+			setPropertyFromGroup('playerStrums', i, 'scale.y', scaleXY)
+
+			local offsetss = 64 * i;
+			setPropertyFromGroup('playerStrums', i, 'x', 781.5 + offsetss)
+			setPropertyFromGroup('playerStrums', i, 'y', 120)
+		end
+		for i = 0, getProperty('unspawnNotes.length') -1 do
+			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
+				setPropertyFromGroup('unspawnNotes', i, 'scale.x', scaleXY)
+				setPropertyFromGroup('unspawnNotes', i, 'scale.y', scaleXY)
+			end
+		end
+
 		print('UH OH GARRETT IS ANGRY >:(')
 	end
 
 	if curStep == 4719 then
+		removeLuaSprite('blackScreenBG', true)
 		setProperty('defaultCamZoom', 0.8)
 		setProperty('blackScreenBG.visible', false)
 		setProperty('IPADBG.visible', false)
 		setProperty('IPAD.visible', false)
+		removeLuaSprite('IPADBG', true)
+		removeLuaSprite('IPAD', true)
 		setProperty('RUNBITCHSTATIC.visible', true)
+		for i = 0, 4, 1 do
+			setPropertyFromGroup('opponentStrums', i, 'visible', true)
+		end
+		for i = 0, getProperty('notes.length') -1 do
+			if getPropertyFromGroup('notes', i, 'mustPress') == false then --only "player" side
+				setPropertyFromGroup('notes', i, 'visible', true)
+			end
+		end
+		for i = 0, getProperty('unspawnNotes.length') -1 do
+			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == false then --only "player" side
+				setPropertyFromGroup('unspawnNotes', i, 'visible', true)
+			end
+		end
+		changeNoteSkin(true, 'NOTE_assets_3D')
+		for i = 0, 4, 1 do
+			local offsetss = 115 * i;
+			setPropertyFromGroup('playerStrums', i, 'x', 750 + offsetss)
+			setPropertyFromGroup('playerStrums', i, 'y', normalStrumY)
+		end
+
 		print('magik man appeared')
 	end
 
@@ -190,8 +232,10 @@ function onStepHit()
 
 	if curStep == 11038 then
 		setProperty('PEDOPHILESTATIC.visible', false)
+		removeLuaSprite('PEDOPHILESTATIC', true)
 		setProperty('blackScreen.visible', true)
 		setProperty('RUNBITCHSTATIC.visible', false)
+		removeLuaSprite('RUNBITCHSTATIC', true)
 		setProperty('RUNBITCH.visible', true)
 
 		makeAnimatedLuaSprite('POLICECAR', 'funnyAnimal/palooseCar', getProperty('dad.x'), getProperty('dad.y'))
@@ -204,6 +248,7 @@ function onStepHit()
 
 	if curStep == 11043 then
 		setProperty('blackScreen.visible', false)
+		removeLuaSprite('blackScreen', true)
 		setProperty('BFLEGS2.visible', true)
 		setProperty('BFLEGS2.flipX', false)
 		reposLegs()
@@ -315,4 +360,29 @@ function reposLegs()
 	if getProperty("BFLEGS2.flipX") == false then
 		setProperty('BFLEGS2.x', getProperty("BFLEGS2.x") + 100)
 	end
+end
+
+function changeNoteSkin(player, skin)
+	if player == true then
+		for i = 0, 4, 1 do
+			setPropertyFromGroup('playerStrums', i, 'texture', skin)
+		end
+	end
+    if not player then
+		for i = 0, 4, 1 do
+			setPropertyFromGroup('opponentStrums', i, 'texture', skin)
+		end
+	end
+
+    for i = 0, getProperty('notes.length') -1 do
+        if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
+            setPropertyFromGroup('notes', i, 'texture', skin)
+        end
+    end
+
+    for i = 0, getProperty('unspawnNotes.length') -1 do
+        if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
+            setPropertyFromGroup('unspawnNotes', i, 'texture', skin)
+        end
+    end
 end
