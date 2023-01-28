@@ -375,13 +375,13 @@ function changeNoteSkin(player, skin)
 	end
 
     for i = 0, getProperty('notes.length') -1 do
-        if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
+        if getPropertyFromGroup('notes', i, 'mustPress') == player and getPropertyFromGroup('unspawnNotes', i, 'texture') == '' then --only "player" side
             setPropertyFromGroup('notes', i, 'texture', skin)
         end
     end
 
     for i = 0, getProperty('unspawnNotes.length') -1 do
-        if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
+        if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player and getPropertyFromGroup('unspawnNotes', i, 'texture') == '' then --only "player" side
             setPropertyFromGroup('unspawnNotes', i, 'texture', skin)
         end
     end
