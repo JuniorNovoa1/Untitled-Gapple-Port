@@ -129,7 +129,11 @@ function onStepHit()
 
 			local offsetss = 64 * i;
 			setPropertyFromGroup('playerStrums', i, 'x', 781.5 + offsetss)
-			setPropertyFromGroup('playerStrums', i, 'y', 120)
+			if downscroll then
+				setPropertyFromGroup('playerStrums', i, 'y', 535)
+			else
+				setPropertyFromGroup('playerStrums', i, 'y', 120)
+			end
 		end
 		for i = 0, getProperty('unspawnNotes.length') -1 do
 			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
@@ -164,6 +168,20 @@ function onStepHit()
 			end
 		end
 		changeNoteSkin(true, 'NOTE_assets_3D')
+		for i = 0, getProperty('unspawnNotes.length') -1 do
+			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
+				setPropertyFromGroup('unspawnNotes', i, 'scale.x', getPropertyFromGroup('playerStrums', 0, 'scale.x'))
+				setPropertyFromGroup('unspawnNotes', i, 'scale.y', getPropertyFromGroup('playerStrums', 0, 'scale.y'))
+			end
+		end
+		for i = 0, getProperty('unspawnNotes.length') -1 do
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'magic note' then
+				setPropertyFromGroup('unspawnNotes', i, 'texture', 'funnyAnimal/magicNote')
+			end
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'police note' then
+				setPropertyFromGroup('unspawnNotes', i, 'texture', 'funnyAnimal/palooseNote')
+			end
+		end
 		for i = 0, 4, 1 do
 			local offsetss = 115 * i;
 			setPropertyFromGroup('playerStrums', i, 'x', 750 + offsetss)
@@ -375,13 +393,13 @@ function changeNoteSkin(player, skin)
 	end
 
     for i = 0, getProperty('notes.length') -1 do
-        if getPropertyFromGroup('notes', i, 'mustPress') == player and getPropertyFromGroup('unspawnNotes', i, 'texture') == '' then --only "player" side
+        if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
             setPropertyFromGroup('notes', i, 'texture', skin)
         end
     end
 
     for i = 0, getProperty('unspawnNotes.length') -1 do
-        if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player and getPropertyFromGroup('unspawnNotes', i, 'texture') == '' then --only "player" side
+        if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
             setPropertyFromGroup('unspawnNotes', i, 'texture', skin)
         end
     end
