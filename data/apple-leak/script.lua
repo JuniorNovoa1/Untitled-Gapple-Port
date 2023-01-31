@@ -10,6 +10,8 @@ local stayOnCam = false;
 local camX = 0;
 local camY = 0;
 
+local loopVarThing = false;
+
 function onCreatePost()
 	local randomNumb = 0;
 	randomNumb = getRandomInt(1, 80);
@@ -121,6 +123,22 @@ function onStepHit()
 		doTweenY('invisPortal', 'portal.scale', 0, 1)
 		doTweenX('null3', 'boyfriend.scale', 0, 1)
 		doTweenY('null4', 'boyfriend.scale', 0, 1)
+	end
+
+	if curStep == 9696 then
+		--static for prob 2 secs
+	end
+
+	if curStep == 10464 then
+		--static for prob 2 secs
+	end
+
+	if curStep == 11424 then
+		--static for prob 2 secs
+	end
+
+	if curStep == 11944 then
+		--discord leave call
 	end
 end
 
@@ -239,27 +257,53 @@ function onEvent(name, value1, value2)
 		end
 
 		if value2 == '3d-bambi-leak-finale' then
-			removeLuaSprite('caveBG', true)
-			removeLuaSprite('brob', true)
-			removeLuaSprite('monkey', true)
-			removeLuaSprite('ohyeah', true)
-			removeLuaSprite('wrath', true)
-			removeLuaSprite('caveFloor', true)
-			removeLuaSprite('norman', true)
-			setProperty('fire.visible', true)
-			setProperty('vg.visible', true)
-			setProperty('dad.x', 250)
-			setProperty('dad.y', -315)
-			setProperty('dad.visible', false)
-			setProperty('camHUD.visible', false)
-			camX = 1290;
-			camY = 450;
-			stayOnCam = true;
+			if loopVarThing == false then
+				removeLuaSprite('caveBG', true)
+				removeLuaSprite('brob', true)
+				removeLuaSprite('monkey', true)
+				removeLuaSprite('ohyeah', true)
+				removeLuaSprite('wrath', true)
+				removeLuaSprite('caveFloor', true)
+				removeLuaSprite('norman', true)
+				setProperty('fire.visible', true)
+				setProperty('vg.visible', true)
+				setProperty('dad.x', 250)
+				setProperty('dad.y', -315)
+				setProperty('dad.visible', false)
+				setProperty('camHUD.visible', false)
+				camX = 1290;
+				camY = 450;
+				stayOnCam = true;
+
+				setProperty('boyfriend.y', getProperty('boyfriend.y') - 900)
+				doTweenY('boyfrinedYYY', 'boyfriend', getProperty('boyfriend.y') + 900, 1.5)
+				loopVarThing = true;
+			end
 
 			changeNoteSkin(true, 'NOTE_assets_3D'); --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
+		else
+			setProperty('dad.x', 250)
+			setProperty('dad.y', -315)
+		end
 
-			setProperty('boyfriend.y', getProperty('boyfriend.y') - 900)
-			doTweenY('boyfrinedYYY', 'boyfriend', getProperty('boyfriend.y') + 900, 1.5)
+		if value2 == 'duel-cheating-bambi-leak' then
+			--1 second static
+		end
+
+		if value2 == 'wide-bambi-leak' then
+			--2 second static
+		end
+
+		if value2 == 'screwed-bambi-leak' then
+			--2 second static
+		end
+		
+		if value2 == 'among-bambi' then
+			--2 second static
+		end
+
+		if value2 == 'bob-bambi-leak' then
+			--2 second static
 		end
 	end
 end
@@ -315,6 +359,7 @@ end
 
 local POP = false;
 local POP2 = false;
+local POP3 = false;
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if getProperty('dad.curCharacter') == 'bandu-trolled' and not POP then
@@ -335,6 +380,10 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 		setProperty('dad.visible', true)
 		stayOnCam = false;
 		POP2 = true;
+	end
+
+	if getProperty('dad.curCharacter') == 'among-bambi' and not POP3 then
+		--flash twitter post
 	end
 end
 
