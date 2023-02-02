@@ -42,7 +42,7 @@ function onUpdate()
 			setPropertyFromGroup('notes', iNote, 'wasGoodHit', false)
 			setPropertyFromGroup('notes', iNote, 'hitByOpponent', true)
 			local lateHitMult = getPropertyFromGroup('notes', iNote, 'lateHitMult');
-			lateHitMult = 0.465; --was to high before
+			--lateHitMult = 0.465; --was to high before (im pretty sure this doesn't need fixing)
 			local earlyHitMult = getPropertyFromGroup('notes', iNote, 'earlyHitMult');
 			earlyHitMult = 0.2; --was to high before and you would be able to spam the shit outta jacks
 			if getPropertyFromGroup('notes', iNote, 'strumTime') > getPropertyFromClass('Conductor', 'songPosition') - (getPropertyFromClass('Conductor', 'safeZoneOffset') * lateHitMult) and getPropertyFromGroup('notes', iNote, 'strumTime') < getPropertyFromClass('Conductor', 'songPosition') + (getPropertyFromClass('Conductor', 'safeZoneOffset') * earlyHitMult) then
@@ -68,7 +68,9 @@ function onUpdate()
 						recalculateShitRating()
 						local holdStuff = 0.15;
 						if sustainSUS then
-							holdStuff = holdStuff +0.1;
+							if getPropertyFromGroup('notes', iNote, 'animation.curAnim.name.endsWith') ~= 'end' then
+								holdStuff = holdStuff +0.05;
+							end
 							setProperty('health', getProperty('health') - 0.0115)
 						else 
 							setProperty('health', getProperty('health') - 0.023)
