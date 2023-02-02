@@ -44,7 +44,7 @@ function onUpdate()
 			local lateHitMult = getPropertyFromGroup('notes', iNote, 'lateHitMult');
 			--lateHitMult = 0.465; --was to high before (im pretty sure this doesn't need fixing)
 			local earlyHitMult = getPropertyFromGroup('notes', iNote, 'earlyHitMult');
-			earlyHitMult = 0.2; --was to high before and you would be able to spam the shit outta jacks
+			earlyHitMult = 0.275; --was to high before and you would be able to spam the shit outta jacks
 			if getPropertyFromGroup('notes', iNote, 'strumTime') > getPropertyFromClass('Conductor', 'songPosition') - (getPropertyFromClass('Conductor', 'safeZoneOffset') * lateHitMult) and getPropertyFromGroup('notes', iNote, 'strumTime') < getPropertyFromClass('Conductor', 'songPosition') + (getPropertyFromClass('Conductor', 'safeZoneOffset') * earlyHitMult) then
 				setPropertyFromGroup('notes', iNote, 'canBeHit', true);
 			else
