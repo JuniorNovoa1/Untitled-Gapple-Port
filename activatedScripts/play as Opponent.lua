@@ -6,6 +6,7 @@ local lastMissAnim = '';
 local ratingPos = 215;
 local prevRatingPos = {};
 local dadHasMissAnims = false;
+local actualTotalNotesPlayed = 0;
 
 function onCreatePost()
 	if not opponentPlay then
@@ -19,6 +20,7 @@ function onCreatePost()
 		setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
 		setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
 	end
+	addHaxeLibrary('StrumNote')
 end
 
 function onUpdate()
@@ -26,14 +28,23 @@ function onUpdate()
 		return;
 	end
 
+	for iKey = 1, #keys do
+		local fuckingLua = iKey-1;
+		 if getProperty('strumLineNotes.members['..fuckingLua..'].animation.curAnim.name') == 'static' then
+			if keyJustPressed(keys[iKey]) then
+				strumAnim(iKey-1, 'pressed')
+			end
+		end
+	end
+
 	for iNote = 0, getProperty('notes.length') do
 		if getPropertyFromGroup('notes', iNote, 'mustPress') == false then
 			setPropertyFromGroup('notes', iNote, 'wasGoodHit', false)
 			setPropertyFromGroup('notes', iNote, 'hitByOpponent', true)
 			local lateHitMult = getPropertyFromGroup('notes', iNote, 'lateHitMult');
-			lateHitMult = 0.4; --was to high before
+			lateHitMult = 0.465; --was to high before
 			local earlyHitMult = getPropertyFromGroup('notes', iNote, 'earlyHitMult');
-			earlyHitMult = 0.245; --was to high before and you would be able to spam the shit outta jacks
+			earlyHitMult = 0.2; --was to high before and you would be able to spam the shit outta jacks
 			if getPropertyFromGroup('notes', iNote, 'strumTime') > getPropertyFromClass('Conductor', 'songPosition') - (getPropertyFromClass('Conductor', 'safeZoneOffset') * lateHitMult) and getPropertyFromGroup('notes', iNote, 'strumTime') < getPropertyFromClass('Conductor', 'songPosition') + (getPropertyFromClass('Conductor', 'safeZoneOffset') * earlyHitMult) then
 				setPropertyFromGroup('notes', iNote, 'canBeHit', true);
 			else
@@ -49,12 +60,15 @@ function onUpdate()
 			for iKey = 1, #keys do
 				if keyJustPressed(keys[iKey]) or keyPressed(keys[iKey]) then
 					if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'canBeHit') and getPropertyFromGroup('notes', iNote, 'tooLate') == false then
+						actualTotalNotesPlayed = actualTotalNotesPlayed +1;
 						if getProperty('camZooming') == false then
 							setProperty('camZooming', true)
 						end
 						setPropertyFromGroup('notes', iNote, 'ratingDisabled', false);
 						recalculateShitRating()
+						local holdStuff = 0.15;
 						if sustainSUS then
+							holdStuff = holdStuff +0.1;
 							setProperty('health', getProperty('health') - 0.0115)
 						else 
 							setProperty('health', getProperty('health') - 0.023)
@@ -72,13 +86,15 @@ function onUpdate()
 							characterPlayAnim('dad', 'hey', true);
 						end
 						doRatingShits(true, iNote)
-
+				
+						strumAnim(directionNOTE, 'confirm', holdStuff);
 						setPropertyFromGroup('notes', iNote, 'wasGoodHit', true)
 						callOnLuas('opponentNoteHit', {iNote, directionNOTE, assType, sustainSUS}) --thank god this exists
 						removeFromGroup('notes', iNote, false)
 					end
 				end
 				if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'tooLate') then
+					actualTotalNotesPlayed = actualTotalNotesPlayed +1;
 					if sustainSUS then
 						setProperty('health', getProperty('health') + 0.0125)
 					else 
@@ -100,6 +116,8 @@ function onUpdate()
 			end
 		end
 	end
+
+	setProperty('totalPlayed', actualTotalNotesPlayed)
 
 	for i = 0, #singAnims do
 		if getProperty('dad.animation.curAnim.name') ~= lastMissAnim and dadHasMissAnims ~= true then
@@ -130,13 +148,15 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 	removeFromGroup('grpNoteSplashes', getProperty('grpNoteSplashes.length') -1, false); --insta killed
 end
 
-function opponentNoteHit(id, direction, noteType, isSustainNote)
-	local holdTimer = 0.15;
-	if isSustainNote then
-		holdTimer = holdTimer +0.15;
-	end
-	setProperty('opponentStrums.members['..direction..'].resetAnim', holdTimer);
-	setProperty('opponentStrums.members['..direction..'].animation.curAnim.name', 'confirm');
+function strumAnim(direction, fool, timer)
+	runHaxeCode([[
+		var directionStrum = ]]..direction..[[;
+		var animAtion = ']]..fool..[[';
+		var time = ']]..timer..[[';
+		var strum = game.strumLineNotes.members[directionStrum];
+		strum.playAnim(animAtion, true);
+		strum.resetAnim = time;
+	]])
 end
 
 function doRatingShits(hit, ID)
