@@ -1,5 +1,6 @@
-local opponentPlay = true; --not gonna be used but if u want to use it just turn opponentPlay on
-local regularNotes = {'', 'Alt Animation', 'Hey!'}
+opponentPlay = true; --not gonna be used but if u want to use it just turn opponentPlay on
+
+local regularNotes = {'', 'Alt Animation', 'Hey!', 'GF Sing'}
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
 local keys = {'left', 'down', 'up', 'right'}
 local lastMissAnim = '';
@@ -28,11 +29,26 @@ function onUpdate()
 		return;
 	end
 
+	setProperty('totalPlayed', actualTotalNotesPlayed)
+
 	for iKey = 1, #keys do
 		local fuckingLua = iKey-1;
-		 if getProperty('strumLineNotes.members['..fuckingLua..'].animation.curAnim.name') == 'static' then
+		if getProperty('strumLineNotes.members['..fuckingLua..'].animation.curAnim.name') == 'confirm' and getProperty('strumLineNotes.members['..fuckingLua..'].resetAnim') <= 0.01 and keyPressed(keys[iKey]) then
+			setProperty('strumLineNotes.members['..fuckingLua..'].resetAnim', 0.1)
+		end
+		if getProperty('strumLineNotes.members['..fuckingLua..'].animation.curAnim.name') == 'static' or getProperty('strumLineNotes.members['..fuckingLua..'].animation.curAnim.name') == 'pressed' then
 			if keyJustPressed(keys[iKey]) then
-				strumAnim(iKey-1, 'pressed')
+				strumAnim(iKey-1, 'pressed', 0.15)
+
+				if ghostTapping ~= true then
+					--miss shit
+					setProperty('vocals.volume', 0)
+					addScore(-10)
+					addMisses(1)
+					callOnLuas('noteMissPress', {iKey-1}) --thank god this exists
+				end
+			elseif keyPressed(keys[iKey]) then
+				setProperty('strumLineNotes.members['..fuckingLua..'].resetAnim', 0.05)
 			end
 		end
 	end
@@ -57,14 +73,12 @@ function onUpdate()
 			local assType = getPropertyFromGroup('notes', iNote, 'noteType');
 			local directionNOTE = getPropertyFromGroup('notes', iNote, 'noteData');
 			local sustainSUS = getPropertyFromGroup('notes', iNote, 'isSustainNote');
-			for iKey = 1, #keys do
+			for iKey = 1, #keys do --need to prevent people from holding keys and spamming notes
 				if keyJustPressed(keys[iKey]) or keyPressed(keys[iKey]) then
 					if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'canBeHit') and getPropertyFromGroup('notes', iNote, 'tooLate') == false then
-						actualTotalNotesPlayed = actualTotalNotesPlayed +1;
 						if getProperty('camZooming') == false then
 							setProperty('camZooming', true)
 						end
-						setPropertyFromGroup('notes', iNote, 'ratingDisabled', false);
 						recalculateShitRating()
 						local holdStuff = 0.15;
 						if sustainSUS then
@@ -77,15 +91,22 @@ function onUpdate()
 						end
 						lastMissAnim = '';
 						local urAnus = '';
-						if assType == regularNotes[2] then
+						if assType == regularNotes[2] or altAnim then
 							urAnus = '-alt'
 						end
-						setProperty('dad.holdTimer', 0)
+						if assType == regularNotes[4] or gfSection then
+							setProperty('gf.holdTimer', 0)
+						else
+							setProperty('dad.holdTimer', 0)
+						end
 						if assType == regularNotes[1] or assType == regularNotes[2] then
 							characterPlayAnim('dad', singAnims[directionNOTE + 1]..urAnus, true);
 						end
 						if assType == regularNotes[3] then
 							characterPlayAnim('dad', 'hey', true);
+						end
+						if assType == regularNotes[4] or gfSection then
+							characterPlayAnim('gf', singAnims[directionNOTE + 1]..urAnus, true);
 						end
 						doRatingShits(true, iNote)
 				
@@ -96,7 +117,6 @@ function onUpdate()
 					end
 				end
 				if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'tooLate') then
-					actualTotalNotesPlayed = actualTotalNotesPlayed +1;
 					if sustainSUS then
 						setProperty('health', getProperty('health') + 0.0125)
 					else 
@@ -119,16 +139,19 @@ function onUpdate()
 		end
 	end
 
-	setProperty('totalPlayed', actualTotalNotesPlayed)
-
 	for i = 0, #singAnims do
 		if getProperty('dad.animation.curAnim.name') ~= lastMissAnim and dadHasMissAnims ~= true then
 			setProperty('dad.color', getColorFromHex('FFFFFF'))
 			lastMissAnim = '';
 		end
 		--hold time shits
-		if getProperty('dad.animation.curAnim.name') == singAnims[i + 1] and keyPressed(keys[i + 1]) then
-			setProperty('dad.holdTimer', 0)
+		if keyPressed(keys[i + 1]) then
+			if getProperty('dad.animation.curAnim.name') ~= 'idle' then
+				setProperty('dad.holdTimer', 0)
+			end
+			if getProperty('gf.animation.curAnim.name') ~= 'idle' and getProperty('gf.animation.curAnim.name') ~= 'danceLeft' and getProperty('gf.animation.curAnim.name') ~= 'danceRight' and gfSection then
+				setProperty('gf.holdTimer', 0)
+			end
 		end
 	end
 
@@ -146,6 +169,9 @@ function onUpdate()
 end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
+	if not opponentPlay then
+		return;
+	end
 	setProperty('health', getProperty('health') - 0.023)
 	removeFromGroup('grpNoteSplashes', getProperty('grpNoteSplashes.length') -1, false); --insta killed
 end
@@ -190,7 +216,7 @@ function doRatingShits(hit, ID)
 		addMisses(1)
 		callOnLuas('noteMiss', {getPropertyFromGroup('notes', iNote, 'ID'), getPropertyFromGroup('notes', iNote, 'noteData'), getPropertyFromGroup('notes', iNote, 'noteType'), getPropertyFromGroup('notes', iNote, 'isSustainNote')}) --thank god this exists
 	end
-	setProperty('totalPlayed', getProperty('totalPlayed') +1)
+	actualTotalNotesPlayed = actualTotalNotesPlayed +1;
 end
 
 function recalculateShitRating(bad)
