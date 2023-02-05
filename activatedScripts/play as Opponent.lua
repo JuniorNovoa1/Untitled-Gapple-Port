@@ -7,6 +7,7 @@ local missedOn = false;
 local ratingPos = 215;
 local prevRatingPos = {};
 local dadHasMissAnims = false;
+local actualTotalNotesHit = 0;
 local actualTotalNotesPlayed = 0;
 
 function onCreatePost()
@@ -32,6 +33,7 @@ function onCreatePost()
 			setPropertyFromGroup('opponentStrums', i-1, 'x', xOldBF)
 		end
 	end
+	addHaxeLibrary('NoteSplash')
 	addHaxeLibrary('StrumNote')
 end
 
@@ -41,9 +43,9 @@ function onUpdate()
 	end
 
 	dadHasMissAnims = getProperty('dad.hasMissAnimations')
-	setProperty('totalPlayed', actualTotalNotesPlayed)
 
 	for iNote = 0, getProperty('notes.length') do
+		actualTotalNotesPlayed = actualTotalNotesPlayed +1;
 		if getPropertyFromGroup('notes', iNote, 'mustPress') == false then
 			setPropertyFromGroup('notes', iNote, 'wasGoodHit', false)
 			setPropertyFromGroup('notes', iNote, 'hitByOpponent', true)
@@ -97,7 +99,8 @@ function onUpdate()
 							characterPlayAnim('gf', singAnims[iKey]..urAnus, true);
 						end
 						doRatingShits(true, iNote)
-				
+	
+						actualTotalNotesHit = actualTotalNotesHit +1;
 						strumAnim(directionNOTE, 'confirm', holdStuff);
 						setPropertyFromGroup('notes', iNote, 'wasGoodHit', true)
 						callOnLuas('opponentNoteHit', {iNote, directionNOTE, assType, sustainSUS}) --thank god this exists
@@ -107,6 +110,7 @@ function onUpdate()
 				if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'tooLate') then
 					setProperty('health', getProperty('health') + getPropertyFromGroup('notes', iNote, 'missHealth') * getProperty('healthLoss'))
 					setProperty('dad.holdTimer', 0)
+					playSound('missnote'..getRandomInt(1, 3), getRandomFloat(0.4, 0.6))
 					if getProperty('dad.hasMissAnimations') ~= true then
 						characterPlayAnim('dad', singAnims[iKey], true);
 						setProperty('dad.color', getColorFromHex('800080'))
@@ -137,6 +141,7 @@ function onUpdate()
 					setProperty('vocals.volume', 0)
 					addScore(-10)
 					addMisses(1)
+					playSound('missnote'..getRandomInt(1, 3), getRandomFloat(0.4, 0.6))
 					setProperty('health', getProperty('health') + 0.05 * getProperty('healthLoss'))
 					if dadHasMissAnims then
 						characterPlayAnim('dad', singAnims[iKey], true);
@@ -213,7 +218,7 @@ function doRatingShits(hit, ID)
 		setProperty('vocals.volume', 1)
 
 		local noteDiff = math.abs(getPropertyFromGroup('notes', ID, 'strumTime') - getPropertyFromClass('Conductor', 'songPosition'));
-		local isSick = true;
+		local isSick = false;
 		local score = 350;
 
 		if noteDiff > getPropertyFromClass('Conductor', 'safeZoneOffset') * 0.9 then
@@ -233,25 +238,31 @@ function doRatingShits(hit, ID)
 		addMisses(1)
 		callOnLuas('noteMiss', {getPropertyFromGroup('notes', iNote, 'ID'), getPropertyFromGroup('notes', iNote, 'noteData'), getPropertyFromGroup('notes', iNote, 'noteType'), getPropertyFromGroup('notes', iNote, 'isSustainNote')}) --thank god this exists
 	end
-	actualTotalNotesPlayed = actualTotalNotesPlayed +1;
 end
 
 function recalculateShitRating(bad)
-	if getProperty('totalPlayed') < 1 then
+	if actualTotalNotesPlayed < 1 then
 		ratingName = '?';
 	else
-		rating = math.min(1, math.max(0, getProperty('totalNotesHit') / getProperty('totalPlayed')))
-
-		--[[if rating >= 1 then
-			ratingName = getProperty('ratingStuff.length[0]');
-		else	
-			for i = 0, getProperty('ratingStuff.length')-1 do
-				if rating < getProperty('ratingStuff['..i..'][1]') then
-					setProperty('ratingName', getProperty('ratingStuff['..i..'][0]'));
-					break;
-				end
-			end
-		end--]]
+		rating = math.min(1, math.max(0, actualTotalNotesHit / actualTotalNotesPlayed))
+		--i literally broke it lmao
+		runHaxeCode([[
+			if(game.ratingPercent >= 1)
+			{
+				game.ratingName = game.ratingStuff[game.ratingStuff.length-1][0]; //Uses last string
+			}
+			else
+			{
+				for (i in 0...game.ratingStuff.length-1)
+				{
+					if(game.ratingPercent < game.ratingStuff[i][1])
+					{
+						game.ratingName = game.ratingStuff[i][0];
+						break;
+					}
+				}
+			}
+		]])
 	end
 
 	if getProperty('sicks') > 0 then 
