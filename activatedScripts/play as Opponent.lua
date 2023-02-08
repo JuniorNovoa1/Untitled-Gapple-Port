@@ -33,7 +33,6 @@ function onCreatePost()
 			setPropertyFromGroup('opponentStrums', i-1, 'x', xOldBF)
 		end
 	end
-	addHaxeLibrary('NoteSplash')
 	addHaxeLibrary('StrumNote')
 end
 
