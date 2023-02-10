@@ -10,7 +10,6 @@ local dadHasMissAnims = false;
 local actualTotalNotesHit = 0;
 local actualTotalNotesPlayed = 0;
 local vocalVolume = 0;
-local holdingNoteTimer = {0, 0, 0, 0}
 
 function onCreatePost()
 	if not opponentPlay then
@@ -90,11 +89,6 @@ function onUpdate()
 					removeFromGroup('notes', iNote, false)
 				end
 				if keyJustPressed(keys[iKey]) or keyPressed(keys[iKey]) then
-					if holdingNoteTimer[iKey] >= 0.8 and sustainSUS == false then
-						break;
-					elseif holdingNoteTimer[iKey] <= 0.8 and sustainSUS then
-						holdingNoteTimer[iKey] = 0;
-					end
 					if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'canBeHit') and getPropertyFromGroup('notes', iNote, 'tooLate') == false then
 						if getProperty('camZooming') == false then
 							setProperty('camZooming', true)
@@ -198,17 +192,6 @@ function onUpdate()
 
 	if getProperty('health') >= 2 then
 		setProperty('health', 0)
-	end
-end
-
-function onUpdatePost()
-	for iKey = 1, #keys do
-		if keyPressed(keys[iKey]) then
-			holdingNoteTimer[iKey] = holdingNoteTimer[iKey] +0.025;
-		end
-		if keyReleased(keys[iKey]) then
-			holdingNoteTimer[iKey] = 0;
-		end
 	end
 end
 
