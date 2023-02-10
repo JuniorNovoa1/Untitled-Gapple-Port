@@ -4,6 +4,7 @@ local speedAmount = 4.5;
 local tweenType = 'sineInOut';
 
 function onCreate()
+    setObjectOrder('dadGroup', 4)
     originalPos = getProperty('dad.y')
     doTweenY('daveDown', 'dad', originalPos +posAmount, speedAmount / 2, tweenType)
 end

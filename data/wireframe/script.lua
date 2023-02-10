@@ -10,10 +10,6 @@ function onCreate()
     end
 end
 
-function onCreatePost()
-    setObjectOrder('dadGroup', 4)
-end
-
 function onStepHit()
     if curStep == 1205 then
         doTweenX('badaiInFrameX', 'badaiComes', getProperty('dad.x') +100, 0.8, 'cubeOut')
@@ -25,7 +21,6 @@ end
 function onTweenCompleted(tag)
     if tag == 'badaiInFrameY' then
         triggerEvent('Change Character', 'dad', 'badai')
-        setObjectOrder('dadGroup', 4)
         setProperty('daveFuckingDies.visible', true)
         setProperty('badaiComes.visible', false)
         cameraFlash('camother', 'FFFFFF', 1)

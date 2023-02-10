@@ -1,5 +1,3 @@
---CODE BY JUNIORNOVOA (THIS SAVED ME 700MB RAM ON LORE)
-
 function onCreate()
 	addHaxeLibrary('System', 'openfl.system')
 	clearCache();

@@ -9,6 +9,8 @@ local prevRatingPos = {};
 local dadHasMissAnims = false;
 local actualTotalNotesHit = 0;
 local actualTotalNotesPlayed = 0;
+local vocalVolume = 0;
+local holdingNoteTimer = {0, 0, 0, 0}
 
 function onCreatePost()
 	if not opponentPlay then
@@ -36,6 +38,10 @@ function onCreatePost()
 	addHaxeLibrary('StrumNote')
 end
 
+function onSongStart()
+	vocalVolume = getProperty('vocals.volume') -0.1;
+end
+
 function onUpdate()
 	if not opponentPlay then
 		return;
@@ -49,7 +55,7 @@ function onUpdate()
 			setPropertyFromGroup('notes', iNote, 'wasGoodHit', false)
 			setPropertyFromGroup('notes', iNote, 'hitByOpponent', true)
 			local lateHitMult = getPropertyFromGroup('notes', iNote, 'lateHitMult');
-			--lateHitMult = 0.465; --was to high before (im pretty sure this doesn't need fixing)
+			--lateHitMult = -0.365; --was to high before (im pretty sure this doesn't need fixing)
 			local earlyHitMult = getPropertyFromGroup('notes', iNote, 'earlyHitMult');
 			earlyHitMult = 0.275; --was to high before and you would be able to spam the shit outta jacks
 			if getPropertyFromGroup('notes', iNote, 'strumTime') > getPropertyFromClass('Conductor', 'songPosition') - (getPropertyFromClass('Conductor', 'safeZoneOffset') * lateHitMult) and getPropertyFromGroup('notes', iNote, 'strumTime') < getPropertyFromClass('Conductor', 'songPosition') + (getPropertyFromClass('Conductor', 'safeZoneOffset') * earlyHitMult) then
@@ -58,14 +64,37 @@ function onUpdate()
 				setPropertyFromGroup('notes', iNote, 'canBeHit', false);
 			end
 
-			if getPropertyFromGroup('notes', iNote, 'strumTime') -75 < getPropertyFromClass('Conductor', 'songPosition') - getPropertyFromClass('Conductor', 'safeZoneOffset') and getPropertyFromGroup('notes', iNote, 'wasGoodHit') == false then
+			local strumOffset = 25;
+			strumOffset = strumOffset * getProperty('songSpeed') * getPropertyFromGroup('notes', iNote, 'multSpeed'); --YOU WILL ALWAYS BE ABLE TO MISS NOW!!
+			if getPropertyFromGroup('notes', iNote, 'strumTime') -strumOffset < getPropertyFromClass('Conductor', 'songPosition') - getPropertyFromClass('Conductor', 'safeZoneOffset') and getPropertyFromGroup('notes', iNote, 'wasGoodHit') == false then
 				setPropertyFromGroup('notes', iNote, 'tooLate', true);
 			end
 			local assType = getPropertyFromGroup('notes', iNote, 'noteType');
 			local directionNOTE = getPropertyFromGroup('notes', iNote, 'noteData');
 			local sustainSUS = getPropertyFromGroup('notes', iNote, 'isSustainNote');
-			for iKey = 1, #keys do --need to prevent people from holding keys and spamming notes
+			for iKey = 1, #keys do
+				if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'tooLate') then
+					setProperty('health', getProperty('health') + getPropertyFromGroup('notes', iNote, 'missHealth') * getProperty('healthLoss'))
+					setProperty('dad.holdTimer', 0)
+					playSound('missnote'..getRandomInt(1, 3), getRandomFloat(vocalVolume -0.2, vocalVolume))
+					if getProperty('dad.hasMissAnimations') ~= true then
+						characterPlayAnim('dad', singAnims[iKey], true);
+						setProperty('dad.color', getColorFromHex('800080'))
+						missedOn = true;
+					else
+						characterPlayAnim('dad', singAnims[iKey]..'miss', true);
+					end
+					doRatingShits(false, iNote)
+				
+					callOnLuas('noteMiss', {iNote, directionNOTE, assType, sustainSUS}) --thank god this exists
+					removeFromGroup('notes', iNote, false)
+				end
 				if keyJustPressed(keys[iKey]) or keyPressed(keys[iKey]) then
+					if holdingNoteTimer[iKey] >= 0.8 and sustainSUS == false then
+						break;
+					elseif holdingNoteTimer[iKey] <= 0.8 and sustainSUS then
+						holdingNoteTimer[iKey] = 0;
+					end
 					if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'canBeHit') and getPropertyFromGroup('notes', iNote, 'tooLate') == false then
 						if getProperty('camZooming') == false then
 							setProperty('camZooming', true)
@@ -88,10 +117,10 @@ function onUpdate()
 						else
 							setProperty('dad.holdTimer', 0)
 						end
-						if assType == regularNotes[1] or assType == regularNotes[2] then
-							characterPlayAnim('dad', singAnims[iKey]..urAnus, true);
+						if assType ~= regularNotes[4] and not gfSection then
+							characterPlayAnim('dad', singAnims[iKey]..urAnus, true); --play it anyway
 						end
-						if assType == regularNotes[3] then
+						if assType == regularNotes[3] and not gfSection then
 							characterPlayAnim('dad', 'hey', true);
 						end
 						if assType == regularNotes[4] or gfSection then
@@ -105,22 +134,6 @@ function onUpdate()
 						callOnLuas('opponentNoteHit', {iNote, directionNOTE, assType, sustainSUS}) --thank god this exists
 						removeFromGroup('notes', iNote, false)
 					end
-				end
-				if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'tooLate') then
-					setProperty('health', getProperty('health') + getPropertyFromGroup('notes', iNote, 'missHealth') * getProperty('healthLoss'))
-					setProperty('dad.holdTimer', 0)
-					playSound('missnote'..getRandomInt(1, 3), getRandomFloat(0.4, 0.6))
-					if getProperty('dad.hasMissAnimations') ~= true then
-						characterPlayAnim('dad', singAnims[iKey], true);
-						setProperty('dad.color', getColorFromHex('800080'))
-						missedOn = true;
-					else
-						characterPlayAnim('dad', singAnims[iKey]..'miss', true);
-					end
-					doRatingShits(false, iNote)
-				
-					callOnLuas('noteMiss', {iNote, directionNOTE, assType, sustainSUS}) --thank god this exists
-					removeFromGroup('notes', iNote, false)
 				end
 			end
 		end
@@ -140,7 +153,7 @@ function onUpdate()
 					setProperty('vocals.volume', 0)
 					addScore(-10)
 					addMisses(1)
-					playSound('missnote'..getRandomInt(1, 3), getRandomFloat(0.4, 0.6))
+					playSound('missnote'..getRandomInt(1, 3), getRandomFloat(vocalVolume -0.2, vocalVolume))
 					setProperty('health', getProperty('health') + 0.05 * getProperty('healthLoss'))
 					if dadHasMissAnims then
 						characterPlayAnim('dad', singAnims[iKey], true);
@@ -149,7 +162,6 @@ function onUpdate()
 					else
 						characterPlayAnim('dad', singAnims[iKey]..'miss', true);
 					end
-					missedOn = true;
 					callOnLuas('noteMissPress', {iKey-1}) --thank god this exists
 				end
 			elseif keyPressed(keys[iKey]) then
@@ -186,6 +198,17 @@ function onUpdate()
 
 	if getProperty('health') >= 2 then
 		setProperty('health', 0)
+	end
+end
+
+function onUpdatePost()
+	for iKey = 1, #keys do
+		if keyPressed(keys[iKey]) then
+			holdingNoteTimer[iKey] = holdingNoteTimer[iKey] +0.025;
+		end
+		if keyReleased(keys[iKey]) then
+			holdingNoteTimer[iKey] = 0;
+		end
 	end
 end
 
