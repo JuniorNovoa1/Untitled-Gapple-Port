@@ -16,20 +16,14 @@ function onCreatePost()
 	local randomNumb = 0;
 	randomNumb = getRandomInt(1, 80);
 
-	makeLuaSprite('iconBandu', 'icons/fatbandu/'..randomNumb, 0, 0)
-	addAnimationByIndices('iconBandu', 'idle', 'null', '0') --i have to fix this shit bro
-	addAnimationByIndices('iconBandu', 'dead', 'null', '1')
-	setProperty('iconBandu.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-	setProperty('iconBandu.x', getProperty('iconP2.x'))
-	setProperty('iconBandu.y', getProperty('iconP2.y'))
-	setProperty('iconBandu.width', getProperty('iconP2.width'))
-	setProperty('iconBandu.height', getProperty('iconP2.height'))
-	setObjectCamera('iconBandu', 'camhud')
-	updateHitbox('iconBandu')
-	if not lowQuality then
-    	addLuaSprite('iconBandu', false)
-	end
-
+	addHaxeLibrary('FlxObject', 'flixel')
+	addHaxeLibrary('FlxBasic', 'flixel')
+	addHaxeLibrary('HealthIcon')
+	runHaxeCode([[
+		var rando = ]]..randomNumb..[[;
+		var icon = new HealthIcon('fatbandu/' + rando, false);
+		add(icon);
+	]]) --doesn't work but it was worth a shot.
 	--setProperty('cpuControlled', true) --testing loll
 end
 
@@ -39,21 +33,18 @@ function onUpdate()
 	end
 
 	if getProperty('iconP2.visible') == false and canChangeIcon then
-		setProperty('iconBandu.x', getProperty('iconP2.x'))
-		setProperty('iconBandu.y', getProperty('iconP2.y'))
-		setProperty('iconBandu.width', getProperty('iconP2.width'))
-		setProperty('iconBandu.height', getProperty('iconP2.height'))
-		updateHitbox('iconBandu')
-
-		if getProperty('health') >= 1.75 then
-			objectPlayAnimation('iconBandu', 'lose')
-		else
-			objectPlayAnimation('iconBandu', 'idle')
-		end
+		runHaxeCode([[
+			icon.x = game.iconP2.x;
+			icon.y = game.iconP2.y;
+			icon.width = game.iconP2.width;
+			icon.height = game.iconP2.height;
+		]])
 	end
 	if getProperty('iconP2.visible') == false and not canChangeIcon then
 		setProperty('iconP2.visible', true)
-		removeLuaSprite('iconBandu', true)
+		runHaxeCode([[
+			destroy(icon);
+		]])
 	end
 
 	time = 1.5;
