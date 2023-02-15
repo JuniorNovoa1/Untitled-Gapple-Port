@@ -112,13 +112,13 @@ function onUpdate()
 							setProperty('dad.holdTimer', 0)
 						end
 						if assType ~= regularNotes[4] and not gfSection then
-							characterPlayAnim('dad', singAnims[iKey]..urAnus, true); --play it anyway
+							characterPlayAnim('dad', singAnims[directionNOTE +1]..urAnus, true); --play it anyway
 						end
 						if assType == regularNotes[3] and not gfSection then
 							characterPlayAnim('dad', 'hey', true);
 						end
 						if assType == regularNotes[4] or gfSection then
-							characterPlayAnim('gf', singAnims[iKey]..urAnus, true);
+							characterPlayAnim('gf', singAnims[directionNOTE +1]..urAnus, true);
 						end
 						doRatingShits(true, iNote)
 	
