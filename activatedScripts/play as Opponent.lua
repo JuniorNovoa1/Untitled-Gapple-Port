@@ -53,10 +53,17 @@ function onUpdate()
 		if getPropertyFromGroup('notes', iNote, 'mustPress') == false then
 			setPropertyFromGroup('notes', iNote, 'wasGoodHit', false)
 			setPropertyFromGroup('notes', iNote, 'hitByOpponent', true)
+			local androidHandicap = 1.425;
 			local lateHitMult = getPropertyFromGroup('notes', iNote, 'lateHitMult');
 			--lateHitMult = -0.365; --was to high before (im pretty sure this doesn't need fixing)
+			if buildTarget == 'android' then
+				lateHitMult = lateHitMult * androidHandicap; --mobile handicap
+			end
 			local earlyHitMult = getPropertyFromGroup('notes', iNote, 'earlyHitMult');
 			earlyHitMult = 0.275; --was to high before and you would be able to spam the shit outta jacks
+			if buildTarget == 'android' then
+				earlyHitMult = earlyHitMult * androidHandicap; --mobile handicap
+			end
 			if getPropertyFromGroup('notes', iNote, 'strumTime') > getPropertyFromClass('Conductor', 'songPosition') - (getPropertyFromClass('Conductor', 'safeZoneOffset') * lateHitMult) and getPropertyFromGroup('notes', iNote, 'strumTime') < getPropertyFromClass('Conductor', 'songPosition') + (getPropertyFromClass('Conductor', 'safeZoneOffset') * earlyHitMult) then
 				setPropertyFromGroup('notes', iNote, 'canBeHit', true);
 			else
@@ -64,6 +71,9 @@ function onUpdate()
 			end
 
 			local strumOffset = 25;
+			if buildTarget == 'android' then
+				strumOffset = 24.75; --mobile handicap
+			end
 			strumOffset = strumOffset * getProperty('songSpeed') * getPropertyFromGroup('notes', iNote, 'multSpeed'); --YOU WILL ALWAYS BE ABLE TO MISS NOW!!
 			if getPropertyFromGroup('notes', iNote, 'strumTime') -strumOffset < getPropertyFromClass('Conductor', 'songPosition') - getPropertyFromClass('Conductor', 'safeZoneOffset') and getPropertyFromGroup('notes', iNote, 'wasGoodHit') == false then
 				setPropertyFromGroup('notes', iNote, 'tooLate', true);
@@ -106,19 +116,21 @@ function onUpdate()
 						if assType == regularNotes[2] or altAnim then
 							urAnus = '-alt'
 						end
-						if assType == regularNotes[4] or gfSection then
-							setProperty('gf.holdTimer', 0)
-						else
-							setProperty('dad.holdTimer', 0)
-						end
-						if assType ~= regularNotes[4] and not gfSection then
-							characterPlayAnim('dad', singAnims[directionNOTE +1]..urAnus, true); --play it anyway
-						end
-						if assType == regularNotes[3] and not gfSection then
-							characterPlayAnim('dad', 'hey', true);
-						end
-						if assType == regularNotes[4] or gfSection then
-							characterPlayAnim('gf', singAnims[directionNOTE +1]..urAnus, true);
+						if getPropertyFromGroup('notes', iNote, 'noAnimation') == false then
+							if assType == regularNotes[4] or gfSection then
+								setProperty('gf.holdTimer', 0)
+							else
+								setProperty('dad.holdTimer', 0)
+							end
+							if assType ~= regularNotes[4] and not gfSection then
+								characterPlayAnim('dad', singAnims[directionNOTE +1]..urAnus, true); --play it anyway
+							end
+							if assType == regularNotes[3] and not gfSection then
+								characterPlayAnim('dad', 'hey', true);
+							end
+							if assType == regularNotes[4] or gfSection then
+								characterPlayAnim('gf', singAnims[directionNOTE +1]..urAnus, true);
+							end
 						end
 						doRatingShits(true, iNote)
 	
@@ -139,7 +151,7 @@ function onUpdate()
 			setProperty('strumLineNotes.members['..fuckingLua..'].resetAnim', 0.1)
 		end
 		if getProperty('strumLineNotes.members['..fuckingLua..'].animation.curAnim.name') == 'static' or getProperty('strumLineNotes.members['..fuckingLua..'].animation.curAnim.name') == 'pressed' then
-			if keyJustPressed(keys[iKey]) then
+			if keyJustPressed(keys[iKey]) and getProperty('strumLineNotes.members['..fuckingLua..'].resetAnim') == 0 then
 				strumAnim(iKey-1, 'pressed', 0.15)
 
 				if ghostTapping ~= true then
