@@ -27,6 +27,8 @@ function onCreatePost()
 	--setProperty('cpuControlled', true) --testing loll
 end
 
+local shadname = "stridentCrisisWavy";
+
 function onUpdate()
 	if getProperty('iconP2.visible') == true and canChangeIcon then
 		setProperty('iconP2.visible', false)
@@ -70,6 +72,7 @@ function onStepHit()
 
 	if curStep == 1855 then
 		--unused
+		cancelTween('banduFat')
 		dadX = getProperty('dad.x');
 		dadY = getProperty('dad.y');
 	end
@@ -105,9 +108,14 @@ function onStepHit()
 
 	if curStep == 7488 then
 		--portal
-		setProperty('portal.visible', true)
-		setProperty('portal.x', getProperty('boyfriend.x') + 205)
-		setProperty('portal.y', getProperty('boyfriend.y') + 205)
+		makeLuaSprite('portal', 'appleLeak/cave/portal', getProperty('boyfriend.x') + 205, getProperty('boyfriend.y') + 205)
+		setProperty('portal.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+		setProperty('portal.scale.x', 0)
+		setProperty('portal.scale.y', 0)
+		updateHitbox('portal')
+		if not lowQuality then
+			addLuaSprite('portal', true)
+		end
 		setProperty('portal.scale.x', 1)
 		setProperty('portal.scale.y', 1)
 		doTweenX('null1', 'portal.scale', 0, 1)
@@ -138,14 +146,22 @@ function onEvent(name, value1, value2)
 		if value2 == 'fat-bandu-3d' then
 			changeNoteSkin(false, 'NOTE_assets_3D'); --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
 
-			setProperty('wavyApplecore.visible', true)
+			makeLuaSprite('wavyApplecore', 'appleLeak/wavyApplecore', 0, 150)
+			setProperty('wavyApplecore.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			screenCenter('wavyApplecore', 'X')
+			updateHitbox('wavyApplecore')
+			addLuaSprite('wavyApplecore', false)
 			canChangeIcon = false;
 		end
 
 		if value2 == 'gary' then
-			setProperty('fatBandu.x', dadX)
-			setProperty('fatBandu.y', dadY)
-			setProperty('fatBandu.visible', true)
+			makeAnimatedLuaSprite('fatBandu', 'characters/appleLeak/fat_bandu_25', dadX, dadY)
+			setProperty('fatBandu.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			addAnimationByPrefix('fatBandu', 'idle', 'idle0', 24, false)
+			objectPlayAnimation('fatBandu', 'idle', true)
+			if not lowQuality then
+				addLuaSprite('fatBandu', false)
+			end
 	
 			doTweenX('gasStationWidth', 'gasStation.scale', 0, 1)
 			doTweenY('gasStationHeigth', 'gasStation.scale', 0, 1)
@@ -165,7 +181,21 @@ function onEvent(name, value1, value2)
 		if value2 == '3d-bambi-leak' then
 			setProperty('defaultCamZoom', getProperty('defaultCamZoom') -zoomStuff)
 			removeLuaSprite('garryLeak', true)
-			setProperty('r2.visible', true)
+			makeLuaSprite('r1', 'appleLeak/r1', 50, 125)
+			setProperty('r1.antialiasing', false)
+			setProperty('r1.scale.x', 0.75)
+			setProperty('r1.scale.y', 0.8)
+			updateHitbox('r1')
+			addLuaSprite('r1', false)
+		
+			makeLuaSprite('r2', 'appleLeak/r2', 50, 200)
+			setProperty('r2.antialiasing', false)
+			setProperty('r2.scale.x', 0.9)
+			setProperty('r2.scale.y', 0.9)
+			updateHitbox('r2')
+			if not lowQuality then
+				addLuaSprite('r2', true)
+			end
 			alphaChange = true;
 		end
 
@@ -174,7 +204,11 @@ function onEvent(name, value1, value2)
 
 			zoomStuff = zoomStuff + 0.15;
 			setProperty('defaultCamZoom', getProperty('defaultCamZoom') +zoomStuff)
-			setProperty('th1ft.visible', true)
+			makeLuaSprite('th1ft', 'appleLeak/th1ft_room', 0, 150)
+			setProperty('th1ft.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			screenCenter('th1ft', 'X')
+			updateHitbox('th1ft')
+			addLuaSprite('th1ft', false)
 			removeLuaSprite('r1', true)
 			removeLuaSprite('r2', true)
 			alphaChange = false;
@@ -187,6 +221,23 @@ function onEvent(name, value1, value2)
 		if value2 == 'bandu-trolled' then
 			changeNoteSkin(false, 'NOTE_assets_3D'); --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
 
+			makeLuaSprite('ytVids', 'appleLeak/trolled/bgthing', 175 * 2, 250 * 2) -- -175, -250
+			setProperty('ytVids.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			setProperty('ytVids.scale.x', 0)
+			setProperty('ytVids.scale.y', 0)
+			updateHitbox('ytVids')
+			addLuaSprite('ytVids', true)
+		
+			makeLuaSprite('ytStatic', 'appleLeak/trolled/bg2', -175, 1075)
+			setProperty('ytStatic.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			if not lowQuality then
+				addLuaSprite('ytStatic', false)
+			end
+			setSpriteShader('ytStatic', shadname)
+		
+			makeLuaSprite('ytBox', 'appleLeak/trolled/bg1', -175, 1075)
+			setProperty('ytBox.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			addLuaSprite('ytBox', false)
 			setProperty('ytVids.scale.x', 2)
 			setProperty('ytVids.scale.y', 2)
 			doTweenX('ytVidsWidth', 'ytVids.scale', 1, 1)
@@ -202,13 +253,13 @@ function onEvent(name, value1, value2)
 			setProperty('boyfriend.y', 1625)
 			makeLuaSprite('boyfond', 'appleLeak/trolled/boyfranon', bfX, bfY)
 			addLuaSprite('boyfond', false)
-
-			setProperty('ytStatic.visible', true)
-			setProperty('ytBox.visible', true)
 		end
 
 		if value2 == 'sammy' then
-			setProperty('funkipedia.visible', true)
+			makeLuaSprite('funkipedia', 'appleLeak/funkipedia', -175, 1940)
+			setProperty('funkipedia.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			addLuaSprite('funkipedia', false)
+			
 			setProperty('dad.x', 1660)
 			setProperty('dad.y', 2070)
 			setProperty('boyfriend.x', 1250)
@@ -222,13 +273,74 @@ function onEvent(name, value1, value2)
 			removeLuaSprite('funkipedia', true)
 			removeLuaSprite('ytStatic', true)
 			removeLuaSprite('ytBox', true)
-			setProperty('caveBG.visible', true)
-			setProperty('brob.visible', true)
-			setProperty('monkey.visible', true)
-			setProperty('ohyeah.visible', true)
-			setProperty('wrath.visible', true)
-			setProperty('caveFloor.visible', true)
-			setProperty('norman.visible', true)
+			makeLuaSprite('caveBG', 'appleLeak/cave/caveBG', -750, 100)
+			setProperty('caveBG.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			setProperty('caveBG.scale.x', 2.25)
+			setProperty('caveBG.scale.y', 2.25)
+			updateHitbox('caveBG')
+			addLuaSprite('caveBG', false)
+		
+			makeAnimatedLuaSprite('brob', 'appleLeak/cave/brob', getProperty('caveBG.x') +1925, getProperty('caveBG.y') + 575)
+			addAnimationByPrefix('brob', 'idle', 'brob0', 24, false)
+			objectPlayAnimation('brob', 'idle', true)
+			setProperty('brob.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			setProperty('brob.scale.x', 0.5)
+			setProperty('brob.scale.y', 0.5)
+			updateHitbox('brob')
+			if not lowQuality then
+				addLuaSprite('brob', false)
+			end
+		
+			makeAnimatedLuaSprite('monkey', 'appleLeak/cave/monkey', getProperty('caveBG.x') +1590, getProperty('caveBG.y') + 425)
+			addAnimationByPrefix('monkey', 'idle', 'monkey0', 24, false)
+			objectPlayAnimation('monkey', 'idle', true)
+			setProperty('monkey.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			setProperty('monkey.scale.x', 0.35)
+			setProperty('monkey.scale.y', 0.35)
+			updateHitbox('monkey')
+			if not lowQuality then
+				addLuaSprite('monkey', false)
+			end
+		
+			makeAnimatedLuaSprite('ohyeah', 'appleLeak/cave/ohyeah', getProperty('caveBG.x') +950, getProperty('caveBG.y') + 500)
+			addAnimationByPrefix('ohyeah', 'idle', 'ohyeah0', 24, false)
+			objectPlayAnimation('ohyeah', 'idle', true)
+			setProperty('ohyeah.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			--setProperty('ohyeah.scale.x', 0.75)
+			--setProperty('ohyeah.scale.y', 0.75)
+			updateHitbox('ohyeah')
+			if not lowQuality then
+				addLuaSprite('ohyeah', false)
+			end
+		
+			makeAnimatedLuaSprite('wrath', 'appleLeak/cave/wrath', getProperty('caveBG.x') +475, getProperty('caveBG.y') + 500)
+			addAnimationByPrefix('wrath', 'idle', 'wrath0', 24, false)
+			objectPlayAnimation('wrath', 'idle', true)
+			setProperty('wrath.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			setProperty('wrath.scale.x', 0.5)
+			setProperty('wrath.scale.y', 0.5)
+			updateHitbox('wrath')
+			if not lowQuality then
+				addLuaSprite('wrath', false)
+			end
+		
+			makeLuaSprite('caveFloor', 'appleLeak/cave/caveGround', getProperty('caveBG.x') +300, getProperty('caveBG.y') + 350)
+			setProperty('caveFloor.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			setProperty('caveFloor.scale.x', 1.75)
+			setProperty('caveFloor.scale.y', 1.75)
+			updateHitbox('caveFloor')
+			addLuaSprite('caveFloor', false)
+		
+			makeAnimatedLuaSprite('norman', 'appleLeak/cave/norman', getProperty('caveFloor.x') + 950, getProperty('caveFloor.y') + 110)
+			addAnimationByPrefix('norman', 'idle', 'idle0', 24, false)
+			objectPlayAnimation('norman', 'idle', true)
+			setProperty('norman.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+			setProperty('norman.scale.x', 0.25)
+			setProperty('norman.scale.y', 0.25)
+			updateHitbox('norman')
+			if not lowQuality then
+				addLuaSprite('norman', false)
+			end
 
 			setProperty('dad.x', -300)
 			setProperty('dad.y', 350)
@@ -256,7 +368,20 @@ function onEvent(name, value1, value2)
 				removeLuaSprite('wrath', true)
 				removeLuaSprite('caveFloor', true)
 				removeLuaSprite('norman', true)
-				setProperty('fire.visible', true)
+				makeAnimatedLuaSprite('fire', 'appleLeak/dookie/FLAMESFLAMESBURNINGFLAMES', 75, -50)
+				addAnimationByPrefix('fire', 'idle', 'FlamesBurn0', 24, true)
+				objectPlayAnimation('fire', 'idle', true)
+				setProperty('fire.antialiasing', false)
+				setProperty('fire.scale.x', 1.8)
+				setProperty('fire.scale.y', 1.5)
+				setProperty('fire.alpha', 0.75)
+				updateHitbox('fire')
+				--screenCenter('fire')
+				if not lowQuality then
+					addLuaSprite('fire', true) -- 250, -315
+				end
+				
+				addLuaScript('activatedScripts/VG');
 				setProperty('vg.visible', true)
 				setProperty('dad.x', 250)
 				setProperty('dad.y', -315)
