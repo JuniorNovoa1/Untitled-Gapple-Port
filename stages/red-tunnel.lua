@@ -24,45 +24,49 @@ function onCreate()
     if not lowQuality then
         addLuaSprite('daveFuckingDies', false)
     end
+
+    makeLuaSprite('lightColor', '', 0, 0)
+    makeGraphic('lightColor', '1280', '720', 'FFFFFF')
+    setProperty('lightColor.antialiasing', false)
+    setProperty('lightColor.alpha', 0)
+    updateHitbox('lightColor')
+    screenCenter('lightColor', 'x')
+    screenCenter('lightColor', 'y')
+    setObjectCamera('lightColor', 'other')
+    addLuaSprite('lightColor', false)
 end
 
 function onCreatePost()
     changeNoteSkin(false, 'NOTE_assets_3D')
 end
 
+local tweenEase = 'sineInOut';
+local timer = 15;
+
 function onUpdate(elapsed)
-    if getProperty('dad.curCharacter') == 'badai' then
-        --setProperty('dad.angle', getProperty('dad.angle') +elapsed * 50);
-    end
-
-    if getProperty('dad.curCharacter') == 'badai' then
-        --setProperty('dad.angle', getProperty('dad.angle') +elapsed * 50);
-        setProperty('dad.y', getProperty('dad.y') +(math.sin(elapsed) * 0.6));
-    end
-
-    if getProperty('dad.curCharacter') == 'badai' then
-        --setProperty('dad.angle', getProperty('dad.angle') +math.sin(elapsed) * 15);
-        setProperty('dad.x', getProperty('dad.x') +math.sin(elapsed) * 0.6);
-        setProperty('dad.y', getProperty('dad.y') +(math.sin(elapsed) * 0.6));
-    end
-
     local yStuff = bounceMultiplier * yBullshit;
 
-    setProperty('daveFuckingDies.angle', elapsed * 20);
-    setProperty('daveFuckingDies.x', 1 * bounceMultiplier);
-    setProperty('daveFuckingDies.y', 1 * yStuff);
+    --setProperty('daveFuckingDies.angle', elapsed * 20);
+    --setProperty('daveFuckingDies.x', 1 * bounceMultiplier);
+    --setProperty('daveFuckingDies.y', 1 * yStuff);
 
     if getProperty('daveFuckingDies.x') >= (getProperty('redTunnel.width') - 1000) or getProperty('daveFuckingDies.y') >= (getProperty('redTunnel.height') - 1000) then
         bounceAnimState = 1;
         bounceMultiplier = getRandomFloat(-0.75, -1.15);
         yBullshit = getRandomFloat(0.95, 1.05);
         danceDave();
+        doTweenAngle('DAVESAN', 'daveFuckingDies', -30, timer * 0.85, tweenEase)
+        doTweenX('DAVESA', 'daveFuckingDies', getProperty('redTunnel.x') + 100, timer, tweenEase)
+        doTweenY('DAVESF', 'daveFuckingDies', getProperty('redTunnel.y') + 100, timer, tweenEase)
     end
     if getProperty('daveFuckingDies.x') <= (getProperty('redTunnel.x') + 100) or getProperty('daveFuckingDies.y') <= (getProperty('redTunnel.y') + 100) then
         bounceAnimState = 2;
         bounceMultiplier = getRandomFloat(0.75, 1.15);
         yBullshit = getRandomFloat(0.95, 1.05);
         danceDave();
+        doTweenAngle('DAVESAN', 'daveFuckingDies', 30, timer * 0.85, tweenEase)
+        doTweenX('DAVESA', 'daveFuckingDies', getProperty('redTunnel.width') - 1000, timer, tweenEase)
+        doTweenY('DAVESF', 'daveFuckingDies', getProperty('redTunnel.height') - 1000, timer, tweenEase)
     end
 
     if getProperty('daveFuckingDies.x') >= (getProperty('redTunnel.width') - 1150) or getProperty('daveFuckingDies.y') >= (getProperty('redTunnel.height') - 1150) then

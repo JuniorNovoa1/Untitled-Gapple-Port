@@ -18,3 +18,9 @@ function onTweenCompleted(tag)
         doTweenY('daveDown', 'dad', originalPos +posAmount, speedAmount, tweenType)
     end
 end
+
+function onEvent(tag, val1, val2)
+    if tag == 'Change Character' and val2 == 'tunnel-dave' then
+        doTweenY('daveDown', 'dad', originalPos +posAmount, speedAmount / 2, tweenType)
+    end
+end
