@@ -55,7 +55,7 @@ function onUpdate(elapsed)
         bounceMultiplier = getRandomFloat(-0.75, -1.15);
         yBullshit = getRandomFloat(0.95, 1.05);
         danceDave();
-        doTweenAngle('DAVESAN', 'daveFuckingDies', -30, timer * 0.85, tweenEase)
+        doTweenAngle('DAVESAN', 'daveFuckingDies', -30 * getRandomFloat(0.3, 3), timer * 0.85, tweenEase)
         doTweenX('DAVESA', 'daveFuckingDies', getProperty('redTunnel.x') + 100, timer, tweenEase)
         doTweenY('DAVESF', 'daveFuckingDies', getProperty('redTunnel.y') + 100, timer, tweenEase)
     end
@@ -64,7 +64,7 @@ function onUpdate(elapsed)
         bounceMultiplier = getRandomFloat(0.75, 1.15);
         yBullshit = getRandomFloat(0.95, 1.05);
         danceDave();
-        doTweenAngle('DAVESAN', 'daveFuckingDies', 30, timer * 0.85, tweenEase)
+        doTweenAngle('DAVESAN', 'daveFuckingDies', 30 * getRandomFloat(0.5, 1.5), timer * 0.85, tweenEase)
         doTweenX('DAVESA', 'daveFuckingDies', getProperty('redTunnel.width') - 1000, timer, tweenEase)
         doTweenY('DAVESF', 'daveFuckingDies', getProperty('redTunnel.height') - 1000, timer, tweenEase)
     end

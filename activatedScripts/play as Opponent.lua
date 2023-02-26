@@ -3,13 +3,14 @@ opponentPlay = true; --not gonna be used but if u want to use it just turn oppon
 local regularNotes = {'', 'Alt Animation', 'Hey!', 'GF Sing'}
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
 local keys = {'left', 'down', 'up', 'right'}
-local missedOn = false;
+local missedOn = true;
 local ratingPos = 215;
 local prevRatingPos = {};
 local dadHasMissAnims = false;
 local actualTotalNotesHit = 0;
 local actualTotalNotesPlayed = 0;
 local vocalVolume = 0;
+local holdTimers = {0, 0, 0, 0};
 
 function onCreatePost()
 	if not opponentPlay then
@@ -41,7 +42,7 @@ function onSongStart()
 	vocalVolume = getProperty('vocals.volume') -0.1;
 end
 
-function onUpdate()
+function onUpdate(elapsed)
 	if not opponentPlay then
 		return;
 	end
@@ -88,7 +89,7 @@ function onUpdate()
 					playSound('missnote'..getRandomInt(1, 3), getRandomFloat(vocalVolume -0.2, vocalVolume))
 					if getProperty('dad.hasMissAnimations') ~= true then
 						characterPlayAnim('dad', singAnims[iKey], true);
-						setProperty('dad.color', getColorFromHex('800080'))
+						setProperty('dad.color', getColorFromHex('9400d3'))
 						missedOn = true;
 					else
 						characterPlayAnim('dad', singAnims[iKey]..'miss', true);
@@ -99,7 +100,7 @@ function onUpdate()
 					removeFromGroup('notes', iNote, false)
 				end
 				if keyJustPressed(keys[iKey]) or keyPressed(keys[iKey]) then
-					if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'canBeHit') and getPropertyFromGroup('notes', iNote, 'tooLate') == false then
+					if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'canBeHit') and getPropertyFromGroup('notes', iNote, 'tooLate') == false and holdTimers[iKey] <= 0.65 then
 						if getProperty('camZooming') == false then
 							setProperty('camZooming', true)
 						end
@@ -149,6 +150,7 @@ function onUpdate()
 		local fuckingLua = iKey-1;
 		if getProperty('strumLineNotes.members['..fuckingLua..'].animation.curAnim.name') == 'confirm' and getProperty('strumLineNotes.members['..fuckingLua..'].resetAnim') <= 0.01 and keyPressed(keys[iKey]) then
 			setProperty('strumLineNotes.members['..fuckingLua..'].resetAnim', 0.1)
+			holdTimers[iKey] = holdTimers[iKey] + 0.1255;
 		end
 		if getProperty('strumLineNotes.members['..fuckingLua..'].animation.curAnim.name') == 'static' or getProperty('strumLineNotes.members['..fuckingLua..'].animation.curAnim.name') == 'pressed' then
 			if keyJustPressed(keys[iKey]) and getProperty('strumLineNotes.members['..fuckingLua..'].resetAnim') == 0 then
@@ -163,7 +165,7 @@ function onUpdate()
 					setProperty('health', getProperty('health') + 0.05 * getProperty('healthLoss'))
 					if dadHasMissAnims then
 						characterPlayAnim('dad', singAnims[iKey], true);
-						setProperty('dad.color', getColorFromHex('800080'))
+						setProperty('dad.color', getColorFromHex('9400d3'))
 						missedOn = true;
 					else
 						characterPlayAnim('dad', singAnims[iKey]..'miss', true);
@@ -172,15 +174,26 @@ function onUpdate()
 				end
 			elseif keyPressed(keys[iKey]) then
 				setProperty('strumLineNotes.members['..fuckingLua..'].resetAnim', 0.05)
+				holdTimers[iKey] = holdTimers[iKey] + 0.1255;
 			end
+		end
+	end
+
+	for i = 1, #holdTimers do
+		holdTimers[i] = holdTimers[i] -0.125;
+		if holdTimers[i] <= 0 then
+			holdTimers[i] = 0;
 		end
 	end
 
 	for i = 0, #singAnims do
 		if missedOn == false and dadHasMissAnims ~= true then
-			setProperty('dad.color', getColorFromHex('FFFFFF'))
+			missedOn = true;
+			if getProperty('dad.color') == getColorFromHex('9400d3') then
+				setProperty('dad.color', getColorFromHex('FFFFFF'))
+			end
 		end
-		if getProperty('dad.animation.curAnim.name') == 'idle' and getProperty('dad.color') == getColorFromHex('800080') then
+		if getProperty('dad.animation.curAnim.name') == 'idle' and getProperty('dad.color') == getColorFromHex('9400d3') then
 			setProperty('dad.color', getColorFromHex('FFFFFF'))
 		end
 		--hold time shits
