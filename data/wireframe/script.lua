@@ -10,6 +10,7 @@ function onCreate()
     objectPlayAnimation('badaiComes', 'idle', true)
     setProperty('badaiComes.antialiasing', false)
     setProperty('badaiComes.visible', false)
+    setProperty('badaiComes.angle', 24)
     updateHitbox('badaiComes')
     if not lowQuality then
         addLuaSprite('badaiComes', true)
@@ -32,6 +33,7 @@ end
 
 function onStepHit()
     if curStep == 1179 then
+        doTweenAngle('badaiInFrameAngle', 'badaiComes', 0, 0.8, 'sineOut')
         doTweenX('badaiInFrameX', 'badaiComes', getProperty('dad.x') -500, 0.8, 'sineOut')
         doTweenY('badaiInFrameY', 'badaiComes', getProperty('dad.y') -200, 0.8, 'sineOut')
         setProperty('badaiComes.visible', true)
