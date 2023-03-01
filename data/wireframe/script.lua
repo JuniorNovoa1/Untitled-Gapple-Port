@@ -17,20 +17,6 @@ function onCreate()
     end
 end
 
-function onUpdate(elapsed)
-    for i = 1, #objects do
-        setShaderFloat(objects[i], 'uWaveAmplitude', getProperty('lightColor.alpha') * 0.005)
-        setShaderFloat(objects[i], 'uFrequency', 5)
-        setShaderFloat(objects[i], 'uSpeed', 10)
-    end
-end
-
-function onUpdatePost(elapsed)
-    for i = 1, #objects do
-        setShaderFloat(objects[i], 'uTime', os.clock())
-    end
-end
-
 function onStepHit()
     if curStep == 1179 then
         doTweenAngle('badaiInFrameAngle', 'badaiComes', 0, 0.8, 'sineOut')
@@ -40,14 +26,28 @@ function onStepHit()
     end
 
     if curStep == 2145 then --bandai explodes then dave comes in
-        doTweenAngle('dave COMIN ANG', 'daveFuckingDies', 0, 1.25, 'cubeInOut')
+        --[[doTweenAngle('dave COMIN ANG', 'daveFuckingDies', 0, 1.25, 'cubeInOut')
         doTweenX('dave COMINSCALE', 'daveFuckingDies.scale', 2, 1.25, 'cubeInOut')
         doTweenY('dave COMINSCALE A', 'daveFuckingDies.scale', 2, 1.25, 'cubeInOut')
         doTweenX('dave COMINX', 'daveFuckingDies', getProperty('dad.x') + 375 + 500, 1.25, 'cubeInOut')
-        doTweenY('dave COMIN', 'daveFuckingDies', getProperty('dad.y') + 375 + 200, 1.25, 'cubeInOut')
+        doTweenY('dave COMIN', 'daveFuckingDies', getProperty('dad.y') + 375 + 200, 1.25, 'cubeInOut')--]]
+        --explosion
     end
 
     if curStep == 2154 then --bandai explodes then dave comes in
+        setProperty('badaiComes.x', getProperty('dad.x'))
+        setProperty('badaiComes.y', getProperty('dad.y'))
+        setProperty('badaiComes.angle', getProperty('dad.angle'))
+        doTweenAngle('badaiInFrameAngle', 'badaiComes', 24, 1, 'sineOut')
+        doTweenX('badaiInFrameX2', 'badaiComes', 1000, 1, 'sineOut')
+        doTweenY('badaiInFrameY2', 'badaiComes', 1000, 1, 'sineOut')
+        setProperty('badaiComes.visible', true)
+        cancelTween('DAVESAN')
+        cancelTween('DAVESA')
+        cancelTween('DAVESF')
+        removeLuaSprite('daveFuckingDies', true)
+        triggerEvent('Change Character', 'dad', 'tunnel-dave')
+        cameraFlash('other', 'FFFFFF', 1)
     end
 
     if curStep == 2671 then --BF IS EXAPNOGI
@@ -60,9 +60,6 @@ function onStepHit()
         doTweenY('DAVE C', 'dad.scale', 0.375, 12.5, 'cubeInOut')
         doTweenX('BF S', 'boyfriend.scale', 1.65, 12.5, 'cubeInOut')
         doTweenY('BF C', 'boyfriend.scale', 1.65, 12.5, 'cubeInOut')--]]
-        for i = 1, #objects do
-            setSpriteShader(objects[i], shadname)
-        end
     end
     if curStep >= 2680 then
         triggerEvent('Screen Shake', '0.1,'..getProperty('lightColor.alpha') * 0.0085, '0.1,'..getProperty('lightColor.alpha') * 0.0085)
@@ -95,7 +92,8 @@ function onTweenCompleted(tag)
         setProperty('dad.x', getProperty('badaiComes.x'))
         setProperty('dad.y', getProperty('badaiComes.y'))
         setProperty('daveFuckingDies.visible', true)
-        removeLuaSprite('badaiComes', true)
+        setProperty('badaiComes.visible', false)
+        --removeLuaSprite('badaiComes', true)
         cameraFlash('camother', 'FFFFFF', 1)
         doTweenY('davefuckinggoesup', 'daveFuckingDies', -125, 2.5, 'cubeInOut')
     end
@@ -113,6 +111,10 @@ function onTweenCompleted(tag)
         removeLuaSprite('daveFuckingDies', true)
         triggerEvent('Change Character', 'dad', 'tunnel-dave')
         cameraFlash('other', 'FFFFFF', 1)
+    end
+
+    if tag == 'badaiInFrameY2' then
+        removeLuaSprite('badaiComes', true)
     end
 end
 
