@@ -2,7 +2,6 @@ opponentPlay = true; --not gonna be used but if u want to use it just turn oppon
 
 local regularNotes = {'', 'Alt Animation', 'Hey!', 'GF Sing'}
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
-local keyss = {'Z', 'X', 'COMMA', 'PERIOD'}
 local keys = {'left', 'down', 'up', 'right'}
 local missedOn = true;
 local ratingPos = 215;
@@ -57,7 +56,7 @@ function onUpdate(elapsed)
 			setPropertyFromGroup('notes', iNote, 'hitByOpponent', true)
 			local androidHandicap = 1.425;
 			local lateHitMult = getPropertyFromGroup('notes', iNote, 'lateHitMult');
-			lateHitMult = lateHitMult * 1.85;
+			--lateHitMult = 0.375; --was to high before (is just fine haha!)
 			if buildTarget == 'android' then
 				lateHitMult = lateHitMult * androidHandicap; --mobile handicap
 			end
