@@ -1,10 +1,13 @@
 local shadname = "stridentCrisisWavy";
 local objects = {'daveFuckingDies', 'redTunnel', 'dad', 'boyfriend'}
+local camObjs = {'timeBar', 'timeTxt', 'scoreTxt'}
+local invisObjs = {'healthBar', 'healthBarBG', 'iconP2', 'iconP1'}
 local colors = {'00ff00', '00FFFF', '800080', 'FFFFFF'}
 local curColor = 1;
 local curTxt = 0;
 
 function onCreate()
+    addCharacterToList('badai', 'dad')
     makeAnimatedLuaSprite('badaiComes', 'characters/main/wireframe/badai', 6000, -4000)
     addAnimationByPrefix('badaiComes', 'idle', 'idle', 24, true)
     objectPlayAnimation('badaiComes', 'idle', true)
@@ -67,6 +70,11 @@ function onStepHit()
 end
 
 function onBeatHit()
+    if curStep >= 1605 and curStep <= 1630 then
+        for i = 1, #invisObjs do
+            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1, 'sineOut')
+        end
+    end
     if curStep >= 1630 and curStep <= 2143 then
         if curColor >= 5 then
             curColor = 1;
@@ -74,12 +82,21 @@ function onBeatHit()
         for i = 1, #objects do
             setProperty(objects[i]..'.color', getColorFromHex(colors[curColor]))
         end
+        for i = 1, #camObjs do
+            setProperty(camObjs[i]..'.color', getColorFromHex(colors[curColor]))
+        end
         curColor = curColor +1;
 
         if curStep == 2143 then
             curColor = 4;
             for i = 1, #objects do
                 setProperty(objects[i]..'.color', getColorFromHex(colors[curColor]))
+            end
+            for i = 1, #camObjs do
+                setProperty(camObjs[i]..'.color', getColorFromHex(colors[curColor]))
+            end
+            for i = 1, #invisObjs do
+                doTweenAlpha('invisObj'..i, invisObjs[i], 1, 1, 'sineOut')
             end
         end
     end

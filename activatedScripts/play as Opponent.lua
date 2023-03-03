@@ -2,6 +2,7 @@ opponentPlay = true; --not gonna be used but if u want to use it just turn oppon
 
 local regularNotes = {'', 'Alt Animation', 'Hey!', 'GF Sing'}
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
+local keyss = {'Z', 'X', 'COMMA', 'PERIOD'}
 local keys = {'left', 'down', 'up', 'right'}
 local missedOn = true;
 local ratingPos = 215;
@@ -56,12 +57,12 @@ function onUpdate(elapsed)
 			setPropertyFromGroup('notes', iNote, 'hitByOpponent', true)
 			local androidHandicap = 1.425;
 			local lateHitMult = getPropertyFromGroup('notes', iNote, 'lateHitMult');
-			--lateHitMult = -0.365; --was to high before (im pretty sure this doesn't need fixing)
+			lateHitMult = lateHitMult * 1.85;
 			if buildTarget == 'android' then
 				lateHitMult = lateHitMult * androidHandicap; --mobile handicap
 			end
 			local earlyHitMult = getPropertyFromGroup('notes', iNote, 'earlyHitMult');
-			earlyHitMult = 0.275; --was to high before and you would be able to spam the shit outta jacks
+			earlyHitMult = 0.475; --was to high before and you would be able to spam the shit outta jacks
 			if buildTarget == 'android' then
 				earlyHitMult = earlyHitMult * androidHandicap; --mobile handicap
 			end
@@ -100,17 +101,14 @@ function onUpdate(elapsed)
 					removeFromGroup('notes', iNote, false)
 				end
 				if keyJustPressed(keys[iKey]) or keyPressed(keys[iKey]) then
+					--[[if getPropertyFromGroup('opponentStrums', iKey-1, 'animation.curAnim.name') == 'pressed' or (getPropertyFromGroup('opponentStrums', iKey-1, 'animation.curAnim.name') == 'confirm' and ((getPropertyFromGroup('notes', iNote, 'nextNote.isSustainNote') == false) and sustainSUS == false)) then
+						break;
+					end--]] --kinda broken
 					if getPropertyFromGroup('notes', iNote, 'noteData') == iKey-1 and getPropertyFromGroup('notes', iNote, 'canBeHit') and getPropertyFromGroup('notes', iNote, 'tooLate') == false and holdTimers[iKey] <= 0.65 then
 						if getProperty('camZooming') == false then
 							setProperty('camZooming', true)
 						end
 						recalculateShitRating()
-						local holdStuff = 0.15;
-						if sustainSUS then
-							if getPropertyFromGroup('notes', iNote, 'animation.curAnim.name.endsWith') ~= 'end' then
-								holdStuff = holdStuff +0.05;
-							end
-						end
 						setProperty('health', getProperty('health') - getPropertyFromGroup('notes', iNote, 'hitHealth') * getProperty('healthGain'))
 						missedOn = false;
 						local urAnus = '';
@@ -136,7 +134,7 @@ function onUpdate(elapsed)
 						doRatingShits(true, iNote)
 	
 						actualTotalNotesHit = actualTotalNotesHit +1;
-						strumAnim(directionNOTE, 'confirm', holdStuff);
+						strumAnim(directionNOTE, 'confirm', 0.15);
 						setPropertyFromGroup('notes', iNote, 'wasGoodHit', true)
 						callOnLuas('opponentNoteHit', {iNote, directionNOTE, assType, sustainSUS}) --thank god this exists
 						removeFromGroup('notes', iNote, false)
