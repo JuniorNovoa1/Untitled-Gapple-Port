@@ -5,13 +5,14 @@ local txtOffset = 65;
 --local midSongPopUp = false;
 local time = 1;
 local waitTime = 3;
-local songNames = {'Maze', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'lore', 'Close Chuckle', 'Rari', 'Grand-Wizard-Man'};
+local songNames = {'Maze', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn', 'lore', 'Close Chuckle', 'Rari', 'Grand-Wizard-Man'};
 local songTxt = {
 	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello', 
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\nJuniorNovoa (finished it)', 
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\n\nGarrett\'s Funny Animal Game\nJumpman25', 
 	'Mod\nDave and Bambi Golden Apple\n\nPart\nSilly Squirmer\n\nVisuals\nSAMMYPIGZY\nArty Squirmer\n\nCharter\nCharty Squirmer\n\nBased off\nHigh Effort Poopers', 
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\n\n\nCredits might be wrong...', 
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\n\n\nCredits might be wrong...',
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nidk\n\n\nCredits might be wrong...',
 	'Mod\nD-Sides\n\nArt\nThe Whole Team Ig\n\nSong\nsherrii\n\nCharter\nViva',
 	'Mod\nHotline-042\n\nArt\nThe Whole Team Ig\n\nSong\nSaruky\n\nCharter\nCape',
 	'Song\nHarlem Fetty\n\nChart\nDrixppx\n\nVideo\nZa Walrus\n\nFortnite\nSebby',
@@ -22,7 +23,6 @@ local left = false;
 local down = false;
 local up = false;
 local right = false;
-local globalCredits = false;
 
 function onCreate()
     makeLuaSprite('Creditssss', '', -500, 0)
@@ -70,7 +70,6 @@ function onCreatePost()
 	for i = 1, #songNames do
 		--print(songName..songNames[i]);
 		if songName == songNames[i] then
-			globalCredits = true;
 			txt = songTxt[i];
 		end
 	end
@@ -80,12 +79,7 @@ local timeAlpha = 1.25;
 local offsesss = 150;
 
 function onSongStart()
-	if globalCredits == true then
-		moveStuff(waitTime);
-	else
-		removeLuaSprite('Creditssss', true)
-		removeLuaText('DATEXTTTTYYTT', true)
-	end
+	moveStuff(waitTime);
 end
 
 function onTimerCompleted(tag, loops, loopsLeft)
