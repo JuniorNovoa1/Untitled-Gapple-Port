@@ -4,7 +4,6 @@
 local songSplashNames = {'Maze', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
 local songNames = {'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
 local arrowXoffset = 35;
-local arrowYoffset = 0;
 local no_splashes = false;
 
 function onCreatePost()
