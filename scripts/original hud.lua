@@ -1,8 +1,8 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 
-local songSplashNames = {'Maze', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG'};
-local songNames = {'Wireframe', 'Ferocious', 'Apple-Leak', 'OG'};
+local songSplashNames = {'Maze', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
+local songNames = {'Maze', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn', 'lore', 'Close Chuckle', 'Rari', 'Grand-Wizard-Man'};
 local arrowXoffset = 35;
 local arrowYoffset = 0;
 local no_splashes = false;
