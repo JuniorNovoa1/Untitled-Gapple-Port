@@ -56,7 +56,7 @@ function onUpdate(elapsed)
 			setPropertyFromGroup('notes', iNote, 'hitByOpponent', true)
 			local androidHandicap = 1.425;
 			local lateHitMult = getPropertyFromGroup('notes', iNote, 'lateHitMult');
-			--lateHitMult = 0.375; --was to high before (is just fine haha!)
+			--lateHitMult = lateHitMult * 1.85; --was just fine haha!!
 			if buildTarget == 'android' then
 				lateHitMult = lateHitMult * androidHandicap; --mobile handicap
 			end
@@ -107,7 +107,7 @@ function onUpdate(elapsed)
 						if getProperty('camZooming') == false then
 							setProperty('camZooming', true)
 						end
-						recalculateShitRating()
+						recalculateShitRating(sustainSUS)
 						setProperty('health', getProperty('health') - getPropertyFromGroup('notes', iNote, 'hitHealth') * getProperty('healthGain'))
 						missedOn = false;
 						local urAnus = '';

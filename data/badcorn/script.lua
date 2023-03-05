@@ -4,7 +4,7 @@ local curThing = false;
 local tween = 'cubeOut';
 local notesX = {};
 local notesY = {};
-local noteOrgasm = {-15, 15}
+local noteOrgasm = {-25, 25}
 local timerOrgasim = 0.05;
 
 function onCreatePost()
