@@ -11,6 +11,7 @@ local actualTotalNotesHit = 0;
 local actualTotalNotesPlayed = 0;
 local vocalVolume = 0;
 local holdTimers = {0, 0, 0, 0};
+local ratings = {0, 0, 0, 0, 0};
 
 function onCreatePost()
 	if not opponentPlay then
@@ -35,7 +36,12 @@ function onCreatePost()
 			setPropertyFromGroup('opponentStrums', i-1, 'x', xOldBF)
 		end
 	end
+	runHaxeCode([[
+		var actualTotalNotesHit = 0;
+	]])
+	addHaxeLibrary('FlxMath', 'flixel.math')
 	addHaxeLibrary('StrumNote')
+	addHaxeLibrary('Rating')
 end
 
 function onSongStart()
@@ -50,13 +56,12 @@ function onUpdate(elapsed)
 	dadHasMissAnims = getProperty('dad.hasMissAnimations')
 
 	for iNote = 0, getProperty('notes.length') do
-		actualTotalNotesPlayed = actualTotalNotesPlayed +1;
 		if getPropertyFromGroup('notes', iNote, 'mustPress') == false then
 			setPropertyFromGroup('notes', iNote, 'wasGoodHit', false)
 			setPropertyFromGroup('notes', iNote, 'hitByOpponent', true)
 			local androidHandicap = 1.425;
 			local lateHitMult = getPropertyFromGroup('notes', iNote, 'lateHitMult');
-			--lateHitMult = lateHitMult * 1.85; --was just fine haha!!
+			lateHitMult = lateHitMult * 1.85;
 			if buildTarget == 'android' then
 				lateHitMult = lateHitMult * androidHandicap; --mobile handicap
 			end
@@ -87,6 +92,7 @@ function onUpdate(elapsed)
 					setProperty('health', getProperty('health') + getPropertyFromGroup('notes', iNote, 'missHealth') * getProperty('healthLoss'))
 					setProperty('dad.holdTimer', 0)
 					playSound('missnote'..getRandomInt(1, 3), getRandomFloat(vocalVolume -0.2, vocalVolume))
+					ratings[5] = ratings[5] +1;
 					if getProperty('dad.hasMissAnimations') ~= true then
 						characterPlayAnim('dad', singAnims[iKey], true);
 						setProperty('dad.color', getColorFromHex('9400d3'))
@@ -160,6 +166,7 @@ function onUpdate(elapsed)
 					addMisses(1)
 					playSound('missnote'..getRandomInt(1, 3), getRandomFloat(vocalVolume -0.2, vocalVolume))
 					setProperty('health', getProperty('health') + 0.05 * getProperty('healthLoss'))
+					ratings[5] = ratings[5] +1;
 					if dadHasMissAnims then
 						characterPlayAnim('dad', singAnims[iKey], true);
 						setProperty('dad.color', getColorFromHex('9400d3'))
@@ -249,14 +256,23 @@ function doRatingShits(hit, ID)
 		local score = 350;
 
 		if noteDiff > getPropertyFromClass('Conductor', 'safeZoneOffset') * 0.9 then
+			ratings[4] = ratings[4] +1;
 			score = 50;
 		elseif noteDiff > getPropertyFromClass('Conductor', 'safeZoneOffset') * 0.75 then
+			ratings[3] = ratings[3] +1;
 			score = 100;
 		elseif noteDiff > getPropertyFromClass('Conductor', 'safeZoneOffset') * 0.2 then
+			ratings[2] = ratings[2] +1;
 			score = 200;
 		elseif noteDiff < getPropertyFromClass('Conductor', 'safeZoneOffset') * 0.2 then
+			ratings[1] = ratings[1] +1;
 			isSick = true;
 		end
+
+		setProperty('sicks', ratings[1])
+		setProperty('goods', ratings[2])
+		setProperty('bads', ratings[3])
+		setProperty('songMisses', ratings[5])
 
 		addScore(score)
 	else
@@ -268,50 +284,18 @@ function doRatingShits(hit, ID)
 end
 
 function recalculateShitRating(bad)
-	if actualTotalNotesPlayed < 1 then
-		ratingName = '?';
-	else
-		rating = math.min(1, math.max(0, actualTotalNotesHit / actualTotalNotesPlayed))
-		--i literally broke it lmao
-		runHaxeCode([[
-			if(game.ratingPercent >= 1)
-			{
-				game.ratingName = game.ratingStuff[game.ratingStuff.length-1][0]; //Uses last string
-			}
-			else
-			{
-				for (i in 0...game.ratingStuff.length-1)
-				{
-					if(game.ratingPercent < game.ratingStuff[i][1])
-					{
-						game.ratingName = game.ratingStuff[i][0];
-						break;
-					}
-				}
-			}
-		]])
-	end
+	actualTotalNotesPlayed = actualTotalNotesPlayed +1;
+	setProperty('totalNotesHit', actualTotalNotesHit)
+	setProperty('totalPlayed', actualTotalNotesPlayed)
+	runHaxeCode([[
+		var note = game.notes.members[0];
+		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
+		var daRating:Rating = Conductor.judgeNote(note, noteDiff / game.playbackRate);
+		actualTotalNotesHit += daRating.ratingMod;
+		game.totalNotesHit = actualTotalNotesHit;
+		game.RecalculateRating(false);
+	]])
 
-	if getProperty('sicks') > 0 then 
-		ratingFC = "SFC"; 
-	end
-	if getProperty('goods') > 0 then 
-		ratingFC = "GFC"; 
-	end
-	if getProperty('bads') > 0 or getProperty('shits') > 0 then 
-		ratingFC = "FC"; 
-	end
-	if getProperty('songMisses') > 0 and getProperty('songMisses') < 10 then 
-		ratingFC = "SDCB"; 
-	elseif getProperty('songMisses') >= 10 then 
-		ratingFC = "Clear"; 
-	end
-
-	--setOnLuas('ratingFC', ratingFC2)
-	updateScore(bad)
-end
-
-function updateScore(bad)
 	cancelTween('scoreX')
 	cancelTween('scoreY')
 	if not bad then

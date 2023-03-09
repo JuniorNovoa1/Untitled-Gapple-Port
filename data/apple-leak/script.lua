@@ -1,4 +1,3 @@
-local canChangeIcon = true;
 local alphaChange = false;
 local bfX = 0;
 local bfY = 0;
@@ -12,44 +11,10 @@ local camY = 0;
 
 local loopVarThing = false;
 
-function onCreatePost()
-	local randomNumb = 0;
-	randomNumb = getRandomInt(1, 80);
-
-	addHaxeLibrary('FlxObject', 'flixel')
-	addHaxeLibrary('FlxBasic', 'flixel')
-	addHaxeLibrary('HealthIcon')
-	runHaxeCode([[
-		var rando = ]]..randomNumb..[[;
-		var icon = new HealthIcon('fatbandu/' + rando, false);
-		add(icon);
-	]]) --doesn't work but it was worth a shot.
-	--setProperty('cpuControlled', true) --testing loll
-end
-
 local shadname = "stridentCrisisWavy";
 
 function onUpdate()
-	if getProperty('iconP2.visible') == true and canChangeIcon then
-		setProperty('iconP2.visible', false)
-	end
-
-	if getProperty('iconP2.visible') == false and canChangeIcon then
-		runHaxeCode([[
-			icon.x = game.iconP2.x;
-			icon.y = game.iconP2.y;
-			icon.width = game.iconP2.width;
-			icon.height = game.iconP2.height;
-		]])
-	end
-	if getProperty('iconP2.visible') == false and not canChangeIcon then
-		setProperty('iconP2.visible', true)
-		runHaxeCode([[
-			destroy(icon);
-		]])
-	end
-
-	time = 1.5;
+	local time = 1.5;
 
 	if alphaChange and getProperty('dad.alpha') == 1 then
 		doTweenAlpha('lmaoDad', 'dad', 0, time)
@@ -72,7 +37,6 @@ function onStepHit()
 
 	if curStep == 1855 then
 		--unused
-		cancelTween('banduFat')
 		dadX = getProperty('dad.x');
 		dadY = getProperty('dad.y');
 	end
@@ -145,13 +109,7 @@ function onEvent(name, value1, value2)
 	if name == 'Change Character' then
 		if value2 == 'fat-bandu-3d' then
 			changeNoteSkin(false, 'NOTE_assets_3D'); --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
-
-			makeLuaSprite('wavyApplecore', 'appleLeak/wavyApplecore', 0, 150)
-			setProperty('wavyApplecore.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-			screenCenter('wavyApplecore', 'X')
-			updateHitbox('wavyApplecore')
-			addLuaSprite('wavyApplecore', false)
-			canChangeIcon = false;
+			setProperty('wavyApplecore.visible', true)
 		end
 
 		if value2 == 'gary' then
@@ -181,21 +139,7 @@ function onEvent(name, value1, value2)
 		if value2 == '3d-bambi-leak' then
 			setProperty('defaultCamZoom', getProperty('defaultCamZoom') -zoomStuff)
 			removeLuaSprite('garryLeak', true)
-			makeLuaSprite('r1', 'appleLeak/r1', 50, 125)
-			setProperty('r1.antialiasing', false)
-			setProperty('r1.scale.x', 0.75)
-			setProperty('r1.scale.y', 0.8)
-			updateHitbox('r1')
-			addLuaSprite('r1', false)
-		
-			makeLuaSprite('r2', 'appleLeak/r2', 50, 200)
-			setProperty('r2.antialiasing', false)
-			setProperty('r2.scale.x', 0.9)
-			setProperty('r2.scale.y', 0.9)
-			updateHitbox('r2')
-			if not lowQuality then
-				addLuaSprite('r2', true)
-			end
+			setProperty('r2.visible', true)
 			alphaChange = true;
 		end
 
@@ -204,13 +148,9 @@ function onEvent(name, value1, value2)
 
 			zoomStuff = zoomStuff + 0.15;
 			setProperty('defaultCamZoom', getProperty('defaultCamZoom') +zoomStuff)
-			makeLuaSprite('th1ft', 'appleLeak/th1ft_room', 0, 150)
-			setProperty('th1ft.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-			screenCenter('th1ft', 'X')
-			updateHitbox('th1ft')
-			addLuaSprite('th1ft', false)
 			removeLuaSprite('r1', true)
 			removeLuaSprite('r2', true)
+			setProperty('th1ft.visible', true)
 			alphaChange = false;
 			setProperty('dad.alpha', 1)
 
@@ -221,23 +161,6 @@ function onEvent(name, value1, value2)
 		if value2 == 'bandu-trolled' then
 			changeNoteSkin(false, 'NOTE_assets_3D'); --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
 
-			makeLuaSprite('ytVids', 'appleLeak/trolled/bgthing', 175 * 2, 250 * 2) -- -175, -250
-			setProperty('ytVids.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-			setProperty('ytVids.scale.x', 0)
-			setProperty('ytVids.scale.y', 0)
-			updateHitbox('ytVids')
-			addLuaSprite('ytVids', true)
-		
-			makeLuaSprite('ytStatic', 'appleLeak/trolled/bg2', -175, 1075)
-			setProperty('ytStatic.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-			if not lowQuality then
-				addLuaSprite('ytStatic', false)
-			end
-			setSpriteShader('ytStatic', shadname)
-		
-			makeLuaSprite('ytBox', 'appleLeak/trolled/bg1', -175, 1075)
-			setProperty('ytBox.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-			addLuaSprite('ytBox', false)
 			setProperty('ytVids.scale.x', 2)
 			setProperty('ytVids.scale.y', 2)
 			doTweenX('ytVidsWidth', 'ytVids.scale', 1, 1)
@@ -253,13 +176,13 @@ function onEvent(name, value1, value2)
 			setProperty('boyfriend.y', 1625)
 			makeLuaSprite('boyfond', 'appleLeak/trolled/boyfranon', bfX, bfY)
 			addLuaSprite('boyfond', false)
+
+			setProperty('ytStatic.visible', true)
+			setProperty('ytBox.visible', true)
 		end
 
 		if value2 == 'sammy' then
-			makeLuaSprite('funkipedia', 'appleLeak/funkipedia', -175, 1940)
-			setProperty('funkipedia.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-			addLuaSprite('funkipedia', false)
-			
+			setProperty('funkipedia.visible', true)
 			setProperty('dad.x', 1660)
 			setProperty('dad.y', 2070)
 			setProperty('boyfriend.x', 1250)
