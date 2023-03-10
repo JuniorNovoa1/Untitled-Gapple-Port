@@ -5,7 +5,7 @@ local txtOffset = 65;
 --local midSongPopUp = false;
 local time = 1;
 local waitTime = 3;
-local songNames = {'Maze', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn', 'lore', 'Close Chuckle', 'Rari', 'Grand-Wizard-Man'};
+local songNames = {'Maze', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn', 'lore', 'Close Chuckle'};
 local songTxt = {
 	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello', 
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\nJuniorNovoa (finished it)', 
@@ -14,9 +14,7 @@ local songTxt = {
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\n\n\nCredits might be wrong...',
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nidk\n\n\nCredits might be wrong...',
 	'Mod\nD-Sides\n\nArt\nThe Whole Team Ig\n\nSong\nsherrii\n\nCharter\nViva',
-	'Mod\nHotline-042\n\nArt\nThe Whole Team Ig\n\nSong\nSaruky\n\nCharter\nCape',
-	'Song\nHarlem Fetty\n\nChart\nDrixppx\n\nVideo\nZa Walrus\n\nFortnite\nSebby',
-	'Sebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nPenis\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby\nSebby'
+	'Mod\nHotline-042\n\nArt\nThe Whole Team Ig\n\nSong\nSaruky\n\nCharter\nCape'
 };
 local txt = 'Porter\nJuniorNovoa';
 local left = false;

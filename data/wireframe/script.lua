@@ -1,6 +1,6 @@
 local shadname = "stridentCrisisWavy";
 local objects = {'daveFuckingDies', 'redTunnel', 'dad', 'boyfriend'}
-local camObjs = {'timeBar', 'timeTxt', 'scoreTxt'}
+local camObjs = {'timeBar', 'timeTxt', 'scoreTxt', 'creditsWatermark'}
 local invisObjs = {'healthBar', 'healthBarBG', 'iconP2', 'iconP1'}
 local colors = {'00ff00', '00FFFF', '800080', 'FFFFFF'}
 local curColor = 1;
