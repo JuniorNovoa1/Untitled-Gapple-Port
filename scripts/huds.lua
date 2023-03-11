@@ -1,9 +1,9 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 
-local songSplashNames = {'Maze', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
-local oldFNFPos = {'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
-local gappleHUD = {'Maze', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
+local songSplashNames = {'Maze', 'Disruption', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
+local oldFNFPos = {'Disruption', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
+local gappleHUD = {'Maze', 'Disruption', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
 local gappleHUDsong = false;
 local arrowXoffset = 35;
 local no_splashes = false;
@@ -27,7 +27,7 @@ function onCreatePost()
 			setTextFont('scoreTxt', 'comic.ttf')
 			setTextFont('timeTxt', 'comic.ttf')
 
-			makeLuaText('creditsWatermark', songName, 0, 4, getProperty('healthBarBG.y') + 50)
+			makeLuaText('creditsWatermark', songName, 0, 4, getProperty('healthBarBG.y') + 30)
 			setObjectCamera('creditsWatermark', 'camHUD')
 			setTextAlignment('creditsWatermark', 'center')
 			setTextFont('creditsWatermark', 'comic.ttf')
@@ -36,6 +36,24 @@ function onCreatePost()
 			setProperty('creditsWatermark.antialiasing', false)
 			updateHitbox('creditsWatermark')
 			addLuaText('creditsWatermark')
+
+			makeLuaText('creditsText', '', 0, 4, getProperty('healthBarBG.y') + 50)
+			setObjectCamera('creditsText', 'camHUD')
+			setTextAlignment('creditsText', 'center')
+			setTextFont('creditsText', 'comic.ttf')
+			setTextSize('creditsText', 16)
+			setTextBorder('creditsText', 1.5, '000000')
+			setProperty('creditsText.antialiasing', false)
+			updateHitbox('creditsText')
+			addLuaText('creditsText')
+
+			if songName == 'Disruption' then
+				setProperty('creditsText.text', 'Screw you!')
+			end
+
+			if getProperty('creditsText.text') == '' then
+				setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
+			end
 			if songName == 'Maze' then
 				setProperty('healthBarBG.visible', false)
 				makeLuaSprite('healthBarBGnew', 'daveHealth', getProperty('healthBarBG.x'), getProperty('healthBarBG.y'))
@@ -93,7 +111,7 @@ function onUpdate()
 		setProperty('timeBar.visible', false)
 		local actualSongLength = math.toTime(getProperty("songLength") / 1000);
 		local songPos = math.toTime(getSongPosition() / 1000)
-		if songName == gappleHUD[4] then
+		if songName == gappleHUD[5] then
 			local curStestz = 7854;
 			local time = 783600;
 			if curStep <= (curStestz * 1.11) then
@@ -137,7 +155,7 @@ end
 function onBeatHit()
 	if gappleHUDsong then
 		if curBeat % getProperty('gfSpeed') == 0 then
-			local fuasd = {0.45, 1.75}
+			local fuasd = {0.8 / getProperty('songSpeed'), 1.2 * getProperty('songSpeed') / 2.35} --thought it should be dependent of how fast song is
 			local angl = 10;
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', 1.1, fuasd[1])
