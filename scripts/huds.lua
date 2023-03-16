@@ -1,9 +1,9 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 
-local songSplashNames = {'Maze', 'Disruption', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
-local oldFNFPos = {'Disruption', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
-local gappleHUD = {'Maze', 'Disruption', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn'};
+local songSplashNames = {'Maze', 'Disruption', 'Applecore', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn', 'Kooky'};
+local oldFNFPos = {'Disruption', 'Applecore', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn', 'Kooky'};
+local gappleHUD = {'Maze', 'Disruption', 'Applecore', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn', 'Kooky'};
 local gappleHUDsong = false;
 local arrowXoffset = 35;
 local no_splashes = false;
@@ -68,6 +68,7 @@ function onCreatePost()
 
 			setProperty("updateTime", false)
 			
+			setObjectOrder('timeTxt', 99)
 			gappleHUDsong = true;
 		end
 	end
@@ -111,7 +112,7 @@ function onUpdate()
 		setProperty('timeBar.visible', false)
 		local actualSongLength = math.toTime(getProperty("songLength") / 1000);
 		local songPos = math.toTime(getSongPosition() / 1000)
-		if songName == gappleHUD[5] then
+		if songName == gappleHUD[6] then
 			local curStestz = 7854;
 			local time = 783600;
 			if curStep <= (curStestz * 1.11) then
@@ -154,6 +155,9 @@ end
 
 function onBeatHit()
 	if gappleHUDsong then
+		if songName == 'Kooky' then
+			return;
+		end
 		if curBeat % getProperty('gfSpeed') == 0 then
 			local fuasd = {0.8 / getProperty('songSpeed'), 1.2 * getProperty('songSpeed') / 2.35} --thought it should be dependent of how fast song is
 			local angl = 10;

@@ -21,6 +21,12 @@ function onUpdate() --camera now follows characters!!!!
 		if getProperty('dad.animation.curAnim.name') == 'idle' then
 			moveCam(dadCamIdle[0], dadCamIdle[1]);
 		end
+		if getProperty('dad.curCharacter') == 'bandu' then
+			moveCam(bfCamIdle[0], bfCamIdle[1]);
+		end
+		if getProperty('dad.curCharacter') == 'bandu-sad' then
+			moveCam(625, dadCamIdle[1]);
+		end
 	end
 end
 
@@ -42,6 +48,9 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
+	if getProperty('dad.curCharacter') == 'bandu-sad' then
+		return;
+	end
 	if mustHitSection == false then
 		if direction == 0 then
 			moveCam(dadCamIdle[0] -offsets, dadCamIdle[1]);

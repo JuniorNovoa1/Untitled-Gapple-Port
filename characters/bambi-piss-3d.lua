@@ -3,26 +3,34 @@ local originalPos = 0;
 local posAmount = 125;
 local speedAmount = 3;
 local tweenType = 'sineInOut';
+local dad = 'dad'
 
 function onCreatePost()
     changeNoteSkin(false, 'NOTE_assets_3D')
     setObjectOrder('dadGroup', 99)
     originalPos = getProperty('dad.y')
-    doTweenY('bambiUp', 'dad', originalPos -posAmount, speedAmount, tweenType)
+    if getProperty('gf.curCharacter') == 'bambi-piss-3d' then
+        dad = 'gf';
+    end
+    if songName ~= 'Applecore' then
+        doTweenY('bambiUp', dad, originalPos -posAmount, speedAmount, tweenType)
+    end
 end
 
 function onTweenCompleted(tag)
-    if tag == 'bambiDown' and getProperty('dad.curCharacter') == 'bambi-piss-3d' then
-        doTweenY('bambiUp', 'dad', originalPos -posAmount, speedAmount, tweenType)
+    if tag == 'bambiDown' and (getProperty('gf.curCharacter') == 'bambi-piss-3d' or getProperty('dad.curCharacter') == 'bambi-piss-3d') then
+        doTweenY('bambiUp', dad, originalPos -posAmount, speedAmount, tweenType)
     end
 
-    if tag == 'bambiUp' and getProperty('dad.curCharacter') == 'bambi-piss-3d' then
-        doTweenY('bambiDown', 'dad', originalPos, speedAmount, tweenType)
+    if tag == 'bambiUp' and (getProperty('gf.curCharacter') == 'bambi-piss-3d' or getProperty('dad.curCharacter') == 'bambi-piss-3d') then
+        doTweenY('bambiDown', dad, originalPos, speedAmount, tweenType)
     end
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
-	setProperty('health', getProperty('health') -(healthtolower / 2.65))
+    if songName ~= 'Applecore' then
+	    setProperty('health', getProperty('health') -(healthtolower / 2.65))
+    end
 end
 
 function changeNoteSkin(player, skin)

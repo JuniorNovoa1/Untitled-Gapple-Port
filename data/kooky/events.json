@@ -1,0 +1,46 @@
+{
+	"song": {
+		"events": [
+			[
+				36000,
+				[
+					[
+						"Play Animation",
+						"seizure",
+						"dad"
+					]
+				]
+			],
+			[
+				36545.4545454546,
+				[
+					[
+						"Play Animation",
+						"seizure",
+						"dad"
+					]
+				]
+			],
+			[
+				125454.545454545,
+				[
+					[
+						"Play Animation",
+						"seizure",
+						"dad"
+					]
+				]
+			],
+			[
+				126000,
+				[
+					[
+						"Play Animation",
+						"seizure",
+						"dad"
+					]
+				]
+			]
+		]
+	}
+}
