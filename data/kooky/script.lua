@@ -35,14 +35,14 @@ function onCreatePost()
 	setObjectCamera('iconP2', 'camGame')
 	setObjectOrder('grid', getObjectOrder('iconP2') +1)
 
-	scaleObject('healthBarBG', 0.8, 1.5)
-	scaleObject('healthBar', 0.8, 1.5)
+	scaleObject('healthBarBG', 0.8, 3)
+	scaleObject('healthBar', 0.8, 4)
 	setProperty('healthBarBG.angle', 90)
 	setProperty('healthBar.angle', 90)
 	setProperty('healthBarBG.x', 850)
 	setProperty('healthBar.x', 850)
-	setProperty('healthBarBG.y', 555)
-	setProperty('healthBar.y', 555)
+	setProperty('healthBarBG.y', 550)
+	setProperty('healthBar.y', 550)
 	setProperty('healthBarBG.flipX', true)
 	setProperty('healthBar.flipX', true)
 end
@@ -53,10 +53,10 @@ function onUpdate()
 end
 
 function onUpdatePost()
-	setProperty('iconP1.x', getProperty('healthBarBG.x') * 1.15)
-	setProperty('iconP2.x', getProperty('healthBarBG.x') * 1.25)
-	setProperty('iconP1.y', getProperty('healthBarBG.y') / 2.1)
-	setProperty('iconP2.y', getProperty('healthBarBG.y') * 1.2)
+	setProperty('iconP1.x', getProperty('healthBarBG.x') * 1.1625)
+	setProperty('iconP2.x', getProperty('healthBarBG.x') * 1.225)
+	setProperty('iconP1.y', getProperty('healthBarBG.y') / 1.925)
+	setProperty('iconP2.y', getProperty('healthBarBG.y') * 1.225)
 end
 
 function onEndSong()
