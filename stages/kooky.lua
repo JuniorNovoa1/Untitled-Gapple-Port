@@ -37,8 +37,11 @@ end
 function onCreatePost()
     runHaxeCode([[
         game.boyfriend.healthColorArray[0] = 255;
-        game.boyfriend.healthColorArray[1] = 0;
-        game.boyfriend.healthColorArray[2] = 0;
+        game.boyfriend.healthColorArray[1] = 255;
+        game.boyfriend.healthColorArray[2] = 255;
+        game.dad.healthColorArray[0] = 255;
+        game.dad.healthColorArray[1] = 0;
+        game.dad.healthColorArray[2] = 0;
         game.reloadHealthBarColors();
     ]])
 end
