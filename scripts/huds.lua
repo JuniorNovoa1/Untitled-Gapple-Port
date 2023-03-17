@@ -159,7 +159,7 @@ function onBeatHit()
 			return;
 		end
 		if curBeat % getProperty('gfSpeed') == 0 then
-			local fuasd = {0.8 / getProperty('songSpeed'), 1.2 * getProperty('songSpeed') / 2.35} --thought it should be dependent of how fast song is
+			local fuasd = {0.8, 1.2}--{0.8 / getProperty('songSpeed'), 1.2 * getProperty('songSpeed') / 2.35} --thought it should be dependent of how fast song is
 			local angl = 10;
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', 1.1, fuasd[1])
