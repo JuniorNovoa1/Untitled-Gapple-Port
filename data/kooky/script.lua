@@ -6,26 +6,26 @@ function onCreate()
 end
 
 function onCreatePost()
+	local scaleXY = 0.8;
 	for direction = 0, 3 do
 		setPropertyFromGroup('opponentStrums', direction, 'visible', false)
-	end
-	local scaleXY = 0.55;
-	for i = 0, 4, 1 do
-		setPropertyFromGroup('playerStrums', i, 'scale.x', scaleXY)
-		setPropertyFromGroup('playerStrums', i, 'scale.y', scaleXY)
+		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') + 62.5)
+		setPropertyFromGroup('playerStrums', direction, 'y', getPropertyFromGroup('playerStrums', direction, 'y') - 125)
+		setPropertyFromGroup('playerStrums', direction, 'scale.x', scaleXY)
+		setPropertyFromGroup('playerStrums', direction, 'scale.y', scaleXY)
 
-		local offsetss = 95 * i;
-		setPropertyFromGroup('playerStrums', i, 'x', 250 + offsetss)
-		setPropertyFromGroup('playerStrums', i, 'y', 35)
+		local offsetss = 25 * direction;
+		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') + offsetss)
 	end
 	for i = 1, getProperty('unspawnNotes.length') -1 do
-		if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
-			setPropertyFromGroup('unspawnNotes', i, 'scale.x', scaleXY)
-			setPropertyFromGroup('unspawnNotes', i, 'scale.y', scaleXY)
-		end
+		setPropertyFromGroup('unspawnNotes', i-1, 'scale.x', scaleXY)
+		setPropertyFromGroup('unspawnNotes', i-1, 'scale.y', scaleXY)
 		if getPropertyFromGroup('unspawnNotes', i-1, 'mustPress') == false then
 			setPropertyFromGroup('unspawnNotes', i-1, 'visible', false)
 		end
+	end
+	for i = 0, 4, 1 do
+		setObjectCamera('playerStrums.members['..i..']', 'camGame')
 	end
 	
 	setObjectCamera('scoreTxt', 'camGame')
@@ -57,6 +57,10 @@ function onUpdatePost()
 	setProperty('iconP2.x', getProperty('healthBarBG.x') * 1.225)
 	setProperty('iconP1.y', getProperty('healthBarBG.y') / 1.925)
 	setProperty('iconP2.y', getProperty('healthBarBG.y') * 1.225)
+
+	for i = 1, getProperty('notes.length') -1 do
+		setObjectCamera('notes.members['..i..']', 'camGame')
+	end
 end
 
 function onEndSong()
