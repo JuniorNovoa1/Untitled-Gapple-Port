@@ -10,7 +10,7 @@ function onCreatePost()
 	for direction = 0, 3 do
 		setPropertyFromGroup('opponentStrums', direction, 'visible', false)
 		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') + 62.5)
-		setPropertyFromGroup('playerStrums', direction, 'y', getPropertyFromGroup('playerStrums', direction, 'y') - 125)
+		setPropertyFromGroup('playerStrums', direction, 'y', getPropertyFromGroup('playerStrums', direction, 'y') - 115)
 		setPropertyFromGroup('playerStrums', direction, 'scale.x', scaleXY)
 		setPropertyFromGroup('playerStrums', direction, 'scale.y', scaleXY)
 
