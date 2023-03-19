@@ -42,6 +42,7 @@ function onUpdatePost()
             local healthtolower = 0.02;
             local noteDataa = getPropertyFromGroup('notes', i, 'noteData') + 1;
             if getPropertyFromGroup('notes', i, 'canBeHit') then
+                setProperty('vocals.volume', 1)
                 setProperty('gf.holdTimer', 0)
                 strumAnim(noteDataa - 1, 'confirm', 0.15);
                 setProperty('health', getProperty('health') -(healthtolower / 2.65))
