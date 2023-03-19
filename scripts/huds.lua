@@ -50,7 +50,6 @@ function onCreatePost()
 			if songName == 'Disruption' then
 				setProperty('creditsText.text', 'Screw you!')
 			end
-
 			if getProperty('creditsText.text') == '' then
 				setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
 			end
