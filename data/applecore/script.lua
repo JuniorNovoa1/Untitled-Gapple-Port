@@ -122,6 +122,10 @@ end
 function onStepHit()
     if curStep == 767 then
         bambiPissed = true;
+        setProperty('pizza.visible', false)
+        setProperty('pizza1.visible', false)
+        setProperty('minion.visible', true)
+        setProperty('minion1.visible', true)
         setProperty('creditsText.text', 'Screw you!')
         setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 30)
         setProperty('creditsText.y', getProperty('healthBarBG.y') + 50)
@@ -139,6 +143,8 @@ function onStepHit()
     if curStep == 1984 then
         bambiPissed = false;
         unfairPart = true;
+        setProperty('minion.visible', false)
+        setProperty('minion1.visible', false)
         for i = 0, getProperty('strumLineNotes.length') do
             setPropertyFromGroup('strumLineNotes', i, 'scale.x', 0.65)
             setPropertyFromGroup('strumLineNotes', i, 'scale.y', 0.65)
