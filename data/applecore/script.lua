@@ -146,8 +146,8 @@ function onStepHit()
         setProperty('minion.visible', false)
         setProperty('minion1.visible', false)
         for i = 0, getProperty('strumLineNotes.length') do
-            setPropertyFromGroup('strumLineNotes', i, 'scale.x', 0.65)
-            setPropertyFromGroup('strumLineNotes', i, 'scale.y', 0.65)
+            setPropertyFromGroup('strumLineNotes', i, 'scale.x', 0.7)
+            setPropertyFromGroup('strumLineNotes', i, 'scale.y', 0.7)
         end
         setProperty('creditsText.text', 'Ghost tapping is forced off! Screw you!')
         setPropertyFromClass('ClientPrefs', 'ghostTapping', false)
@@ -214,7 +214,7 @@ function onStepHit()
         playSound('suck', 1, 'suck')
     end
 
-    if curStep >= 2130 and curStep <= 2140 then
+    if curStep >= 2130 and curStep <= 2142 then
         characterPlayAnim('dad', 'inhale', false)
         setProperty('dad.specialAnim', true)
     end
@@ -229,7 +229,9 @@ function onTweenCompleted(tag)
 
     if tag == 'expungedY' then
         triggerEvent('Change Character', 'dad', 'unfair-junker')
-        setObjectOrder('dad', getObjectOrder('gfe') -1)
+        setObjectOrder('dadGroup', getObjectOrder('gfGroup') -1)
+        setObjectOrder('gfe', getObjectOrder('gfGroup'))
+        setProperty('dad.x', getProperty('dad.x') -350)
         doTweenX('expungedLeft', 'dad', getProperty('dad.x') -165, 2.8 * 1.125, 'sineInOut')
         doTweenY('expungedUP', 'dad', getProperty('dad.y') -165 * 2, 2.8 / 2, 'sineInOut')
         setProperty('expunged.visible', false)

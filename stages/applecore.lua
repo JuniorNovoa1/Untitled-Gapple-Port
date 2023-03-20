@@ -7,6 +7,7 @@ local anims = {'walking', 'woah', 'spin'};
 
 local tweenType = '';
 local timeTimer = {4.01, 6.3};
+local heightStuff = {-350, 2500}
 local time = 4;
 
 local poip = true;
@@ -32,12 +33,14 @@ function onCreate()
         setProperty(items2[i]..'.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix(items2[i], 'idle', 'p', 12, true);
         objectPlayAnimation(items2[i], 'idle', true);
+        scaleObject(items2[i], 0.65, 0.65)
         addLuaSprite(items2[i], false)
 
         makeAnimatedLuaSprite(items2[i]..'1', 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(100, 500))
         setProperty(items2[i]..'1.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix(items2[i]..'1', 'idle', 'p', 12, true);
         objectPlayAnimation(items2[i]..'1', 'idle', true);
+        scaleObject(items2[i]..'1', 0.65, 0.65)
         addLuaSprite(items2[i]..'1', false)
 
         doTweenX(items2[i]..'first', items2[i], getRandomInt(0, 500), time, tweenType)
@@ -54,7 +57,7 @@ function onCreate()
         addAnimationByPrefix(items3[i], 'spin', 'porp0', 24, true);
         objectPlayAnimation(items3[i], 'walking', true);
         setProperty(items3[i]..'.visible', false)
-        scaleObject(items3[i], 0.9, 0.9)
+        scaleObject(items3[i], 0.65, 0.65)
         addLuaSprite(items3[i], false)
 
         makeAnimatedLuaSprite(items3[i]..'1', 'main/applecore/'..items3[i], getRandomInt(-2000, -3000), getRandomInt(100, 500))
@@ -64,13 +67,13 @@ function onCreate()
         addAnimationByPrefix(items3[i]..'1', 'spin', 'porp0', 24, true);
         objectPlayAnimation(items3[i]..'1', 'walking', true);
         setProperty(items3[i]..'1.visible', false)
-        scaleObject(items3[i]..'1', 0.9, 0.9)
+        scaleObject(items3[i]..'1', 0.65, 0.65)
         addLuaSprite(items3[i]..'1', false)
 
         doTweenX(items3[i]..'first', items3[i], getRandomInt(0, 500), time, tweenType)
-        doTweenY(items3[i]..'first1', items3[i], getRandomInt(-200, 2000), time, tweenType)
+        doTweenY(items3[i]..'first1', items3[i], getRandomInt(heightStuff[1], heightStuff[2]), time, tweenType)
         doTweenX(items3[i]..'first11', items3[i]..'1', getRandomInt(0, 500), time, tweenType)
-        doTweenY(items3[i]..'first111', items3[i]..'1', getRandomInt(-200, 2000), time, tweenType)
+        doTweenY(items3[i]..'first111', items3[i]..'1', getRandomInt(heightStuff[1], heightStuff[2]), time, tweenType)
     end
 
     makeAnimatedLuaSprite('gfe', 'characters/GF_assets', 350, 500)
@@ -123,9 +126,9 @@ function onTweenCompleted(tag)
     for i = 1, #items3 do
         if tag == items3[i]..'first111' then
             doTweenX(items3[i]..'second', items3[i], 3000, time, tweenType)
-            doTweenY(items3[i]..'second1', items3[i], getRandomInt(-200, 2000), time, tweenType)
+            doTweenY(items3[i]..'second1', items3[i], getRandomInt(heightStuff[1], heightStuff[2]), time, tweenType)
             doTweenX(items3[i]..'second11', items3[i]..'1', 3000, time, tweenType)
-            doTweenY(items3[i]..'second111', items3[i]..'1', getRandomInt(-200, 2000), time, tweenType)
+            doTweenY(items3[i]..'second111', items3[i]..'1', getRandomInt(heightStuff[1], heightStuff[2]), time, tweenType)
             runTimer('time2', getRandomFloat(timeTimer[1], timeTimer[2]))
         end
 

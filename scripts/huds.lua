@@ -128,7 +128,18 @@ function onUpdate()
 	end
 end
 
-function onUpdatePost()
+function onStepHit()
+	for i = 0, getProperty('notes.length') do --why doesn't psych do this already???
+        for iStrum = 0, 3 do
+            if getPropertyFromGroup('notes', i, 'mustPress') then
+                setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
+                setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
+            else
+                setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
+                setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
+            end
+        end
+    end
 	if gappleHUDsong then
 		iconScale()
 	end
