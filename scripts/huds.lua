@@ -128,6 +128,12 @@ function onUpdate()
 	end
 end
 
+function onUpdatePost()
+	if gappleHUDsong then
+		iconScale()
+	end
+end
+
 function onStepHit()
 	for i = 0, getProperty('notes.length') do --why doesn't psych do this already???
         for iStrum = 0, 3 do
@@ -140,9 +146,6 @@ function onStepHit()
             end
         end
     end
-	if gappleHUDsong then
-		iconScale()
-	end
 end
 
 function iconScale()

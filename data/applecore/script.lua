@@ -214,7 +214,7 @@ function onStepHit()
         playSound('suck', 1, 'suck')
     end
 
-    if curStep >= 2130 and curStep <= 2142 then
+    if curStep >= 2130 and curStep <= 2146 then
         characterPlayAnim('dad', 'inhale', false)
         setProperty('dad.specialAnim', true)
     end
@@ -231,7 +231,7 @@ function onTweenCompleted(tag)
         triggerEvent('Change Character', 'dad', 'unfair-junker')
         setObjectOrder('dadGroup', getObjectOrder('gfGroup') -1)
         setObjectOrder('gfe', getObjectOrder('gfGroup'))
-        setProperty('dad.x', getProperty('dad.x') -350)
+        setProperty('dad.x', getProperty('dad.x') -425)
         doTweenX('expungedLeft', 'dad', getProperty('dad.x') -165, 2.8 * 1.125, 'sineInOut')
         doTweenY('expungedUP', 'dad', getProperty('dad.y') -165 * 2, 2.8 / 2, 'sineInOut')
         setProperty('expunged.visible', false)

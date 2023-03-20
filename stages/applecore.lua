@@ -7,7 +7,7 @@ local anims = {'walking', 'woah', 'spin'};
 
 local tweenType = '';
 local timeTimer = {4.01, 6.3};
-local heightStuff = {-350, 2500}
+local heightStuff = {-250, 2500}
 local time = 4;
 
 local poip = true;
@@ -29,18 +29,18 @@ function onCreate()
     end
 
     for i = 1, #items2 do
-        makeAnimatedLuaSprite(items2[i], 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(100, 500))
+        makeAnimatedLuaSprite(items2[i], 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
         setProperty(items2[i]..'.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-        addAnimationByPrefix(items2[i], 'idle', 'p', 12, true);
+        addAnimationByPrefix(items2[i], 'idle', 'p', getRandomInt(9, 14), true);
         objectPlayAnimation(items2[i], 'idle', true);
-        scaleObject(items2[i], 0.65, 0.65)
+        scaleObject(items2[i], 0.675, 0.675)
         addLuaSprite(items2[i], false)
 
-        makeAnimatedLuaSprite(items2[i]..'1', 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(100, 500))
+        makeAnimatedLuaSprite(items2[i]..'1', 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
         setProperty(items2[i]..'1.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-        addAnimationByPrefix(items2[i]..'1', 'idle', 'p', 12, true);
+        addAnimationByPrefix(items2[i]..'1', 'idle', 'p', getRandomInt(9, 14), true);
         objectPlayAnimation(items2[i]..'1', 'idle', true);
-        scaleObject(items2[i]..'1', 0.65, 0.65)
+        scaleObject(items2[i]..'1', 0.675, 0.675)
         addLuaSprite(items2[i]..'1', false)
 
         doTweenX(items2[i]..'first', items2[i], getRandomInt(0, 500), time, tweenType)
@@ -50,24 +50,24 @@ function onCreate()
     end
 
     for i = 1, #items3 do
-        makeAnimatedLuaSprite(items3[i], 'main/applecore/'..items3[i], getRandomInt(-2000, -3000), getRandomInt(100, 500))
+        makeAnimatedLuaSprite(items3[i], 'main/applecore/'..items3[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
         setProperty(items3[i]..'.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix(items3[i], 'walking', 'poip0', 24, true);
         addAnimationByPrefix(items3[i], 'woah', 'poop0', 24, true);
         addAnimationByPrefix(items3[i], 'spin', 'porp0', 24, true);
         objectPlayAnimation(items3[i], 'walking', true);
         setProperty(items3[i]..'.visible', false)
-        scaleObject(items3[i], 0.65, 0.65)
+        scaleObject(items3[i], 0.725, 0.725)
         addLuaSprite(items3[i], false)
 
-        makeAnimatedLuaSprite(items3[i]..'1', 'main/applecore/'..items3[i], getRandomInt(-2000, -3000), getRandomInt(100, 500))
+        makeAnimatedLuaSprite(items3[i]..'1', 'main/applecore/'..items3[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
         setProperty(items3[i]..'1.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix(items3[i]..'1', 'walking', 'poip0', 24, true);
         addAnimationByPrefix(items3[i]..'1', 'woah', 'poop0', 24, true);
         addAnimationByPrefix(items3[i]..'1', 'spin', 'porp0', 24, true);
         objectPlayAnimation(items3[i]..'1', 'walking', true);
         setProperty(items3[i]..'1.visible', false)
-        scaleObject(items3[i]..'1', 0.65, 0.65)
+        scaleObject(items3[i]..'1', 0.725, 0.725)
         addLuaSprite(items3[i]..'1', false)
 
         doTweenX(items3[i]..'first', items3[i], getRandomInt(0, 500), time, tweenType)
@@ -118,8 +118,8 @@ function onTweenCompleted(tag)
         if tag == items2[i]..'second111' then
             setProperty(items2[i]..'.x', getRandomInt(-2000, -3000))
             setProperty(items2[i]..'1.x', getRandomInt(-2000, -3000))
-            setProperty(items2[i]..'.y', getRandomInt(100, 500))
-            setProperty(items2[i]..'1.y', getRandomInt(100, 500))
+            setProperty(items2[i]..'.y', getRandomInt(heightStuff[1], heightStuff[2]))
+            setProperty(items2[i]..'1.y', getRandomInt(heightStuff[1], heightStuff[2]))
         end
     end
 
@@ -138,8 +138,8 @@ function onTweenCompleted(tag)
 
             setProperty(items3[i]..'.x', getRandomInt(-2000, -3000))
             setProperty(items3[i]..'1.x', getRandomInt(-2000, -3000))
-            setProperty(items3[i]..'.y', getRandomInt(100, 500))
-            setProperty(items3[i]..'1.y', getRandomInt(100, 500))
+            setProperty(items3[i]..'.y', getRandomInt(heightStuff[1], heightStuff[2]))
+            setProperty(items3[i]..'1.y', getRandomInt(heightStuff[1], heightStuff[2]))
         end
     end
 end
