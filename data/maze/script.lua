@@ -6,10 +6,6 @@ local bfPos = {};
 local dadPos = {};
 
 function onUpdate()
-	if getPropertyFromClass('FlxG', 'justPressed.7') then --can still play lmao
-		loadSong('Badcorn')
-	end
-
 	if angleRandom == 6 or angleRandom == 8 and spotLightPart then
 		doTweenAngle('angleSpotlight', 'spotLight', 4, timeSpot, 'expoInOut')
 	end
