@@ -135,12 +135,6 @@ function onStepHit()
 				setPropertyFromGroup('playerStrums', i, 'y', 120)
 			end
 		end
-		for i = 0, getProperty('unspawnNotes.length') -1 do
-			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
-				setPropertyFromGroup('unspawnNotes', i, 'scale.x', scaleXY)
-				setPropertyFromGroup('unspawnNotes', i, 'scale.y', scaleXY)
-			end
-		end
 
 		print('UH OH GARRETT IS ANGRY >:(')
 	end
@@ -169,12 +163,6 @@ function onStepHit()
 		end
 		changeNoteSkin(true, 'NOTE_assets_3D')
 		for i = 0, getProperty('unspawnNotes.length') -1 do
-			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == true then
-				setPropertyFromGroup('unspawnNotes', i, 'scale.x', getPropertyFromGroup('playerStrums', 0, 'scale.x'))
-				setPropertyFromGroup('unspawnNotes', i, 'scale.y', getPropertyFromGroup('playerStrums', 0, 'scale.y'))
-			end
-		end
-		for i = 0, getProperty('unspawnNotes.length') -1 do
 			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'magic note' then
 				setPropertyFromGroup('unspawnNotes', i, 'texture', 'funnyAnimal/magicNote')
 			end
@@ -183,7 +171,7 @@ function onStepHit()
 			end
 		end
 		for i = 0, 4, 1 do
-			local offsetss = 115 * i;
+			local offsetss = 100 * i;
 			setPropertyFromGroup('playerStrums', i, 'x', 750 + offsetss)
 			setPropertyFromGroup('playerStrums', i, 'y', normalStrumY)
 		end
