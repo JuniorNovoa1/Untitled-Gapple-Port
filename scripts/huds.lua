@@ -139,16 +139,20 @@ function onStepHit()
         for iStrum = 0, 3 do
             if getPropertyFromGroup('notes', i, 'mustPress') then
                 setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
-                setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
-				if getPropertyFromGroup('notes', i, 'isSustainNote') then
-					setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y') * 2)
+				if getPropertyFromGroup('notes', i, 'isSustainNote') ~= true then
+                	setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
 				end
+				--[[if getPropertyFromGroup('notes', i, 'isSustainNote') and getPropertyFromGroup('notes', i, 'prevNote.isSustainNote') then
+					setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y') * (crochet / 100 * 1.05) * getProperty('songSpeed'))
+				end--]]
             else
                 setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
-                setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
-				if getPropertyFromGroup('notes', i, 'isSustainNote') then
-					setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y') * 2)
+				if getPropertyFromGroup('notes', i, 'isSustainNote') ~= true then
+                	setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
 				end
+				--[[if getPropertyFromGroup('notes', i, 'isSustainNote') and getPropertyFromGroup('notes', i, 'prevNote.isSustainNote') then
+					setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y') * (crochet / 100 * 1.05) * getProperty('songSpeed'))
+				end--]]
             end
         end
     end
