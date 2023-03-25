@@ -171,9 +171,10 @@ function onStepHit()
 			end
 		end
 		for i = 0, 4, 1 do
-			local offsetss = 100 * i;
+			local offsetss = 125 * i;
 			setPropertyFromGroup('playerStrums', i, 'x', 750 + offsetss)
 			setPropertyFromGroup('playerStrums', i, 'y', normalStrumY)
+			setPropertyFromGroup('opponentStrums', i, 'y', normalStrumY)
 		end
 
 		print('magik man appeared')
