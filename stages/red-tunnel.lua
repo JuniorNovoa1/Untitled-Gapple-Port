@@ -3,13 +3,14 @@ local bounceMultiplier = 1;
 local yBullshit = 1;
 
 function onCreate()
-    makeAnimatedLuaSprite('redTunnel', 'main/wireframe/redTunnel', -1000, -1000)
-    addAnimationByPrefix('redTunnel', 'idle', 'redtunnel idle0', 24, true)
+    makeAnimatedLuaSprite('redTunnel', 'main/wireframe/redtunnelperspective', -750, -1000)
+    addAnimationByPrefix('redTunnel', 'idle', 'redtunnelperspective idle0', 24, true)
     objectPlayAnimation('redTunnel', 'idle', true)
     setProperty('redTunnel.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     --setGraphicSize('redTunnel', math.floor(getProperty('redTunnel.width') * 1.15), math.floor(getProperty('redTunnel.height') * 1.15));
     setProperty('redTunnel.scale.x', 4)--getProperty('redTunnel.width') * 1.15)
     setProperty('redTunnel.scale.y', 3.25)--getProperty('redTunnel.height') * 1.15)
+    setScrollFactor('redTunnel', 1.1, 0.95)
     updateHitbox('redTunnel')
     addLuaSprite('redTunnel', false)
 
