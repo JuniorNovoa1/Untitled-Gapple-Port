@@ -54,3 +54,11 @@ function onTweenCompleted(tag)
         end
     end
 end
+
+function goodNoteHit(id, direction, noteType, isSustainNote)
+    triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
+end
+
+function opponentNoteHit(id, direction, noteType, isSustainNote)
+    triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
+end

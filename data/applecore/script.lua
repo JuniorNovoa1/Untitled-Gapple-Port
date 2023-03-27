@@ -109,6 +109,7 @@ function onUpdatePost()
                 setProperty('gf.holdTimer', 0)
                 strumAnim(noteDataa - 1, 'confirm', 0.15);
                 setProperty('health', getProperty('health') -(healthtolower / 2.65))
+                triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
                 characterPlayAnim('gf', singAnims[noteDataa], true);
                 removeFromGroup('notes', i, false)
             end
@@ -141,6 +142,9 @@ function onStepHit()
     end
 
     if curStep == 1984 then
+        for direction = 4, 7 do
+            setPropertyFromGroup('opponentStrums', direction, 'visible', false)
+        end
         bambiPissed = false;
         unfairPart = true;
         setProperty('minion.visible', false)
@@ -257,16 +261,16 @@ function strumAnim(direction, fool, timer)
 end
 
 function onGameOver()
-    setPropertyFromClass('clientPrefs', 'middleScroll', oldVal[1])
-    setPropertyFromClass('clientPrefs', 'ghostTapping', oldVal[2])
+    setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
+    setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
 end
 
 function onEndSong()
-    setPropertyFromClass('clientPrefs', 'middleScroll', oldVal[1])
-    setPropertyFromClass('clientPrefs', 'ghostTapping', oldVal[2])
+    setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
+    setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
 end
 
 function onDestroy()
-    setPropertyFromClass('clientPrefs', 'middleScroll', oldVal[1])
-    setPropertyFromClass('clientPrefs', 'ghostTapping', oldVal[2])
+    setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
+    setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
 end
