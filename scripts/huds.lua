@@ -129,8 +129,11 @@ function onUpdate()
 end
 
 function onUpdatePost()
-	if gappleHUDsong then
-		iconScale()
+	if songName == 'Maze' or gappleHUDsong then
+		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+		if songName ~= 'Maze' then
+			iconScale()
+		end
 	end
 end
 

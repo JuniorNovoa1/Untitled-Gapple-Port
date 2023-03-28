@@ -12,7 +12,7 @@ end
 
 function onTweenCompleted(tag)
     if tag == 'BadaiXRight' and getProperty('dad.curCharacter') == 'badai' then
-        doTweenX('BadaiXLeft', 'dad', originalPosX -posAmount * getRandomFloat(1, 1.5), speedAmount * 1.125, tweenType)
+        doTweenX('BadaiXLeft', 'dad', originalPosX -posAmount * getRandomFloat(1, 1.25), speedAmount * 1.125, tweenType)
     end
 
     if tag == 'BadaiXLeft' and getProperty('dad.curCharacter') == 'badai' then
