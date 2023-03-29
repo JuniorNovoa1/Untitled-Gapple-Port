@@ -23,7 +23,6 @@ function onCreatePost()
 	if songName == 'Maze' then
 		runHaxeCode[[
 			Application.current.window.title = "Friday Night Funkin' | VS. Dave and Bambi 3.0b";
-			Application.current.window.setIcon(lime.utils.Assets.getImage('mods/juniors-funny-mod-folder-ports/dave.png'));
 		]]
 	end
 
@@ -33,6 +32,19 @@ function onCreatePost()
 				Application.current.window.title = 'Vs Dave and Bambi: Golden Apple';
 			]]
 		end
+	end
+
+
+	if songName == 'lore' then
+		runHaxeCode[[
+			Application.current.window.title = "Friday Night Funkin' D-Sides";
+		]]
+	end
+
+	if songName == 'Close Chuckle' then
+		runHaxeCode[[
+			Application.current.window.title = "Hotline 024";
+		]]
 	end
 end
 
@@ -106,6 +118,5 @@ function clearCache()
 	]])
 	runHaxeCode[[
 		Application.current.window.title = "Friday Night Funkin': Psych Engine";
-		Application.current.window.setIcon(lime.utils.Assets.getImage(mods/juniors-funny-mod-folder-ports/iconOG.png'));
 	]]
 end
