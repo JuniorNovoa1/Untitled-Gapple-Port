@@ -45,6 +45,8 @@ function onCreatePost()
 	setProperty('healthBar.y', 550)
 	setProperty('healthBarBG.flipX', true)
 	setProperty('healthBar.flipX', true)
+	setProperty('scoreTxt.x', 130)
+	setProperty('scoreTxt.y', 325)
 end
 
 function onUpdate()

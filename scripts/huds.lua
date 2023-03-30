@@ -9,6 +9,7 @@ local arrowXoffset = 35;
 local no_splashes = false;
 
 function onCreatePost()
+	setProperty('showCombo', true)
 	for i = 1, #songSplashNames do
 		if songName == songSplashNames[i] then
 			no_splashes = true;
@@ -62,6 +63,16 @@ function onCreatePost()
 				break;
 			end
 
+			makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBarBG.x'), getProperty('healthBarBG.y'))
+			scaleObject('healthBarBGnew', getProperty('healthBarBG.scale.x') - 0.075, getProperty('healthBarBG.scale.y') - 0.15)
+			setObjectCamera('healthBarBGnew', 'camHUD')
+			addLuaSprite('healthBarBGnew', false)
+			setObjectOrder('healthBarBGnew', getObjectOrder('healthBarBG') + 1)
+
+			if songName == 'Kooky' then
+				setProperty('healthBarBGnew.visible', false)
+			end
+
 			makeLuaSprite('iconP12', 'icons/missing', 0, 0)
 			makeLuaSprite('iconP22', 'icons/missing', 0, 0)
 
@@ -105,6 +116,7 @@ end
 --NO MORE INTERNET NEEDED
 
 function onUpdate()
+	setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha'))
 	if gappleHUDsong then
 		iconScale()
 		setProperty('timeBarBG.visible', false)
@@ -131,6 +143,9 @@ end
 function onUpdatePost()
 	if songName == 'Maze' or gappleHUDsong then
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+		if songName == 'Kooky' then
+			setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\n\n\n  Accuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+		end
 		if songName ~= 'Maze' then
 			iconScale()
 		end
@@ -185,7 +200,7 @@ function onBeatHit()
 			return;
 		end
 		if curBeat % getProperty('gfSpeed') == 0 then
-			local fuasd = {0.8, 1.2}--{0.8 / getProperty('songSpeed'), 1.2 * getProperty('songSpeed') / 2.35} --thought it should be dependent of how fast song is
+			local fuasd = {0.8, 1.2}
 			local angl = 10;
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', 1.1, fuasd[1])
