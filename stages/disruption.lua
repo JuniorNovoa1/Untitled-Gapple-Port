@@ -9,9 +9,9 @@ function onCreate()
 end
 
 function onUpdate()
-    setShaderFloat('disruption', 'uWaveAmplitude', 0.1)
-	setShaderFloat('disruption', 'uFrequency', 5)
-	setShaderFloat('disruption', 'uSpeed', 10)
+    setShaderFloat('disruption', 'uWaveAmplitude', 0.08)
+	setShaderFloat('disruption', 'uFrequency', 3)
+	setShaderFloat('disruption', 'uSpeed', 8)
 end
 
 function onUpdatePost(elapsed)

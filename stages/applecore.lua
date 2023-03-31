@@ -88,13 +88,13 @@ end
 function onUpdate(elapsed)
     for i = 1, #items do
         if i == 3 then
-            setShaderFloat(items[i], 'uWaveAmplitude', 0.2)
-            setShaderFloat(items[i], 'uFrequency', 10)
-            setShaderFloat(items[i], 'uSpeed', 20)
-        else
             setShaderFloat(items[i], 'uWaveAmplitude', 0.1)
             setShaderFloat(items[i], 'uFrequency', 5)
             setShaderFloat(items[i], 'uSpeed', 10)
+        else
+            setShaderFloat(items[i], 'uWaveAmplitude', 0.08)
+            setShaderFloat(items[i], 'uFrequency', 3)
+            setShaderFloat(items[i], 'uSpeed', 8)
         end
     end
 end
