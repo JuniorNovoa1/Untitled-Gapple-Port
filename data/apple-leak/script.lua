@@ -13,6 +13,11 @@ local loopVarThing = false;
 
 local shadname = "stridentCrisisWavy";
 
+function onCreatePost()
+	changeNoteSkin(false, 'NOTE_assets_3D');
+	changeNoteSkin(false, 'NOTE_assets'); --caching!!
+end
+
 function onUpdate()
 	local time = 1.5;
 
@@ -32,13 +37,15 @@ end
 
 function onStepHit()
 	if curStep == 1088 then
-		doTweenY('banduFat', 'dad', getProperty('dad.y') -500, 40)
+		dadX = getProperty('dad.x');
+		dadY = getProperty('dad.y') -125;
+		doTweenY('banduFat', 'dad', getProperty('dad.y') -500, 30)
 	end
 
 	if curStep == 1855 then
 		--unused
-		dadX = getProperty('dad.x');
-		dadY = getProperty('dad.y');
+		--dadX = getProperty('dad.x');
+		--dadY = getProperty('dad.y');
 	end
 
 	--[[local zoomStuff = 0.05;
@@ -105,9 +112,16 @@ function onStepHit()
 	end
 end
 
+function thisNewPsychUpdateFuckedME(x, y)
+	doTweenX('dad xxx', 'dad', x, 0.1)
+	doTweenY('dad yyy', 'dad', y, 0.1)
+end
+
 function onEvent(name, value1, value2)
 	if name == 'Change Character' then
 		if value2 == 'fat-bandu-3d' then
+			cancelTween('banduFat')
+			thisNewPsychUpdateFuckedME(dadX, dadY)
 			changeNoteSkin(false, 'NOTE_assets_3D'); --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
 			setProperty('wavyApplecore.visible', true)
 		end
@@ -138,6 +152,7 @@ function onEvent(name, value1, value2)
 
 		if value2 == '3d-bambi-leak' then
 			setProperty('defaultCamZoom', getProperty('defaultCamZoom') -zoomStuff)
+			thisNewPsychUpdateFuckedME(dadX, dadY -200)
 			removeLuaSprite('garryLeak', true)
 			setProperty('r2.visible', true)
 			alphaChange = true;
@@ -148,6 +163,7 @@ function onEvent(name, value1, value2)
 
 			zoomStuff = zoomStuff + 0.15;
 			setProperty('defaultCamZoom', getProperty('defaultCamZoom') +zoomStuff)
+			thisNewPsychUpdateFuckedME(dadX -400, dadY -35)
 			removeLuaSprite('r1', true)
 			removeLuaSprite('r2', true)
 			setProperty('th1ft.visible', true)
@@ -156,6 +172,10 @@ function onEvent(name, value1, value2)
 
 			bfX = getProperty('boyfriend.x');
 			bfY = getProperty('boyfriend.y');
+		end
+
+		if value2 == 'th1ft-monster' then
+			thisNewPsychUpdateFuckedME(dadX -400, dadY -35)
 		end
 
 		if value2 == 'bandu-trolled' then
@@ -169,8 +189,7 @@ function onEvent(name, value1, value2)
 			camY = getProperty('camFollow.y');
 			stayOnCam = true;
 
-			setProperty('dad.x', 25)
-			setProperty('dad.y', 1290)
+			thisNewPsychUpdateFuckedME(25, 1290)
 			
 			setProperty('boyfriend.x', 1400)
 			setProperty('boyfriend.y', 1625)
@@ -183,8 +202,7 @@ function onEvent(name, value1, value2)
 
 		if value2 == 'sammy' then
 			setProperty('funkipedia.visible', true)
-			setProperty('dad.x', 1660)
-			setProperty('dad.y', 2070)
+			thisNewPsychUpdateFuckedME(1660, 2070)
 			setProperty('boyfriend.x', 1250)
 			setProperty('boyfriend.y', 2500)
 			setProperty('boyfriend.scale.x', 0.85)
@@ -265,8 +283,7 @@ function onEvent(name, value1, value2)
 				addLuaSprite('norman', false)
 			end
 
-			setProperty('dad.x', -300)
-			setProperty('dad.y', 350)
+			thisNewPsychUpdateFuckedME(-300, 350)
 			setProperty('boyfriend.x', 900)
 			setProperty('boyfriend.y', 465) --765
 
@@ -291,7 +308,7 @@ function onEvent(name, value1, value2)
 				removeLuaSprite('wrath', true)
 				removeLuaSprite('caveFloor', true)
 				removeLuaSprite('norman', true)
-				makeAnimatedLuaSprite('fire', 'appleLeak/dookie/FLAMESFLAMESBURNINGFLAMES', 75, -50)
+				makeAnimatedLuaSprite('fire', 'appleLeak/dookie/FLAMESFLAMESBURNINGFLAMES', 75, -100)
 				addAnimationByPrefix('fire', 'idle', 'FlamesBurn0', 24, true)
 				objectPlayAnimation('fire', 'idle', true)
 				setProperty('fire.antialiasing', false)
@@ -349,10 +366,6 @@ end
 
 function onTweenCompleted(tag)
 	if tag == 'jamboulAlpha' then
-		removeLuaSprite('jamboul', true)
-		removeLuaSprite('fatBandu', true)
-		removeLuaSprite('gasStation', true)
-		removeLuaSprite('wavyApplecore', true)
 		doTweenX('garyMoveX', 'dad', dadX, 1.5)
 		doTweenY('garyMoveY', 'dad', dadY, 1.5)
 	end
@@ -363,6 +376,10 @@ function onTweenCompleted(tag)
 	end
 
 	if tag == 'kineMasterAngle2' then
+		removeLuaSprite('jamboul', true)
+		removeLuaSprite('fatBandu', true)
+		removeLuaSprite('gasStation', true)
+		removeLuaSprite('wavyApplecore', true)
 		removeLuaSprite('kineMaster', true)
 	end
 
