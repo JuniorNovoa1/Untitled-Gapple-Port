@@ -6,7 +6,12 @@ local tweenType = 'sineInOut';
 function onCreate()
     setObjectOrder('dadGroup', 99)
     originalPos = getProperty('dad.y')
-    doTweenY('daveDown', 'dad', originalPos +posAmount, speedAmount / 2, tweenType)
+end
+
+function onCountdownTick(tick)
+    if tick == 69 then
+        doTweenY('daveDown', 'dad', originalPos +posAmount, speedAmount / 2, tweenType)
+    end
 end
 
 function onTweenCompleted(tag)

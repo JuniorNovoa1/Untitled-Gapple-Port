@@ -12,8 +12,13 @@ function onCreatePost()
     if getProperty('gf.curCharacter') == 'bambi-piss-3d' then
         dad = 'gf';
     end
-    if songName ~= 'Applecore' then
-        doTweenY('bambiUp', dad, originalPos -posAmount, speedAmount, tweenType)
+end
+
+function onCountdownTick(tick)
+    if tick == 69 then
+        if songName ~= 'Applecore' then
+            doTweenY('bambiUp', dad, originalPos -posAmount, speedAmount, tweenType)
+        end
     end
 end
 

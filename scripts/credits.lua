@@ -79,8 +79,10 @@ end
 local timeAlpha = 1.25;
 local offsesss = 150;
 
-function onSongStart()
-	moveStuff(waitTime);
+function onCountdownTick(tick)
+	if tick == 69 then
+		moveStuff(waitTime);
+	end
 end
 
 function onTimerCompleted(tag, loops, loopsLeft)

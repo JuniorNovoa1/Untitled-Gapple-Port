@@ -1,3 +1,8 @@
+local maximumAlpha = 0.4;
+local doTween = false;
+local doWait = true;
+local time = 1;
+
 function onCreate()
     makeLuaSprite('vg', 'vig_red', 0, 0)
     setProperty('vg.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
@@ -10,10 +15,11 @@ function onCreate()
     end
 end
 
-local maximumAlpha = 0.4;
-local doTween = false;
-local doWait = true;
-local time = 1;
+function onCreatePost()
+    if songName == 'Applecore' then
+        maximumAlpha = 0.2;
+    end
+end
 
 function onUpdate(elapsed)
     if getProperty('vg.alpha') == maximumAlpha and doTween then

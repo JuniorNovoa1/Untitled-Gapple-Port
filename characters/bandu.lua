@@ -7,7 +7,12 @@ function onCreatePost()
     changeNoteSkin(false, 'NOTE_assets_3D')
     setObjectOrder('dadGroup', getObjectOrder('boyfriendGroup') -1)
     originalPos = getProperty('dad.x')
-    doTweenX('banduRight', 'dad', originalPos +posAmount, speedAmount, tweenType)
+end
+
+function onCountdownTick(tick)
+    if tick == 69 then
+        doTweenX('banduRight', 'dad', originalPos +posAmount, speedAmount, tweenType)
+    end
 end
 
 function onTweenCompleted(tag)

@@ -1,4 +1,4 @@
-local oldVal = {false, false, false}
+local oldVal = {false, false}
 local bambiPissed = false;
 local unfairPart = false;
 
@@ -11,9 +11,7 @@ function onCreatePost()
     addCharacterToList('unfair-junker', 'dad')
     oldVal[1] = middleScroll;
     oldVal[2] = ghostTapping;
-end
-
-function onCreatePost()
+    
     for i = 0, getProperty('unspawnNotes.length') -1 do
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'GF Sing' then
             setPropertyFromGroup('unspawnNotes', i, 'scrollFactor.x', 0.9)

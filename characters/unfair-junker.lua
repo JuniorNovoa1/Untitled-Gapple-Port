@@ -6,8 +6,8 @@ local tweenType = 'sineInOut';
 
 function onCreate()
     originalPosX = getProperty('dad.x')
-    originalPosY = getProperty('dad.y')
-    if getProperty('dad.curCharacter' == 'unfair-junker') then
+    originalPosY = getProperty('dad.y') -100;
+    if getProperty('dad.curCharacter') == 'unfair-junker' then
         doTweenX('expungedLeft', 'dad', originalPosX -(posAmount), speedAmount * 1.125, tweenType)
         doTweenY('expungedUP', 'dad', originalPosY -posAmount * 1.45, speedAmount / 2, tweenType)
     end
