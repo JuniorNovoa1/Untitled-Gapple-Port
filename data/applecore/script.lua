@@ -119,6 +119,13 @@ function onUpdatePost()
 end
 
 function onStepHit()
+    if curBeat == 160 or curBeat == 436 or curBeat == 684 then
+        setProperty('gfSpeed', 2)
+    end
+    if curBeat == 240 then
+        setProperty('gfSpeed', 1)
+    end
+
     if curStep == 767 then
         bambiPissed = true;
         setProperty('pizza.visible', false)
@@ -145,6 +152,7 @@ function onStepHit()
         end
         bambiPissed = false;
         unfairPart = true;
+        setProperty('gfSpeed', 1)
         setProperty('minion.visible', false)
         setProperty('minion1.visible', false)
         for i = 0, getProperty('strumLineNotes.length') do

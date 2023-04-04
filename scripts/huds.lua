@@ -123,19 +123,6 @@ function onUpdate()
 		setProperty('timeBar.visible', false)
 		local actualSongLength = math.toTime(getProperty("songLength") / 1000);
 		local songPos = math.toTime(getSongPosition() / 1000)
-		if songName == gappleHUD[6] then
-			local curStestz = 7854;
-			local time = 783600;
-			if curStep <= (curStestz * 1.11) then
-				actualSongLength = math.toTime(time / 1000);
-			elseif curStep >= (curStestz * 1.11) and curStep <= (curStestz * 1.114) then
-				actualSongLength = math.toTime((time * 1.16) / 1000);
-			elseif curStep >= (curStestz * 1.114) and curStep >= (curStestz * 1.119) then
-				actualSongLength = math.toTime((time * 1.26) / 1000);
-			elseif curStep >= (curStestz * 1.119) then
-				actualSongLength = math.toTime(getProperty("songLength") / 1000);
-			end
-		end
 		setTextString('timeTxt', songPos.." / "..actualSongLength)
 	end
 end
@@ -200,17 +187,17 @@ function onBeatHit()
 			return;
 		end
 		if curBeat % getProperty('gfSpeed') == 0 then
-			local fuasd = {0.8, 1.2}
-			local angl = 10;
+			local fuasd = {0.8, 1.3, 1.1}
+			local angl = 15;
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
-				scaleObject('iconP12', 1.1, fuasd[1])
-				scaleObject('iconP22', 1.1, fuasd[2])
+				scaleObject('iconP12', fuasd[3], fuasd[1])
+				scaleObject('iconP22', fuasd[3], fuasd[2])
 
 				doTweenAngle('iconP1', 'iconP1', angl, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
 				doTweenAngle('iconP2', 'iconP2', angl, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
 			else
-				scaleObject('iconP12', 1.1, fuasd[2])
-				scaleObject('iconP22', 1.1, fuasd[1])
+				scaleObject('iconP12', fuasd[3], fuasd[2])
+				scaleObject('iconP22', fuasd[3], fuasd[1])
 
 				doTweenAngle('iconP1', 'iconP1', -angl, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
 				doTweenAngle('iconP2', 'iconP2', -angl, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
@@ -224,6 +211,8 @@ function onBeatHit()
 
 		updateHitbox('iconP12')
 		updateHitbox('iconP22')
+		updateHitbox('iconP1')
+		updateHitbox('iconP2')
 		iconScale()
 	end
 end

@@ -43,7 +43,7 @@ function onCreate()
 	updateHitbox('DATEXTTTTYYTT')
 	addLuaText('DATEXTTTTYYTT')
 
-	local randomCred = getRandomInt(0, 7); --I hate getting the same one twice in a row
+	--[[local randomCred = getRandomInt(0, 7); --I hate getting the same one twice in a row
 	if randomCred == 0 or randomCred == 4 then
 		left = true;
 	elseif randomCred == 1 or randomCred == 5 then
@@ -63,7 +63,8 @@ function onCreate()
 
 		setProperty('Creditssss.x', 1300)
 		setProperty('DATEXTTTTYYTT.x', getProperty('Creditssss.x') -txtOffset)
-	end
+	end-]]
+	left = true;
 end
 
 function onCreatePost()

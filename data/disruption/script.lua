@@ -12,6 +12,10 @@ function onCreatePost()
     end
 end
 
+function onSongStart()
+    setProperty('gfSpeed', 2)
+end
+
 local elapsedtime = 0;
 
 function onUpdate(elapsed)

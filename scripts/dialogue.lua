@@ -119,6 +119,11 @@ function onCreatePost()
 				song = 'leakCutscene';
 			end
 
+			precacheImage('speech_bubble')
+			for i = 1, #images do
+				precacheImage('dialogue/'..images[i])
+			end
+
 			for i = 1, #dialogueTXT do
 				maxDialogue = i;
 			end
@@ -128,6 +133,7 @@ end
 
 function onSongStart()
 	if not dialogueBool then
+		callOnLuas('onCountdownTick', {69})
 		return;
 	end
 	openCustomSubstate('dialogue', false)
