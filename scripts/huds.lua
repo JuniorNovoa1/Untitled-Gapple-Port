@@ -60,6 +60,9 @@ function onCreatePost()
 				setObjectCamera('healthBarBGnew', 'camHUD')
 				addLuaSprite('healthBarBGnew', false)
 				setObjectOrder('healthBarBGnew', getObjectOrder('healthBarBG') + 1)
+	
+				makeLuaSprite('iconP12', 'icons/missing', 0, 0)
+				makeLuaSprite('iconP22', 'icons/missing', 0, 0)
 				break;
 			end
 
@@ -73,6 +76,7 @@ function onCreatePost()
 				setProperty('healthBarBGnew.visible', false)
 			end
 
+			
 			makeLuaSprite('iconP12', 'icons/missing', 0, 0)
 			makeLuaSprite('iconP22', 'icons/missing', 0, 0)
 
@@ -85,6 +89,9 @@ function onCreatePost()
 end
 
 --THANK GOD THE INTERNET EXISTS
+function math.lerp(from, to, t)
+	return from + (to - from) * math.clamp(t, 0, 1)
+end
 function math.clamp(x,min,max)return math.max(min,math.min(x,max))end
 function string.duplicate(s, i)
     local str = ""
@@ -133,8 +140,15 @@ function onUpdatePost()
 		if songName == 'Kooky' then
 			setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\n\n\n  Accuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		end
-		if songName ~= 'Maze' then
-			iconScale()
+		iconScale()
+		if songName == 'Maze' then
+			local thingy = 0.88;
+			setGraphicSize('iconP22', math.floor(math.lerp(150, getProperty('iconP22.width'), thingy)), math.floor(math.lerp(150, getProperty('iconP22.height'), thingy)))
+			setGraphicSize('iconP12', math.floor(math.lerp(150, getProperty('iconP12.width'), thingy)), math.floor(math.lerp(150, getProperty('iconP12.height'), thingy)))
+			updateHitbox('iconP12')
+			updateHitbox('iconP22')
+			updateHitbox('iconP1')
+			updateHitbox('iconP2')
 		end
 	end
 end
@@ -182,6 +196,21 @@ function onSectionHit()
 end
 
 function onBeatHit()
+	if songName == 'Maze' then
+		local funny = math.max(math.min(getProperty('healthBar.value'), 1.9), 0.1)
+
+		local icons = {'iconP12', 'iconP22'};
+
+		setGraphicSize(icons[1], math.floor(getProperty(icons[1]..'.width') + (50 * funny)), math.floor(getProperty(icons[1]..'.height') - (25 * funny)))
+		setGraphicSize(icons[2], math.floor(getProperty(icons[2]..'.width') + (50 * ((2 - funny) + 0.1))), math.floor(getProperty(icons[2]..'.height') - (25 * ((2 - funny) + 0.1))))
+
+		updateHitbox('iconP12')
+		updateHitbox('iconP22')
+		updateHitbox('iconP1')
+		updateHitbox('iconP2')
+		iconScale()
+	end
+
 	if gappleHUDsong then
 		if songName == 'Kooky' then
 			return;
