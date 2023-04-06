@@ -198,11 +198,8 @@ end
 function onBeatHit()
 	if songName == 'Maze' then
 		local funny = math.max(math.min(getProperty('healthBar.value'), 1.9), 0.1)
-
-		local icons = {'iconP12', 'iconP22'};
-
-		setGraphicSize(icons[1], math.floor(getProperty(icons[1]..'.width') + (50 * funny)), math.floor(getProperty(icons[1]..'.height') - (25 * funny)))
-		setGraphicSize(icons[2], math.floor(getProperty(icons[2]..'.width') + (50 * ((2 - funny) + 0.1))), math.floor(getProperty(icons[2]..'.height') - (25 * ((2 - funny) + 0.1))))
+		setGraphicSize('iconP12', math.floor(getProperty('iconP12.width') + (50 * funny)), math.floor(getProperty('iconP12.height') - (25 * funny)))
+		setGraphicSize('iconP22', math.floor(getProperty('iconP22.width') + (50 * ((2 - funny) + 0.1))), math.floor(getProperty('iconP22.height') - (25 * ((2 - funny) + 0.1))))
 
 		updateHitbox('iconP12')
 		updateHitbox('iconP22')
@@ -216,7 +213,7 @@ function onBeatHit()
 			return;
 		end
 		if curBeat % getProperty('gfSpeed') == 0 then
-			local fuasd = {0.8, 1.3, 1.1}
+			local fuasd = {0.7, 1.3, 1.1}
 			local angl = 15;
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', fuasd[3], fuasd[1])
