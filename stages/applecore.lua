@@ -7,7 +7,7 @@ local anims = {'walking', 'woah', 'spin'};
 
 local tweenType = '';
 local timeTimer = {4.01, 6.3};
-local heightStuff = {-250, 2500}
+local heightStuff = {-500, 2500}
 local time = 4;
 
 local poip = true;
@@ -78,7 +78,8 @@ function onCreate()
 
     makeAnimatedLuaSprite('gfe', 'characters/GF_assets', 350, 500)
     setProperty('gfe.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-    addAnimationByPrefix('gfe', 'idle', 'GF Dancing Beat0', 24, true)
+    addAnimationByPrefix('gfe', 'idle', 'GF Dancing Beat0', 24, false)
+    addAnimationByPrefix('gfe', 'idleFast', 'GF Dancing Beat0', 48, false)
     objectPlayAnimation('gfe', 'idle', true)
     addLuaSprite('gfe', false)
 
@@ -160,6 +161,16 @@ function onTimerCompleted(tag)
             doTweenY(items3[i]..'first1', items3[i], getRandomInt(-250, 750), time, tweenType)
             doTweenX(items3[i]..'first11', items3[i]..'1', getRandomInt(0, 750), time, tweenType)
             doTweenY(items3[i]..'first111', items3[i]..'1', getRandomInt(-250, 500), time, tweenType)
+        end
+    end
+end
+
+function onBeatHit()
+    if curBeat % (4 / getProperty('gfSpeed')) == 0 then
+        if getProperty('gfSpeed') == 1 then
+            objectPlayAnimation('gfe', 'idle', true)
+        else
+            objectPlayAnimation('gfe', 'idleFast', true)
         end
     end
 end

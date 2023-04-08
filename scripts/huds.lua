@@ -140,7 +140,6 @@ function onUpdatePost()
 		if songName == 'Kooky' then
 			setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\n\n\n  Accuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		end
-		iconScale()
 		if songName == 'Maze' then
 			local thingy = 0.82;
 			setGraphicSize('iconP22', math.floor(math.lerp(150, getProperty('iconP22.width'), thingy)), math.floor(math.lerp(150, getProperty('iconP22.height'), thingy)))
@@ -150,6 +149,7 @@ function onUpdatePost()
 			updateHitbox('iconP1')
 			updateHitbox('iconP2')
 		end
+		iconScale()
 	end
 end
 
@@ -160,18 +160,12 @@ function onStepHit()
                 setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
 				if getPropertyFromGroup('notes', i, 'isSustainNote') ~= true then
                 	setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
-				end
-				--[[if getPropertyFromGroup('notes', i, 'isSustainNote') and getPropertyFromGroup('notes', i, 'prevNote.isSustainNote') then
-					setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y') * (crochet / 100 * 1.05) * getProperty('songSpeed'))
-				end--]]
+				end-=
             else
                 setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
 				if getPropertyFromGroup('notes', i, 'isSustainNote') ~= true then
                 	setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
 				end
-				--[[if getPropertyFromGroup('notes', i, 'isSustainNote') and getPropertyFromGroup('notes', i, 'prevNote.isSustainNote') then
-					setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y') * (crochet / 100 * 1.05) * getProperty('songSpeed'))
-				end--]]
             end
         end
     end
@@ -213,22 +207,22 @@ function onBeatHit()
 			return;
 		end
 		if curBeat % getProperty('gfSpeed') == 0 then
-			local fuasd = {1.3, 0.6, 1}
+			local fuasd = {0.8, 0.5, 1}
 			local angl = 15;
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', fuasd[3], fuasd[1])
 				scaleObject('iconP22', fuasd[3], fuasd[2])
 				setProperty('iconP1.angle', -angl)
-				setProperty('iconP2.angle', angl)
+				setProperty('iconP2.angle', -angl)
 			else
 				scaleObject('iconP12', fuasd[3], fuasd[2])
 				scaleObject('iconP22', fuasd[3], fuasd[1])
 				setProperty('iconP1.angle', angl)
-				setProperty('iconP2.angle', -angl)
+				setProperty('iconP2.angle', angl)
 			end
 		end
 
-		local crochetOffset = 1250;
+		local crochetOffset = 1050;
 		local tweenType = 'quadOut';
 
 		doTweenAngle('iconP1', 'iconP1', 0, crochet / (crochetOffset * 1.05) * getProperty('gfSpeed'), tweenType)
