@@ -160,7 +160,7 @@ function onStepHit()
                 setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
 				if getPropertyFromGroup('notes', i, 'isSustainNote') ~= true then
                 	setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
-				end-=
+				end
             else
                 setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
 				if getPropertyFromGroup('notes', i, 'isSustainNote') ~= true then
@@ -207,8 +207,8 @@ function onBeatHit()
 			return;
 		end
 		if curBeat % getProperty('gfSpeed') == 0 then
-			local fuasd = {0.8, 0.5, 1}
-			local angl = 15;
+			local fuasd = {1.4, 0.6, 1.05}
+			local angl = 20;
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', fuasd[3], fuasd[1])
 				scaleObject('iconP22', fuasd[3], fuasd[2])
@@ -222,8 +222,8 @@ function onBeatHit()
 			end
 		end
 
-		local crochetOffset = 1050;
-		local tweenType = 'quadOut';
+		local crochetOffset = 625;
+		local tweenType = 'circOut';
 
 		doTweenAngle('iconP1', 'iconP1', 0, crochet / (crochetOffset * 1.05) * getProperty('gfSpeed'), tweenType)
 		doTweenAngle('iconP2', 'iconP2', 0, crochet / (crochetOffset * 1.05) * getProperty('gfSpeed'), tweenType)
