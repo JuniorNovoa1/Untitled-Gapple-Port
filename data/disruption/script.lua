@@ -42,26 +42,9 @@ function onUpdate(elapsed)
     end
 end
 
-function onTweenCompleted(tag)
-    for i = 0, getProperty('strumLineNotes.length') -1 do
-        if tag == 'noteXLeft'..i then
-            noteTweenX('noteXRight'..i, i, originPosX[i] +offset, tweenTime, tweenType)
-        end
-        if tag == 'noteXRight'..i then
-            noteTweenX('noteXLeft'..i, i, originPosX[i] -offset, tweenTime, tweenType)
-        end
-        if tag == 'noteYUp'..i then
-            noteTweenY('noteYDown'..i, i, originPosY[i] +offset, tweenTime, tweenType)
-        end
-        if tag == 'noteYDown'..i then
-            noteTweenY('noteYUp'..i, i, originPosY[i] -offset, tweenTime, tweenType)
-        end
-    end
-end
-
-function goodNoteHit(id, direction, noteType, isSustainNote)
+--[[function goodNoteHit(id, direction, noteType, isSustainNote)
     triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
-end
+end--]]
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
     triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')

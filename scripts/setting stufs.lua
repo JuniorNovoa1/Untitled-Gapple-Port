@@ -1,9 +1,12 @@
 local gappleSongs = {'Disruption', 'Applecore', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn', 'Kooky'};
-local gappleHUD = {'Maze', 'Disruption', 'Applecore', 'Wireframe', 'Ferocious', 'Apple-Leak', 'OG', 'badcorn', 'Kooky'};
 
 function onCreate()
 	addHaxeLibrary('Application', 'lime.app')
+	addHaxeLibrary('Image', 'lime.graphics')
+	addHaxeLibrary('WindowData', 'lime.tools')
 	addHaxeLibrary('System', 'openfl.system')
+	addHaxeLibrary('Lib', 'openfl')
+
 	clearCache();
 end
 
@@ -20,32 +23,7 @@ function onCreatePost()
 		setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
 	end
 
-	if songName == 'Maze' then
-		runHaxeCode[[
-			Application.current.window.title = "Friday Night Funkin' | VS. Dave and Bambi 3.0b";
-		]]
-	end
-
-	for i = 1, #gappleSongs do
-		if songName == gappleSongs[i] then
-			runHaxeCode[[
-				Application.current.window.title = 'Vs Dave and Bambi: Golden Apple';
-			]]
-		end
-	end
-
-
-	if songName == 'lore' then
-		runHaxeCode[[
-			Application.current.window.title = "Friday Night Funkin' D-Sides";
-		]]
-	end
-
-	if songName == 'Close Chuckle' then
-		runHaxeCode[[
-			Application.current.window.title = "Hotline 024";
-		]]
-	end
+	changeIcon();
 end
 
 function onUpdate()
@@ -104,6 +82,17 @@ function onEvent(tag, val1, val2)
 	end
 end
 
+function onPause()
+	runHaxeCode([[
+		Application.current.window.title = "Friday Night Funkin': Psych Engine";
+		Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/Funkin").bitmap));
+	]])
+end
+
+function onResume()
+	changeIcon()
+end
+
 function onEndSong()
 	clearCache();
 end
@@ -114,9 +103,45 @@ end
 
 function clearCache()
 	runHaxeCode([[
+		Application.current.window.title = "Friday Night Funkin': Psych Engine";
+		Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/Funkin").bitmap));
 		openfl.system.System.gc();
 	]])
-	runHaxeCode[[
-		Application.current.window.title = "Friday Night Funkin': Psych Engine";
-	]]
+end
+
+function changeIcon()
+	if buildTarget ~= 'windows' then
+		return; --don't want other people crashing when trying to play
+	end
+
+	if songName == 'Maze' then
+		runHaxeCode[[
+			Application.current.window.title = "Friday Night Funkin' | VS. Dave and Bambi 3.0b";
+			Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/DNB").bitmap));
+		]]
+	end
+
+	for i = 1, #gappleSongs do
+		if songName == gappleSongs[i] then
+			runHaxeCode[[
+				Application.current.window.title = 'Vs Dave and Bambi: Golden Apple';
+				Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/Gapple").bitmap));
+			]]
+		end
+	end
+
+
+	if songName == 'lore' then
+		runHaxeCode[[
+			Application.current.window.title = "Friday Night Funkin' D-Sides";
+			Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/D-Sides").bitmap));
+		]]
+	end
+
+	if songName == 'Close Chuckle' then
+		runHaxeCode[[
+			Application.current.window.title = "Hotline 024";
+			Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/Hotline-024").bitmap));
+		]]
+	end
 end
