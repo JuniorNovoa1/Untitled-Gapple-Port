@@ -1,7 +1,7 @@
 local originalPosX = 0;
 local originalPosY = 0;
 local posAmount = 253;
-local speedAmount = 2.8;
+local speedAmount = 4.75;
 local tweenType = 'sineInOut';
 
 function onCreate()

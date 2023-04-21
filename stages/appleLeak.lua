@@ -1,4 +1,4 @@
-local shadname = "stridentCrisisWavy";
+local shadname = "glitchEffect";
 
 function onCreate()   
     makeLuaSprite('portal', 'appleLeak/cave/portal', 0, 0)
@@ -42,6 +42,9 @@ function onCreate()
     addLuaSprite('garryLeak', false)
     initLuaShader(shadname)
 	setSpriteShader('garryLeak', shadname)
+    setShaderFloat('garryLeak', 'uWaveAmplitude', 0.1)
+    setShaderFloat('garryLeak', 'uFrequency', 5)
+    setShaderFloat('garryLeak', 'uSpeed', 2)
 
     makeLuaSprite('gasStation', 'appleLeak/gas_station', 0, 0)
     setProperty('gasStation.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
@@ -92,6 +95,9 @@ function onCreate()
         addLuaSprite('ytStatic', false)
     end
     setSpriteShader('ytStatic', shadname)
+    setShaderFloat('ytStatic', 'uWaveAmplitude', 0.1)
+	setShaderFloat('ytStatic', 'uFrequency', 5)
+	setShaderFloat('ytStatic', 'uSpeed', 2)
 
     makeLuaSprite('ytBox', 'appleLeak/trolled/bg1', -175, 1075)
     setProperty('ytBox.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
@@ -102,16 +108,6 @@ function onCreate()
     setProperty('funkipedia.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('funkipedia.visible', false)
     addLuaSprite('funkipedia', false)
-end
-
-function onUpdate(elapsed)
-	setShaderFloat('garryLeak', 'uWaveAmplitude', 0.1)
-	setShaderFloat('garryLeak', 'uFrequency', 5)
-	setShaderFloat('garryLeak', 'uSpeed', 10)
-
-    setShaderFloat('ytStatic', 'uWaveAmplitude', 0.1)
-	setShaderFloat('ytStatic', 'uFrequency', 5)
-	setShaderFloat('ytStatic', 'uSpeed', 10)
 end
 
 function onUpdatePost(elapsed)

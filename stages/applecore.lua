@@ -1,4 +1,4 @@
-local shadname = "stridentCrisisWavy";
+local shadname = "glitchEffect";
 
 local items = {'hi', 'poop', 'yeah'}
 local items2 = {'pizza'}
@@ -26,6 +26,16 @@ function onCreate()
         screenCenter(items[i], 'x')
         addLuaSprite(items[i], false)
         setSpriteShader(items[i], shadname)
+
+        if i == 3 then
+            setShaderFloat(items[i], 'uWaveAmplitude', 0.25)
+            setShaderFloat(items[i], 'uFrequency', 10)
+            setShaderFloat(items[i], 'uSpeed', 3)
+        else
+            setShaderFloat(items[i], 'uWaveAmplitude', 0.1)
+            setShaderFloat(items[i], 'uFrequency', 5)
+            setShaderFloat(items[i], 'uSpeed', 2)
+        end
     end
 
     for i = 1, #items2 do
@@ -84,20 +94,6 @@ function onCreate()
     addLuaSprite('gfe', false)
 
     setProperty('hi.visible', true)
-end
-
-function onUpdate(elapsed)
-    for i = 1, #items do
-        if i == 3 then
-            setShaderFloat(items[i], 'uWaveAmplitude', 0.1)
-            setShaderFloat(items[i], 'uFrequency', 5)
-            setShaderFloat(items[i], 'uSpeed', 10)
-        else
-            setShaderFloat(items[i], 'uWaveAmplitude', 0.08)
-            setShaderFloat(items[i], 'uFrequency', 3)
-            setShaderFloat(items[i], 'uSpeed', 8)
-        end
-    end
 end
 
 function onUpdatePost(elapsed)

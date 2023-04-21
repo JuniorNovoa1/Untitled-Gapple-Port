@@ -207,36 +207,35 @@ function onBeatHit()
 			return;
 		end
 		if curBeat % getProperty('gfSpeed') == 0 then
-			local fuasd = {1.4, 0.6, 1.05}
-			local angl = 20;
+			local fuasd = {0.8, 1.3}
+			local angl = 15;
+
+			cancelTween('iconP1')
+			cancelTween('iconP2')
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
-				scaleObject('iconP12', fuasd[3], fuasd[1])
-				scaleObject('iconP22', fuasd[3], fuasd[2])
+				scaleObject('iconP12', 1.1, fuasd[1])
+				scaleObject('iconP22', 1.1, fuasd[2])
 				setProperty('iconP1.angle', -angl)
-				setProperty('iconP2.angle', -angl)
-			else
-				scaleObject('iconP12', fuasd[3], fuasd[2])
-				scaleObject('iconP22', fuasd[3], fuasd[1])
-				setProperty('iconP1.angle', angl)
 				setProperty('iconP2.angle', angl)
+			else
+				scaleObject('iconP12', 1.1, fuasd[2])
+				scaleObject('iconP22', 1.1, fuasd[1])
+				setProperty('iconP1.angle', angl)
+				setProperty('iconP2.angle', -angl)
 			end
 		end
 
-		local crochetOffset = 625;
-		local tweenType = 'circOut';
+		doTweenAngle('iconP1', 'iconP1', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
+		doTweenAngle('iconP2', 'iconP2', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
+		doTweenX('iconP1x', 'iconP12.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
+		doTweenX('iconP2x', 'iconP22.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
+		doTweenY('iconP1y', 'iconP12.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
+		doTweenY('iconP2y', 'iconP22.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
 
-		doTweenAngle('iconP1', 'iconP1', 0, crochet / (crochetOffset * 1.05) * getProperty('gfSpeed'), tweenType)
-		doTweenAngle('iconP2', 'iconP2', 0, crochet / (crochetOffset * 1.05) * getProperty('gfSpeed'), tweenType)
-
-		doTweenX('iconP1x', 'iconP12.scale', 1, crochet / crochetOffset * getProperty('gfSpeed'), tweenType)
-		doTweenX('iconP2x', 'iconP22.scale', 1, crochet / crochetOffset * getProperty('gfSpeed'), tweenType)
-		doTweenY('iconP1y', 'iconP12.scale', 1, crochet / crochetOffset * getProperty('gfSpeed'), tweenType)
-		doTweenY('iconP2y', 'iconP22.scale', 1, crochet / crochetOffset * getProperty('gfSpeed'), tweenType)
-
-		updateHitbox('iconP12')
-		updateHitbox('iconP22')
 		updateHitbox('iconP1')
 		updateHitbox('iconP2')
+		updateHitbox('iconP12')
+		updateHitbox('iconP22')
 		iconScale()
 	end
 end

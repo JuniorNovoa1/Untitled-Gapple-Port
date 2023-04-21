@@ -51,6 +51,12 @@ end
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
 local elapsedtime = 0;
 
+function moveCam(x, y)
+	triggerEvent('Camera Follow Pos', ''..x, ''..y) --didn't want to see this stupid shit everywhere
+end
+
+local camLock = false;
+
 function onUpdate(elapsed)
     elapsedtime = elapsedtime +elapsed;
     if bambiPissed then
@@ -116,6 +122,10 @@ function onUpdatePost()
             setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
         end
     end
+
+    if camLock then
+        moveCam(625, -625)
+    end
 end
 
 function onStepHit()
@@ -176,7 +186,7 @@ function onStepHit()
         objectPlayAnimation('expunged', 'idle', true)
         setProperty('expunged.alpha', 0)
 		addLuaSprite('expunged', true)
-        setObjectOrder('expunged', getObjectOrder('dadGroup'))
+        setObjectOrder('expunged', getObjectOrder('gfe') -1)
 
         makeLuaSprite('monkey_guy', 'main/applecore/monkey_guy', getProperty('dad.x'), getProperty('dad.y'))
 		setProperty('monkey_guy.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
@@ -191,13 +201,14 @@ function onStepHit()
 		addLuaSprite('monkey_person', true)
     end
 
-    if curStep == 2104 then
+    if curStep == 2096 then
         doTweenAlpha('expunged', 'expunged', 1, 1, 'sineInOut')
     end
 
     if curStep == 2110 then
         doTweenX('expungedX', 'expunged.scale', 2, 1, 'sineInOut')
         doTweenY('expungedY', 'expunged.scale', 2, 1, 'sineInOut')
+        camLock = true;
     end
 
     if curStep == 2127 then
@@ -241,10 +252,12 @@ function onTweenCompleted(tag)
         triggerEvent('Change Character', 'dad', 'unfair-junker')
         setObjectOrder('dadGroup', getObjectOrder('gfGroup') -1)
         setObjectOrder('gfe', getObjectOrder('gfGroup'))
-        setProperty('dad.x', getProperty('dad.x') -425)
+        setProperty('dad.x', -125)
+        setProperty('dad.y', -200)
         doTweenX('expungedLeft', 'dad', getProperty('dad.x') -165, 2.8 * 1.125, 'sineInOut')
         doTweenY('expungedUP', 'dad', getProperty('dad.y') -165 * 2, 2.8 / 2, 'sineInOut')
         setProperty('expunged.visible', false)
+        camLock = false;
     end
 
     if tag == 'monkey_person' then
