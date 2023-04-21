@@ -6,7 +6,7 @@ function onCreate()
 end
 
 function onCreatePost()
-	local scaleXY = 0.8;
+	local scaleXY = 0.65;
 	for direction = 0, 3 do
 		setPropertyFromGroup('opponentStrums', direction, 'visible', false)
 		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') + 62.5)
@@ -45,8 +45,9 @@ function onCreatePost()
 	setProperty('healthBar.y', 550)
 	setProperty('healthBarBG.flipX', true)
 	setProperty('healthBar.flipX', true)
-	setProperty('scoreTxt.x', 130)
+	setProperty('scoreTxt.x', 180)
 	setProperty('scoreTxt.y', 325)
+	setTextSize('scoreTxt', 28)
 end
 
 function onUpdate()

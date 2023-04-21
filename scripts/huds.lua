@@ -76,7 +76,6 @@ function onCreatePost()
 				setProperty('healthBarBGnew.visible', false)
 			end
 
-			
 			makeLuaSprite('iconP12', 'icons/missing', 0, 0)
 			makeLuaSprite('iconP22', 'icons/missing', 0, 0)
 
@@ -138,7 +137,7 @@ function onUpdatePost()
 	if songName == 'Maze' or gappleHUDsong then
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		if songName == 'Kooky' then
-			setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\n\n\n  Accuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+			setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		end
 		if songName == 'Maze' then
 			local thingy = 0.82;
