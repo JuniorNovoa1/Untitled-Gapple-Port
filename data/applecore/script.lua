@@ -6,6 +6,7 @@ local originPosX = {};
 local originPosY = {};
 
 function onCreatePost()
+    setProperty('gf.visible', false)
     addLuaScript('activatedScripts/VG');
     setProperty('vg.visible', false)
     addCharacterToList('unfair-junker', 'dad')
@@ -153,6 +154,7 @@ function onStepHit()
     end
 
     if curStep == 800 then
+        setProperty('gf.visible', true)
         doTweenY('gf', 'gf', 350, 1.35, 'sineIn')
     end
 
