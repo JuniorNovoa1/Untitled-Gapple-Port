@@ -209,8 +209,6 @@ function onBeatHit()
 			local fuasd = {0.8, 1.3}
 			local angl = 15;
 
-			cancelTween('iconP1')
-			cancelTween('iconP2')
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', 1.1, fuasd[1])
 				scaleObject('iconP22', 1.1, fuasd[2])
