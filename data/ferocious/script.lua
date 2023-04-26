@@ -171,8 +171,8 @@ function onStepHit()
 			end
 		end
 		for i = 0, 4, 1 do
-			local offsetss = 90 * i;
-			setPropertyFromGroup('playerStrums', i, 'x', 750 + offsetss)
+			local offsets = 110 * i;
+			setPropertyFromGroup('playerStrums', i, 'x', 750 + offsets)
 			setPropertyFromGroup('playerStrums', i, 'y', normalStrumY)
 			setPropertyFromGroup('opponentStrums', i, 'y', normalStrumY)
 		end
@@ -253,7 +253,7 @@ function onStepHit()
 		print('CAR IS HERE LOL')
 	end
 
-	if curStep == 11043 then
+	if curStep == 11043 or curStep == 11044 then
 		setProperty('blackScreen.visible', false)
 		removeLuaSprite('blackScreen', true)
 		setProperty('BFLEGS2.visible', true)

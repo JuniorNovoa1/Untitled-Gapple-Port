@@ -24,10 +24,14 @@ local curDialogue = 1;
 local maxDialogue = 1;
 local dialogueBool = false;
 local inDialogue = false;
+local crazyBubble = false;
 function onCreatePost()
 	for i = 1, #dialogueSongs do
 		if songName == dialogueSongs[i] then
 			dialogueBool = true;
+			if i == 1 then
+				crazyBubble = true;
+			end
 			if i == 2 then
 				dialogueTXT = {
 					'Howdy!',
@@ -88,6 +92,7 @@ function onCreatePost()
 				}
 				song = 'wireframeCutscene';
 				images = {'decimated_dave_port', 'bf_reg_port'}
+				crazyBubble = true;
 			elseif i == 4 then
 				dialogueBool = true; --change to true to have unused ferocious dialogue
 
@@ -123,12 +128,16 @@ function onCreatePost()
 			for i = 1, #images do
 				precacheImage('dialogue/'..images[i])
 			end
+			precacheSound('pixelText')
 
 			for i = 1, #dialogueTXT do
 				maxDialogue = i;
 			end
 		end
 	end
+
+	addHaxeLibrary('FlxSound', 'flixel.system')
+	addHaxeLibrary('FlxTimer', 'flixel.util')
 end
 
 function onSongStart()
@@ -143,8 +152,10 @@ end
 function onUpdate()
 	if inDialogue then
 		runHaxeCode([[FlxG.sound.music.pause();]])
+		runHaxeCode([[game.vocals.pause();]])
 		runHaxeCode([[game.setSongTime(0)]])
 		runHaxeCode([[FlxG.sound.music.pause();]])
+		runHaxeCode([[game.vocals.pause();]])
 	end
 end
 
@@ -191,7 +202,7 @@ function onCustomSubstateCreate(tag)
 		updateHitbox('dialogueTxtTEXT')
 		addLuaText('dialogueTxtTEXT')
 
-		if songName == 'Wireframe' then
+		if crazyBubble then
 			objectPlayAnimation('speech_bubble', 'idle2', true);
 
 			setProperty('dad.x', getProperty('dad.x') -25)
@@ -206,6 +217,8 @@ function onCustomSubstateCreate(tag)
 
 		dialogueProps()
 
+		changeTxt(dialogueTXT[1])
+
 		playSound(song, 1, 'song')
 	end
 end
@@ -214,14 +227,14 @@ function dialogueProps()
 	if dialogueChar[curDialogue] == true then
 		setProperty('dad.visible', true)
 		setProperty('bf.visible', false)
-		if songName ~= 'Wireframe' then
+		if crazyBubble ~= true then
 			setProperty('speech_bubble.flipX', true)
 		end
 		objectPlayAnimation('dad', 'idle', false)
 	else
 		setProperty('dad.visible', false)
 		setProperty('bf.visible', true)
-		if songName ~= 'Wireframe' then
+		if crazyBubble ~= true then
 			setProperty('speech_bubble.flipX', false)
 		end
 		objectPlayAnimation('bf', 'idle', false)
@@ -230,15 +243,17 @@ end
 
 local spam = false;
 
+local canContinue = false;
+
 function onCustomSubstateUpdate(tag, elapsed)
 	if tag == 'dialogue' then
-		if keyboardJustPressed('ENTER') == true and not spam then
+		if keyboardJustPressed('ENTER') == true and canContinue and not spam then
 			curDialogue = curDialogue +1;
 
 			playSound('scrollMenu', 1)
 
 			if curDialogue <= maxDialogue then
-				setTextString('dialogueTxtTEXT', dialogueTXT[curDialogue])
+				changeTxt(dialogueTXT[curDialogue])
 				dialogueProps()
 			end
 		end
@@ -256,6 +271,26 @@ function onCustomSubstateUpdate(tag, elapsed)
 		if luaSoundExists('song') == false then
 			playSound(song, 1, 'song')
 		end
+
+		if getProperty('dialogueTxtTEXT.text') ~= dialogueTXT[curDialogue] and not spam then
+			playSound('pixelText', 0.6)
+			canContinue = false;
+		else
+			canContinue = true;
+		end
+	end
+end
+
+function changeTxt(text)
+	local timeForEach = 0.03;
+	setTextString('dialogueTxtTEXT', '')
+	for i = 1, #text do
+		runHaxeCode([[
+			new FlxTimer().start(]]..timeForEach * i..[[, function(tmr) {
+				var txt = PlayState.instance.modchartTexts.get('dialogueTxtTEXT');
+				txt.text += "]]..text:sub(i, i)..[[";
+			});
+		]])
 	end
 end
 
@@ -272,6 +307,7 @@ function onTweenCompleted(tag)
 		callOnLuas('onCountdownTick', {69})
 		runHaxeCode([[
 			FlxG.sound.music.time = 0;
+			game.vocals.time = 0;
 			//game.setSongTime(Conductor.crochet * 5);
 		]])
 		setProperty('canPause', true)
