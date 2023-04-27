@@ -210,14 +210,6 @@ function onStepHit()
 
     if curStep == 2671 then --BF IS EXAPNOGI
         doTweenAlpha('guh', 'lightColor', 1, 12.5, 'cubeInOut')
-        --[[[doTweenX('BG S', 'redTunnel.scale', 0.45, 12.5 * 2.5, 'cubeInOut')
-        doTweenY('BG C', 'redTunnel.scale', 0.45, 12.5 * 2.5, 'cubeInOut')
-        doTweenY('DAVE SX', 'dad', getProperty('dad.x') -400, 12.5, 'cubeInOut')
-        doTweenY('DAVE SD', 'dad', getProperty('dad.y') -575, 12.5, 'cubeInOut')
-        doTweenX('DAVE S', 'dad.scale', 0.375, 12.5, 'cubeInOut')
-        doTweenY('DAVE C', 'dad.scale', 0.375, 12.5, 'cubeInOut')
-        doTweenX('BF S', 'boyfriend.scale', 1.65, 12.5, 'cubeInOut')
-        doTweenY('BF C', 'boyfriend.scale', 1.65, 12.5, 'cubeInOut')--]]
     end
     if curStep >= 2680 then
         triggerEvent('Screen Shake', '0.1,'..getProperty('lightColor.alpha') * 0.0085, '0.1,'..getProperty('lightColor.alpha') * 0.0085)
@@ -230,7 +222,7 @@ function onBeatHit()
             doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1, 'sineOut')
         end
     end
-    if curStep >= 1630 and curStep <= 2143 then
+    if curStep >= 1630 and curStep <= 2143 and getGlobalFromScript('settings', 'epilepsy') == true then
         if curColor >= 5 then
             curColor = 1;
         end

@@ -136,7 +136,6 @@ function onCreatePost()
 		end
 	end
 
-	addHaxeLibrary('FlxSound', 'flixel.system')
 	addHaxeLibrary('FlxTimer', 'flixel.util')
 end
 

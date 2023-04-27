@@ -20,25 +20,27 @@ local elapsedtime = 0;
 
 function onUpdate(elapsed)
     elapsedtime = elapsedtime +elapsed;
-    for i = 0, getProperty('strumLineNotes.length') do
-        local krunkThing = 60;
-        if getPropertyFromGroup('strumLineNotes', i, 'ID') % 2 == 0 then
-            setPropertyFromGroup('strumLineNotes', i, 'x', originPosX[i] + ((math.sin(elapsedtime) * (1) * krunkThing)))
-            setPropertyFromGroup('strumLineNotes', i, 'y', originPosY[i] + (math.sin(elapsedtime - 5) * (1) * krunkThing))
-            setPropertyFromGroup('strumLineNotes', i, 'scale.x', math.abs(math.sin(elapsedtime - 5) * (1) / 4))
-            setPropertyFromGroup('strumLineNotes', i, 'scale.y', math.abs((math.sin(elapsedtime) * (1)) / 2))
-        else
-            setPropertyFromGroup('strumLineNotes', i, 'x', originPosX[i] + ((math.sin(elapsedtime) * (-1) * krunkThing)))
-            setPropertyFromGroup('strumLineNotes', i, 'y', originPosY[i] + (math.sin(elapsedtime - 5) * (-1) * krunkThing))
-            setPropertyFromGroup('strumLineNotes', i, 'scale.x', math.abs(math.sin(elapsedtime - 5) * (-1) / 4))
-            setPropertyFromGroup('strumLineNotes', i, 'scale.y', math.abs((math.sin(elapsedtime) * (-1)) / 2))
+    if getGlobalFromScript('settings', 'modCharts') == true then
+        for i = 0, getProperty('strumLineNotes.length') do
+            local krunkThing = 60;
+            if getPropertyFromGroup('strumLineNotes', i, 'ID') % 2 == 0 then
+                setPropertyFromGroup('strumLineNotes', i, 'x', originPosX[i] + ((math.sin(elapsedtime) * (1) * krunkThing)))
+                setPropertyFromGroup('strumLineNotes', i, 'y', originPosY[i] + (math.sin(elapsedtime - 5) * (1) * krunkThing))
+                setPropertyFromGroup('strumLineNotes', i, 'scale.x', math.abs(math.sin(elapsedtime - 5) * (1) / 4))
+                setPropertyFromGroup('strumLineNotes', i, 'scale.y', math.abs((math.sin(elapsedtime) * (1)) / 2))
+            else
+                setPropertyFromGroup('strumLineNotes', i, 'x', originPosX[i] + ((math.sin(elapsedtime) * (-1) * krunkThing)))
+                setPropertyFromGroup('strumLineNotes', i, 'y', originPosY[i] + (math.sin(elapsedtime - 5) * (-1) * krunkThing))
+                setPropertyFromGroup('strumLineNotes', i, 'scale.x', math.abs(math.sin(elapsedtime - 5) * (-1) / 4))
+                setPropertyFromGroup('strumLineNotes', i, 'scale.y', math.abs((math.sin(elapsedtime) * (-1)) / 2))
+            end
+    
+            setPropertyFromGroup('strumLineNotes', i, 'scale.x', getPropertyFromGroup('strumLineNotes', i, 'scale.x') + 0.2)
+            setPropertyFromGroup('strumLineNotes', i, 'scale.y', getPropertyFromGroup('strumLineNotes', i, 'scale.y') + 0.2)
+    
+            setPropertyFromGroup('strumLineNotes', i, 'scale.x', getPropertyFromGroup('strumLineNotes', i, 'scale.x') * 1.5)
+            setPropertyFromGroup('strumLineNotes', i, 'scale.y', getPropertyFromGroup('strumLineNotes', i, 'scale.y') * 1.5)
         end
-
-        setPropertyFromGroup('strumLineNotes', i, 'scale.x', getPropertyFromGroup('strumLineNotes', i, 'scale.x') + 0.2)
-        setPropertyFromGroup('strumLineNotes', i, 'scale.y', getPropertyFromGroup('strumLineNotes', i, 'scale.y') + 0.2)
-
-        setPropertyFromGroup('strumLineNotes', i, 'scale.x', getPropertyFromGroup('strumLineNotes', i, 'scale.x') * 1.5)
-        setPropertyFromGroup('strumLineNotes', i, 'scale.y', getPropertyFromGroup('strumLineNotes', i, 'scale.y') * 1.5)
     end
 end
 

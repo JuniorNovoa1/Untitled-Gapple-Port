@@ -66,7 +66,7 @@ function onUpdate(elapsed)
             if i <= 3 then
                 nope = true;
             end
-            if not nope then
+            if not nope and getGlobalFromScript('settings', 'modCharts') == true then
                 local krunkThing = 60;
                 if getPropertyFromGroup('strumLineNotes', i, 'ID') % 2 == 0 then
                     setPropertyFromGroup('strumLineNotes', i, 'x', originPosX[i] + ((math.sin(elapsedtime) * (1) * krunkThing)))
@@ -87,7 +87,7 @@ function onUpdate(elapsed)
                 setPropertyFromGroup('strumLineNotes', i, 'scale.y', getPropertyFromGroup('strumLineNotes', i, 'scale.y') * 1.5)
             end
         end
-    elseif unfairPart then
+    elseif unfairPart and getGlobalFromScript('settings', 'modCharts') == true then
         for i = 0, getProperty('strumLineNotes.length') do
             setPropertyFromGroup('strumLineNotes', i, 'x', ((screenWidth / 2) - (getPropertyFromGroup('strumLineNotes', i, 'width') / 2)) + (math.sin(elapsedtime + (i)) * 300))
             setPropertyFromGroup('strumLineNotes', i, 'y', ((screenHeight / 2) - (getPropertyFromGroup('strumLineNotes', i, 'height') / 2)) + (math.cos(elapsedtime + (i)) * 300))
