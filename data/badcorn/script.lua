@@ -9,19 +9,23 @@ local timerOrgasim = 0.05;
 
 function onCreatePost()
     addCharacterToList('awesomeBambiCrack', 'dad')
-    doTweenAngle('camHUD1', 'camHUD', camAngle, camTimer, tween)
-    doTweenAngle('camGame1', 'camGame', camAngle, camTimer, tween)
-    for i = 1, getProperty('strumLineNotes.length') do
-        notesX[i] = getPropertyFromGroup('strumLineNotes', i-1, 'x')
-        notesY[i] = getPropertyFromGroup('strumLineNotes', i-1, 'y')
-        noteTweenX('noteX'..i, i-1, notesX[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim, tween)
-        noteTweenY('noteY'..i, i-1, notesY[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim, tween)
+    if getGlobalFromScript('settings', 'modCharts') == true then
+        doTweenAngle('camHUD1', 'camHUD', camAngle, camTimer, tween)
+        doTweenAngle('camGame1', 'camGame', camAngle, camTimer, tween)
+        for i = 1, getProperty('strumLineNotes.length') do
+            notesX[i] = getPropertyFromGroup('strumLineNotes', i-1, 'x')
+            notesY[i] = getPropertyFromGroup('strumLineNotes', i-1, 'y')
+            noteTweenX('noteX'..i, i-1, notesX[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim, tween)
+            noteTweenY('noteY'..i, i-1, notesY[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim, tween)
+        end
     end
 end
 
 local shake = 0.0125;
 function onUpdate()
-    triggerEvent('Screen Shake', '0.1,'..shake, '0.1,'..shake / 1.35)
+    if getGlobalFromScript('settings', 'screenShake') == true then
+        triggerEvent('Screen Shake', '0.1,'..shake, '0.1,'..shake / 1.35)
+    end
 end
 
 function onStepHit()

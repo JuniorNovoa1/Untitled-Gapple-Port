@@ -39,7 +39,9 @@ function onStepHit()
 
     if curStep == 64 then
         setProperty('defaultCamZoom', 0.65)
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
     end
 
     if curStep == 326 then
@@ -67,7 +69,9 @@ function onStepHit()
             doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.0001, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.65)
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
     end
 
     if curStep == 568 then
@@ -83,7 +87,9 @@ function onStepHit()
         for i = 1, #invisObjs do
             doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1, 'sineOut')
         end
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
     end
 
     if curStep == 832 then
@@ -96,7 +102,9 @@ function onStepHit()
             doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.0001, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.65)
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
     end
 
     if curStep == 1093 then
@@ -109,7 +117,9 @@ function onStepHit()
             doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.95)
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
     end
 
     if curStep == 1184 then
@@ -122,7 +132,9 @@ function onStepHit()
             doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.8, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.65)
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
     end
 
     if curStep == 1179 then
@@ -151,7 +163,9 @@ function onStepHit()
             doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.8, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.65)
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
     end
 
     if curStep == 2143 then
@@ -167,7 +181,7 @@ function onStepHit()
         cameraFlash('other', 'FFFFFF', 1)
     end
 
-    if curStep == 2285 then
+    if curStep == 2285 and flashingLights then
         setProperty('defaultCamZoom', 0.65)
     end
 
@@ -180,7 +194,9 @@ function onStepHit()
         for i = 1, #invisObjs do
             doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.8, 'sineOut')
         end
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
     end
 
     if curStep == 2145 then --bandai explodes then dave comes in
@@ -205,13 +221,15 @@ function onStepHit()
         cancelTween('DAVESF')
         removeLuaSprite('daveFuckingDies', true)
         triggerEvent('Change Character', 'dad', 'tunnel-dave')
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
     end
 
     if curStep == 2671 then --BF IS EXAPNOGI
         doTweenAlpha('guh', 'lightColor', 1, 12.5, 'cubeInOut')
     end
-    if curStep >= 2680 then
+    if curStep >= 2680 and getGlobalFromScript('settings', 'screenShake') == true then
         triggerEvent('Screen Shake', '0.1,'..getProperty('lightColor.alpha') * 0.0085, '0.1,'..getProperty('lightColor.alpha') * 0.0085)
     end
 end
@@ -248,14 +266,15 @@ end
 
 function onTweenCompleted(tag)
     if tag == 'badaiInFrameY' then
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
         triggerEvent('Change Character', 'dad', 'badai')
         setProperty('dad.x', getProperty('badaiComes.x'))
         setProperty('dad.y', getProperty('badaiComes.y'))
         setProperty('daveFuckingDies.visible', true)
         setProperty('badaiComes.visible', false)
         --removeLuaSprite('badaiComes', true)
-        cameraFlash('camother', 'FFFFFF', 1)
         doTweenY('davefuckinggoesup', 'daveFuckingDies', -125, 2.5, 'cubeInOut')
     end
 
@@ -271,7 +290,9 @@ function onTweenCompleted(tag)
         cancelTween('DAVESF')
         removeLuaSprite('daveFuckingDies', true)
         triggerEvent('Change Character', 'dad', 'tunnel-dave')
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('other', 'FFFFFF', 1)
+		end
     end
 
     if tag == 'badaiInFrameY2' then

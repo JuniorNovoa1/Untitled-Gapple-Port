@@ -49,5 +49,7 @@ end
 end--]]
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
-    triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
+    if getGlobalFromScript('settings', 'screenShake') == true then
+        triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
+    end
 end

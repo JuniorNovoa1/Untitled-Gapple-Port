@@ -320,7 +320,7 @@ function onEvent(n, v1, v2)
 				addLuaSprite('PEDOPHILESTATIC', false)
 				print('pedophile sprite made')
 			end
-		else
+		elseif flashingLights then
 			cameraFlash('other', 'FFFFFF', 0.35)
 		end
 	end

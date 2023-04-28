@@ -3,3 +3,4 @@ settingsAlert = true; --disable to remove message in the top left!!! (GOTTA FIND
 --main settings (all mods)
 modCharts = true; --determines wether modcharts are enabled
 epilepsy = true; --don't want someone having a seizure on fnf lol!
+screenShake = true; --optional

@@ -114,7 +114,9 @@ function onUpdatePost()
                 setProperty('gf.holdTimer', 0)
                 strumAnim(noteDataa - 1, 'confirm', 0.15);
                 setProperty('health', getProperty('health') -(healthtolower / 2.65))
-                triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
+                if getGlobalFromScript('settings', 'screenShake') == true then
+                    triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
+                end
                 characterPlayAnim('gf', singAnims[noteDataa], true);
                 removeFromGroup('notes', i, false)
             end
@@ -150,7 +152,9 @@ function onStepHit()
         removeLuaSprite('hi', true)
         setProperty('poop.visible', true)
         setProperty('defaultCamZoom', 0.55)
-        cameraFlash('other', 'FFFFFF', 1)
+        if flashingLights then
+			cameraFlash('camother', 'FFFFFF', 1)
+		end
     end
 
     if curStep == 800 then
@@ -177,7 +181,9 @@ function onStepHit()
         removeLuaSprite('poop', true)
         setProperty('yeah.visible', true)
         setProperty('defaultCamZoom', 0.425)
-        cameraFlash('other', '000000', 1.5)
+        if flashingLights then
+			cameraFlash('camother', '000000', 1.5)
+		end
         setProperty('vg.visible', true)
     end
 

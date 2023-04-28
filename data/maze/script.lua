@@ -60,7 +60,9 @@ function onStepHit()
 		--spotlight
 		spotLightPart = true;
 		setProperty('defaultCamZoom', getProperty('defaultCamZoom') - 0.1)
-		cameraFlash('camother', 'FFFFFF', 0.5)
+		if flashingLights then
+			cameraFlash('camother', 'FFFFFF', 0.5)
+		end
 		updateSpotlight(false)
 
 		--[[
@@ -85,7 +87,7 @@ function onStepHit()
 		doTweenAlpha('fadeOUTTSPOT', 'spotLight', 0, 1, 'quadInOut')
 	end
 
-	if curStep == 1232 then
+	if curStep == 1232 and flashingLights then
 		cameraFlash('camother', 'FFFFFF', 0.5)
 	end
 end
