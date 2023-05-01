@@ -6,7 +6,7 @@
 				0
 			],
 			"loop": false,
-			"fps": 24,
+			"fps": 12,
 			"anim": "singLEFT",
 			"indices": [],
 			"name": "left"
@@ -17,7 +17,7 @@
 				-25
 			],
 			"loop": false,
-			"fps": 24,
+			"fps": 12,
 			"anim": "singDOWN",
 			"indices": [],
 			"name": "down0"
@@ -28,7 +28,7 @@
 				75
 			],
 			"loop": false,
-			"fps": 24,
+			"fps": 12,
 			"anim": "singUP",
 			"indices": [],
 			"name": "up"
@@ -39,7 +39,7 @@
 				0
 			],
 			"loop": false,
-			"fps": 24,
+			"fps": 12,
 			"anim": "singRIGHT",
 			"indices": [],
 			"name": "right"
@@ -51,8 +51,19 @@
 				0
 			],
 			"anim": "idle",
-			"fps": 24,
+			"fps": 12,
 			"name": "idle",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singUP-alt",
+			"fps": 12,
+			"name": "smash",
 			"indices": []
 		}
 	],

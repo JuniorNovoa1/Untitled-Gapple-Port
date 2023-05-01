@@ -7,7 +7,10 @@ local notesY = {};
 local noteOrgasm = {-25, 25}
 local timerOrgasim = 0.05;
 
+local originDad = ''
+
 function onCreatePost()
+    originDad = getProperty('dad.curCharacter')
     addCharacterToList('awesomeBambiCrack', 'dad')
     if getGlobalFromScript('settings', 'modCharts') == true then
         doTweenAngle('camHUD1', 'camHUD', camAngle, camTimer, tween)
@@ -72,9 +75,9 @@ function onTweenCompleted(tag)
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
-	if noteType == 'Alt Animation' and getProperty('dad.curCharacter') == 'awesomeBambi' then
+	if noteType == 'Alt Animation' and getProperty('dad.curCharacter') == originDad then
         triggerEvent('Change Character', 'dad', 'awesomeBambiCrack')
     elseif noteType ~= 'Alt Animation' and getProperty('dad.curCharacter') == 'awesomeBambiCrack' then
-        triggerEvent('Change Character', 'dad', 'awesomeBambi')
+        triggerEvent('Change Character', 'dad', originDad)
     end
 end

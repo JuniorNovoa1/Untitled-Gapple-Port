@@ -8,6 +8,8 @@ local gappleHUDsong = false;
 local arrowXoffset = 35;
 local no_splashes = false;
 
+local CharactersWith3D = {"dave-angey", "bambi-3d", 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'tunnel-dave', 'badai', 'unfair-junker', 'garrett', '3d-bf', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car'}
+
 function onCreatePost()
 	setProperty('showCombo', true)
 	for i = 1, #songSplashNames do
@@ -76,6 +78,12 @@ function onCreatePost()
 				setProperty('healthBarBGnew.visible', false)
 			end
 
+			for i = 0, getProperty('unspawnNotes.length')-1 do
+				if (((has_value(CharactersWith3D, getProperty('dad.curCharacter')) and not getPropertyFromGroup('unspawnNotes', i, 'mustHit')) or (has_value(CharactersWith3D, getProperty('boyfriend.curCharacter'))) and getPropertyFromGroup('unspawnNotes', i, 'mustHit'))) or ((has_value(CharactersWith3D, getProperty('dad.curCharacter')) or has_value(CharactersWith3D, getProperty('boyfriend.curCharacter'))) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
+					setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_assets_3D')
+				end
+			end
+
 			makeLuaSprite('iconP12', 'icons/missing', 0, 0)
 			makeLuaSprite('iconP22', 'icons/missing', 0, 0)
 
@@ -88,6 +96,16 @@ function onCreatePost()
 end
 
 --THANK GOD THE INTERNET EXISTS
+function has_value (tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
 function math.lerp(from, to, t)
 	return from + (to - from) * math.clamp(t, 0, 1)
 end

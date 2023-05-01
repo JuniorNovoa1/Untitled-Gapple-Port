@@ -190,7 +190,7 @@ function onStepHit()
     if curStep == 2088 then
         makeAnimatedLuaSprite('expunged', 'characters/main/applecore/UNFAIR_GUY_FAICNG_FORWARD', -125, -200)
 		setProperty('expunged.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-        addAnimationByPrefix('expunged', 'idle', 'idle0', 24, true)
+        addAnimationByPrefix('expunged', 'idle', 'idle0', 12, true)
         objectPlayAnimation('expunged', 'idle', true)
         setProperty('expunged.alpha', 0)
 		addLuaSprite('expunged', true)

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="bad.png">
+<SubTexture name="bad down0000" x="0" y="2784" width="598" height="275" frameX="-440" frameY="-486" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad down0001" x="2516" y="2464" width="594" height="278" frameX="-436" frameY="-483" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad down0002" x="601" y="2464" width="625" height="314" frameX="-398" frameY="-447" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad down0003" x="606" y="2133" width="650" height="327" frameX="-373" frameY="-434" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad down0004" x="1462" y="1773" width="655" height="332" frameX="-368" frameY="-429" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad fastsmash0000" x="0" y="0" width="660" height="492" frameX="-359" frameY="-266" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad fastsmash0001" x="2640" y="0" width="592" height="321" frameX="-431" frameY="-437" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad idle0000" x="598" y="2784" width="731" height="275" frameX="-331" frameY="-483" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad idle0001" x="1828" y="2464" width="688" height="304" frameX="-355" frameY="-454" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad idle0002" x="1762" y="2133" width="577" height="322" frameX="-410" frameY="-436" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad idle0003" x="2025" y="1407" width="519" height="335" frameX="-441" frameY="-423" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad idle0004" x="2102" y="479" width="490" height="340" frameX="-459" frameY="-418" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad left0000" x="1226" y="2464" width="602" height="312" frameX="-389" frameY="-442" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad left0001" x="2640" y="321" width="585" height="313" frameX="-404" frameY="-441" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad left0002" x="1256" y="2133" width="506" height="324" frameX="-452" frameY="-430" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad left0003" x="1071" y="1773" width="391" height="334" frameX="-505" frameY="-420" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad left0004" x="2117" y="1773" width="383" height="332" frameX="-508" frameY="-422" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad right0000" x="1384" y="0" width="1256" height="479" frameX="-51" frameY="-364" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad right0001" x="0" y="973" width="1212" height="434" frameX="-62" frameY="-379" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad right0002" x="0" y="1773" width="1071" height="360" frameX="-94" frameY="-399" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad right0003" x="0" y="1407" width="1016" height="366" frameX="-99" frameY="-393" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad right0004" x="1016" y="1407" width="1009" height="364" frameX="-102" frameY="-395" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad smash0000" x="0" y="0" width="660" height="492" frameX="-359" frameY="-266" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad smash0001" x="721" y="492" width="645" height="431" frameX="-374" frameY="-327" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad smash0002" x="2640" y="0" width="592" height="321" frameX="-431" frameY="-437" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad smash0003" x="0" y="2464" width="601" height="320" frameX="-416" frameY="-438" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad smash0004" x="0" y="2133" width="606" height="331" frameX="-411" frameY="-427" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad up0000" x="660" y="0" width="724" height="484" frameX="-312" frameY="-274" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad up0001" x="0" y="492" width="721" height="481" frameX="-314" frameY="-277" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad up0002" x="1384" y="479" width="718" height="446" frameX="-316" frameY="-312" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad up0003" x="1212" y="973" width="693" height="404" frameX="-334" frameY="-354" frameWidth="1437" frameHeight="1075" />
+<SubTexture name="bad up0004" x="1905" y="973" width="691" height="402" frameX="-337" frameY="-356" frameWidth="1437" frameHeight="1075" />
+</TextureAtlas>

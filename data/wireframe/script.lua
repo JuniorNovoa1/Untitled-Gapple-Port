@@ -240,7 +240,10 @@ function onBeatHit()
             doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1, 'sineOut')
         end
     end
-    if curStep >= 1630 and curStep <= 2143 and getGlobalFromScript('settings', 'epilepsy') == true then
+    if curStep >= 1630 and curStep <= 2143 then
+        if getGlobalFromScript('settings', 'epilepsy') == true then
+            return;
+        end
         if curColor >= 5 then
             curColor = 1;
         end

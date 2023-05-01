@@ -1,3 +1,5 @@
+local camMovementType = 'charSize'; --all types: '', charSize, camZoom - (charSize changes the movement amount by the size of the char, camZoom changes the movement amount by how much the vaule defaultCamZoom is)
+
 local regAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'};
 local altAnims = {'singLEFT-alt', 'singDOWN-alt', 'singUP-alt', 'singRIGHT-alt'};
 local bfCamIdle = {};
@@ -32,6 +34,11 @@ end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
 	if mustHitSection == true then
+		if camMovementType == 'charSize' then
+			offsets = 30 + (0.000025 * getProperty('boyfriend.width') * getProperty('boyfriend.height'));
+		elseif camMovementType == 'camZoom' then
+			offsets = 30 / (getProperty('defaultCamZoom') * 0.8);
+		end
 		if direction == 0 then
 			moveCam(bfCamIdle[0] -offsets, bfCamIdle[1]);
 		end
@@ -52,6 +59,11 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 		return;
 	end
 	if mustHitSection == false then
+		if camMovementType == 'charSize' then
+			offsets = 30 + (0.000025 * getProperty('dad.width') * getProperty('dad.height'));
+		elseif camMovementType == 'camZoom' then
+			offsets = 30 / (getProperty('defaultCamZoom') * 0.8);
+		end
 		if direction == 0 then
 			moveCam(dadCamIdle[0] -offsets, dadCamIdle[1]);
 		end
