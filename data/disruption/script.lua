@@ -14,7 +14,7 @@ end
 local elapsedtime = 0;
 
 function onUpdate(elapsed)
-    if getGlobalFromScript('settings', 'modcharts') == false then
+    if getDataFromSave('settings', 'modcharts') == false then
         return;
     end
 
@@ -43,10 +43,10 @@ end
 
 --[[function goodNoteHit(id, direction, noteType, isSustainNote)
     triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
-end--]]
+end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
-    if getGlobalFromScript('settings', 'screenshake') == true then
+    if getDataFromSave('settings', 'screenshake') == true then
         triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
     end
-end
+end--]]

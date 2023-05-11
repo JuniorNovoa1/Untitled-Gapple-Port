@@ -1,0 +1,26 @@
+{
+	"song": {
+		"events": [
+			[
+				130000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"sart-producer-front"
+					]
+				]
+			],
+			[
+				150000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"sart-producer"
+					]
+				]
+			]
+		]
+	}
+}

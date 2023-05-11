@@ -16,7 +16,8 @@ end
 
 function onCountdownTick(tick)
     if tick == 69 then
-        if songName ~= 'Applecore' then
+        if dadName == 'bambi-piss-3d' then
+            originalPos = getProperty('dad.y')
             doTweenY('bambiUp', dad, originalPos -posAmount, speedAmount, tweenType)
         end
     end
@@ -33,32 +34,10 @@ function onTweenCompleted(tag)
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
-    if songName ~= 'Applecore' then
+    if dadName == 'bambi-piss-3d' then
 	    setProperty('health', getProperty('health') -(healthtolower / 2.65))
-    end
-end
-
-function changeNoteSkin(player, skin)
-	if player == true then
-		for i = 0, 4, 1 do
-			setPropertyFromGroup('playerStrums', i, 'texture', skin)
-		end
-	end
-    if not player then
-		for i = 0, 4, 1 do
-			setPropertyFromGroup('opponentStrums', i, 'texture', skin)
-		end
-	end
-
-    for i = 0, getProperty('notes.length') -1 do
-        if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('notes', i, 'texture', skin)
-        end
-    end
-
-    for i = 0, getProperty('unspawnNotes.length') -1 do
-        if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('unspawnNotes', i, 'texture', skin)
+        if getDataFromSave('settings', 'screenshake') == true then
+            triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
         end
     end
 end

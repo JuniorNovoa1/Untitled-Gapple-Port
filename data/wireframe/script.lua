@@ -241,7 +241,7 @@ function onBeatHit()
         end
     end
     if curStep >= 1630 and curStep <= 2143 then
-        if getGlobalFromScript('settings', 'epilepsy') == true then
+        if getDataFromSave('settings', 'epilepsy') == false then
             return;
         end
         if curColor >= 5 then

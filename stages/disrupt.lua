@@ -1,6 +1,6 @@
 local shadname = "glitchEffect";
 function onCreate()
-    makeLuaSprite('disruption', 'main/disruptor', 0, 250)
+    makeLuaSprite('disruption', 'main/disruptor', 0, 0)
     setProperty('disruption.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     screenCenter('disruption', 'x')
     addLuaSprite('disruption', false)

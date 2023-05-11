@@ -140,7 +140,7 @@ function onCreatePost()
 end
 
 function onSongStart()
-	if not dialogueBool then
+	if not dialogueBool or buildTarget == 'android' or getDataFromSave(saveFileName, 'dialogue') == false then
 		callOnLuas('onCountdownTick', {69})
 		return;
 	end
