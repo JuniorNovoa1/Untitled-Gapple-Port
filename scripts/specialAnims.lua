@@ -1,4 +1,5 @@
-anims = {'smash', 'singThrow', 'singSmash', 'singUP-alt', 'dodge', 'hit'}
+anims = {'smash', 'singThrow', 'singSmash', 'singUP-alt', 'dodge', 'hit', 'hey'}
+
 function onUpdate()
     for i = 1, #anims do
         if getProperty('boyfriend.animation.curAnim.name') == anims[i] then

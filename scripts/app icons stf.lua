@@ -23,38 +23,9 @@ function onCreatePost()
 		setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
 	end
 
-	changeIcon();
-end
-
-function onUpdate()
-	--[[
-	if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
-		setProperty('boyfriend.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-	end
-	
-	if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
-		setProperty('dad.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-	end
-	
-	if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
-		setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-	end
-	
-	for i = 0, 4, 1 do --actually causes framerate drop + not needed
-		if getPropertyFromGroup('playerStrums', i, 'antialiasing') == true then --no point if antialiasing is off
-			setPropertyFromGroup('playerStrums', i, 'antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-			playerDones[i] = true;
-		end
-
-		if getPropertyFromGroup('opponentStrums', i, 'antialiasing') == true then --no point if antialiasing is off
-			setPropertyFromGroup('opponentStrums', i, 'antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-			opponentDones[i] = true;
-		end
-	end
-
-	for i = 0, getProperty('notes.length') -1 do
-		if getPropertyFromGroup('notes', i, 'antialiasing') == true then --no point if antialiasing is off
-			setPropertyFromGroup('notes', i, 'antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+	for i = 0, getProperty('strumLineNotes.length') do
+		if getPropertyFromGroup('strumLineNotes', i, 'antialiasing') == true then --no point if antialiasing is off
+			setPropertyFromGroup('strumLineNotes.antialiasing', i, getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
 		end
 	end
 
@@ -63,7 +34,8 @@ function onUpdate()
 			setPropertyFromGroup('unspawnNotes', i, 'antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
 		end
 	end
-	--]]
+
+	changeIcon();
 end
 
 function onEvent(tag, val1, val2)
@@ -83,6 +55,9 @@ function onEvent(tag, val1, val2)
 end
 
 function onPause()
+	if buildTarget ~= 'windows' then
+		return; --don't want other people crashing when trying to play
+	end
 	runHaxeCode([[
 		Application.current.window.title = "Friday Night Funkin': Psych Engine";
 		Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/Funkin").bitmap));
@@ -103,9 +78,14 @@ end
 
 function clearCache()
 	runHaxeCode([[
+		openfl.system.System.gc();
+	]])
+	if buildTarget ~= 'windows' then
+		return; --don't want other people crashing when trying to play
+	end
+	runHaxeCode([[
 		Application.current.window.title = "Friday Night Funkin': Psych Engine";
 		Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/Funkin").bitmap));
-		openfl.system.System.gc();
 	]])
 end
 
