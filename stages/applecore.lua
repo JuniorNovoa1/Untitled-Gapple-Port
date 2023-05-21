@@ -41,14 +41,14 @@ function onCreate()
     for i = 1, #items2 do
         makeAnimatedLuaSprite(items2[i], 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
         setProperty(items2[i]..'.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-        addAnimationByPrefix(items2[i], 'idle', 'p', getRandomInt(9, 14), true);
+        addAnimationByPrefix(items2[i], 'idle', 'p', 14, true);
         objectPlayAnimation(items2[i], 'idle', true);
         scaleObject(items2[i], 0.675, 0.675)
         addLuaSprite(items2[i], false)
 
         makeAnimatedLuaSprite(items2[i]..'1', 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
         setProperty(items2[i]..'1.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-        addAnimationByPrefix(items2[i]..'1', 'idle', 'p', getRandomInt(9, 14), true);
+        addAnimationByPrefix(items2[i]..'1', 'idle', 'p', 14, true);
         objectPlayAnimation(items2[i]..'1', 'idle', true);
         scaleObject(items2[i]..'1', 0.675, 0.675)
         addLuaSprite(items2[i]..'1', false)
@@ -96,7 +96,7 @@ function onCreate()
     setProperty('hi.visible', true)
 end
 
-local elapsedtime = nil
+local elapsedtime = 0
 function onUpdatePost(elapsed)
 	elapsedtime = elapsedtime + elapsed
 	for i = 1, #items do
