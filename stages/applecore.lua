@@ -16,12 +16,12 @@ function onCreate()
     initLuaShader(shadname)
     for i = 1, #items do
         makeLuaSprite(items[i], 'main/applecore/'..items[i], 0, -250)
-        setProperty(items[i]..'.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+        setProperty(items[i]..'.antialiasing', false) -- mistake lol it needs to be no antialiasing for more accurateness
         setProperty(items[i]..'.visible', false)
-        scaleObject(items[i], 1.75, 1.5)
+        setGraphicSize(items[i], getProperty(items[i] .. '.width') * 1.75, getProperty(items[i] .. '.height') * 1.75, true)
         if i == 3 then
             setProperty(items[i]..'.y', -500)
-            scaleObject(items[i], 2.5, 2.5)
+            setGraphicSize(items[i], getProperty(items[i] .. '.width') * 2, getProperty(items[i] .. '.height') * 2, true)
         end
         screenCenter(items[i], 'x')
         addLuaSprite(items[i], false)
@@ -96,9 +96,11 @@ function onCreate()
     setProperty('hi.visible', true)
 end
 
+local elapsedtime = nil
 function onUpdatePost(elapsed)
-    for i = 1, #items do
-	    setShaderFloat(items[i], 'uTime', os.clock())
+	elapsedtime = elapsedtime + elapsed
+	for i = 1, #items do
+	    setShaderFloat(items[i], 'uTime', elapsedtime)
     end
 end
 
