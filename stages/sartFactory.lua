@@ -9,7 +9,7 @@ function onCreate()
     setProperty('spoarFolk.y', getProperty('spoarFolk.y') + 175)
     setProperty('spoarFolk.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     addAnimationByPrefix('spoarFolk', 'idle', 'dance', 24, true);
-    addAnimationByPrefix('spoarFolk', 'move0', 'uncle klunk move0', 24, false);
+    addAnimationByPrefix('spoarFolk', 'move', 'uncle klunk move0', 24, false);
     objectPlayAnimation('spoarFolk', 'idle', true);
     addLuaSprite('spoarFolk', false)
     setProperty('spoarFolk.visible', false)

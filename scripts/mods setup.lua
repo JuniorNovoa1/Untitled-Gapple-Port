@@ -1,7 +1,7 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 local gappleHUD = {'Maze', 'Disruption', 'Applecore', 'Wireframe', 'Ferocious', 'Cuberoot', 'Sart-Producer', 'OG', 'Apple-Leak', 'badcorn', 'crap!', 'Kooky'};
-local songSplashNames = {''};
+local songSplashNames = {'SONG'};
 local oldFNFPos = {''};
 local gappleHUDsong = false;
 local arrowXoffset = 35;
@@ -12,6 +12,7 @@ local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad',
 
 function onCreatePost()
 	setProperty('showCombo', true)
+	--gappleHUDsong = true;
 
 	for i = 1, #songSplashNames do
 		if songName == songSplashNames[i] then
@@ -27,7 +28,7 @@ function onCreatePost()
 		end
 	end
 	for i = 1, #gappleHUD do
-		if songName == gappleHUD[i] then
+		if songName == gappleHUD[i] or gappleHUDsong then
 			no_splashes = true;
 			setTextFont('scoreTxt', 'comic.ttf')
 			setTextFont('timeTxt', 'comic.ttf')
@@ -88,7 +89,7 @@ function onCreatePost()
 				changeNoteSkin(false, 'NOTE_assets_3D');
 			end
 
-			local difHealth = 0.4;
+			local difHealth = 0.2;
 
 			for i = 0, getProperty('unspawnNotes.length')-1 do
 				setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup('unspawnNotes', i, 'hitHealth') * (1.0 - difHealth))
@@ -111,6 +112,9 @@ function onCreatePost()
 			
 			setObjectOrder('scoreTxt', getObjectOrder('healthBarBG') -1)
 			setObjectOrder('timeTxt', 99)
+			if gappleHUDsong then
+				break;
+			end
 			gappleHUDsong = true;
 		end
 	end
@@ -209,14 +213,14 @@ end
 
 local noteColors = {'7A5299', '00FFFF', '90EE90', 'FF7F7F'} --90EE90
 
-function onUpdatePost()
+function onUpdatePost(elapsed)
 	if songName == 'Maze' or gappleHUDsong then
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		if songName == 'Kooky' then
 			setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		end
 		if songName == 'Maze' then
-			local thingy = 0.82;
+			local thingy = 0.8;
 			setGraphicSize('iconP22', math.floor(math.lerp(150, getProperty('iconP22.width'), thingy)), math.floor(math.lerp(150, getProperty('iconP22.height'), thingy)))
 			setGraphicSize('iconP12', math.floor(math.lerp(150, getProperty('iconP12.width'), thingy)), math.floor(math.lerp(150, getProperty('iconP12.height'), thingy)))
 			updateHitbox('iconP12')
@@ -315,15 +319,6 @@ function onBeatHit()
 		if songName == 'Kooky' then
 			return;
 		end
-		if curBeat % 2 == 0 then
-			if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
-				characterPlayAnim('boyfriend', 'idle', true)
-			end
-
-			if getProperty('dad.animation.curAnim.name') == 'idle' then
-				characterPlayAnim('dad', 'idle', true)
-			end
-		end
 		if curBeat % getProperty('gfSpeed') == 0 then
 			local fuasd = {0.8, 1.3}
 			local angl = 15;
@@ -354,13 +349,25 @@ function onBeatHit()
 		updateHitbox('iconP22')
 		iconScale()
 	end
+	if curBeat % 2 == 0 then
+		if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
+			characterPlayAnim('boyfriend', 'idle', true)
+		end
+
+		if getProperty('dad.animation.curAnim.name') == 'idle' then
+			if dadName == 'bambi-piss-3d' then
+				return;
+			end
+			characterPlayAnim('dad', 'idle', true)
+		end
+	end
 end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
 	if getProperty('boyfriend.color') == getColorFromHex('9400d3') then
 		setProperty('boyfriend.color', getColorFromHex('FFFFFF'))
 	end
-
+	
 	if no_splashes then
 		removeFromGroup('grpNoteSplashes', getProperty('grpNoteSplashes.length') -1, false); --insta killed
 	end

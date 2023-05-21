@@ -61,7 +61,7 @@ function onCreate()
 	end
 end
 
-function onUpdate()
+function onUpdate(elapsed)
 	if curStep >= 3311 and curStep <= 4719 then
 		setProperty('camFollow.x', 600);
 		setProperty('camFollow.y', 350);
@@ -76,7 +76,7 @@ function onStepHit()
 		setProperty('RUNBITCH.visible', true)
 		setProperty('BFLEGS2.visible', true)
 		setProperty('defaultCamZoom', 0.75)
-		print('POLICE IS ON UR ASS, RUN!')
+		--print('POLICE IS ON UR ASS, RUN!')
 	end
 
 	if curStep == 3215 then
@@ -85,7 +85,7 @@ function onStepHit()
 		setProperty('Jail.visible', true)
 
 		runTimer('dadMovingTimer', 1.45)
-		print('POLICE CAUGHT UR ASS!')
+		--print('POLICE CAUGHT UR ASS!')
 	end
 
 	if curStep == 3300 then
@@ -136,7 +136,7 @@ function onStepHit()
 			end
 		end
 
-		print('UH OH GARRETT IS ANGRY >:(')
+		--print('UH OH GARRETT IS ANGRY >:(')
 	end
 
 	if curStep == 4719 then
@@ -177,20 +177,20 @@ function onStepHit()
 			setPropertyFromGroup('opponentStrums', i, 'y', normalStrumY)
 		end
 
-		print('magik man appeared')
+		--print('magik man appeared')
 	end
 
 	if curStep == 5903 then
 		setProperty('RUNBITCHSTATIC.visible', false)
 		setProperty('RUNBITCH.visible', true)
-		print('A FUCKING PIANO?!')
+		--print('A FUCKING PIANO?!')
 	end
 
 	if curStep == 7719 then
 		setProperty('RUNBITCHSTATIC.visible', true)
 		setProperty('RUNBITCH.visible', false)
 		doTweenX('movePiano', 'dad', -3610, 1.3)
-		print('piano leaves now')
+		--print('piano leaves now')
 	end
 
 	if curStep == 8927 then
@@ -250,7 +250,7 @@ function onStepHit()
 		objectPlayAnimation('POLICECAR', 'run', true)
 		setProperty('POLICECAR.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
 		addLuaSprite('POLICECAR', true)
-		print('CAR IS HERE LOL')
+		--print('CAR IS HERE LOL')
 	end
 
 	if curStep == 11043 or curStep == 11044 then
@@ -298,7 +298,7 @@ function onEvent(n, v1, v2)
 				setProperty('PEDOPHILESTATIC.y', 675)
 				setProperty('PEDOPHILESTATIC.visible', true)
 				objectPlayAnimation('PEDOPHILESTATIC', 'hey its the toddler')
-				print('pedophile 2 is now shown')
+				--print('pedophile 2 is now shown')
 			end
 
 			if v2 == 'pedophile' then
@@ -318,7 +318,7 @@ function onEvent(n, v1, v2)
 				setProperty('PEDOPHILESTATIC.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
 				setProperty('PEDOPHILESTATIC.visible', false)
 				addLuaSprite('PEDOPHILESTATIC', false)
-				print('pedophile sprite made')
+				--print('pedophile sprite made')
 			end
 		elseif flashingLights then
 			cameraFlash('other', 'FFFFFF', 0.35)

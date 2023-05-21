@@ -63,7 +63,7 @@
 			"indices": [],
 			"fps": 12,
 			"anim": "idle",
-			"loop": false,
+			"loop": true,
 			"name": "idle"
 		}
 	],

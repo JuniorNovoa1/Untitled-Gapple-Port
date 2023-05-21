@@ -143,6 +143,10 @@ function onCreate()
     if isStoryMode then
         setProperty('health', getProperty('health') - 0.2)
     end
+
+    if songName == 'Maze' then
+        setProperty('health', 0.1)
+    end
 end
 
 local amount = 0.35;

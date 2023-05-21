@@ -37,6 +37,10 @@ function onStepHit()
 		end
     end
 
+    if curStep == 632 then
+        objectPlayAnimation('spoarFolk', 'move', false);
+    end
+
     if curStep == 640 then
         setProperty('gf.visible', false)
         setProperty('spoarFolk.visible', false)
