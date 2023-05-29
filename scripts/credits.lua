@@ -5,7 +5,7 @@ local txtOffset = 65;
 --local midSongPopUp = false;
 local time = 1;
 local waitTime = 3;
-local songNames = {'Maze', 'Disruption', 'Applecore', 'Wireframe', 'Ferocious', 'Cuberoot', 'Sart-Producer', 'OG', 'Apple-Leak', 'badcorn', 'crap!', 'Kooky', 'lore', 'Close Chuckle'};
+local songNames = {'maze', 'disruption', 'applecore', 'wireframe', 'ferocious', 'cuberoot', 'sart-producer', 'og', 'apple-leak', 'badcorn', 'crap!', 'kooky', 'lore', 'close chuckle'};
 local songTxt = {
 	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello',
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord',
@@ -74,7 +74,7 @@ function onCreatePost()
 	print(songName);
 	for i = 1, #songNames do
 		--print(songName..songNames[i]);
-		if songName == songNames[i] then
+		if string.lower(songName) == songNames[i] then
 			txt = songTxt[i];
 		end
 	end

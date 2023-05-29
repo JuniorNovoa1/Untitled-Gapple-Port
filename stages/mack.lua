@@ -12,7 +12,7 @@ function onCreate()
     --make a hidden phone guy sprite here to be shown in 'show gf.lua' and to be hidden in 'Break Window.lua'
     makeAnimatedLuaSprite('phoneGuy', 'characters/police2', 0, 0)
     addAnimationByPrefix('phoneGuy', 'running', 'approach', 35, true)
-    objectPlayAnimation('phoneGuy', 'running', true)
+    playAnim('phoneGuy', 'running', true)
     setProperty('phoneGuy.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('phoneGuy.visible', false)
     scaleObject('phoneGuy', 0.5, 0.5)

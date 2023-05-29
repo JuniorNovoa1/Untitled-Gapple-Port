@@ -6,6 +6,14 @@ function onCreate()
     updateHitbox('farm')
     screenCenter('farm')
     addLuaSprite('farm', false)
+
+    makeLuaSprite('mineBG', 'extras/mine_bg', 0, 0)
+    setProperty('mineBG.visible', false)
+    updateHitbox('mineBG')
+    screenCenter('mineBG')
+    setProperty('mineBG.y', getProperty('mineBG.y') +250)
+    setProperty('mineBG.x', getProperty('mineBG.x') +100)
+    addLuaSprite('mineBG', false)
 end
 
 function onCreatePost()

@@ -1,11 +1,13 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
-local gappleHUD = {'Maze', 'Disruption', 'Applecore', 'Wireframe', 'Ferocious', 'Cuberoot', 'Sart-Producer', 'OG', 'Apple-Leak', 'badcorn', 'crap!', 'Kooky'};
+local gappleHUD = {'maze', 'disruption', 'applecore', 'wireframe', 'ferocious', 'cuberoot', 'sart-producer', 'og', 'apple-leak', 'badcorn', 'crap!', 'kooky'};
 local songSplashNames = {'SONG'};
 local oldFNFPos = {''};
 local gappleHUDsong = false;
 local arrowXoffset = 35;
 local no_splashes = false;
+
+local songMod = 'Null';
 
 local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'garrett', '3d-bf', '3d-bf-flipped', '3d-bf-shoulder', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-front', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 'duelExpunged', '3d-bambi-leak-finale'}
@@ -15,12 +17,12 @@ function onCreatePost()
 	--gappleHUDsong = true;
 
 	for i = 1, #songSplashNames do
-		if songName == songSplashNames[i] then
+		if string.lower(songName) == songSplashNames[i] then
 			no_splashes = true;
 		end
 	end
 	for i = 1, 99 do
-		if songName == oldFNFPos[i] or songName == gappleHUD[i] then
+		if string.lower(songName) == oldFNFPos[i] or string.lower(songName) == gappleHUD[i] then
 			for direction = 0, 3 do
 				setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') - arrowXoffset)
 				setPropertyFromGroup('opponentStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') - arrowXoffset -5)
@@ -28,7 +30,7 @@ function onCreatePost()
 		end
 	end
 	for i = 1, #gappleHUD do
-		if songName == gappleHUD[i] or gappleHUDsong then
+		if string.lower(songName) == gappleHUD[i] then
 			no_splashes = true;
 			setTextFont('scoreTxt', 'comic.ttf')
 			setTextFont('timeTxt', 'comic.ttf')
@@ -53,13 +55,14 @@ function onCreatePost()
 			updateHitbox('creditsText')
 			addLuaText('creditsText')
 
-			if songName == 'Disruption' then
+			if string.lower(songName) == 'disruption' then
 				setProperty('creditsText.text', 'Screw you!')
 			end
 			if getProperty('creditsText.text') == '' then
 				setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
 			end
-			if songName == 'Maze' then
+			songMod = 'Dave and Bambi';
+			if string.lower(songName) == 'maze' then
 				setProperty('healthBarBG.visible', false)
 				makeLuaSprite('healthBarBGnew', 'daveHealth', getProperty('healthBarBG.x'), getProperty('healthBarBG.y'))
 				setObjectCamera('healthBarBGnew', 'camHUD')
@@ -71,13 +74,15 @@ function onCreatePost()
 				break;
 			end
 
+			songMod = 'DNB: Golden Apple';
+
 			makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBarBG.x'), getProperty('healthBarBG.y'))
 			scaleObject('healthBarBGnew', getProperty('healthBarBG.scale.x') - 0.075, getProperty('healthBarBG.scale.y') - 0.15)
 			setObjectCamera('healthBarBGnew', 'camHUD')
 			addLuaSprite('healthBarBGnew', false)
 			setObjectOrder('healthBarBGnew', getObjectOrder('healthBarBG') + 1)
 
-			if songName == 'Kooky' then
+			if string.lower(songName) == 'kooky' then
 				setProperty('healthBarBGnew.visible', false)
 			end
 
@@ -89,14 +94,14 @@ function onCreatePost()
 				changeNoteSkin(false, 'NOTE_assets_3D');
 			end
 
-			local difHealth = 0.2;
+			local difHealth = 0.025;
 
 			for i = 0, getProperty('unspawnNotes.length')-1 do
 				setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup('unspawnNotes', i, 'hitHealth') * (1.0 - difHealth))
 				if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
 					setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup('unspawnNotes', i, 'hitHealth') / 2)
 				end
-				setPropertyFromGroup('unspawnNotes', i, 'missHealth', getPropertyFromGroup('unspawnNotes', i, 'missHealth') * (1.0 + difHealth))
+				setPropertyFromGroup('unspawnNotes', i, 'missHealth', getPropertyFromGroup('unspawnNotes', i, 'missHealth') * (1.0 + (difHealth * 4)))
 				if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
 					setPropertyFromGroup('unspawnNotes', i, 'missHealth', getPropertyFromGroup('unspawnNotes', i, 'missHealth') / 2)
 				end
@@ -117,6 +122,14 @@ function onCreatePost()
 			end
 			gappleHUDsong = true;
 		end
+	end
+
+	if songName == 'lore' then
+		songMod = 'D-Sides';
+	end
+
+	if string.lower(songName) == 'close chuckle' then
+		songMod = 'Hotline-024';
 	end
 end
 
@@ -191,15 +204,18 @@ end
 
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
 local boyfriendHasMissAnims = false;
+local actualSongLength = 0;
+local songPos = 0;
 
 function onUpdate(elapsed)
 	setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha'))
+	actualSongLength = math.toTime(getProperty("songLength") / 1000);
+	songPos = math.toTime(getSongPosition() / 1000)
+
 	if gappleHUDsong then
 		iconScale()
 		setProperty('timeBarBG.visible', false)
 		setProperty('timeBar.visible', false)
-		local actualSongLength = math.toTime(getProperty("songLength") / 1000);
-		local songPos = math.toTime(getSongPosition() / 1000)
 		setTextString('timeTxt', songPos.." / "..actualSongLength)
 	end
 
@@ -214,12 +230,26 @@ end
 local noteColors = {'7A5299', '00FFFF', '90EE90', 'FF7F7F'} --90EE90
 
 function onUpdatePost(elapsed)
-	if songName == 'Maze' or gappleHUDsong then
+	if string.lower(songName) == 'maze' or gappleHUDsong then
+		setProperty('healthBarBG.y', screenHeight * 0.9)
+		setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
+		setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
+		setProperty('healthBarBGnew.y', screenHeight * 0.9)
+		setProperty('healthBarBGnew.x', getProperty('healthBarBG.x'))
+		setProperty('scoreTxt.y', getProperty('healthBarBG.y') + 40)
+		if downscroll then
+			setProperty('healthBarBG.y', 50)
+			setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
+			setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
+			setProperty('healthBarBGnew.y', getProperty('healthBarBG.y') + 4)
+			setProperty('healthBarBGnew.x', getProperty('healthBarBG.x') + 4)
+		end
+
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
-		if songName == 'Kooky' then
+		if string.lower(songName) == 'kooky' then
 			setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		end
-		if songName == 'Maze' then
+		if string.lower(songName) == 'maze' then
 			local thingy = 0.8;
 			setGraphicSize('iconP22', math.floor(math.lerp(150, getProperty('iconP22.width'), thingy)), math.floor(math.lerp(150, getProperty('iconP22.height'), thingy)))
 			setGraphicSize('iconP12', math.floor(math.lerp(150, getProperty('iconP12.width'), thingy)), math.floor(math.lerp(150, getProperty('iconP12.height'), thingy)))
@@ -230,53 +260,11 @@ function onUpdatePost(elapsed)
 		end
 		iconScale()
 	end
-
-	setProperty('healthBarBG.y', screenHeight * 0.9)
-	setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
-	setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
-	setProperty('scoreTxt.y', getProperty('healthBarBG.y') + 40)
-	if downscroll then
-		setProperty('healthBarBG.y', 50)
-		setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
-		setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
-	end
-	
-	for i = 0, getProperty('playerStrums.length') do
-		if getPropertyFromGroup('playerStrums', i, 'texture') ~= 'NOTE_assets_TRASH' then
-			break;
-		end
-
-		if getPropertyFromGroup('playerStrums', i, 'animation.curAnim.name') == 'confirm' then
-			cancelTween('noteHitxP'..i)
-			cancelTween('noteHityP'..i)
-			setProperty('playerStrums.members['..i..'].scale.x', 0.8)
-			setProperty('playerStrums.members['..i..'].scale.y', 0.8)
-			doTweenX('noteHitxP'..i, 'playerStrums.members['..i..'].scale', 0.7, 0.05)
-			doTweenY('noteHityP'..i, 'playerStrums.members['..i..'].scale', 0.7, 0.05)
-			setProperty('playerStrums.members['..i..'].color', getColorFromHex(noteColors[i % 4 + 1]))
-		else
-			setProperty('playerStrums.members['..i..'].color', getColorFromHex('FFFFFF'))
-		end
-	end
-	for i = 0, getProperty('opponentStrums.length') do
-		if getPropertyFromGroup('opponentStrums', i, 'texture') ~= 'NOTE_assets_TRASH' then
-			break;
-		end
-
-		if getPropertyFromGroup('opponentStrums', i, 'animation.curAnim.name') == 'confirm' then
-			cancelTween('noteHitxO'..i)
-			cancelTween('noteHityO'..i)
-			setProperty('opponentStrums.members['..i..'].scale.x', 0.8)
-			setProperty('opponentStrums.members['..i..'].scale.y', 0.8)
-			doTweenX('noteHitxO'..i, 'opponentStrums.members['..i..'].scale', 0.7, 0.05)
-			doTweenY('noteHityO'..i, 'opponentStrums.members['..i..'].scale', 0.7, 0.05)
-			setProperty('opponentStrums.members['..i..'].color', getColorFromHex(noteColors[i % 4 + 1]))
-		else
-			setProperty('opponentStrums.members['..i..'].color', getColorFromHex('FFFFFF'))
-		end
-	end
 end
+
 function onStepHit()
+	changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
+
 	for i = 0, getProperty('notes.length') do --why doesn't psych do this already???
         for iStrum = 0, 3 do
             if getPropertyFromGroup('notes', i, 'mustPress') then
@@ -313,7 +301,7 @@ function onSectionHit()
 end
 
 function onBeatHit()
-	if songName == 'Maze' then
+	if string.lower(songName) == 'maze' then
 		local funny = math.max(math.min(getProperty('healthBar.value'), 1.9), 0.1)
 		setGraphicSize('iconP12', math.floor(getProperty('iconP12.width') + (50 * funny)), math.floor(getProperty('iconP12.height') - (25 * funny)))
 		setGraphicSize('iconP22', math.floor(getProperty('iconP22.width') + (50 * ((2 - funny) + 0.1))), math.floor(getProperty('iconP22.height') - (25 * ((2 - funny) + 0.1))))
@@ -326,26 +314,35 @@ function onBeatHit()
 	end
 
 	if gappleHUDsong then
-		if songName == 'Kooky' then
+		if string.lower(songName) == 'kooky' then
 			return;
 		end
+		local iconPos = getProperty('healthBar.y') -75;
+
 		if curBeat % getProperty('gfSpeed') == 0 then
 			local fuasd = {0.8, 1.3}
 			local angl = 15;
+			local yOffset = 12.5;
 
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', 1.1, fuasd[1])
 				scaleObject('iconP22', 1.1, fuasd[2])
 				setProperty('iconP1.angle', -angl)
 				setProperty('iconP2.angle', angl)
+				setProperty('iconP1.y', iconPos - yOffset)
+				setProperty('iconP2.y', iconPos + yOffset)
 			else
 				scaleObject('iconP12', 1.1, fuasd[2])
 				scaleObject('iconP22', 1.1, fuasd[1])
 				setProperty('iconP1.angle', angl)
 				setProperty('iconP2.angle', -angl)
+				setProperty('iconP1.y', iconPos + yOffset)
+				setProperty('iconP2.y', iconPos - yOffset)
 			end
 		end
 
+		doTweenY('iconP1yREAL', 'iconP1', iconPos, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
+		doTweenY('iconP2yREAL', 'iconP2', iconPos, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
 		doTweenAngle('iconP1', 'iconP1', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
 		doTweenAngle('iconP2', 'iconP2', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
 		doTweenX('iconP1x', 'iconP12.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
@@ -361,14 +358,14 @@ function onBeatHit()
 	end
 	if curBeat % 2 == 0 then
 		if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
-			characterPlayAnim('boyfriend', 'idle', true)
+			playAnim('boyfriend', 'idle', true)
 		end
 
 		if getProperty('dad.animation.curAnim.name') == 'idle' then
 			if dadName == 'bambi-piss-3d' then
 				return;
 			end
-			characterPlayAnim('dad', 'idle', true)
+			playAnim('dad', 'idle', true)
 		end
 	end
 end
@@ -395,7 +392,7 @@ function noteMissedStuff(direction)
 	if boyfriendHasMissAnims ~= false then
 		return;
 	end
-	characterPlayAnim('boyfriend', singAnims[direction+1], true);
+	playAnim('boyfriend', singAnims[direction+1], true);
 	setProperty('boyfriend.color', getColorFromHex('9400d3'))
 	setProperty('boyfriend.holdTimer', 0)
 	prevAnim = getProperty('boyfriend.animation.curAnim.name')

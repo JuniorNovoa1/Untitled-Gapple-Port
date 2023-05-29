@@ -36,7 +36,7 @@ function onUpdate()
     end
 
     if getProperty('dad.animation.curAnim.name') == 'idle' then
-        characterPlayAnim('dad', 'idle'..random, true)
+        playAnim('dad', 'idle'..random, true)
     end
 end
 

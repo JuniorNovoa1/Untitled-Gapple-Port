@@ -37,8 +37,8 @@ function onStepHit()
 		end
     end
 
-    if curStep == 632 then
-        objectPlayAnimation('spoarFolk', 'move', false);
+    if curStep == 634 then
+        playAnim('spoarFolk', 'move', false);
     end
 
     if curStep == 640 then

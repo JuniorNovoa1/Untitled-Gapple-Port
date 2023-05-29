@@ -24,14 +24,14 @@ end
 -- isSustainNote: If it's a hold note, can be either true or false
 function goodNoteHit(id, noteData, noteType, isSustainNote)
 	if noteType == 'phone' then
-		characterPlayAnim('boyfriend', 'dodge', true)
+		playAnim('boyfriend', 'dodge', true)
 	end
 end
 
 function noteMiss(id, direction, noteType, isSustainNote)
 	if noteType == 'phone' then
-		characterPlayAnim('dad', 'singThrow', true)
-		characterPlayAnim('boyfriend', 'hit', true)
+		playAnim('dad', 'singThrow', true)
+		playAnim('boyfriend', 'hit', true)
 		cancelTween('TWEEN NOTE '..direction) --don't crash please
 		setPropertyFromGroup('playerStrums', direction, 'alpha', 0) --instant
 		noteTweenAlpha('TWEEN NOTE '..direction, direction, 1, 7, 'expoIn')
@@ -40,6 +40,6 @@ end
 
 function opponentNoteHit(id, noteData, noteType, isSustainNote)
 	if noteType == 'phone' then
-		characterPlayAnim('dad', 'singSmash', true)
+		playAnim('dad', 'singSmash', true)
 	end
 end

@@ -1,0 +1,21 @@
+{
+	"song": {
+		"events": [
+			[
+				88000,
+				[
+					[
+						"Change Character",
+						"bf",
+						"bf-dinner"
+					],
+					[
+						"Change Character",
+						"dad",
+						"bambi-dinner"
+					]
+				]
+			]
+		]
+	}
+}

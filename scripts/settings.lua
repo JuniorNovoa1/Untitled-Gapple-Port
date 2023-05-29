@@ -15,4 +15,28 @@ function onCreate()
     setDataFromSave(saveFileName, 'epilepsy', epilepsy)
     setDataFromSave(saveFileName, 'screenshake', screenshake)
     setDataFromSave(saveFileName, 'dialogue', dialogue)
+    setDataFromSave(saveFileName, 'camZoom', true)
+end
+
+--THANK GOD THE INTERNET EXISTS
+function math.clamp(x,min,max)return math.max(min,math.min(x,max))end
+function math.lerp(from, to, t)
+	return from + (to - from) * math.clamp(t, 0, 1)
+end
+
+function onUpdate()
+    if not getDataFromSave('camZoom') then
+        return;
+    end
+    setProperty('camZooming', false)
+    local maxxed = 0.95;
+    setProperty('camGame.zoom', math.lerp(getProperty('defaultCamZoom'), getProperty('camGame.zoom'), maxxed))
+    setProperty('camHUD.zoom', math.lerp(1, getProperty('camHUD.zoom'), maxxed))
+end
+
+function onSectionHit()
+    if getDataFromSave('camZoom') then
+        setProperty('camGame.zoom', getProperty('camGame.zoom') + 0.015 * getProperty('camZoomingMult'))
+        setProperty('camHUD.zoom', getProperty('camHUD.zoom') + 0.03 * getProperty('camZoomingMult'))
+    end
 end

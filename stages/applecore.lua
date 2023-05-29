@@ -42,14 +42,14 @@ function onCreate()
         makeAnimatedLuaSprite(items2[i], 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
         setProperty(items2[i]..'.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix(items2[i], 'idle', 'p', 14, true);
-        objectPlayAnimation(items2[i], 'idle', true);
+        playAnim(items2[i], 'idle', true);
         scaleObject(items2[i], 0.675, 0.675)
         addLuaSprite(items2[i], false)
 
         makeAnimatedLuaSprite(items2[i]..'1', 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
         setProperty(items2[i]..'1.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix(items2[i]..'1', 'idle', 'p', 14, true);
-        objectPlayAnimation(items2[i]..'1', 'idle', true);
+        playAnim(items2[i]..'1', 'idle', true);
         scaleObject(items2[i]..'1', 0.675, 0.675)
         addLuaSprite(items2[i]..'1', false)
 
@@ -65,7 +65,7 @@ function onCreate()
         addAnimationByPrefix(items3[i], 'walking', 'poip0', 24, true);
         addAnimationByPrefix(items3[i], 'woah', 'poop0', 24, true);
         addAnimationByPrefix(items3[i], 'spin', 'porp0', 24, true);
-        objectPlayAnimation(items3[i], 'walking', true);
+        playAnim(items3[i], 'walking', true);
         setProperty(items3[i]..'.visible', false)
         scaleObject(items3[i], 0.725, 0.725)
         addLuaSprite(items3[i], false)
@@ -75,7 +75,7 @@ function onCreate()
         addAnimationByPrefix(items3[i]..'1', 'walking', 'poip0', 24, true);
         addAnimationByPrefix(items3[i]..'1', 'woah', 'poop0', 24, true);
         addAnimationByPrefix(items3[i]..'1', 'spin', 'porp0', 24, true);
-        objectPlayAnimation(items3[i]..'1', 'walking', true);
+        playAnim(items3[i]..'1', 'walking', true);
         setProperty(items3[i]..'1.visible', false)
         scaleObject(items3[i]..'1', 0.725, 0.725)
         addLuaSprite(items3[i]..'1', false)
@@ -85,13 +85,6 @@ function onCreate()
         doTweenX(items3[i]..'first11', items3[i]..'1', getRandomInt(0, 500), time, tweenType)
         doTweenY(items3[i]..'first111', items3[i]..'1', getRandomInt(heightStuff[1], heightStuff[2]), time, tweenType)
     end
-
-    makeAnimatedLuaSprite('gfe', 'characters/GF_assets', 350, 500)
-    setProperty('gfe.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-    addAnimationByPrefix('gfe', 'idle', 'GF Dancing Beat0', 24, false)
-    addAnimationByPrefix('gfe', 'idleFast', 'GF Dancing Beat0', 48, false)
-    objectPlayAnimation('gfe', 'idle', true)
-    addLuaSprite('gfe', false)
 
     setProperty('hi.visible', true)
 end
@@ -132,8 +125,8 @@ function onTweenCompleted(tag)
         end
 
         if tag == items3[i]..'second111' then
-            objectPlayAnimation(items3[i], anims[getRandomInt(1, 3)], true);
-            objectPlayAnimation(items3[i]..'1', anims[getRandomInt(1, 3)], true);
+            playAnim(items3[i], anims[getRandomInt(1, 3)], true);
+            playAnim(items3[i]..'1', anims[getRandomInt(1, 3)], true);
 
             setProperty(items3[i]..'.x', getRandomInt(-2000, -3000))
             setProperty(items3[i]..'1.x', getRandomInt(-2000, -3000))
@@ -159,16 +152,6 @@ function onTimerCompleted(tag)
             doTweenY(items3[i]..'first1', items3[i], getRandomInt(-250, 750), time, tweenType)
             doTweenX(items3[i]..'first11', items3[i]..'1', getRandomInt(0, 750), time, tweenType)
             doTweenY(items3[i]..'first111', items3[i]..'1', getRandomInt(-250, 500), time, tweenType)
-        end
-    end
-end
-
-function onBeatHit()
-    if curBeat % (4 / getProperty('gfSpeed')) == 0 then
-        if getProperty('gfSpeed') == 1 then
-            objectPlayAnimation('gfe', 'idle', true)
-        else
-            objectPlayAnimation('gfe', 'idleFast', true)
         end
     end
 end

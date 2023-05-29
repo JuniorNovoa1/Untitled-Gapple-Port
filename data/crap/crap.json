@@ -1039,7 +1039,7 @@
 		"splashSkin": "noteSplashes",
 		"song": "crap!",
 		"needsVoices": false,
-		"arrowSkin": "NOTE_assets_TRASH",
+		"arrowSkin": "",
 		"validScore": true,
 		"stage": "badFarm",
 		"bpm": 180,

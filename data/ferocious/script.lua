@@ -194,47 +194,47 @@ function onStepHit()
 	end
 
 	if curStep == 8927 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'hhmm')
+		playAnim('PEDOPHILESTATIC', 'hhmm')
 	end
 
 	if curStep == 8991 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'smile')
+		playAnim('PEDOPHILESTATIC', 'smile')
 	end
 
 	if curStep == 9279 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'im smile at you')
+		playAnim('PEDOPHILESTATIC', 'im smile at you')
 	end
 
 	if curStep == 9347 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'you ugly')
+		playAnim('PEDOPHILESTATIC', 'you ugly')
 	end
 
 	if curStep == 9420 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'did you get uglier')
+		playAnim('PEDOPHILESTATIC', 'did you get uglier')
 	end
 
 	if curStep == 9503 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'garrett is ugly')
+		playAnim('PEDOPHILESTATIC', 'garrett is ugly')
 	end
 
 	if curStep == 9759 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'bf is ugly')
+		playAnim('PEDOPHILESTATIC', 'bf is ugly')
 	end
 
 	if curStep == 10015 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'like my cut')
+		playAnim('PEDOPHILESTATIC', 'like my cut')
 	end
 
 	if curStep == 10271 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'i wear a mask with a smile')
+		playAnim('PEDOPHILESTATIC', 'i wear a mask with a smile')
 	end
 
 	if curStep == 10527 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'wtf')
+		playAnim('PEDOPHILESTATIC', 'wtf')
 	end
 
 	if curStep == 10863 then
-		objectPlayAnimation('PEDOPHILESTATIC', 'THERE IS A CAR COMING RUN BITCH')
+		playAnim('PEDOPHILESTATIC', 'THERE IS A CAR COMING RUN BITCH')
 	end
 
 	if curStep == 11038 then
@@ -247,7 +247,7 @@ function onStepHit()
 
 		makeAnimatedLuaSprite('POLICECAR', 'funnyAnimal/palooseCar', getProperty('dad.x'), getProperty('dad.y'))
 		addAnimationByPrefix('POLICECAR', 'run', 'idle0', 24, true)
-		objectPlayAnimation('POLICECAR', 'run', true)
+		playAnim('POLICECAR', 'run', true)
 		setProperty('POLICECAR.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
 		addLuaSprite('POLICECAR', true)
 		--print('CAR IS HERE LOL')
@@ -297,7 +297,7 @@ function onEvent(n, v1, v2)
 				setProperty('PEDOPHILESTATIC.x', 1950)
 				setProperty('PEDOPHILESTATIC.y', 675)
 				setProperty('PEDOPHILESTATIC.visible', true)
-				objectPlayAnimation('PEDOPHILESTATIC', 'hey its the toddler')
+				playAnim('PEDOPHILESTATIC', 'hey its the toddler')
 				--print('pedophile 2 is now shown')
 			end
 

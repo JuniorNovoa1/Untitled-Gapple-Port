@@ -5,7 +5,7 @@ local yBullshit = 1;
 function onCreate()
     makeAnimatedLuaSprite('redTunnel', 'main/wireframe/redtunnelperspective', -750, -1000)
     addAnimationByPrefix('redTunnel', 'idle', 'redtunnelperspective idle0', 24, true)
-    objectPlayAnimation('redTunnel', 'idle', true)
+    playAnim('redTunnel', 'idle', true)
     setProperty('redTunnel.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     --setGraphicSize('redTunnel', math.floor(getProperty('redTunnel.width') * 1.15), math.floor(getProperty('redTunnel.height') * 1.15));
     setProperty('redTunnel.scale.x', 4)--getProperty('redTunnel.width') * 1.15)
@@ -18,7 +18,7 @@ function onCreate()
     addAnimationByPrefix('daveFuckingDies', 'idle', 'IDLE', 24, false)
     addAnimationByPrefix('daveFuckingDies', 'bounceLeft', 'EDGE', 24, false)
     addAnimationByPrefix('daveFuckingDies', 'bounceRight', 'EDGE', 24, false, true)
-    objectPlayAnimation('daveFuckingDies', 'idle', true)
+    playAnim('daveFuckingDies', 'idle', true)
     setProperty('daveFuckingDies.antialiasing', false)
     setProperty('daveFuckingDies.visible', false)
     updateHitbox('daveFuckingDies')
@@ -84,18 +84,18 @@ end
 
 function onBeatHit()
     if curBeat % 2 == 0 then
-		objectPlayAnimation('daveFuckingDies', 'idle');
+		playAnim('daveFuckingDies', 'idle');
 	end
 end
 
 function danceDave()
     if bounceAnimState == 0 then
-        objectPlayAnimation('daveFuckingDies', 'idle', true);
+        playAnim('daveFuckingDies', 'idle', true);
     end
     if bounceAnimState == 1 then
-        objectPlayAnimation('daveFuckingDies', 'bounceLeft');
+        playAnim('daveFuckingDies', 'bounceLeft');
     end
     if bounceAnimState == 2 then
-        objectPlayAnimation('daveFuckingDies', 'bounceRight');
+        playAnim('daveFuckingDies', 'bounceRight');
     end
 end

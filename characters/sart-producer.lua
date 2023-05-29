@@ -3,7 +3,7 @@ local stuff = {'x', 'y', 'scale.x', 'scale.y', 'angle'}
 function onCreatePost()
     makeAnimatedLuaSprite('sartICON', 'icons/sartys_icon', 0, 0)
     addAnimationByPrefix('sartICON', 'idle', 'sart-producer0', 24, true);
-    objectPlayAnimation('sartICON', 'idle', true);
+    playAnim('sartICON', 'idle', true);
     setObjectCamera('sartICON', 'hud')
     setProperty('sartICON.visible', true)
     setProperty('iconP2.visible', false)

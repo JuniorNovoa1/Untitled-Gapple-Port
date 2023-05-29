@@ -94,11 +94,11 @@ function onUpdate(elapsed)
 					playSound('missnote'..getRandomInt(1, 3), getRandomFloat(vocalVolume -0.2, vocalVolume))
 					ratings[5] = ratings[5] +1;
 					if getProperty('dad.hasMissAnimations') ~= true then
-						characterPlayAnim('dad', singAnims[iKey], true);
+						playAnim('dad', singAnims[iKey], true);
 						setProperty('dad.color', getColorFromHex('9400d3'))
 						missedOn = true;
 					else
-						characterPlayAnim('dad', singAnims[iKey]..'miss', true);
+						playAnim('dad', singAnims[iKey]..'miss', true);
 					end
 					doRatingShits(false, iNote)
 				
@@ -127,13 +127,13 @@ function onUpdate(elapsed)
 								setProperty('dad.holdTimer', 0)
 							end
 							if assType ~= regularNotes[4] and not gfSection then
-								characterPlayAnim('dad', singAnims[directionNOTE +1]..urAnus, true); --play it anyway
+								playAnim('dad', singAnims[directionNOTE +1]..urAnus, true); --play it anyway
 							end
 							if assType == regularNotes[3] and not gfSection then
-								characterPlayAnim('dad', 'hey', true);
+								playAnim('dad', 'hey', true);
 							end
 							if assType == regularNotes[4] or gfSection then
-								characterPlayAnim('gf', singAnims[directionNOTE +1]..urAnus, true);
+								playAnim('gf', singAnims[directionNOTE +1]..urAnus, true);
 							end
 						end
 						doRatingShits(true, iNote)
@@ -168,11 +168,11 @@ function onUpdate(elapsed)
 					setProperty('health', getProperty('health') + 0.05 * getProperty('healthLoss'))
 					ratings[5] = ratings[5] +1;
 					if dadHasMissAnims then
-						characterPlayAnim('dad', singAnims[iKey], true);
+						playAnim('dad', singAnims[iKey], true);
 						setProperty('dad.color', getColorFromHex('9400d3'))
 						missedOn = true;
 					else
-						characterPlayAnim('dad', singAnims[iKey]..'miss', true);
+						playAnim('dad', singAnims[iKey]..'miss', true);
 					end
 					callOnLuas('noteMissPress', {iKey-1}) --thank god this exists
 				end

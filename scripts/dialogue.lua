@@ -1,7 +1,7 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 
-local dialogueSongs = {'Disruption', 'Applecore', 'Wireframe', 'Ferocious', 'Apple-Leak'};
+local dialogueSongs = {'disruption', 'applecore', 'wireframe', 'ferocious', 'apple-leak'};
 local images = {'disruption_port', 'bf_compuzzled_port'}
 local song = 'disruptionCutscene';
 local dialogueTXT = {
@@ -27,7 +27,7 @@ local inDialogue = false;
 local crazyBubble = false;
 function onCreatePost()
 	for i = 1, #dialogueSongs do
-		if songName == dialogueSongs[i] then
+		if string.lower(songName) == dialogueSongs[i] then
 			dialogueBool = true;
 			if i == 1 then
 				crazyBubble = true;
@@ -171,14 +171,14 @@ function onCustomSubstateCreate(tag)
 		makeAnimatedLuaSprite('dad', 'dialogue/'..images[1], 100, 175)
         setProperty('dad.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix('dad', 'idle', 'portrait', 24, false);
-        objectPlayAnimation('dad', 'idle', false);
+        playAnim('dad', 'idle', false);
 		setObjectCamera('dad', 'other')
         addLuaSprite('dad', false)
 
 		makeAnimatedLuaSprite('bf', 'dialogue/'..images[2], 625, 175)
         setProperty('bf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix('bf', 'idle', 'portrait', 24, false);
-        objectPlayAnimation('bf', 'idle', false);
+        playAnim('bf', 'idle', false);
 		setObjectCamera('bf', 'other')
         addLuaSprite('bf', false)
 
@@ -186,7 +186,7 @@ function onCustomSubstateCreate(tag)
         setProperty('speech_bubble.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix('speech_bubble', 'idle', 'speech bubble normal', 24, true);
 		addAnimationByPrefix('speech_bubble', 'idle2', 'AHH speech bubble0', 24, true);
-        objectPlayAnimation('speech_bubble', 'idle', true);
+        playAnim('speech_bubble', 'idle', true);
 		scaleObject('speech_bubble', 0.9, 0.9)
 		setObjectCamera('speech_bubble', 'other')
         addLuaSprite('speech_bubble', false)
@@ -202,7 +202,7 @@ function onCustomSubstateCreate(tag)
 		addLuaText('dialogueTxtTEXT')
 
 		if crazyBubble then
-			objectPlayAnimation('speech_bubble', 'idle2', true);
+			playAnim('speech_bubble', 'idle2', true);
 
 			setProperty('dad.x', getProperty('dad.x') -25)
 			setProperty('bf.x', getProperty('bf.x') -25)
@@ -229,14 +229,14 @@ function dialogueProps()
 		if crazyBubble ~= true then
 			setProperty('speech_bubble.flipX', true)
 		end
-		objectPlayAnimation('dad', 'idle', false)
+		playAnim('dad', 'idle', false)
 	else
 		setProperty('dad.visible', false)
 		setProperty('bf.visible', true)
 		if crazyBubble ~= true then
 			setProperty('speech_bubble.flipX', false)
 		end
-		objectPlayAnimation('bf', 'idle', false)
+		playAnim('bf', 'idle', false)
 	end
 end
 

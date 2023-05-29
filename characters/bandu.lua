@@ -17,7 +17,7 @@ end
 function onTweenCompleted(tag)
     if tag == 'banduLeft' and (getProperty('dad.curCharacter') == 'bandu' or getProperty('dad.curCharacter') == 'bandu-sad') then
         doTweenX('banduRight', 'dad', originalPos +posAmount, speedAmount, tweenType)
-        setObjectOrder('dadGroup', getObjectOrder('boyfriendGroup') -1)
+        setObjectOrder('dadGroup', getObjectOrder('gfGroup') +1)
     end
 
     if tag == 'banduRight' and (getProperty('dad.curCharacter') == 'bandu' or getProperty('dad.curCharacter') == 'bandu-sad') then

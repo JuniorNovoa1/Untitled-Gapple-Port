@@ -66,7 +66,7 @@ function onCreate()
     addAnimationByPrefix('jamboul', 'up', 'jamboul up wip0', 24, false)
     addAnimationByPrefix('jamboul', 'right', 'jamboul right0', 24, false)
     addAnimationByPrefix('jamboul', 'insane', 'jamboul insane0', 24, false)
-    objectPlayAnimation('jamboul', 'left', true)
+    playAnim('jamboul', 'left', true)
     if not lowQuality then
         addLuaSprite('jamboul', false)
     end
@@ -121,30 +121,30 @@ function onBeatHit()
     switchedAnim = false;
 
     if getProperty('jamboul.animation.curAnim.name') == 'left' and not switchedAnim then
-        objectPlayAnimation('jamboul', 'right', true)
+        playAnim('jamboul', 'right', true)
         switchedAnim = true;
     end
 
     if getProperty('jamboul.animation.curAnim.name') == 'right' and not switchedAnim then
-        objectPlayAnimation('jamboul', 'up', true)
+        playAnim('jamboul', 'up', true)
         switchedAnim = true;
     end
 
     if getProperty('jamboul.animation.curAnim.name') == 'up' and not switchedAnim then
-        objectPlayAnimation('jamboul', 'down', true)
+        playAnim('jamboul', 'down', true)
         switchedAnim = true;
     end
 
     if getProperty('jamboul.animation.curAnim.name') == 'down' and not switchedAnim then
-        objectPlayAnimation('jamboul', 'left', true)
+        playAnim('jamboul', 'left', true)
         switchedAnim = true;
     end
 
     if curBeat % 2 == 0 then
-        objectPlayAnimation('brob', 'idle');
-        objectPlayAnimation('monkey', 'idle');
-        objectPlayAnimation('ohyeah', 'idle');
-        objectPlayAnimation('wrath', 'idle');
-		objectPlayAnimation('norman', 'idle');
+        playAnim('brob', 'idle');
+        playAnim('monkey', 'idle');
+        playAnim('ohyeah', 'idle');
+        playAnim('wrath', 'idle');
+		playAnim('norman', 'idle');
 	end
 end

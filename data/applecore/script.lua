@@ -6,7 +6,14 @@ local originPosX = {};
 local originPosY = {};
 
 function onCreatePost()
-    setProperty('gf.visible', false)
+    addHaxeLibrary('Character')
+    runHaxeCode([[
+        var bambi = new Character(-350, -800, 'bambi-piss-3d');
+        bambi.visible = false;
+        game.add(bambi);
+        game.modchartSprites.set('bambi', bambi);
+    ]])
+    setObjectOrder('bambi', getObjectOrder('gfGroup') +1)
     addLuaScript('activatedScripts/VG');
     setProperty('vg.visible', false)
     addCharacterToList('unfair-junker', 'dad')
@@ -111,13 +118,13 @@ function onUpdatePost()
             local noteDataa = getPropertyFromGroup('notes', i, 'noteData') + 1;
             if getPropertyFromGroup('notes', i, 'canBeHit') then
                 setProperty('vocals.volume', 1)
-                setProperty('gf.holdTimer', 0)
+                setProperty('bambi.holdTimer', 0)
                 strumAnim(noteDataa - 1, 'confirm', 0.15);
                 setProperty('health', getProperty('health') -(healthtolower / 2.65))
-                if getGlobalFromScript('settings', 'screenShake') == true then
+                if getDataFromSave('screenshake') == true then
                     triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
                 end
-                characterPlayAnim('gf', singAnims[noteDataa], true);
+                playAnim('bambi', singAnims[noteDataa], true)
                 removeFromGroup('notes', i, false)
             end
             setPropertyFromGroup('notes', i, 'x', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'x') - 147.5)
@@ -158,8 +165,8 @@ function onStepHit()
     end
 
     if curStep == 800 then
-        setProperty('gf.visible', true)
-        doTweenY('gf', 'gf', 350, 1.35, 'sineIn')
+        setProperty('bambi.visible', true)
+        doTweenY('bambi', 'bambi', 350, 1.35, 'sineIn')
     end
 
     if curStep == 1984 then
@@ -191,7 +198,7 @@ function onStepHit()
         makeAnimatedLuaSprite('expunged', 'characters/main/applecore/UNFAIR_GUY_FAICNG_FORWARD', -125, -200)
 		setProperty('expunged.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix('expunged', 'idle', 'idle0', 12, true)
-        objectPlayAnimation('expunged', 'idle', true)
+        playAnim('expunged', 'idle', true)
         setProperty('expunged.alpha', 0)
 		addLuaSprite('expunged', true)
         setObjectOrder('expunged', getObjectOrder('gfe') -1)
@@ -202,9 +209,9 @@ function onStepHit()
         setProperty('monkey_guy.visible', false)
 		addLuaSprite('monkey_guy', true)
 
-        makeLuaSprite('monkey_person', 'main/applecore/monkey_person', getProperty('gf.x'), getProperty('gf.y'))
+        makeLuaSprite('monkey_person', 'main/applecore/monkey_person', getProperty('bambi.x'), getProperty('bambi.y'))
 		setProperty('monkey_person.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-        scaleObject('monkey_person', getProperty('gf.scale.x'), getProperty('gf.scale.y'))
+        scaleObject('monkey_person', getProperty('bambi.scale.x'), getProperty('bambi.scale.y'))
         setProperty('monkey_person.visible', false)
 		addLuaSprite('monkey_person', true)
     end
@@ -223,7 +230,7 @@ function onStepHit()
         for direction = 4, 7 do
             setPropertyFromGroup('opponentStrums', direction, 'visible', false)
         end
-        setProperty('gf.visible', false)
+        setProperty('bambi.visible', false)
     end
 
     if curStep == 2128 then
@@ -244,13 +251,20 @@ function onStepHit()
     end
 
     if curStep >= 2130 and curStep <= 2146 then
-        characterPlayAnim('dad', 'inhale', false)
-        setProperty('dad.specialAnim', true)
+        playAnim('dad', 'inhale', false)
     end
 end
 
+function onBeatHit()
+    if curBeat % 2 == 0 then
+		if getProperty('bambi.animation.curAnim.name') == 'idle' then
+			playAnim('bambi', 'idle', true)
+		end
+	end
+end
+
 function onTweenCompleted(tag)
-    if tag == 'gf' then
+    if tag == 'bambi' then
         for direction = 4, 7 do
             setPropertyFromGroup('opponentStrums', direction, 'visible', true)
         end
@@ -259,7 +273,6 @@ function onTweenCompleted(tag)
     if tag == 'expungedY' then
         triggerEvent('Change Character', 'dad', 'unfair-junker')
         setObjectOrder('dadGroup', getObjectOrder('gfGroup') -1)
-        setObjectOrder('gfe', getObjectOrder('gfGroup'))
         setProperty('dad.x', -125)
         setProperty('dad.y', -200)
         doTweenX('expungedLeft', 'dad', getProperty('dad.x') -165, 2.8 * 1.125, 'sineInOut')
