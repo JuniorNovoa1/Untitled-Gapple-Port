@@ -231,6 +231,16 @@ function onUpdatePost(elapsed)
 		iconScale()
 	end
 
+	setProperty('healthBarBG.y', screenHeight * 0.9)
+	setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
+	setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
+	setProperty('scoreTxt.y', getProperty('healthBarBG.y') + 40)
+	if downscroll then
+		setProperty('healthBarBG.y', 50)
+		setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
+		setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
+	end
+	
 	for i = 0, getProperty('playerStrums.length') do
 		if getPropertyFromGroup('playerStrums', i, 'texture') ~= 'NOTE_assets_TRASH' then
 			break;
