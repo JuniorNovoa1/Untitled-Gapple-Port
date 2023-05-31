@@ -265,6 +265,8 @@ end
 function onStepHit()
 	changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
 
+	--setObjectOrder('strumLineNotes', getObjectOrder('notes') +1) --puts notes under strumlinenotes
+
 	for i = 0, getProperty('notes.length') do --why doesn't psych do this already???
         for iStrum = 0, 3 do
             if getPropertyFromGroup('notes', i, 'mustPress') then

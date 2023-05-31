@@ -1,5 +1,5 @@
 local originalPos = 0;
-local posAmount = 1075;
+local posAmount = 1000;
 local speedAmount = 1.5;
 local tweenType = 'sineInOut';
 
@@ -21,7 +21,7 @@ function onTweenCompleted(tag)
     end
 
     if tag == 'banduRight' and (getProperty('dad.curCharacter') == 'bandu' or getProperty('dad.curCharacter') == 'bandu-sad') then
-        doTweenX('banduLeft', 'dad', originalPos, speedAmount, tweenType)
+        doTweenX('banduLeft', 'dad', originalPos +50, speedAmount, tweenType)
         setObjectOrder('dadGroup', getObjectOrder('boyfriendGroup') +1)
     end
 end

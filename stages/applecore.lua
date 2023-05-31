@@ -20,7 +20,7 @@ function onCreate()
         setProperty(items[i]..'.visible', false)
         setGraphicSize(items[i], getProperty(items[i] .. '.width') * 1.75, getProperty(items[i] .. '.height') * 1.75, true)
         if i == 3 then
-            setProperty(items[i]..'.y', -500)
+            setProperty(items[i]..'.y', -1250)
             setGraphicSize(items[i], getProperty(items[i] .. '.width') * 2, getProperty(items[i] .. '.height') * 2, true)
         end
         screenCenter(items[i], 'x')

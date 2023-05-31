@@ -9,11 +9,12 @@ function onCreatePost()
     addHaxeLibrary('Character')
     runHaxeCode([[
         var bambi = new Character(-350, -800, 'bambi-piss-3d');
+        bambi.scale.set(0.85, 0.85);
         bambi.visible = false;
         game.add(bambi);
         game.modchartSprites.set('bambi', bambi);
     ]])
-    setObjectOrder('bambi', getObjectOrder('gfGroup') +1)
+    setObjectOrder('bambi', getObjectOrder('boyfriendGroup'))
     addLuaScript('activatedScripts/VG');
     setProperty('vg.visible', false)
     addCharacterToList('unfair-junker', 'dad')
@@ -201,7 +202,7 @@ function onStepHit()
         playAnim('expunged', 'idle', true)
         setProperty('expunged.alpha', 0)
 		addLuaSprite('expunged', true)
-        setObjectOrder('expunged', getObjectOrder('gfe') -1)
+        setObjectOrder('expunged', getObjectOrder('gfGroup') -1)
 
         makeLuaSprite('monkey_guy', 'main/applecore/monkey_guy', getProperty('dad.x'), getProperty('dad.y'))
 		setProperty('monkey_guy.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))

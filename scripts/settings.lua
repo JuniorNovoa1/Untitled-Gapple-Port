@@ -29,9 +29,12 @@ function onUpdate()
         return;
     end
     setProperty('camZooming', false)
-    local maxxed = 0.95;
+    --[[local maxxed = 0.95;
     setProperty('camGame.zoom', math.lerp(getProperty('defaultCamZoom'), getProperty('camGame.zoom'), maxxed))
-    setProperty('camHUD.zoom', math.lerp(1, getProperty('camHUD.zoom'), maxxed))
+    setProperty('camHUD.zoom', math.lerp(1, getProperty('camHUD.zoom'), maxxed))--]]
+    local duration = crochet / 1450 * getProperty('gfSpeed');
+    doTweenZoom('camZoomGame', 'camGame', getProperty('defaultCamZoom'), duration, 'sineOut')
+    doTweenZoom('camZoomHUD', 'camHUD', 1, duration, 'sineOut')
 end
 
 function onSectionHit()
