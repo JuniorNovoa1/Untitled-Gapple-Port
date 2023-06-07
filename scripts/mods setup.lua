@@ -1,11 +1,14 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 local gappleHUD = {'maze', 'disruption', 'applecore', 'wireframe', 'ferocious', 'cuberoot', 'sart-producer', 'og', 'apple-leak', 'badcorn', 'crap!', 'kooky'};
-local songSplashNames = {'SONG'};
+local songSplashNames = {''};
 local oldFNFPos = {''};
 local gappleHUDsong = false;
 local arrowXoffset = 35;
 local no_splashes = false;
+
+local ratingPos = 575;
+local prevRatingPos = {};
 
 local songMod = 'Null';
 
@@ -14,7 +17,6 @@ local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad',
 
 function onCreatePost()
 	setProperty('showCombo', true)
-	--gappleHUDsong = true;
 
 	for i = 1, #songSplashNames do
 		if string.lower(songName) == songSplashNames[i] then
@@ -30,7 +32,7 @@ function onCreatePost()
 		end
 	end
 	for i = 1, #gappleHUD do
-		if string.lower(songName) == gappleHUD[i] then
+		if string.lower(songName) == gappleHUD[i] or gappleHUDsong then
 			no_splashes = true;
 			setTextFont('scoreTxt', 'comic.ttf')
 			setTextFont('timeTxt', 'comic.ttf')
@@ -75,6 +77,11 @@ function onCreatePost()
 			end
 
 			songMod = 'DNB: Golden Apple';
+
+			prevRatingPos[0] = getPropertyFromClass('ClientPrefs', 'comboOffset[0]');
+			prevRatingPos[1] = getPropertyFromClass('ClientPrefs', 'comboOffset[2]');
+			setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
+			setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
 
 			makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBarBG.x'), getProperty('healthBarBG.y'))
 			scaleObject('healthBarBGnew', getProperty('healthBarBG.scale.x') - 0.075, getProperty('healthBarBG.scale.y') - 0.15)
@@ -124,7 +131,7 @@ function onCreatePost()
 		end
 	end
 
-	if songName == 'lore' then
+	if string.lower(songName) == 'lore' then
 		songMod = 'D-Sides';
 	end
 
@@ -231,12 +238,14 @@ local noteColors = {'7A5299', '00FFFF', '90EE90', 'FF7F7F'} --90EE90
 
 function onUpdatePost(elapsed)
 	if string.lower(songName) == 'maze' or gappleHUDsong then
-		setProperty('healthBarBG.y', screenHeight * 0.9)
-		setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
-		setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
-		setProperty('healthBarBGnew.y', screenHeight * 0.9)
-		setProperty('healthBarBGnew.x', getProperty('healthBarBG.x'))
-		setProperty('scoreTxt.y', getProperty('healthBarBG.y') + 40)
+		if string.lower(songName) ~= 'kooky' then
+			setProperty('healthBarBG.y', screenHeight * 0.9)
+			setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
+			setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
+			setProperty('healthBarBGnew.y', screenHeight * 0.9)
+			setProperty('healthBarBGnew.x', getProperty('healthBarBG.x'))
+			setProperty('scoreTxt.y', getProperty('healthBarBG.y') + 40)
+		end
 		if downscroll then
 			setProperty('healthBarBG.y', 50)
 			setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
@@ -319,12 +328,12 @@ function onBeatHit()
 		if string.lower(songName) == 'kooky' then
 			return;
 		end
-		local iconPos = getProperty('healthBar.y') -75;
+		local iconPos = getProperty('healthBar.y') -82.5;
 
 		if curBeat % getProperty('gfSpeed') == 0 then
 			local fuasd = {0.8, 1.3}
 			local angl = 15;
-			local yOffset = 12.5;
+			local yOffset = 15;
 
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', 1.1, fuasd[1])
@@ -398,4 +407,18 @@ function noteMissedStuff(direction)
 	setProperty('boyfriend.color', getColorFromHex('9400d3'))
 	setProperty('boyfriend.holdTimer', 0)
 	prevAnim = getProperty('boyfriend.animation.curAnim.name')
+end
+
+function onPause()
+	if gappleHUDsong then
+		setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
+		setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
+	end
+end
+
+function onDestroy()
+	if gappleHUDsong then
+		setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
+		setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
+	end
 end

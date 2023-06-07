@@ -234,24 +234,7 @@ function onStepHit()
         setProperty('bambi.visible', false)
     end
 
-    if curStep == 2128 then
-        setProperty('monkey_guy.visible', true)
-        setProperty('monkey_person.visible', true)
-
-        doTweenX('monkey_guyXX', 'monkey_guy', getProperty('dad.x'), 1.7, 'sineInOut')
-        doTweenY('monkey_guyYY', 'monkey_guy', getProperty('dad.y'), 1.7, 'sineInOut')
-        doTweenX('monkey_guyX', 'monkey_guy.scale', 0, 1.7, 'sineInOut')
-        doTweenY('monkey_guyY', 'monkey_guy.scale', 0, 1.7, 'sineInOut')
-        doTweenX('monkey_personXX', 'monkey_person', getProperty('dad.x'), 1.7, 'sineInOut')
-        doTweenY('monkey_personYY', 'monkey_person', getProperty('dad.y'), 1.7, 'sineInOut')
-        doTweenX('monkey_personX', 'monkey_person.scale', 0, 1.7, 'sineInOut')
-        doTweenY('monkey_personY', 'monkey_person.scale', 0, 1.7, 'sineInOut')
-        doTweenAngle('monkey_guy', 'monkey_guy', 120, 1.7, 'sineInOut')
-        doTweenAngle('monkey_person', 'monkey_person', 120, 1.7, 'sineInOut')
-        playSound('suck', 1, 'suck')
-    end
-
-    if curStep >= 2130 and curStep <= 2146 then
+    if curStep >= 2128 and curStep <= 2146 then
         playAnim('dad', 'inhale', false)
     end
 end
@@ -276,6 +259,20 @@ function onTweenCompleted(tag)
         setObjectOrder('dadGroup', getObjectOrder('gfGroup') -1)
         setProperty('dad.x', -125)
         setProperty('dad.y', -200)
+        setProperty('monkey_guy.visible', true)
+        setProperty('monkey_person.visible', true)
+
+        doTweenX('monkey_guyXX', 'monkey_guy', getProperty('dad.x'), 1.7, 'sineInOut')
+        doTweenY('monkey_guyYY', 'monkey_guy', getProperty('dad.y'), 1.7, 'sineInOut')
+        doTweenX('monkey_guyX', 'monkey_guy.scale', 0, 1.7, 'sineInOut')
+        doTweenY('monkey_guyY', 'monkey_guy.scale', 0, 1.7, 'sineInOut')
+        doTweenX('monkey_personXX', 'monkey_person', getProperty('dad.x'), 1.7, 'sineInOut')
+        doTweenY('monkey_personYY', 'monkey_person', getProperty('dad.y'), 1.7, 'sineInOut')
+        doTweenX('monkey_personX', 'monkey_person.scale', 0, 1.7, 'sineInOut')
+        doTweenY('monkey_personY', 'monkey_person.scale', 0, 1.7, 'sineInOut')
+        doTweenAngle('monkey_guy', 'monkey_guy', 120, 1.7, 'sineInOut')
+        doTweenAngle('monkey_person', 'monkey_person', 120, 1.7, 'sineInOut')
+        playSound('suck', 1, 'suck')
         doTweenX('expungedLeft', 'dad', getProperty('dad.x') -165, 2.8 * 1.125, 'sineInOut')
         doTweenY('expungedUP', 'dad', getProperty('dad.y') -165 * 2, 2.8 / 2, 'sineInOut')
         setProperty('expunged.visible', false)

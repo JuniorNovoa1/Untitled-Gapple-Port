@@ -12,9 +12,11 @@ local originDad = ''
 function onCreatePost()
     originDad = getProperty('dad.curCharacter')
     addCharacterToList('awesomeBambiCrack', 'dad')
-    if getGlobalFromScript('settings', 'modCharts') == true then
+    if getDataFromSave('settings', 'screenshake') then
         doTweenAngle('camHUD1', 'camHUD', camAngle, camTimer, tween)
         doTweenAngle('camGame1', 'camGame', camAngle, camTimer, tween)
+    end
+    if getDataFromSave('settings', 'modcharts') then
         for i = 1, getProperty('strumLineNotes.length') do
             notesX[i] = getPropertyFromGroup('strumLineNotes', i-1, 'x')
             notesY[i] = getPropertyFromGroup('strumLineNotes', i-1, 'y')
@@ -26,7 +28,7 @@ end
 
 local shake = 0.0125;
 function onUpdate()
-    if getGlobalFromScript('settings', 'screenShake') == true then
+    if getDataFromSave('settings', 'screenshake') then
         triggerEvent('Screen Shake', '0.1,'..shake, '0.1,'..shake / 1.35)
     end
 end

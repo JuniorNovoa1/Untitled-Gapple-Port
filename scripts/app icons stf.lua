@@ -23,20 +23,6 @@ function onCreatePost()
 		setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
 	end
 
-	for i = 0, getProperty('strumLineNotes.length') do
-		if getPropertyFromGroup('strumLineNotes', i, 'antialiasing') == true then --no point if antialiasing is off
-			setPropertyFromGroup('strumLineNotes.antialiasing', i, getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-		end
-		setPropertyFromGroup('strumLineNotes.antialiasing', i, false);
-	end
-
-	for i = 0, getProperty('unspawnNotes.length') -1 do
-		if getPropertyFromGroup('unspawnNotes', i, 'antialiasing') == true then --no point if antialiasing is off
-			setPropertyFromGroup('unspawnNotes', i, 'antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-		end
-		setPropertyFromGroup('unspawnNotes.antialiasing', i, false);
-	end
-
 	changeIcon();
 end
 
