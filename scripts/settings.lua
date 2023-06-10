@@ -25,10 +25,10 @@ function math.lerp(from, to, t)
 end
 
 function onUpdate()
-    if not getDataFromSave('camZoom') then
+    setProperty('camZooming', false)
+    if getDataFromSave('camZoom') == false then
         return;
     end
-    setProperty('camZooming', false)
     --[[local maxxed = 0.95;
     setProperty('camGame.zoom', math.lerp(getProperty('defaultCamZoom'), getProperty('camGame.zoom'), maxxed))
     setProperty('camHUD.zoom', math.lerp(1, getProperty('camHUD.zoom'), maxxed))--]]

@@ -5,11 +5,12 @@ local txtOffset = 65;
 --local midSongPopUp = false;
 local time = 1;
 local waitTime = 3;
-local songNames = {'maze', 'disruption', 'applecore', 'wireframe', 'ferocious', 'cuberoot', 'sart-producer', 'og', 'apple-leak', 'badcorn', 'crap!', 'kooky', 'lore', 'close chuckle'};
+local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'ferocious', 'cuberoot', 'sart-producer', 'og', 'apple-leak', 'badcorn', 'crap!', 'kooky', 'lore', 'close chuckle'};
 local songTxt = {
 	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello',
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord',
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord',
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nT5mpler',
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nSky!\nJuniorNovoa (finished it)', 
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\n\nGarrett\'s Funny Animal Game\nJumpman25', 
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nLexicord',
@@ -123,7 +124,7 @@ function onTweenCompleted(tag, loops, loopsLeft)
 			doTweenX('daXXXX2', 'DATEXTTTTYYTT', 1300 -txtOffset, time / 1.25, 'cubeInOut')
 		end
 
-		doTweenAlpha('DaAlpaaHUD', 'camHUD', 1, time + timeAlpha, 'quadInOut')
+		--doTweenAlpha('DaAlpaaHUD', 'camHUD', 1, time + timeAlpha, 'quadInOut')
 		doTweenAlpha('DaAlpaa', 'Creditssss', 0, time + timeAlpha, 'quadInOut')
 		doTweenAlpha('DaAlpaa2Final', 'DATEXTTTTYYTT', 0, time + timeAlpha, 'quadInOut')
 	end
@@ -185,7 +186,7 @@ function moveStuff(timerTime)
 		doTweenX('da2XX22', 'DATEXTTTTYYTT', 800-txtOffset, time, 'quadInOut')
 	end
 
-	doTweenAlpha('DaAlpaaHUD', 'camHUD', 0.65, time / timeAlpha, 'quadInOut')
+	--doTweenAlpha('DaAlpaaHUD', 'camHUD', 0.65, time / timeAlpha, 'quadInOut')
 	doTweenAlpha('DaAlpaa2', 'Creditssss', 0.6, time / timeAlpha, 'quadInOut')
 	doTweenAlpha('DaAlpaa22', 'DATEXTTTTYYTT', 1, time / timeAlpha, 'quadInOut')
 	runTimer('waittingggggg', timerTime)

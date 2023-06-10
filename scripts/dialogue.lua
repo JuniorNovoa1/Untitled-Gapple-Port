@@ -1,7 +1,7 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 
-local dialogueSongs = {'disruption', 'applecore', 'wireframe', 'ferocious', 'apple-leak'};
+local dialogueSongs = {'disruption', 'applecore', 'disability', 'wireframe', 'ferocious', 'apple-leak'};
 local images = {'disruption_port', 'bf_compuzzled_port'}
 local song = 'disruptionCutscene';
 local dialogueTXT = {
@@ -67,6 +67,29 @@ function onCreatePost()
 				images = {'bandu_port', 'bf_reg_port'}
 			elseif i == 3 then
 				dialogueTXT = {
+					'So, you got past Bambi?',
+					'Beep.',
+					"Guess I'll have to do everything myself.",
+					'I can control the 3D world better than I thought I could.',
+					"We'll sing one song.",
+					'I win, you leave.',
+					"You win, I'll let you be.",
+					'Bap!'
+				}
+				dialogueChar = {
+					true,
+					false,
+					true,
+					true,
+					true,
+					true,
+					true,
+					false
+				}
+				song = 'disabilityDialogue';
+				images = {'3d_splitathon_dave_port', 'bf_reg_port'}
+			elseif i == 4 then
+				dialogueTXT = {
 					"ALRIGHT, THAT IS IT!",
 					"NO MORE FOOLING AROUND!",
 					"Beep?!",
@@ -93,7 +116,7 @@ function onCreatePost()
 				song = 'wireframeCutscene';
 				images = {'decimated_dave_port', 'bf_reg_port'}
 				crazyBubble = true;
-			elseif i == 4 then
+			elseif i == 5 then
 				dialogueBool = true; --change to true to have unused ferocious dialogue
 
 				dialogueTXT = {
@@ -110,7 +133,7 @@ function onCreatePost()
 				}
 				song = 'ferociousDialogue';
 				images = {'disruption_port', 'bf_reg_port'}
-			elseif i == 5 then
+			elseif i == 6 then
 				dialogueTXT = {
 					"hey you let's rap battle btw you were on my kill list so die pls",
 					"no no no non non on non on no",
@@ -168,19 +191,24 @@ function onCustomSubstateCreate(tag)
 		setProperty('background.alpha', 0.6)
 		addLuaSprite('background', false)
 
-		makeAnimatedLuaSprite('dad', 'dialogue/'..images[1], 100, 175)
-        setProperty('dad.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-        addAnimationByPrefix('dad', 'idle', 'portrait', 24, false);
-        playAnim('dad', 'idle', false);
-		setObjectCamera('dad', 'other')
-        addLuaSprite('dad', false)
+		makeAnimatedLuaSprite('dadDialogue', 'dialogue/'..images[1], 100, 175)
+        setProperty('dadDialogue.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+        addAnimationByPrefix('dadDialogue', 'idle', 'portrait', 24, false);
+        playAnim('dadDialogue', 'idle', false);
+		setObjectCamera('dadDialogue', 'other')
+        addLuaSprite('dadDialogue', false)
+		if images[1] == '3d_splitathon_dave_port' then
+			scaleObject('dadDialogue', 1.25, 1.25)
+			setProperty("dadDialogue.x", -35)
+			setProperty("dadDialogue.y", 150)
+		end
 
-		makeAnimatedLuaSprite('bf', 'dialogue/'..images[2], 625, 175)
-        setProperty('bf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
-        addAnimationByPrefix('bf', 'idle', 'portrait', 24, false);
-        playAnim('bf', 'idle', false);
-		setObjectCamera('bf', 'other')
-        addLuaSprite('bf', false)
+		makeAnimatedLuaSprite('bfDialogue', 'dialogue/'..images[2], 625, 175)
+        setProperty('bfDialogue.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+        addAnimationByPrefix('bfDialogue', 'idle', 'portrait', 24, false);
+        playAnim('bfDialogue', 'idle', false);
+		setObjectCamera('bfDialogue', 'other')
+        addLuaSprite('bfDialogue', false)
 
 		makeAnimatedLuaSprite('speech_bubble', 'speech_bubble', 100, 350)
         setProperty('speech_bubble.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
@@ -204,12 +232,12 @@ function onCustomSubstateCreate(tag)
 		if crazyBubble then
 			playAnim('speech_bubble', 'idle2', true);
 
-			setProperty('dad.x', getProperty('dad.x') -25)
-			setProperty('bf.x', getProperty('bf.x') -25)
+			setProperty('dadDialogue.x', getProperty('dadDialogue.x') -25)
+			setProperty('bfDialogue.x', getProperty('bfDialogue.x') -25)
 			setProperty('speech_bubble.x', getProperty('speech_bubble.x') -25)
 			setProperty('dialogueTxtTEXT.x', getProperty('dialogueTxtTEXT.x') -25)
-			setProperty('dad.y', getProperty('dad.y') +50)
-			setProperty('bf.y', getProperty('bf.y') +50)
+			setProperty('dadDialogue.y', getProperty('dadDialogue.y') +50)
+			setProperty('bfDialogue.y', getProperty('bfDialogue.y') +50)
 			setProperty('speech_bubble.y', getProperty('speech_bubble.y') -15)
 			setProperty('dialogueTxtTEXT.y', getProperty('dialogueTxtTEXT.y') +50)
 		end
@@ -224,19 +252,19 @@ end
 
 function dialogueProps()
 	if dialogueChar[curDialogue] == true then
-		setProperty('dad.visible', true)
-		setProperty('bf.visible', false)
+		setProperty('dadDialogue.visible', true)
+		setProperty('bfDialogue.visible', false)
 		if crazyBubble ~= true then
 			setProperty('speech_bubble.flipX', true)
 		end
-		playAnim('dad', 'idle', false)
+		playAnim('dadDialogue', 'idle', false)
 	else
-		setProperty('dad.visible', false)
-		setProperty('bf.visible', true)
+		setProperty('dadDialogue.visible', false)
+		setProperty('bfDialogue.visible', true)
 		if crazyBubble ~= true then
 			setProperty('speech_bubble.flipX', false)
 		end
-		playAnim('bf', 'idle', false)
+		playAnim('bfDialogue', 'idle', false)
 	end
 end
 
@@ -259,8 +287,8 @@ function onCustomSubstateUpdate(tag, elapsed)
 		if keyboardJustPressed('P') == true or curDialogue > maxDialogue and not spam then
 			spam = true;
 			doTweenAlpha('background', 'background', 0, 1)
-			doTweenAlpha('dad', 'dad', 0, 1)
-			doTweenAlpha('bf', 'bf', 0, 1)
+			doTweenAlpha('dadDialogue', 'dadDialogue', 0, 1)
+			doTweenAlpha('bfDialogue', 'bfDialogue', 0, 1)
 			doTweenAlpha('speech_bubble', 'speech_bubble', 0, 1)
 			doTweenAlpha('dialogueTxtTEXT', 'dialogueTxtTEXT', 0, 1)
 		end
