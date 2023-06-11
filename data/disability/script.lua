@@ -3,7 +3,7 @@ local lockCam = false;
 local camZoomA = 1.25;
 
 function onUpdate(elapsed)
-    if getDataFromSave('settings', 'modcharts') == false then
+    if getDataFromSave('settings', 'modcharts') ~= true then
         return;
     end
 
@@ -14,7 +14,7 @@ function onUpdate(elapsed)
     end
 end
 
-function onUpdate(elapsed)
+function onUpdatePost(elapsed)
     if lockCam then
         setDataFromSave('settings', 'camZoom', false)
         doTweenZoom('camZoomGame', 'camGame', camZoomA, 3, "")

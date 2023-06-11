@@ -46,6 +46,7 @@ function onPause()
 	if buildTarget ~= 'windows' then
 		return; --don't want other people crashing when trying to play
 	end
+	
 	runHaxeCode([[
 		Application.current.window.title = "Friday Night Funkin': Psych Engine";
 		Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/Funkin").bitmap));

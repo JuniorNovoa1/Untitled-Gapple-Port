@@ -1,114 +1,114 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singLEFT",
-			"fps": 24,
-			"name": "left",
-			"indices": []
+			"indices": [],
+			"name": "left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singDOWN",
-			"fps": 24,
-			"name": "down0",
-			"indices": []
+			"indices": [],
+			"name": "down0"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singUP",
-			"fps": 24,
-			"name": "up",
-			"indices": []
+			"indices": [],
+			"name": "up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singRIGHT",
-			"fps": 24,
-			"name": "right",
-			"indices": []
+			"indices": [],
+			"name": "right"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singLEFT-alt",
-			"fps": 24,
-			"name": "micleft",
-			"indices": []
+			"indices": [],
+			"name": "micleft"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singDOWN-alt",
-			"fps": 24,
-			"name": "micdown0",
-			"indices": []
+			"indices": [],
+			"name": "micdown0"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singUP-alt",
-			"fps": 24,
-			"name": "micup",
-			"indices": []
+			"indices": [],
+			"name": "micup"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singRIGHT-alt",
+			"indices": [],
+			"name": "micright"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "danceLeft",
 			"fps": 24,
-			"name": "micright",
+			"name": "danceLeft0",
 			"indices": []
 		},
 		{
-			"offsets": [
-				0,
-				0
-			],
-			"indices": [],
-			"fps": 24,
-			"anim": "danceLeft",
 			"loop": false,
-			"name": "danceLeft0"
-		},
-		{
 			"offsets": [
 				0,
 				0
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "danceRight",
-			"loop": false,
-			"name": "danceRight0"
+			"fps": 24,
+			"name": "danceRight0",
+			"indices": []
 		}
 	],
 	"no_antialiasing": true,
@@ -120,9 +120,9 @@
 	"healthicon": "cigar-rush",
 	"flip_x": false,
 	"healthbar_colors": [
-		56,
-		241,
-		87
+		48,
+		195,
+		30
 	],
 	"camera_position": [
 		85,
