@@ -87,7 +87,7 @@ function onCreatePost()
 					false
 				}
 				song = 'disabilityDialogue';
-				images = {'3d_splitathon_dave_port', 'bf_reg_port'}
+				images = {'disable_port', 'bf_reg_port'}
 			elseif i == 4 then
 				dialogueTXT = {
 					"ALRIGHT, THAT IS IT!",
@@ -197,11 +197,6 @@ function onCustomSubstateCreate(tag)
         playAnim('dadDialogue', 'idle', false);
 		setObjectCamera('dadDialogue', 'other')
         addLuaSprite('dadDialogue', false)
-		if images[1] == '3d_splitathon_dave_port' then
-			scaleObject('dadDialogue', 1.25, 1.25)
-			setProperty("dadDialogue.x", -35)
-			setProperty("dadDialogue.y", 150)
-		end
 
 		makeAnimatedLuaSprite('bfDialogue', 'dialogue/'..images[2], 625, 175)
         setProperty('bfDialogue.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))

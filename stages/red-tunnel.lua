@@ -3,7 +3,7 @@ local bounceMultiplier = 1;
 local yBullshit = 1;
 
 function onCreate()
-    makeAnimatedLuaSprite('redTunnel', 'main/wireframe/redtunnelperspective', -750, -1000)
+    makeAnimatedLuaSprite('redTunnel', 'main/wireframe/redtunnelperspective', -775, -1000)
     addAnimationByPrefix('redTunnel', 'idle', 'redtunnelperspective idle0', 24, true)
     playAnim('redTunnel', 'idle', true)
     setProperty('redTunnel.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
