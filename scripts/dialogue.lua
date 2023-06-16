@@ -304,7 +304,7 @@ function onCustomSubstateUpdate(tag, elapsed)
 end
 
 function changeTxt(text)
-	local timeForEach = 0.03;
+	local timeForEach = 0.035;
 	setTextString('dialogueTxtTEXT', '')
 	for i = 1, #text do
 		runHaxeCode([[

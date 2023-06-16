@@ -3,6 +3,13 @@ local lockCam = false;
 local camZoomA = 1.25;
 
 function onUpdate(elapsed)
+    if lockCam then
+        setDataFromSave('settings', 'camZoom', false)
+        doTweenZoom('camZoomGame', 'camGame', camZoomA, 3, "")
+    else
+        setDataFromSave('settings', 'camZoom', true)
+    end
+
     if getDataFromSave('settings', 'modcharts') ~= true then
         return;
     end
@@ -11,15 +18,6 @@ function onUpdate(elapsed)
 
     for i = 0, 8 do
         setPropertyFromGroup("strumLineNotes", i, "angle", getPropertyFromGroup("strumLineNotes", i, "angle") + (math.sin(elapsedtime * 2.5) + 1) * 5)
-    end
-end
-
-function onUpdatePost(elapsed)
-    if lockCam then
-        setDataFromSave('settings', 'camZoom', false)
-        doTweenZoom('camZoomGame', 'camGame', camZoomA, 3, "")
-    else
-        setDataFromSave('settings', 'camZoom', true)
     end
 end
 

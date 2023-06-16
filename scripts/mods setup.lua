@@ -1,6 +1,6 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
-local gappleHUD = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'kooky'};
+local gappleHUD = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky'};
 local songSplashNames = {''};
 local oldFNFPos = {''};
 local gappleHUDsong = false;
@@ -13,7 +13,7 @@ local prevRatingPos = {};
 local songMod = 'Null';
 
 local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', '3d-bf-shoulder', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
-'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-front', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 'duelExpunged', '3d-bambi-leak-finale'}
+'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-front', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 'duelExpunged', '3d-bambi-leak-finale'}
 
 function onCreatePost()
 	setProperty('showCombo', true)
@@ -60,9 +60,6 @@ function onCreatePost()
 			if string.lower(songName) == 'disruption' then
 				setProperty('creditsText.text', 'Screw you!')
 			end
-			if getProperty('creditsText.text') == '' then
-				setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
-			end
 			songMod = 'Dave and Bambi';
 			if string.lower(songName) == 'maze' then
 				setProperty('healthBarBG.visible', false)
@@ -83,7 +80,7 @@ function onCreatePost()
 			setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
 			setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
 
-			makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBarBG.x'), getProperty('healthBarBG.y'))
+			makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBarBG.x'), getProperty('healthBarBG.y') +5)
 			scaleObject('healthBarBGnew', getProperty('healthBarBG.scale.x') - 0.075, getProperty('healthBarBG.scale.y') - 0.15)
 			setObjectCamera('healthBarBGnew', 'camHUD')
 			addLuaSprite('healthBarBGnew', false)
@@ -101,20 +98,23 @@ function onCreatePost()
 				changeNoteSkin(false, 'NOTE_assets_3D');
 			end
 
-			local difHealth = 0.025;
-
 			for i = 0, getProperty('unspawnNotes.length')-1 do
-				setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup('unspawnNotes', i, 'hitHealth') * (1.0 - difHealth))
+				setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.023)
 				if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
-					setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup('unspawnNotes', i, 'hitHealth') / 2)
+					setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.004)
 				end
-				setPropertyFromGroup('unspawnNotes', i, 'missHealth', getPropertyFromGroup('unspawnNotes', i, 'missHealth') * (1.0 + (difHealth * 4)))
+				setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.04 + 0.075)
 				if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
-					setPropertyFromGroup('unspawnNotes', i, 'missHealth', getPropertyFromGroup('unspawnNotes', i, 'missHealth') / 2)
+					setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0)
 				end
 				if (((has_value(CharactersWith3D, getProperty('dad.curCharacter')) and not getPropertyFromGroup('unspawnNotes', i, 'mustHit')) or (has_value(CharactersWith3D, getProperty('boyfriend.curCharacter'))) and getPropertyFromGroup('unspawnNotes', i, 'mustHit'))) or ((has_value(CharactersWith3D, getProperty('dad.curCharacter')) or has_value(CharactersWith3D, getProperty('boyfriend.curCharacter'))) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
 					setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_assets_3D')
 				end
+			end
+
+			if downscroll then
+				setProperty("iconP1.y", getProperty('healthBar.y') -75)
+				setProperty("iconP2.y", getProperty('healthBar.y') -75)
 			end
 
 			makeLuaSprite('iconP12', 'icons/missing', 0, 0)
@@ -242,17 +242,22 @@ function onUpdatePost(elapsed)
 			setProperty('healthBarBG.y', screenHeight * 0.9)
 			setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
 			setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
-			setProperty('healthBarBGnew.y', screenHeight * 0.9)
+			setProperty('healthBarBGnew.y', screenHeight * 0.9 +1.25)
 			setProperty('healthBarBGnew.x', getProperty('healthBarBG.x'))
-			setProperty('scoreTxt.y', getProperty('healthBarBG.y') + 40)
 		end
 		if downscroll then
 			setProperty('healthBarBG.y', 50)
 			setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
 			setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
-			setProperty('healthBarBGnew.y', getProperty('healthBarBG.y') + 4)
+			setProperty('healthBarBGnew.y', getProperty('healthBarBG.y') + 5.25)
 			setProperty('healthBarBGnew.x', getProperty('healthBarBG.x') + 4)
 		end
+		if getProperty('creditsText.text') == '' then
+			setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
+		else
+			setProperty("creditsWatermark.y", getProperty("healthBarBG.y") + 30)
+		end
+		setProperty('scoreTxt.y', getProperty('healthBarBG.y') + 40)
 
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		if string.lower(songName) == 'kooky' then
@@ -329,11 +334,15 @@ function onBeatHit()
 			return;
 		end
 		local iconPos = getProperty('healthBar.y') -82.5;
+		if downscroll then
+			iconPos = getProperty('healthBar.y') -75;
+		end
 
 		if curBeat % getProperty('gfSpeed') == 0 then
-			local fuasd = {0.8, 1.3}
-			local angl = 15;
-			local yOffset = 15;
+			local multiplier = 1;
+			local fuasd = {0.8 * multiplier, 1.3 * multiplier}
+			local angl = 15 * multiplier;
+			local yOffset = 15 * multiplier;
 
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', 1.1, fuasd[1])

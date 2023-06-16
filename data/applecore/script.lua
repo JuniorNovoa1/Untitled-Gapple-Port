@@ -40,7 +40,7 @@ function onCreatePost()
 
     for direction = 4, 7 do
         setPropertyFromGroup('opponentStrums', direction, 'x', -125 + getPropertyFromGroup('opponentStrums', direction, 'x'))
-        setPropertyFromGroup('opponentStrums', direction, 'y', 525)
+        setPropertyFromGroup('opponentStrums', direction, 'y', 500)
         setPropertyFromGroup('opponentStrums', direction, 'scrollFactor.x', 0.9)
         setPropertyFromGroup('opponentStrums', direction, 'scrollFactor.y', 0.9)
         setPropertyFromGroup('opponentStrums', direction, 'visible', false)
@@ -101,6 +101,9 @@ function onUpdate(elapsed)
             setPropertyFromGroup('strumLineNotes', i, 'y', ((screenHeight / 2) - (getPropertyFromGroup('strumLineNotes', i, 'height') / 2)) + (math.cos(elapsedtime + (i)) * 300))
         end
     end
+    if bambiPissed or unfairPart then
+        setProperty("bambi.y", getProperty("bambi.y") - (math.sin(elapsedtime) * 0.6))
+    end
 end
 
 function onUpdatePost()
@@ -122,7 +125,7 @@ function onUpdatePost()
                 setProperty('bambi.holdTimer', 0)
                 strumAnim(noteDataa - 1, 'confirm', 0.15);
                 setProperty('health', getProperty('health') -(healthtolower / 2.65))
-                if getDataFromSave('screenshake') == true then
+                if getDataFromSave('settings', 'screenshake') == true then
                     triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
                 end
                 playAnim('bambi', singAnims[noteDataa], true)
@@ -154,8 +157,6 @@ function onStepHit()
         setProperty('minion.visible', true)
         setProperty('minion1.visible', true)
         setProperty('creditsText.text', 'Screw you!')
-        setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 30)
-        setProperty('creditsText.y', getProperty('healthBarBG.y') + 50)
 
         removeLuaSprite('hi', true)
         setProperty('poop.visible', true)
@@ -258,7 +259,7 @@ function onTweenCompleted(tag)
         triggerEvent('Change Character', 'dad', 'unfair-junker')
         setObjectOrder('dadGroup', getObjectOrder('gfGroup') -1)
         setProperty('dad.x', -125)
-        setProperty('dad.y', -200)
+        setProperty('dad.y', 200)
         setProperty('monkey_guy.visible', true)
         setProperty('monkey_person.visible', true)
 
