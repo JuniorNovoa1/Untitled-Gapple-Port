@@ -11,6 +11,7 @@ function onStepHit()
 
     if curStep == 1114 then --as soon as beat hits
         setProperty('farm.visible', false)
+        setProperty('gf.visible', true)
         setProperty('bestgf.visible', false)
         setProperty('mineBG.visible', true)
         changeNoteSkin(false, 'NOTE_assets_3D')

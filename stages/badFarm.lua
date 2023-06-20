@@ -17,12 +17,13 @@ function onCreate()
 end
 
 function onCreatePost()
-    makeLuaSprite('bestgf', 'characters/joke/awesome/best_gf', getProperty('gf.x') * 1.535, getProperty('gf.y') * 3)
+    makeLuaSprite('bestgf', 'characters/joke/awesome/best_gf', getProperty('gf.x') * 1.25, getProperty('gf.y') * 1.5)
     setProperty('bestgf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('bestgf.scale.x', 2)
     setProperty('bestgf.scale.y', 2)
     addLuaSprite('bestgf', false)
     setProperty('gf.visible', false)
 
+    setProperty('boyfriend.x', getProperty('boyfriend.x') -75)
     setProperty('dad.x', getProperty('dad.x') -75)
 end
