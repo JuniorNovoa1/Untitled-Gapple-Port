@@ -77,6 +77,12 @@ function onStepHit()
 		--funk
 	end
 
+	--6:39
+	--6:39
+	--6:39
+	--6:39
+	--6:39
+
 	if curStep == 7488 then
 		--portal
 		makeLuaSprite('portal', 'appleLeak/cave/portal', getProperty('boyfriend.x') + 205, getProperty('boyfriend.y') + 205)
@@ -95,26 +101,93 @@ function onStepHit()
 		doTweenY('null4', 'boyfriend.scale', 0, 1)
 	end
 
-	if curStep == 9696 then
-		--static for prob 2 secs
+	if curStep == 9520 then --3d and 2d
+		makeAnimatedLuaSprite('staticAnim', 'appleLeak/dookie/give_me_all_your_zunk', -175, -100)
+		setProperty('staticAnim.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+		setScrollFactor('staticAnim', 0, 0)
+		addAnimationByPrefix('staticAnim', 'idle', 'static0', 24, true)
+		playAnim('staticAnim', 'idle', true)
+		addLuaSprite('staticAnim', true)
+		setProperty("fire.visible", false)
+		setProperty("vg.visible", false)
+		runTimer('static2', 1.1)
 	end
 
-	if curStep == 10464 then
-		--static for prob 2 secs
+	if curStep == 9696 then --3d bamber
+		removeLuaSprite("blackNwhite", true)
+		setProperty("staticAnim.visible", true)
+		runTimer('static', 1.1)
 	end
 
-	if curStep == 11424 then
-		--static for prob 2 secs
+	if curStep == 10096 then --wide bambi
+		setProperty("staticAnim.visible", true)
+		setProperty("fire.visible", false)
+		setProperty("vg.visible", false)
+		runTimer('static', 1.2)
 	end
 
-	if curStep == 11944 then
-		--discord leave call
+	if curStep == 10256 then --so screwed
+		setProperty("staticAnim.visible", true)
+		runTimer('static', 1.25)
+	end
+
+	if curStep == 10464 then --3d bamber
+		setProperty("staticAnim.visible", true)
+		runTimer('static', 1.25)
+	end
+
+	if curStep == 10864 then --amog us
+		setProperty("staticAnim.visible", true)
+		setProperty("fire.visible", false)
+		setProperty("vg.visible", false)
+		runTimer('static', 1.25)
+	end
+
+	if curStep == 11152 then --bob
+		setProperty("staticAnim.visible", true)
+		runTimer('static', 1.25)
+	end
+
+	if curStep == 11424 then --3d bamber
+		setProperty("staticAnim.visible", true)
+		runTimer('static', 1.25)
+	end
+
+	if curStep == 11952 then --dik cord
+		setProperty("fire.visible", false)
+		setProperty("vg.visible", false)
+	end
+end
+
+
+function onTimerCompleted(tag, loops, loopsLeft)
+	if tag == 'static' then
+		triggerEvent("Change Character", "dad", "3d-bambi-leak-finale")
+		triggerEvent("Change Character", "bf", "3d-bf-shoulder")
+		setProperty("staticAnim.visible", false)
+		setProperty("fire.visible", true)
+		setProperty("vg.visible", true)
+	end
+
+	if tag == 'static2' then
+		setProperty("staticAnim.visible", false)
+
+		triggerEvent("Change Character", "bf", "bf")
+		makeLuaSprite('blackNwhite', 'appleLeak/dookie/bgs/2d-and-3d/ying and yang makes a comeback', getProperty("boyfriend.x") * 0.9, getProperty("boyfriend.y") / 2)
+		setProperty('blackNwhite.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+		addLuaSprite('blackNwhite', false)
+		makeAnimatedLuaSprite('2dThing', 'appleLeak/dookie/fixed i things', 0, 0)
+    	setProperty('2dThing.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
+		setScrollFactor('2dThing', 0, 0)
+    	addAnimationByPrefix('2dThing', 'idle', 'Symbol 1', 24, true)
+    	playAnim('2dThing', 'idle', true)
+        addLuaSprite('2dThing', true)
 	end
 end
 
 function thisNewPsychUpdateFuckedME(x, y)
-	doTweenX('dad xxx', 'dad', x, 0.1)
-	doTweenY('dad yyy', 'dad', y, 0.1)
+	doTweenX('dad xxx', 'dad', x, 0.05)
+	doTweenY('dad yyy', 'dad', y, 0.05)
 end
 
 function onEvent(name, value1, value2)
@@ -331,8 +404,8 @@ function onEvent(name, value1, value2)
 				camY = 450;
 				stayOnCam = true;
 
-				setProperty('boyfriend.y', getProperty('boyfriend.y') - 900)
-				doTweenY('boyfrinedYYY', 'boyfriend', getProperty('boyfriend.y') + 900, 1.5)
+				setProperty('boyfriend.y', getProperty('boyfriend.y') - 950)
+				doTweenY('boyfrinedYYY', 'boyfriend', getProperty('boyfriend.y') + 950, 1.5)
 				loopVarThing = true;
 			end
 
@@ -437,6 +510,8 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 		stayOnCam = false;
 		POP2 = true;
 	end
+
+	setProperty("2dThing.visible", false)
 
 	if getProperty('dad.curCharacter') == 'among-bambi' and not POP3 then
 		--flash twitter post

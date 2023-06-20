@@ -73,6 +73,12 @@ function onCreatePost()
 				break;
 			end
 
+			if getProperty('creditsText.text') == '' and string.lower(songName) ~= 'kooky' then
+				setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
+			elseif string.lower(songName) ~= 'kooky' then
+				setProperty("creditsWatermark.y", getProperty("healthBarBG.y") + 30)
+			end
+
 			songMod = 'DNB: Golden Apple';
 
 			prevRatingPos[0] = getPropertyFromClass('ClientPrefs', 'comboOffset[0]');
@@ -234,16 +240,48 @@ function onUpdate(elapsed)
 	end
 end
 
-local noteColors = {'7A5299', '00FFFF', '90EE90', 'FF7F7F'} --90EE90
+local offsets = {-13, -13}--{55, 43}
 
 function onUpdatePost(elapsed)
 	if string.lower(songName) == 'maze' or gappleHUDsong then
+		runHaxeCode([[
+			for (i in 0...game.strumLineNotes.length) {
+				if (game.strumLineNotes.members[i].animation.curAnim.name == 'confirm') {
+					game.strumLineNotes.members[i].centerOffsets();
+					//game.strumLineNotes.members[i].centerOrigin();
+					game.strumLineNotes.members[i].offset.x += 2;
+					game.strumLineNotes.members[i].offset.y -= 4;
+				}
+			}
+		]])
+		--[[for direction = 0, 3 do
+			if getPropertyFromGroup("playerStrums", direction, 'animation.curAnim.name') == 'confirm' then
+				if getPropertyFromGroup("playerStrums", direction, "texture") == 'NOTE_assets' then
+					setPropertyFromGroup('playerStrums', direction, 'offset.x', offsets[1] * 1.1)
+					setPropertyFromGroup('playerStrums', direction, 'offset.y', offsets[2] * 1.4)
+				else
+					setPropertyFromGroup('playerStrums', direction, 'offset.x', offsets[1])
+					setPropertyFromGroup('playerStrums', direction, 'offset.y', offsets[2])
+				end
+			end
+			if getPropertyFromGroup("opponentStrums", direction, 'animation.curAnim.name') == 'confirm' then
+				if getPropertyFromGroup("opponentStrums", direction, "texture") == 'NOTE_assets' then
+					setPropertyFromGroup('opponentStrums', direction, 'offset.x', offsets[1] * 1.1)
+					setPropertyFromGroup('opponentStrums', direction, 'offset.y', offsets[2] * 1.4)
+				else
+					setPropertyFromGroup('opponentStrums', direction, 'offset.x', offsets[1])
+					setPropertyFromGroup('opponentStrums', direction, 'offset.y', offsets[2])
+				end
+			end
+		end--]]
+
 		if string.lower(songName) ~= 'kooky' then
 			setProperty('healthBarBG.y', screenHeight * 0.9)
 			setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
 			setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
 			setProperty('healthBarBGnew.y', screenHeight * 0.9 +1.25)
 			setProperty('healthBarBGnew.x', getProperty('healthBarBG.x'))
+			setProperty('scoreTxt.y', getProperty('healthBarBG.y') + 40)
 		end
 		if downscroll then
 			setProperty('healthBarBG.y', 50)
@@ -252,12 +290,11 @@ function onUpdatePost(elapsed)
 			setProperty('healthBarBGnew.y', getProperty('healthBarBG.y') + 5.25)
 			setProperty('healthBarBGnew.x', getProperty('healthBarBG.x') + 4)
 		end
-		if getProperty('creditsText.text') == '' then
+		if getProperty('creditsText.text') == '' and string.lower(songName) ~= 'kooky' then
 			setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
-		else
+		elseif string.lower(songName) ~= 'kooky' then
 			setProperty("creditsWatermark.y", getProperty("healthBarBG.y") + 30)
 		end
-		setProperty('scoreTxt.y', getProperty('healthBarBG.y') + 40)
 
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		if string.lower(songName) == 'kooky' then
