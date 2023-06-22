@@ -249,8 +249,9 @@ function onUpdatePost(elapsed)
 				if (game.strumLineNotes.members[i].animation.curAnim.name == 'confirm') {
 					game.strumLineNotes.members[i].centerOffsets();
 					//game.strumLineNotes.members[i].centerOrigin();
-					game.strumLineNotes.members[i].offset.x += 2;
-					game.strumLineNotes.members[i].offset.y -= 4;
+
+					game.strumLineNotes.members[i].offset.x -= 2;
+					game.strumLineNotes.members[i].offset.y -= 2;
 				}
 			}
 		]])
