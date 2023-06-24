@@ -1,0 +1,96 @@
+{
+	"song": {
+		"events": [
+			[
+				72727.2727272727,
+				[
+					[
+						"Change Character",
+						"dad",
+						"spike"
+					]
+				]
+			],
+			[
+				160000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"og-dave"
+					]
+				]
+			],
+			[
+				196363.636363637,
+				[
+					[
+						"Change Character",
+						"dad",
+						"spike"
+					]
+				]
+			],
+			[
+				200000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"og-dave-angey"
+					]
+				]
+			],
+			[
+				232727.272727273,
+				[
+					[
+						"Change Character",
+						"dad",
+						"hall-monitor"
+					]
+				]
+			],
+			[
+				380000.000000001,
+				[
+					[
+						"Change Character",
+						"dad",
+						"diamond-man"
+					]
+				]
+			],
+			[
+				479999.999999999,
+				[
+					[
+						"Change Character",
+						"dad",
+						"playrobot"
+					]
+				]
+			],
+			[
+				533333.333333332,
+				[
+					[
+						"Change Character",
+						"dad",
+						"playrobot-crazy"
+					]
+				]
+			],
+			[
+				580000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"ogdave-angey"
+					]
+				]
+			]
+		]
+	}
+}

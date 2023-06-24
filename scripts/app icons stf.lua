@@ -1,4 +1,4 @@
-local gappleSongs = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'kooky'};
+local gappleSongs = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'kooky'};
 
 function onCreate()
 	addHaxeLibrary('Application', 'lime.app')

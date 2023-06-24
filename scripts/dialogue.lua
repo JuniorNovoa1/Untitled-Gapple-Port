@@ -1,7 +1,7 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 
-local dialogueSongs = {'disruption', 'applecore', 'disability', 'wireframe', 'ferocious', 'apple-leak'};
+local dialogueSongs = {'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'ferocious', 'apple-leak'};
 local images = {'disruption_port', 'bf_compuzzled_port'}
 local song = 'disruptionCutscene';
 local dialogueTXT = {
@@ -116,7 +116,28 @@ function onCreatePost()
 				song = 'wireframeCutscene';
 				images = {'decimated_dave_port', 'bf_reg_port'}
 				crazyBubble = true;
-			elseif i == 5 then
+			elseif i == 5 then --DIALOGIUE
+				dialogueBool = true;
+
+				dialogueTXT = {
+					"Hey there!",
+					"Welcome to my school!",
+					"People don't visit me often, So I'm glad you're here!",
+					"Beep!",
+					"Don't worry about my disability, I can get around myself.",
+					"Bap!"
+				}
+				dialogueChar = {
+					true,
+					true,
+					true,
+					false,
+					true,
+					false
+				}
+				song = 'DaveDialogue';
+				images = {'og_port', 'bf_reg_port'}
+			elseif i == 6 then
 				dialogueBool = true; --change to true to have unused ferocious dialogue
 
 				dialogueTXT = {
@@ -133,7 +154,7 @@ function onCreatePost()
 				}
 				song = 'ferociousDialogue';
 				images = {'disruption_port', 'bf_reg_port'}
-			elseif i == 6 then
+			elseif i == 7 then
 				dialogueTXT = {
 					"hey you let's rap battle btw you were on my kill list so die pls",
 					"no no no non non on non on no",

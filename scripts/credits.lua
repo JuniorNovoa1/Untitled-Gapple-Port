@@ -5,26 +5,27 @@ local txtOffset = 65;
 --local midSongPopUp = false;
 local time = 1;
 local waitTime = 3;
-local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky', 'lore', 'close chuckle'};
+local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky', 'lore', 'close chuckle'};
 local songTxt = {
-	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello',
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord',
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord',
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nT5mpler',
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nSky!\nJuniorNovoa (finished it)', 
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\n\nGarrett\'s Funny Animal Game\nJumpman25',
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nPointyyESMa',
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nLexicord',
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nCynda',
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord',
-	"Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\nCynda\n\nSong\nSky!\n\nCharter\nCynda\n\nBased off Dinnerbambi\nFunkin' by Anton Bildziuk",
-	'Mod\nDave and Bambi Golden Apple\n\nPart\nSilly Squirmer\n\nVisuals\nSAMMYPIGZY\nArty Squirmer\n\nCharter\nCharty Squirmer\n\nBased off\nHigh Effort Poopers', 
-	'Fake song!\n\nMod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nCrapler\n\nCharter\nUnknown',
-	'Fake song?\n\nMod\nDave and Bambi Golden Apple\n\nArt\nLancey\nBluHairMan\n\nSong\nSky!\n\nCharter\nColin09\n\nBased off Golden Apple?\nMore like Golden Crapple!',
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nProject Tea',
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nProject Tea',
-	'Mod\nD-Sides\n\nArt\nThe Whole Team Ig\n\nSong\nsherrii\n\nCharter\nViva',
-	'Mod\nHotline-042\n\nArt\nThe Whole Team Ig\n\nSong\nSaruky\n\nCharter\nCape'
+	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello', --Maze
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --Disruption
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --Applecore
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nT5mpler', --Disability
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nSky!\nJuniorNovoa (finished it)', --Wireframe
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --Algebra
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\n\nGarrett\'s Funny Animal Game\nJumpman25', --Ferocious
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nPointyyESMa', --Sugar-Rush
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nLexicord', --Cuberoot
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nCynda', --Sart-Producer
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --OG
+	"Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\nCynda\n\nSong\nSky!\n\nCharter\nCynda\n\nBased off Dinnerbambi\nFunkin' by Anton Bildziuk", --Mine
+	'Mod\nDave and Bambi Golden Apple\n\nPart\nSilly Squirmer\n\nVisuals\nSAMMYPIGZY\nArty Squirmer\n\nCharter\nCharty Squirmer\n\nBased off\nHigh Effort Poopers', --Apple-Leak
+	'Fake song!\n\nMod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nCrapler\n\nCharter\nUnknown', --Badcorn
+	'Fake song?\n\nMod\nDave and Bambi Golden Apple\n\nArt\nLancey\nBluHairMan\n\nSong\nSky!\n\nCharter\nColin09\n\nBased off Golden Apple?\nMore like Golden Crapple!', --Crap!
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nProject Tea', --Ticking
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nProject Tea', --Kooky
+	'Mod\nD-Sides\n\nArt\nThe Whole Team Ig\n\nSong\nsherrii\n\nCharter\nViva', --Lore
+	'Mod\nHotline-042\n\nArt\nThe Whole Team Ig\n\nSong\nSaruky\n\nCharter\nCape' --Close Chuckle
 };
 local txt = 'nil';
 local left = false;
