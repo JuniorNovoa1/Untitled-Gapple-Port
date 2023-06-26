@@ -103,8 +103,8 @@
 	"no_antialiasing": true,
 	"image": "characters/main/algebra/spike_lool",
 	"position": [
-		-300,
-		-250
+		-200,
+		-300
 	],
 	"healthicon": "spike",
 	"flip_x": false,
