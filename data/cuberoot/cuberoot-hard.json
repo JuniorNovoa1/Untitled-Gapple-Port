@@ -6284,7 +6284,7 @@
 		],
 		"player3": null,
 		"song": "Cuberoot",
-		"arrowSkin": "NOTE_assets_3D",
+		"arrowSkin": "",
 		"stage": "cuberoot",
 		"validScore": true,
 		"needsVoices": true,
