@@ -29910,7 +29910,7 @@
 		],
 		"player3": null,
 		"song": "Ferocious",
-		"arrowSkin": "NOTE_assets_3D",
+		"arrowSkin": "",
 		"stage": "garrett-school",
 		"needsVoices": true,
 		"validScore": true,
