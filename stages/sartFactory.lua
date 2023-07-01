@@ -1,13 +1,11 @@
 function onCreate()
     makeLuaSprite('factory', 'extras/sart/grand_cake', 0, 0)
-    setProperty('factory.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     screenCenter('factory', '')
     addLuaSprite('factory', false)
 
     makeAnimatedLuaSprite('spoarFolk', 'extras/sart/spoar_folk', getProperty('gf.x'), getProperty('gf.y'))
     setProperty('spoarFolk.x', getProperty('spoarFolk.x') + 200)
     setProperty('spoarFolk.y', getProperty('spoarFolk.y') + 175)
-    setProperty('spoarFolk.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     addAnimationByPrefix('spoarFolk', 'idle', 'dance', 24, true);
     addAnimationByPrefix('spoarFolk', 'move', 'uncle klunk move0', 24, false);
     playAnim('spoarFolk', 'idle', true);

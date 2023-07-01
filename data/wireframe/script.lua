@@ -21,13 +21,11 @@ function onCreate()
 
     makeLuaSprite('blackBarUP', '', 0, -220)
     makeGraphic('blackBarUP', '1280', '120', '000000')
-    setProperty('blackBarUP.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setObjectCamera('blackBarUP', 'camhud')
     addLuaSprite('blackBarUP', false)
 
     makeLuaSprite('blackBarDOWN', '', 0, 720)
     makeGraphic('blackBarDOWN', '1280', '120', '000000')
-    setProperty('blackBarDOWN.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setObjectCamera('blackBarDOWN', 'camhud')
     addLuaSprite('blackBarDOWN', false)
 end

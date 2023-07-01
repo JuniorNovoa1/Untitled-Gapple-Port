@@ -4,7 +4,6 @@ local swagSpeed = 1.6;
 function onCreatePost()
 	makeLuaSprite('thunderBlack', '', getProperty("bg.x"), getProperty("bg.y"))
     makeGraphic('thunderBlack', getProperty("bg.width"), getProperty("bg.height"), '000000')
-    setProperty('thunderBlack.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('thunderBlack.alpha', 0)
     addLuaSprite('thunderBlack', true)
 end

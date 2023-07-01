@@ -1,4 +1,4 @@
-local gappleSongs = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'kooky'};
+local gappleSongs = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky'}
 
 function onCreate()
 	addHaxeLibrary('Application', 'lime.app')
@@ -6,6 +6,7 @@ function onCreate()
 	addHaxeLibrary('WindowData', 'lime.tools')
 	addHaxeLibrary('System', 'openfl.system')
 	addHaxeLibrary('Lib', 'openfl')
+	addHaxeLibrary('ClientPrefs')
 
 	clearCache();
 end
@@ -23,7 +24,21 @@ function onCreatePost()
 		setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
 	end
 
+	runHaxeCode([[
+		for (integer in game.modchartSprites.keys()) {
+			game.modchartSprites[integer].antialiasing = ClientPrefs.globalAntialiasing;
+		}
+	]])
+
 	changeIcon();
+end
+
+function onUpdatePost(elapsed)
+	runHaxeCode([[
+		for (integer in game.modchartSprites.keys()) {
+			game.modchartSprites[integer].antialiasing = ClientPrefs.globalAntialiasing;
+		}
+	]])
 end
 
 function onEvent(tag, val1, val2)

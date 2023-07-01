@@ -8,7 +8,6 @@ function onCreate()
     setProperty('defaultCamZoom',1.2)
 
     makeLuaSprite('bg', 'smiling/bg', -595, -275)
-    setProperty('bg.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('bg.scale.x', 0.6)
     setProperty('bg.scale.y', 0.5)
     updateHitbox('bg')

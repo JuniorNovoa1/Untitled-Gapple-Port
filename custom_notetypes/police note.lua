@@ -1,6 +1,6 @@
 local camOFFSET = 0;
 
-function onCreate()
+function onCreatePost()
     --Iterate over all notes
     for i = 0, getProperty('unspawnNotes.length')-1 do
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'police note' then
@@ -16,6 +16,22 @@ function onCreate()
             end
             if getPropertyFromGroup('unspawnNotes', i, 'mustPress') then --Doesn't let Dad/Opponent notes get ignored
                 setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); --Miss has no penalties
+            end
+        end
+    end
+end
+
+function onUpdate(elapsed)
+    for i = 0, getProperty('notes.length')-1 do
+        if getPropertyFromGroup('notes', i, 'noteType') == 'police note' then
+            if getPropertyFromGroup('notes', i, 'noteData') == 0 then
+                setPropertyFromGroup('notes', i, 'angle', -90);
+            end
+            if getPropertyFromGroup('notes', i, 'noteData') == 1 then
+                setPropertyFromGroup('notes', i, 'flipY', true);
+            end
+            if getPropertyFromGroup('notes', i, 'noteData') == 3 then
+                setPropertyFromGroup('notes', i, 'angle', 90);
             end
         end
     end

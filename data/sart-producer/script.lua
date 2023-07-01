@@ -81,7 +81,7 @@ function onUpdate(elapsed)
 end
 
 function onEvent(tag, val1, val2)
-    if tag == 'Change Character' and val1 == 'dad' and val2 == 'sart-producer-front' then
+    if tag == 'Change Character' and val1 == 'dad' and val2 == 'sart-producer-glitch' then
         setProperty('bgDark.alpha', 1)
         setProperty('defaultCamZoom', 1)
         setProperty('boyfriend.visible', false)

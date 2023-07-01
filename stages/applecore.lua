@@ -40,14 +40,12 @@ function onCreate()
 
     for i = 1, #items2 do
         makeAnimatedLuaSprite(items2[i], 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
-        setProperty(items2[i]..'.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix(items2[i], 'idle', 'p', 14, true);
         playAnim(items2[i], 'idle', true);
         scaleObject(items2[i], 0.675, 0.675)
         addLuaSprite(items2[i], false)
 
         makeAnimatedLuaSprite(items2[i]..'1', 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
-        setProperty(items2[i]..'1.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix(items2[i]..'1', 'idle', 'p', 14, true);
         playAnim(items2[i]..'1', 'idle', true);
         scaleObject(items2[i]..'1', 0.675, 0.675)
@@ -61,7 +59,6 @@ function onCreate()
 
     for i = 1, #items3 do
         makeAnimatedLuaSprite(items3[i], 'main/applecore/'..items3[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
-        setProperty(items3[i]..'.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix(items3[i], 'walking', 'poip0', 24, true);
         addAnimationByPrefix(items3[i], 'woah', 'poop0', 24, true);
         addAnimationByPrefix(items3[i], 'spin', 'porp0', 24, true);
@@ -71,7 +68,6 @@ function onCreate()
         addLuaSprite(items3[i], false)
 
         makeAnimatedLuaSprite(items3[i]..'1', 'main/applecore/'..items3[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
-        setProperty(items3[i]..'1.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix(items3[i]..'1', 'walking', 'poip0', 24, true);
         addAnimationByPrefix(items3[i]..'1', 'woah', 'poop0', 24, true);
         addAnimationByPrefix(items3[i]..'1', 'spin', 'porp0', 24, true);

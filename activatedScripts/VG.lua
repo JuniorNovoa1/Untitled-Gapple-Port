@@ -5,7 +5,6 @@ local time = 1;
 
 function onCreate()
     makeLuaSprite('vg', 'vig_red', 0, 0)
-    setProperty('vg.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('vg.visible', false)
     setObjectCamera('vg', 'camhud')
     setProperty('vg.alpha', 0)

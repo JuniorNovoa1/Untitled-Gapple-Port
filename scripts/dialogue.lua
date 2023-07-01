@@ -213,21 +213,18 @@ function onCustomSubstateCreate(tag)
 		addLuaSprite('background', false)
 
 		makeAnimatedLuaSprite('dadDialogue', 'dialogue/'..images[1], 100, 175)
-        setProperty('dadDialogue.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix('dadDialogue', 'idle', 'portrait', 24, false);
         playAnim('dadDialogue', 'idle', false);
 		setObjectCamera('dadDialogue', 'other')
         addLuaSprite('dadDialogue', false)
 
 		makeAnimatedLuaSprite('bfDialogue', 'dialogue/'..images[2], 625, 175)
-        setProperty('bfDialogue.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix('bfDialogue', 'idle', 'portrait', 24, false);
         playAnim('bfDialogue', 'idle', false);
 		setObjectCamera('bfDialogue', 'other')
         addLuaSprite('bfDialogue', false)
 
 		makeAnimatedLuaSprite('speech_bubble', 'speech_bubble', 100, 350)
-        setProperty('speech_bubble.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix('speech_bubble', 'idle', 'speech bubble normal', 24, true);
 		addAnimationByPrefix('speech_bubble', 'idle2', 'AHH speech bubble0', 24, true);
         playAnim('speech_bubble', 'idle', true);
@@ -238,7 +235,6 @@ function onCustomSubstateCreate(tag)
 		makeLuaText('dialogueTxtTEXT', dialogueTXT[1], 720, 275, 465)
 		setObjectCamera('dialogueTxtTEXT', 'camother')
 		setTextAlignment('dialogueTxtTEXT', 'left')
-		setProperty('dialogueTxtTEXT.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
 		--setTextColor('dialogueTxtTEXT', '000000')
 		setTextFont('dialogueTxtTEXT', 'comic.ttf')
 		setTextSize('dialogueTxtTEXT', 28)

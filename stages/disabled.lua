@@ -1,7 +1,6 @@
 local shadname = "glitchEffect";
 function onCreate()
     makeLuaSprite('disabled', 'dave/disabled', 0, 0)
-    setProperty('disabled.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     screenCenter('disabled', '')
     addLuaSprite('disabled', false)
     initLuaShader(shadname)

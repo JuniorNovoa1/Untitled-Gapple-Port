@@ -2,7 +2,6 @@ local shadname = "glitchEffect";
 
 function onCreate()   
     makeLuaSprite('portal', 'appleLeak/cave/portal', 0, 0)
-    setProperty('portal.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('portal.visible', false)
     setProperty('portal.scale.x', 0)
     setProperty('portal.scale.y', 0)
@@ -12,7 +11,6 @@ function onCreate()
     end
 
     makeLuaSprite('th1ft', 'appleLeak/th1ft_room', 0, 150)
-    setProperty('th1ft.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     screenCenter('th1ft', 'X')
     updateHitbox('th1ft')
     addLuaSprite('th1ft', false)
@@ -35,7 +33,6 @@ function onCreate()
     end
 
     makeLuaSprite('garryLeak', 'appleLeak/gary_leak', 0, 150)
-    setProperty('garryLeak.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     screenCenter('garryLeak', 'X')
     setProperty('garryLeak.x', getProperty('garryLeak.x') + 100)
     updateHitbox('garryLeak')
@@ -47,20 +44,17 @@ function onCreate()
     setShaderFloat('garryLeak', 'uSpeed', 2)
 
     makeLuaSprite('gasStation', 'appleLeak/gas_station', 0, 0)
-    setProperty('gasStation.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     screenCenter('gasStation')
     updateHitbox('gasStation')
     addLuaSprite('gasStation', false)
 
     makeLuaSprite('wavyApplecore', 'appleLeak/wavyApplecore', 0, 150)
-    setProperty('wavyApplecore.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('wavyApplecore.visible', false)
     screenCenter('wavyApplecore', 'X')
     updateHitbox('wavyApplecore')
     addLuaSprite('wavyApplecore', false)
 
     makeAnimatedLuaSprite('jamboul', 'characters/appleLeak/jamboul', 150, 250)
-    setProperty('jamboul.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     addAnimationByPrefix('jamboul', 'left', 'jamboul left0', 24, false)
     addAnimationByPrefix('jamboul', 'down', 'jamboul down wip0', 24, false)
     addAnimationByPrefix('jamboul', 'up', 'jamboul up wip0', 24, false)
@@ -79,7 +73,6 @@ function onCreate()
     end
 
     makeLuaSprite('ytVids', 'appleLeak/trolled/bgthing', 175 * 2, 250 * 2) -- -175, -250
-    setProperty('ytVids.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     --setProperty('ytVids.visible', false)
     setProperty('ytVids.scale.x', 0)
     setProperty('ytVids.scale.y', 0)
@@ -87,7 +80,6 @@ function onCreate()
     addLuaSprite('ytVids', true)
 
     makeLuaSprite('ytStatic', 'appleLeak/trolled/bg2', -175, 1075)
-    setProperty('ytStatic.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('ytStatic.visible', false)
     --setProperty('ytStatic.scale.x', 1.25)
     --setProperty('ytStatic.scale.y', 1.25)
@@ -100,12 +92,10 @@ function onCreate()
 	setShaderFloat('ytStatic', 'uSpeed', 2)
 
     makeLuaSprite('ytBox', 'appleLeak/trolled/bg1', -175, 1075)
-    setProperty('ytBox.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('ytBox.visible', false)
     addLuaSprite('ytBox', false)
 
     makeLuaSprite('funkipedia', 'appleLeak/funkipedia', -175, 1940)
-    setProperty('funkipedia.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     setProperty('funkipedia.visible', false)
     addLuaSprite('funkipedia', false)
 end

@@ -6,7 +6,6 @@ function onCreate()
     makeAnimatedLuaSprite('redTunnel', 'main/wireframe/redtunnelperspective', -775, -1000)
     addAnimationByPrefix('redTunnel', 'idle', 'redtunnelperspective idle0', 24, true)
     playAnim('redTunnel', 'idle', true)
-    setProperty('redTunnel.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     --setGraphicSize('redTunnel', math.floor(getProperty('redTunnel.width') * 1.15), math.floor(getProperty('redTunnel.height') * 1.15));
     setProperty('redTunnel.scale.x', 4)--getProperty('redTunnel.width') * 1.15)
     setProperty('redTunnel.scale.y', 3.25)--getProperty('redTunnel.height') * 1.15)

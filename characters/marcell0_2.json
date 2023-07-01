@@ -1,0 +1,111 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-90,
+				-170
+			],
+			"loop": false,
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "LEFT0",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-140,
+				-150
+			],
+			"loop": false,
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "DOWN0",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-220,
+				-20
+			],
+			"loop": false,
+			"anim": "singUP",
+			"fps": 24,
+			"name": "UP0",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-140,
+				-160
+			],
+			"loop": false,
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "RIGHT0",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				-60,
+				-70
+			],
+			"anim": "idle0",
+			"fps": 24,
+			"name": "IDLE1",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				-120,
+				-110
+			],
+			"anim": "idle1",
+			"fps": 24,
+			"name": "IDLE2",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				-20,
+				0
+			],
+			"anim": "idle2",
+			"fps": 24,
+			"name": "IDLE3",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				-160,
+				-70
+			],
+			"anim": "idle3",
+			"fps": 24,
+			"name": "IDLE4",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/main/nice/marcell0_2",
+	"position": [
+		-400,
+		-200
+	],
+	"healthicon": "hatguy",
+	"flip_x": false,
+	"healthbar_colors": [
+		96,
+		239,
+		253
+	],
+	"camera_position": [
+		-225,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 2
+}

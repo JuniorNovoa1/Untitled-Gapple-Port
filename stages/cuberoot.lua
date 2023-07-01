@@ -1,7 +1,6 @@
 local shadname = "glitchEffect";
 function onCreate()
     makeLuaSprite('cuberoot', 'dave/cuberoot', 0, 0)
-    setProperty('cuberoot.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
     screenCenter('cuberoot', '')
     addLuaSprite('cuberoot', false)
     initLuaShader(shadname)

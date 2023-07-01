@@ -198,7 +198,6 @@ function onStepHit()
 
     if curStep == 2088 then
         makeAnimatedLuaSprite('expunged', 'characters/main/applecore/UNFAIR_GUY_FAICNG_FORWARD', -125, -200)
-		setProperty('expunged.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         addAnimationByPrefix('expunged', 'idle', 'idle0', 12, true)
         playAnim('expunged', 'idle', true)
         setProperty('expunged.alpha', 0)
@@ -206,13 +205,11 @@ function onStepHit()
         setObjectOrder('expunged', getObjectOrder('gfGroup') -1)
 
         makeLuaSprite('monkey_guy', 'main/applecore/monkey_guy', getProperty('dad.x'), getProperty('dad.y'))
-		setProperty('monkey_guy.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         scaleObject('monkey_guy', getProperty('dad.scale.x'), getProperty('dad.scale.y'))
         setProperty('monkey_guy.visible', false)
 		addLuaSprite('monkey_guy', true)
 
         makeLuaSprite('monkey_person', 'main/applecore/monkey_person', getProperty('bambi.x'), getProperty('bambi.y'))
-		setProperty('monkey_person.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'))
         scaleObject('monkey_person', getProperty('bambi.scale.x'), getProperty('bambi.scale.y'))
         setProperty('monkey_person.visible', false)
 		addLuaSprite('monkey_person', true)

@@ -1,6 +1,6 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
-local gappleHUD = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky'};
+local gappleHUD = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky'};
 local songSplashNames = {''};
 local oldFNFPos = {''};
 local gappleHUDsong = false;
@@ -247,7 +247,7 @@ function onUpdatePost(elapsed)
 	if string.lower(songName) == 'maze' or gappleHUDsong then
 		runHaxeCode([[
 			for (i in 0...game.strumLineNotes.length) {
-				if (game.strumLineNotes.members[i].animation.curAnim.name == 'confirm') {
+				if (game.strumLineNotes.members[i].animation.curAnim.name == 'confirm' && (game.strumLineNotes.members[i].texture == 'NOTE_assets' || game.strumLineNotes.members[i].texture == 'NOTE_assets_3D)) {
 					game.strumLineNotes.members[i].centerOffsets();
 					//game.strumLineNotes.members[i].centerOrigin();
 
@@ -256,26 +256,6 @@ function onUpdatePost(elapsed)
 				}
 			}
 		]])
-		--[[for direction = 0, 3 do
-			if getPropertyFromGroup("playerStrums", direction, 'animation.curAnim.name') == 'confirm' then
-				if getPropertyFromGroup("playerStrums", direction, "texture") == 'NOTE_assets' then
-					setPropertyFromGroup('playerStrums', direction, 'offset.x', offsets[1] * 1.1)
-					setPropertyFromGroup('playerStrums', direction, 'offset.y', offsets[2] * 1.4)
-				else
-					setPropertyFromGroup('playerStrums', direction, 'offset.x', offsets[1])
-					setPropertyFromGroup('playerStrums', direction, 'offset.y', offsets[2])
-				end
-			end
-			if getPropertyFromGroup("opponentStrums", direction, 'animation.curAnim.name') == 'confirm' then
-				if getPropertyFromGroup("opponentStrums", direction, "texture") == 'NOTE_assets' then
-					setPropertyFromGroup('opponentStrums', direction, 'offset.x', offsets[1] * 1.1)
-					setPropertyFromGroup('opponentStrums', direction, 'offset.y', offsets[2] * 1.4)
-				else
-					setPropertyFromGroup('opponentStrums', direction, 'offset.x', offsets[1])
-					setPropertyFromGroup('opponentStrums', direction, 'offset.y', offsets[2])
-				end
-			end
-		end--]]
 
 		if string.lower(songName) ~= 'kooky' then
 			setProperty('healthBarBG.y', screenHeight * 0.9)
@@ -378,10 +358,9 @@ function onBeatHit()
 		end
 
 		if curBeat % getProperty('gfSpeed') == 0 then
-			local multiplier = 1;
-			local fuasd = {0.8 * multiplier, 1.3 * multiplier}
-			local angl = 15 * multiplier;
-			local yOffset = 15 * multiplier;
+			local fuasd = {0.8, 1.3}
+			local angl = 15;
+			local yOffset = 15;
 
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', 1.1, fuasd[1])
@@ -421,7 +400,7 @@ function onBeatHit()
 		end
 
 		if getProperty('dad.animation.curAnim.name') == 'idle' then
-			if dadName == 'bambi-piss-3d' then
+			if dadName == 'bambi-piss-3d' or dadName == 'garrett-animal' then
 				return;
 			end
 			playAnim('dad', 'idle', true)
