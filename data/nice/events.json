@@ -1,0 +1,66 @@
+{
+	"song": {
+		"events": [
+			[
+				191238.095238095,
+				[
+					[
+						"Change Character",
+						"dad",
+						"marcell0_2"
+					]
+				]
+			],
+			[
+				287238.095238096,
+				[
+					[
+						"Change Character",
+						"dad",
+						"kiddacorn"
+					]
+				]
+			],
+			[
+				340571.428571428,
+				[
+					[
+						"Play Animation",
+						"shmoovin",
+						"dad"
+					]
+				]
+			],
+			[
+				435321.428571427,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"dad"
+					]
+				]
+			],
+			[
+				436571.428571427,
+				[
+					[
+						"Change Character",
+						"dad",
+						"modls"
+					]
+				]
+			],
+			[
+				549904.76190476,
+				[
+					[
+						"Change Character",
+						"dad",
+						"badrum"
+					]
+				]
+			]
+		]
+	}
+}

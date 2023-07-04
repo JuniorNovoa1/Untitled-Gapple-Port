@@ -48,6 +48,8 @@ function onCreatePost()
 			updateHitbox('creditsWatermark')
 			addLuaText('creditsWatermark')
 
+			if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
+
 			makeLuaText('creditsText', '', 0, 4, getProperty('healthBarBG.y') + 50)
 			setObjectCamera('creditsText', 'camHUD')
 			setTextAlignment('creditsText', 'center')

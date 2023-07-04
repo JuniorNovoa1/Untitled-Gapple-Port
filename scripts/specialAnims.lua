@@ -1,4 +1,4 @@
-anims = {'smash', 'singThrow', 'singSmash', 'singUP-alt', 'dodge', 'hit', 'hey', 'inhale'}
+anims = {'smash', 'singThrow', 'singSmash', 'singUP-alt', 'dodge', 'hit', 'hey', 'inhale', 'shmoovin', 'scream', 'turn', 'scared', 'run'}
 
 function onUpdate()
     for i = 1, #anims do

@@ -17,7 +17,11 @@ function onUpdate() --camera now follows characters!!!!
 	bfCamIdle[1] = getMidpointY('boyfriend') - 100 + getProperty('boyfriend.cameraPosition[1]') + getProperty('boyfriendCameraOffset[1]');
 	dadCamIdle[0] = getMidpointX('dad') + 150 + getProperty('dad.cameraPosition[0]') + getProperty('opponentCameraOffset[0]');
 	dadCamIdle[1] = getMidpointY('dad') - 100 + getProperty('dad.cameraPosition[1]') + getProperty('opponentCameraOffset[1]');
-	if string.lower(songName) == 'nice' then yoffset = 100 / getProperty("defaultCamZoom") end
+	if string.lower(songName) == 'nice' and curStep >= 7628 then
+		dadCamIdle[0] = getMidpointX('errung') + 150 + getProperty('errung.cameraPosition[0]') + getProperty('opponentCameraOffset[0]') + 200;
+		dadCamIdle[1] = getMidpointY('errung') - 100 + getProperty('errung.cameraPosition[1]') + getProperty('opponentCameraOffset[1]') + 200;
+	end
+	if getDataFromSave("settings", "newCamZoom") then yoffset = 105 / getProperty("defaultCamZoom") end
 	if getProperty('dad.curCharacter') == 'sart-producer-glitch' then
 		bfCamIdle[0] = dadCamIdle[0];
 		bfCamIdle[1] = dadCamIdle[1];
@@ -30,7 +34,7 @@ function onUpdate() --camera now follows characters!!!!
 		dadCamIdle[0] = 625;
 	end
 	if mustHitSection == true and getProperty('boyfriend.animation.curAnim.name') == 'idle' then
-		moveCam(bfCamIdle[0] -yoffset, bfCamIdle[1] -yoffset);
+		moveCam(bfCamIdle[0] -(yoffset * 2.5), bfCamIdle[1] -yoffset);
 	end
 	if mustHitSection == false and (getProperty('dad.animation.curAnim.name') == 'idle' or (dadName == 'bandu' or dadName == 'bandu-sad')) then
 		moveCam(dadCamIdle[0] -yoffset, dadCamIdle[1] -yoffset);
@@ -45,16 +49,16 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 			offsets = 30 / getProperty('defaultCamZoom');
 		end
 		if direction == 0 then
-			moveCam(bfCamIdle[0] -offsets -yoffset, bfCamIdle[1] -yoffset);
+			moveCam(bfCamIdle[0] -offsets -(yoffset * 2.5), bfCamIdle[1] -yoffset);
 		end
 		if direction == 1 then
-			moveCam(bfCamIdle[0] -yoffset, bfCamIdle[1] +offsets -yoffset);
+			moveCam(bfCamIdle[0] -(yoffset * 2.5), bfCamIdle[1] +offsets -yoffset);
 		end
 		if direction == 2 then
-			moveCam(bfCamIdle[0] -yoffset, bfCamIdle[1] -offsets -yoffset);
+			moveCam(bfCamIdle[0] -(yoffset * 2.5), bfCamIdle[1] -offsets -yoffset);
 		end
 		if direction == 3 then
-			moveCam(bfCamIdle[0] +offsets -yoffset, bfCamIdle[1] -yoffset);
+			moveCam(bfCamIdle[0] +offsets -(yoffset * 2.5), bfCamIdle[1] -yoffset);
 		end
 	end
 end

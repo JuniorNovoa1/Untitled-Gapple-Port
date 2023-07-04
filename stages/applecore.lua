@@ -16,12 +16,11 @@ function onCreate()
     initLuaShader(shadname)
     for i = 1, #items do
         makeLuaSprite(items[i], 'main/applecore/'..items[i], 0, -250)
-        setProperty(items[i]..'.antialiasing', false) -- mistake lol it needs to be no antialiasing for more accurateness
         setProperty(items[i]..'.visible', false)
-        setGraphicSize(items[i], getProperty(items[i] .. '.width') * 1.75, getProperty(items[i] .. '.height') * 1.75, true)
+        setGraphicSize(items[i], getProperty(items[i] .. '.width') * 1.75, getProperty(items[i] .. '.height') * 1.75)
         if i == 3 then
             setProperty(items[i]..'.y', -1250)
-            setGraphicSize(items[i], getProperty(items[i] .. '.width') * 2, getProperty(items[i] .. '.height') * 2, true)
+            setGraphicSize(items[i], getProperty(items[i] .. '.width') * 2, getProperty(items[i] .. '.height') * 2)
         end
         screenCenter(items[i], 'x')
         addLuaSprite(items[i], false)

@@ -3,8 +3,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				241,
-				0
+				88,
+				6
 			],
 			"fps": 24,
 			"anim": "singLEFT",
@@ -14,8 +14,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				101,
-				-96
+				6,
+				7
 			],
 			"fps": 24,
 			"anim": "singDOWN",
@@ -25,8 +25,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				188,
-				76
+				6,
+				152
 			],
 			"fps": 24,
 			"anim": "singUP",
@@ -36,8 +36,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				198,
-				0
+				27,
+				7
 			],
 			"fps": 24,
 			"anim": "singRIGHT",
@@ -46,33 +46,55 @@
 		},
 		{
 			"offsets": [
-				0,
-				0
+				6,
+				28
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "idle",
-			"loop": false,
+			"indices": [],
 			"name": "idle0"
+		},
+		{
+			"offsets": [
+				6,
+				180
+			],
+			"loop": true,
+			"fps": 24,
+			"anim": "scream",
+			"indices": [],
+			"name": "scream"
+		},
+		{
+			"offsets": [
+				145,
+				88
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "shmoovin",
+			"indices": [],
+			"name": "dancing"
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/main/nice/marcello",
+	"image": "characters/main/nice/kiddacorn",
 	"position": [
-		0,
-		0
+		-250,
+		50
 	],
-	"healthicon": "marsolo",
+	"healthicon": "mista-bambi",
 	"flip_x": false,
 	"healthbar_colors": [
+		0,
 		255,
-		255,
-		0
+		27
 	],
 	"camera_position": [
-		-100,
-		100
+		-300,
+		-200
 	],
 	"sing_duration": 6.1,
-	"scale": 1
+	"scale": 2.5
 }

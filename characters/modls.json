@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				94,
+				-38
+			],
+			"loop": false,
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "left0",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-11,
+				-128
+			],
+			"loop": false,
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "down0",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-30,
+				139
+			],
+			"loop": false,
+			"anim": "singUP",
+			"fps": 24,
+			"name": "up0",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-88,
+				-44
+			],
+			"loop": false,
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "right0",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "idle0",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/main/nice/moldy",
+	"position": [
+		-400,
+		75
+	],
+	"healthicon": "moldy",
+	"flip_x": false,
+	"healthbar_colors": [
+		168,
+		206,
+		255
+	],
+	"camera_position": [
+		0,
+		150
+	],
+	"sing_duration": 6.1,
+	"scale": 1.5
+}

@@ -1,6 +1,7 @@
 local idleDance = 0;
 
 function onBeatHit()
+    if dadName ~= 'marcell0_2' then return; end
     if curBeat % 4 == 0 then playAnim("dad", "idle"..idleDance) end
 
     if curBeat % 8 == 0 then

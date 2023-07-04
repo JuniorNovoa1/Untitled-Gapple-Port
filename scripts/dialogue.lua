@@ -26,158 +26,154 @@ local dialogueBool = false;
 local inDialogue = false;
 local crazyBubble = false;
 function onCreatePost()
-	for i = 1, #dialogueSongs do
-		if string.lower(songName) == dialogueSongs[i] then
-			dialogueBool = true;
-			if i == 1 then
-				crazyBubble = true;
-			end
-			if i == 2 then
-				dialogueTXT = {
-					'Howdy!',
-					'Bop?',
-					'Can I show you something?',
-					'Bep!',
-					'Check this out!',
-					"I got lots o' phones!",
-					'Neat, huh?',
-					'Boop!',
-					'Ooh, is that a microphone?',
-					'Are you a singer?',
-					'Beep!',
-					'Wanna sing?',
-					'Brap',
-				}
-				dialogueChar = {
-					true,
-					false,
-					true,
-					false,
-					true,
-					true,
-					true,
-					false,
-					true,
-					true,
-					false,
-					true,
-					false
-				}
-				song = 'applecoreCutscene';
-				images = {'bandu_port', 'bf_reg_port'}
-			elseif i == 3 then
-				dialogueTXT = {
-					'So, you got past Bambi?',
-					'Beep.',
-					"Guess I'll have to do everything myself.",
-					'I can control the 3D world better than I thought I could.',
-					"We'll sing one song.",
-					'I win, you leave.',
-					"You win, I'll let you be.",
-					'Bap!'
-				}
-				dialogueChar = {
-					true,
-					false,
-					true,
-					true,
-					true,
-					true,
-					true,
-					false
-				}
-				song = 'disabilityDialogue';
-				images = {'disable_port', 'bf_reg_port'}
-			elseif i == 4 then
-				dialogueTXT = {
-					"ALRIGHT, THAT IS IT!",
-					"NO MORE FOOLING AROUND!",
-					"Beep?!",
-					"FIRST, YOU COME HERE WITHOUT A CARE IN THE WORLD..",
-					"AND WHEN I TRY TO STOP YOU, YOU CAUSE ALL OF THESE PROBLEMS!",
-					"DO YOU EVEN KNOW WHAT YOU'RE DOING?!",
-					"IF YOU REALLY THINK YOU CAN JUST BE HERE WITH NO CONSEQUENCES..",
-					"YOU ARE DEAD WRONG!",
-					"THIS IS YOUR LAST CHANCE TO LEAVE.",
-					"Bap!"
-				}
-				dialogueChar = {
-					true,
-					true,
-					false,
-					true,
-					true,
-					true,
-					true,
-					true,
-					true,
-					false
-				}
-				song = 'wireframeCutscene';
-				images = {'decimated_dave_port', 'bf_reg_port'}
-				crazyBubble = true;
-			elseif i == 5 then --DIALOGIUE
-				dialogueBool = true;
+	for i = 1, #dialogueSongs do if string.lower(songName) == dialogueSongs[i] then dialogueBool = true; end end
+	if string.lower(songName) == 'disruption' then
+		crazyBubble = true;
+	end
+	if string.lower(songName) == 'applecore' then
+		dialogueTXT = {
+			'Howdy!',
+			'Bop?',
+			'Can I show you something?',
+			'Bep!',
+			'Check this out!',
+			"I got lots o' phones!",
+			'Neat, huh?',
+			'Boop!',
+			'Ooh, is that a microphone?',
+			'Are you a singer?',
+			'Beep!',
+			'Wanna sing?',
+			'Brap',
+		}
+		dialogueChar = {
+			true,
+			false,
+			true,
+			false,
+			true,
+			true,
+			true,
+			false,
+			true,
+			true,
+			false,
+			true,
+			false
+		}
+		song = 'applecoreCutscene';
+		images = {'bandu_port', 'bf_reg_port'}
+	elseif string.lower(songName) == 'disability' then
+		dialogueTXT = {
+			'So, you got past Bambi?',
+			'Beep.',
+			"Guess I'll have to do everything myself.",
+			'I can control the 3D world better than I thought I could.',
+			"We'll sing one song.",
+			'I win, you leave.',
+			"You win, I'll let you be.",
+			'Bap!'
+		}
+		dialogueChar = {
+			true,
+			false,
+			true,
+			true,
+			true,
+			true,
+			true,
+			false
+		}
+		song = 'disabilityDialogue';
+		images = {'disable_port', 'bf_reg_port'}
+	elseif string.lower(songName) == 'wireframe' then
+		dialogueTXT = {
+			"ALRIGHT, THAT IS IT!",
+			"NO MORE FOOLING AROUND!",
+			"Beep?!",
+			"FIRST, YOU COME HERE WITHOUT A CARE IN THE WORLD..",
+			"AND WHEN I TRY TO STOP YOU, YOU CAUSE ALL OF THESE PROBLEMS!",
+			"DO YOU EVEN KNOW WHAT YOU'RE DOING?!",
+			"IF YOU REALLY THINK YOU CAN JUST BE HERE WITH NO CONSEQUENCES..",
+			"YOU ARE DEAD WRONG!",
+			"THIS IS YOUR LAST CHANCE TO LEAVE.",
+			"Bap!"
+		}
+		dialogueChar = {
+			true,
+			true,
+			false,
+			true,
+			true,
+			true,
+			true,
+			true,
+			true,
+			false
+		}
+		song = 'wireframeCutscene';
+		images = {'decimated_dave_port', 'bf_reg_port'}
+		crazyBubble = true;
+	elseif string.lower(songName) == 'algebra' then --DIALOGIUE
+		dialogueBool = true;
 
-				dialogueTXT = {
-					"Hey there!",
-					"Welcome to my school!",
-					"People don't visit me often, So I'm glad you're here!",
-					"Beep!",
-					"Don't worry about my disability, I can get around myself.",
-					"Bap!"
-				}
-				dialogueChar = {
-					true,
-					true,
-					true,
-					false,
-					true,
-					false
-				}
-				song = 'DaveDialogue';
-				images = {'og_port', 'bf_reg_port'}
-			elseif i == 6 then
-				dialogueBool = true; --change to true to have unused ferocious dialogue
+		dialogueTXT = {
+			"Hey there!",
+			"Welcome to my school!",
+			"People don't visit me often, So I'm glad you're here!",
+			"Beep!",
+			"Don't worry about my disability, I can get around myself.",
+			"Bap!"
+		}
+		dialogueChar = {
+			true,
+			true,
+			true,
+			false,
+			true,
+			false
+		}
+		song = 'DaveDialogue';
+		images = {'og_port', 'bf_reg_port'}
+	elseif string.lower(songName) == 'ferocious' then
+		dialogueBool = true; --change to true to have unused ferocious dialogue
 
-				dialogueTXT = {
-					"Oh, hi! Welcome to my playhouse!",
-					"Breep?",
-					"Nuh-uh-uh, you need to rap battle me before you can go through THOSE doors!",
-					"Bap!"
-				}
-				dialogueChar = {
-					true,
-					false,
-					true,
-					false
-				}
-				song = 'ferociousDialogue';
-				images = {'disruption_port', 'bf_reg_port'}
-			elseif i == 7 then
-				dialogueTXT = {
-					"hey you let's rap battle btw you were on my kill list so die pls",
-					"no no no non non on non on no",
-					"no its ok im nice"
-				}
-				dialogueChar = {
-					true,
-					false,
-					true
-				}
-				song = 'leakCutscene';
-			end
+		dialogueTXT = {
+			"Oh, hi! Welcome to my playhouse!",
+			"Breep?",
+			"Nuh-uh-uh, you need to rap battle me before you can go through THOSE doors!",
+			"Bap!"
+		}
+		dialogueChar = {
+			true,
+			false,
+			true,
+			false
+		}
+		song = 'ferociousDialogue';
+		images = {'disruption_port', 'bf_reg_port'}
+	elseif string.lower(songName) == 'apple-leak' then
+		dialogueTXT = {
+			"hey you let's rap battle btw you were on my kill list so die pls",
+			"no no no non non on non on no",
+			"no its ok im nice"
+		}
+		dialogueChar = {
+			true,
+			false,
+			true
+		}
+		song = 'leakCutscene';
+	end
 
-			precacheImage('speech_bubble')
-			for i = 1, #images do
-				precacheImage('dialogue/'..images[i])
-			end
-			precacheSound('pixelText')
+	precacheImage('speech_bubble')
+	for i = 1, #images do
+		precacheImage('dialogue/'..images[i])
+	end
+	precacheSound('pixelText')
 
-			for i = 1, #dialogueTXT do
-				maxDialogue = i;
-			end
-		end
+	for i = 1, #dialogueTXT do
+		maxDialogue = i;
 	end
 
 	addHaxeLibrary('FlxTimer', 'flixel.util')

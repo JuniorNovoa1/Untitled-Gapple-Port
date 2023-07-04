@@ -5,7 +5,7 @@ local txtOffset = 65;
 --local midSongPopUp = false;
 local time = 1;
 local waitTime = 3;
-local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky', 'lore', 'close chuckle'};
+local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky', 'lore', 'close chuckle'};
 local songTxt = {
 	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello', --Maze
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --Disruption
@@ -13,6 +13,7 @@ local songTxt = {
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nT5mpler', --Disability
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nSky!\nJuniorNovoa (finished it)', --Wireframe
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --Algebra
+	"Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\nWildey\nand TecheVent\n\nSong\nSky!\n\nCharter\nProject Tea\n\nBased off Marcello's The Nice\nAND COLLECT\nOFGAMER AcT:ONE THE\nSTORE GAME MUN by\nMarcello_TimeNice30", --Nice!
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\n\nGarrett\'s Funny Animal Game\nJumpman25', --Ferocious
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nPointyyESMa', --Sugar-Rush
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nLexicord', --Cuberoot

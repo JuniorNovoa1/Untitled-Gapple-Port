@@ -5,6 +5,8 @@ local modcharts = true; --determines wether modcharts are enabled.
 local epilepsy = true; --determines if screen flashes many colors at once. (disable if you have epilepsy)
 local screenshake = true; --determines wether the screen can shake.
 local dialogue = true; --determine wether dialogue pops up on compatible songs.
+--dave and bambi settings
+local newCamZoom = false;
 
 local saveFileName = 'settings';
 
@@ -15,6 +17,7 @@ function onCreate()
     setDataFromSave(saveFileName, 'epilepsy', epilepsy)
     setDataFromSave(saveFileName, 'screenshake', screenshake)
     setDataFromSave(saveFileName, 'dialogue', dialogue)
+    setDataFromSave(saveFileName, 'newCamZoom', newCamZoom)
     setDataFromSave(saveFileName, 'camZoom', true)
 end
 
