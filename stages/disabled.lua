@@ -1,6 +1,6 @@
 local shadname = "glitchEffect";
 function onCreate()
-    makeLuaSprite('disabled', 'dave/disabled', 0, 0)
+    makeLuaSprite('disabled', 'main/disabled', 0, 0)
     screenCenter('disabled', '')
     addLuaSprite('disabled', false)
     initLuaShader(shadname)

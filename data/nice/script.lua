@@ -47,7 +47,6 @@ function onStepHit()
     end
 
     if curStep == 2140 then 
-        lockCam = false;
         setProperty("boyfriend.visible", false)
         setProperty("dad.visible", false)
         playAnim("schoolEntrance", "animEnter", true)
@@ -59,6 +58,7 @@ function onStepHit()
         setProperty("boyfriend.visible", true)
         setProperty("dad.visible", true)
         setProperty("defaultCamZoom", 0.9)
+        lockCam = false;
     end
 
     if curStep == 3290 then
@@ -68,12 +68,14 @@ function onStepHit()
         setProperty("dad.visible", false)
         removeLuaSprite("schoolEntrance", true)
         playAnim("schoolBamber", "animEnter", true)
+        lockCam = true;
     end
 
     if curStep == 3296 then 
         setProperty("boyfriend.visible", true)
         setProperty("dad.visible", true)
         setProperty("defaultCamZoom", 0.65)
+        lockCam = false;
     end
 
     --3935 bambi dancer!!
