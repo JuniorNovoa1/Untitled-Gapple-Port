@@ -1,7 +1,7 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 
-local dialogueSongs = {'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'ferocious', 'apple-leak'};
+local dialogueSongs = {'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'apple-leak'};
 local images = {'disruption_port', 'bf_compuzzled_port'}
 local song = 'disruptionCutscene';
 local dialogueTXT = {
@@ -20,6 +20,7 @@ local dialogueChar = {
 	false,
 	true
 }
+local offsets = {0, 0,  0, 0}
 local curDialogue = 1;
 local maxDialogue = 1;
 local dialogueBool = false;
@@ -115,8 +116,6 @@ function onCreatePost()
 		images = {'decimated_dave_port', 'bf_reg_port'}
 		crazyBubble = true;
 	elseif string.lower(songName) == 'algebra' then --DIALOGIUE
-		dialogueBool = true;
-
 		dialogueTXT = {
 			"Hey there!",
 			"Welcome to my school!",
@@ -135,6 +134,22 @@ function onCreatePost()
 		}
 		song = 'DaveDialogue';
 		images = {'og_port', 'bf_reg_port'}
+	elseif string.lower(songName) == 'nice' then
+		dialogueTXT = {
+			"Oh hi hello OOps Sorry Michael she upload new video.",
+			"I like to SIng do you want do that?",
+			"boh bap breebee",
+			"Yes yes good boyfriend she gaming rhythem song"
+		}
+		dialogueChar = {
+			true,
+			true,
+			false,
+			true
+		}
+		song = 'niceDialogue';
+		images = {'marclooPort', 'bf_reg_port'}
+		offsets = {0, 35,  0, 0}
 	elseif string.lower(songName) == 'ferocious' then
 		dialogueBool = true; --change to true to have unused ferocious dialogue
 
@@ -208,13 +223,13 @@ function onCustomSubstateCreate(tag)
 		setProperty('background.alpha', 0.6)
 		addLuaSprite('background', false)
 
-		makeAnimatedLuaSprite('dadDialogue', 'dialogue/'..images[1], 100, 175)
+		makeAnimatedLuaSprite('dadDialogue', 'dialogue/'..images[1], 100 + offsets[1], 175 + offsets[2])
         addAnimationByPrefix('dadDialogue', 'idle', 'portrait', 24, false);
         playAnim('dadDialogue', 'idle', false);
 		setObjectCamera('dadDialogue', 'other')
         addLuaSprite('dadDialogue', false)
 
-		makeAnimatedLuaSprite('bfDialogue', 'dialogue/'..images[2], 625, 175)
+		makeAnimatedLuaSprite('bfDialogue', 'dialogue/'..images[2], 625 + offsets[3], 175 + offsets[4])
         addAnimationByPrefix('bfDialogue', 'idle', 'portrait', 24, false);
         playAnim('bfDialogue', 'idle', false);
 		setObjectCamera('bfDialogue', 'other')

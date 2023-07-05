@@ -180,7 +180,7 @@ function onStepHit()
 
     if curStep == 7626 then
         setProperty("errung.x", getProperty("dad.x") -1000)
-        setProperty("errung.y", getProperty("dad.y"))
+        setProperty("errung.y", getProperty("dad.y") + 50)
         setProperty("errung.visible", true)
         doTweenX('errung', 'errung', getProperty("dad.x") - 100, 0.5)
     end
@@ -204,7 +204,7 @@ function onTweenCompleted(tag)
     if tag == 'errung' then
         cameraFlash('other', 'FFFFFF', 1) --cam flash simulator dlc
         playAnim("errung", 'scare', true, false, 0)
-        playAnim("dad", "scared", true, false, 0)
+        playAnim("dad", "scare", true, false, 0)
         runTimer("badRum", 1, 1)
     end
 end
@@ -225,6 +225,16 @@ local singAnim = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
 
 function opponentNoteHit(membersIndex, noteData, noteType, isSustainNote)
     playAnim("errung", singAnim[noteData +1], true, false, 0)
+    runHaxeCode([[
+        var AnimName = "]]..singAnim[noteData +1]..[[";
+        var daOffset = errung.animOffsets.get(AnimName);
+		if (errung.animOffsets.exists(AnimName))
+		{
+			errung.offset.set(daOffset[0], daOffset[1]);
+		}
+		else
+			errung.offset.set(0, 0);
+    ]])
     --runHaxeCode([[errung.playAnim(']]..singAnim[noteData +1]..[[');]])
     setProperty("errung.holdTimer", 0)
 end
