@@ -115,9 +115,9 @@
 	"image": "characters/joke/awesome/ny_bambay",
 	"position": [
 		-310,
-		-300
+		-325
 	],
-	"healthicon": "awesomefrend",
+	"healthicon": "bormp-three",
 	"flip_x": false,
 	"healthbar_colors": [
 		34,
@@ -125,9 +125,9 @@
 		0
 	],
 	"camera_position": [
-		-50,
-		0
+		-75,
+		-100
 	],
 	"sing_duration": 6.1,
-	"scale": 1
+	"scale": 1.2
 }

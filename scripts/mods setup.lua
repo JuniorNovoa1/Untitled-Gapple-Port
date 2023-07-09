@@ -1,6 +1,6 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
-local gappleHUD = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky'};
+local gappleHUD = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'awesome', 'badcorn', 'crap!', 'ticking', 'kooky'};
 local songSplashNames = {''};
 local oldFNFPos = {''};
 local gappleHUDsong = false;
@@ -12,9 +12,25 @@ local prevRatingPos = {};
 
 local songMod = 'Null';
 
+local gappleMemoryCounter = false; --gapple doesn't have a memory counter...
 local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', '3d-bf-shoulder', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
 'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
-'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man'}
+'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'dave-wide', 'awesomeBambiCrack'}
+
+function onCreate()
+	for i = 1, #gappleHUD do
+		if string.lower(songName) == gappleHUD[i] or gappleHUDsong then
+			makeLuaSprite('thunderBlack', '', 0, 0)
+			makeGraphic('thunderBlack', '1280', '720', '000000')
+			setProperty('thunderBlack.alpha', 0)
+			setObjectCamera("thunderBlack", "hud")
+			updateHitbox("thunderBlack")
+			screenCenter("thunderBlack", 'xy')
+			addLuaSprite('thunderBlack', true)
+		end
+	end
+end
+
 
 function onCreatePost()
 	setProperty('showCombo', true)
@@ -35,6 +51,33 @@ function onCreatePost()
 	for i = 1, #gappleHUD do
 		if string.lower(songName) == gappleHUD[i] or gappleHUDsong then
 			no_splashes = true;
+
+			--White Hex Code: FFFFFF, Black Hex Code: 000000
+
+			makeLuaText('fpsTxt', '', 0, 18, 6)
+			setObjectCamera('fpsTxt', 'other')
+			setTextAlignment('fpsTxt', 'center')
+			setTextFont('fpsTxt', 'comic.ttf')
+			setTextSize('fpsTxt', 28)
+			setTextBorder('fpsTxt', 1, '000000')
+			setProperty('fpsTxt.antialiasing', false)
+			setProperty("fpsTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
+			if not gappleHUDsong then setProperty("fpsTxt.visible", false) end
+			updateHitbox('fpsTxt')
+			addLuaText('fpsTxt')
+
+			makeLuaText('memoryTxt', '', 0, 18, 38)
+			setObjectCamera('memoryTxt', 'other')
+			setTextAlignment('memoryTxt', 'center')
+			setTextFont('memoryTxt', 'comic.ttf')
+			setTextSize('memoryTxt', 18)
+			setTextBorder('memoryTxt', 1, '000000')
+			setProperty('memoryTxt.antialiasing', false)
+			updateHitbox('memoryTxt')
+			if gappleMemoryCounter then addLuaText('memoryTxt') end
+
+			if gappleHUDsong then setPropertyFromClass("Main", "fpsVar.visible", false) end
+
 			setTextFont('scoreTxt', 'comic.ttf')
 			setTextFont('timeTxt', 'comic.ttf')
 
@@ -50,7 +93,7 @@ function onCreatePost()
 
 			if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
 
-			makeLuaText('creditsText', '', 0, 4, getProperty('healthBarBG.y') + 50)
+			makeLuaText('creditsText', '', 0, 4, getProperty('healthBarBG.y') + 56)
 			setObjectCamera('creditsText', 'camHUD')
 			setTextAlignment('creditsText', 'center')
 			setTextFont('creditsText', 'comic.ttf')
@@ -60,9 +103,7 @@ function onCreatePost()
 			updateHitbox('creditsText')
 			addLuaText('creditsText')
 
-			if string.lower(songName) == 'disruption' then
-				setProperty('creditsText.text', 'Screw you!')
-			end
+			if string.lower(songName) == 'disruption' then setProperty('creditsText.text', 'Screw you!') end
 			songMod = 'Dave and Bambi';
 			if string.lower(songName) == 'maze' then
 				setProperty('healthBarBG.visible', false)
@@ -241,6 +282,10 @@ function onUpdate(elapsed)
 			setProperty('boyfriend.color', getColorFromHex('FFFFFF'))
 		end
 	end
+
+	--setProperty('camHUD.x', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 50)
+	--setProperty('camHUD.y', math.sin((getSongPosition() / 1000) * (getPropertyFromClass("Conductor", "bpm") / 60) * 1.0) * 15)
+	--setProperty('camHUD.angle', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 1.2)
 end
 
 local offsets = {-13, -13}--{55, 43}
@@ -280,6 +325,10 @@ function onUpdatePost(elapsed)
 			setProperty("creditsWatermark.y", getProperty("healthBarBG.y") + 30)
 		end
 
+		if gappleHUDsong then
+			setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
+			setTextString("memoryTxt", "Memory: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
+		end
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		if string.lower(songName) == 'kooky' then
 			setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
@@ -363,7 +412,7 @@ function onBeatHit()
 		if curBeat % getProperty('gfSpeed') == 0 then
 			local fuasd = {0.8, 1.3}
 			local angl = 15;
-			local yOffset = 15;
+			local yOffset = 20;
 
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', 1.1, fuasd[1])

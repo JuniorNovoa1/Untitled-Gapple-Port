@@ -1,0 +1,126 @@
+{
+	"song": {
+		"events": [
+			[
+				27000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"dave-wide"
+					]
+				]
+			],
+			[
+				51000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"dave-wheels"
+					]
+				]
+			],
+			[
+				81000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"dave-wide"
+					]
+				]
+			],
+			[
+				105000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"dave-wheels"
+					]
+				]
+			],
+			[
+				114000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"awesomeBambi"
+					]
+				]
+			],
+			[
+				158000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"dave-wheels"
+					]
+				]
+			],
+			[
+				178833.333333334,
+				[
+					[
+						"Change Character",
+						"dad",
+						"awesomeBambi"
+					]
+				]
+			],
+			[
+				179333.333333334,
+				[
+					[
+						"Change Character",
+						"dad",
+						"awesomeBambiCrack"
+					]
+				]
+			],
+			[
+				190000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"dave-wide"
+					]
+				]
+			],
+			[
+				200666.666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"awesomeBambiCrack"
+					]
+				]
+			],
+			[
+				211333.333333334,
+				[
+					[
+						"Change Character",
+						"dad",
+						"dave-wide"
+					]
+				]
+			],
+			[
+				224666.666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"dave-wheels"
+					]
+				]
+			]
+		]
+	}
+}

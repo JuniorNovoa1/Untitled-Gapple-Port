@@ -246,7 +246,8 @@ function onCustomSubstateCreate(tag)
 		makeLuaText('dialogueTxtTEXT', dialogueTXT[1], 720, 275, 465)
 		setObjectCamera('dialogueTxtTEXT', 'camother')
 		setTextAlignment('dialogueTxtTEXT', 'left')
-		--setTextColor('dialogueTxtTEXT', '000000')
+		setTextColor('dialogueTxtTEXT', '000000')
+		setTextBorder("dialogueTxtTEXT", 1, "0000ff")
 		setTextFont('dialogueTxtTEXT', 'comic.ttf')
 		setTextSize('dialogueTxtTEXT', 28)
 		updateHitbox('dialogueTxtTEXT')
@@ -274,21 +275,13 @@ function onCustomSubstateCreate(tag)
 end
 
 function dialogueProps()
-	if dialogueChar[curDialogue] == true then
-		setProperty('dadDialogue.visible', true)
-		setProperty('bfDialogue.visible', false)
-		if crazyBubble ~= true then
-			setProperty('speech_bubble.flipX', true)
-		end
-		playAnim('dadDialogue', 'idle', false)
-	else
-		setProperty('dadDialogue.visible', false)
-		setProperty('bfDialogue.visible', true)
-		if crazyBubble ~= true then
-			setProperty('speech_bubble.flipX', false)
-		end
-		playAnim('bfDialogue', 'idle', false)
+	setProperty('dadDialogue.visible', dialogueChar[curDialogue])
+	setProperty('bfDialogue.visible', not dialogueChar[curDialogue])
+	if crazyBubble ~= true then
+		setProperty('speech_bubble.flipX', dialogueChar[curDialogue])
 	end
+
+	if dialogueChar[curDialogue] == true then playAnim('dadDialogue', 'idle', false) else playAnim('bfDialogue', 'idle', false) end
 end
 
 local spam = false;
@@ -337,7 +330,7 @@ function changeTxt(text)
 	for i = 1, #text do
 		runHaxeCode([[
 			new FlxTimer().start(]]..timeForEach * i..[[, function(tmr) {
-				var txt = PlayState.instance.modchartTexts.get('dialogueTxtTEXT');
+				var txt = game.modchartTexts.get('dialogueTxtTEXT');
 				txt.text += "]]..text:sub(i, i)..[[";
 			});
 		]])

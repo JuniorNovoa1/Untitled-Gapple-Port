@@ -1,13 +1,6 @@
 local originalSpeed = 3;
 local swagSpeed = 1.6;
 
-function onCreatePost()
-	makeLuaSprite('thunderBlack', '', getProperty("bg.x"), getProperty("bg.y"))
-    makeGraphic('thunderBlack', getProperty("bg.width"), getProperty("bg.height"), '000000')
-    setProperty('thunderBlack.alpha', 0)
-    addLuaSprite('thunderBlack', true)
-end
-
 local lockCam = false;
 local camZoomA = 1.25;
 

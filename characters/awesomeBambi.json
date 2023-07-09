@@ -59,10 +59,10 @@
 	"no_antialiasing": false,
 	"image": "characters/joke/awesome/swag_bambi",
 	"position": [
-		0,
+		-200,
 		0
 	],
-	"healthicon": "awesomefrend",
+	"healthicon": "bormp",
 	"flip_x": false,
 	"healthbar_colors": [
 		34,

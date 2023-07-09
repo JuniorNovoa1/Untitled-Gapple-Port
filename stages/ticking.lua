@@ -3,6 +3,7 @@ function onCreate()
     scaleObject("gunk", 2.5, 2.5)
     updateHitbox("gunk")
     screenCenter('gunk', '')
+    setProperty("gunk.x", getProperty("gunk.x") -150)
     addLuaSprite('gunk', false)
 
     makeAnimatedLuaSprite("tunnel", "secret/ticking/ticking_tunnel", 0, 0)

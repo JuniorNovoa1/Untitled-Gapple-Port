@@ -5,7 +5,7 @@ local txtOffset = 65;
 --local midSongPopUp = false;
 local time = 1;
 local waitTime = 3;
-local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky', 'lore', 'close chuckle'};
+local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'awesome', 'badcorn', 'crap!', 'ticking', 'kooky', 'lore', 'close chuckle'};
 local songTxt = {
 	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello', --Maze
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --Disruption
@@ -21,6 +21,7 @@ local songTxt = {
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --OG
 	"Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\nCynda\n\nSong\nSky!\n\nCharter\nCynda\n\nBased off Dinnerbambi\nFunkin' by Anton Bildziuk", --Mine
 	'Mod\nDave and Bambi Golden Apple\n\nPart\nSilly Squirmer\n\nVisuals\nSAMMYPIGZY\nArty Squirmer\n\nCharter\nCharty Squirmer\n\nBased off\nHigh Effort Poopers', --Apple-Leak
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nRuby\nAadsta\n\nCharter\nRuby', --Awesome
 	'Fake song!\n\nMod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nCrapler\n\nCharter\nUnknown', --Badcorn
 	'Fake song?\n\nMod\nDave and Bambi Golden Apple\n\nArt\nLancey\nBluHairMan\n\nSong\nSky!\n\nCharter\nColin09\n\nBased off Golden Apple?\nMore like Golden Crapple!', --Crap!
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nProject Tea', --Ticking

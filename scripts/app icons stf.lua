@@ -1,4 +1,4 @@
-local gappleSongs = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'badcorn', 'crap!', 'ticking', 'kooky'}
+local gappleSongs = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'awesome', 'badcorn', 'crap!', 'ticking', 'kooky'}
 
 function onCreate()
 	addHaxeLibrary('Application', 'lime.app')
@@ -58,6 +58,7 @@ function onEvent(tag, val1, val2)
 end
 
 function onPause()
+	setPropertyFromClass("Main", "fpsVar.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
 	if buildTarget ~= 'windows' then
 		return; --don't want other people crashing when trying to play
 	end
@@ -70,6 +71,7 @@ end
 
 function onResume()
 	changeIcon()
+	setPropertyFromClass("Main", "fpsVar.visible", false)
 end
 
 function onEndSong()
@@ -84,6 +86,7 @@ function clearCache()
 	runHaxeCode([[
 		openfl.system.System.gc();
 	]])
+	setPropertyFromClass("Main", "fpsVar.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
 	if buildTarget ~= 'windows' then
 		return; --don't want other people crashing when trying to play
 	end
