@@ -59,7 +59,7 @@
 	"no_antialiasing": true,
 	"image": "characters/joke/awesome/cool",
 	"position": [
-		0,
+		-75,
 		-80
 	],
 	"healthicon": "wheels",

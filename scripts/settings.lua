@@ -1,24 +1,23 @@
 --settings!!
 local settingsAlert = true; --disable to remove message in the top left!!! (GOTTA FIND A WAY TO LET PEOPLE KNOW TO CHANGE THEIR SETTINGS!!!!)
---main settings (all mods)
+--main settings
 local modcharts = true; --determines wether modcharts are enabled.
-local epilepsy = true; --determines if screen flashes many colors at once. (disable if you have epilepsy)
+local epilepsy = false; --determines if screen flashes many colors at once. (disable if you have epilepsy)
 local screenshake = true; --determines wether the screen can shake.
 local dialogue = true; --determine wether dialogue pops up on compatible songs.
 --dave and bambi settings
-local newCamZoom = false;
+local newCamZoom = false; --very buggy! only used on some sections of Nice!
 
-local saveFileName = 'settings';
-
+--IGNORE EVERYTHING BELOW!!!!!!
 function onCreate()
-    initSaveData(saveFileName)
-    setDataFromSave(saveFileName, 'settingsAlert', settingsAlert)
-    setDataFromSave(saveFileName, 'modcharts', modcharts)
-    setDataFromSave(saveFileName, 'epilepsy', epilepsy)
-    setDataFromSave(saveFileName, 'screenshake', screenshake)
-    setDataFromSave(saveFileName, 'dialogue', dialogue)
-    setDataFromSave(saveFileName, 'newCamZoom', newCamZoom)
-    setDataFromSave(saveFileName, 'camZoom', true)
+    initSaveData('settings')
+    if buildTarget ~= 'android' then setDataFromSave('settings', 'settingsAlert', settingsAlert) else setDataFromSave('settings', 'settingsAlert', false) end
+    setDataFromSave('settings', 'modcharts', modcharts)
+    setDataFromSave('settings', 'epilepsy', epilepsy)
+    setDataFromSave('settings', 'screenshake', screenshake)
+    setDataFromSave('settings', 'dialogue', dialogue)
+    setDataFromSave('settings', 'newCamZoom', newCamZoom)
+    setDataFromSave('settings', 'camZoom', true)
 end
 
 --THANK GOD THE INTERNET EXISTS

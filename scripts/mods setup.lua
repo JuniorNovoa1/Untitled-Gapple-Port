@@ -1,16 +1,16 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
-local gappleHUD = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'awesome', 'badcorn', 'crap!', 'ticking', 'kooky'};
+local nonGappleSongs = {}
 local songSplashNames = {''};
 local oldFNFPos = {''};
-local gappleHUDsong = false;
+local gappleHUDsong = true;
 local arrowXoffset = 35;
-local no_splashes = false;
+local no_splashes = true;
 
 local ratingPos = 575;
 local prevRatingPos = {};
 
-local songMod = 'Null';
+local songMod = 'DNB: Golden Apple';
 
 local gappleMemoryCounter = false; --gapple doesn't have a memory counter...
 local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', '3d-bf-shoulder', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
@@ -18,16 +18,18 @@ local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad',
 'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'dave-wide', 'awesomeBambiCrack'}
 
 function onCreate()
-	for i = 1, #gappleHUD do
-		if string.lower(songName) == gappleHUD[i] or gappleHUDsong then
-			makeLuaSprite('thunderBlack', '', 0, 0)
-			makeGraphic('thunderBlack', '1280', '720', '000000')
-			setProperty('thunderBlack.alpha', 0)
-			setObjectCamera("thunderBlack", "hud")
-			updateHitbox("thunderBlack")
-			screenCenter("thunderBlack", 'xy')
-			addLuaSprite('thunderBlack', true)
-		end
+	for i = 1, #nonGappleSongs do
+		if string.lower(songName) == nonGappleSongs[i] then gappleHUDsong = false; end
+	end
+
+	if gappleHUDsong then
+		makeLuaSprite('thunderBlack', '', 0, 0)
+		makeGraphic('thunderBlack', '1280', '720', '000000')
+		setProperty('thunderBlack.alpha', 0)
+		setObjectCamera("thunderBlack", "hud")
+		updateHitbox("thunderBlack")
+		screenCenter("thunderBlack", 'xy')
+		addLuaSprite('thunderBlack', true)
 	end
 end
 
@@ -35,159 +37,139 @@ end
 function onCreatePost()
 	setProperty('showCombo', true)
 
-	for i = 1, #songSplashNames do
-		if string.lower(songName) == songSplashNames[i] then
-			no_splashes = true;
-		end
-	end
-	for i = 1, 99 do
-		if string.lower(songName) == oldFNFPos[i] or string.lower(songName) == gappleHUD[i] then
-			for direction = 0, 3 do
-				setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') - arrowXoffset)
-				setPropertyFromGroup('opponentStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') - arrowXoffset -5)
-			end
-		end
-	end
-	for i = 1, #gappleHUD do
-		if string.lower(songName) == gappleHUD[i] or gappleHUDsong then
-			no_splashes = true;
+	--[[for direction = 0, 3 do
+		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') - arrowXoffset)
+		setPropertyFromGroup('opponentStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') - arrowXoffset -5)
+	end--]]
 
-			--White Hex Code: FFFFFF, Black Hex Code: 000000
+	if not gappleHUDsong then return; end
 
-			makeLuaText('fpsTxt', '', 0, 18, 6)
-			setObjectCamera('fpsTxt', 'other')
-			setTextAlignment('fpsTxt', 'center')
-			setTextFont('fpsTxt', 'comic.ttf')
-			setTextSize('fpsTxt', 28)
-			setTextBorder('fpsTxt', 1, '000000')
-			setProperty('fpsTxt.antialiasing', false)
-			setProperty("fpsTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
-			if not gappleHUDsong then setProperty("fpsTxt.visible", false) end
-			updateHitbox('fpsTxt')
-			addLuaText('fpsTxt')
+	--White Hex Code: FFFFFF, Black Hex Code: 000000
 
-			makeLuaText('memoryTxt', '', 0, 18, 38)
-			setObjectCamera('memoryTxt', 'other')
-			setTextAlignment('memoryTxt', 'center')
-			setTextFont('memoryTxt', 'comic.ttf')
-			setTextSize('memoryTxt', 18)
-			setTextBorder('memoryTxt', 1, '000000')
-			setProperty('memoryTxt.antialiasing', false)
-			updateHitbox('memoryTxt')
-			if gappleMemoryCounter then addLuaText('memoryTxt') end
+	makeLuaText('fpsTxt', '', 0, 18, 6)
+	setObjectCamera('fpsTxt', 'other')
+	setTextAlignment('fpsTxt', 'center')
+	setTextFont('fpsTxt', 'comic.ttf')
+	setTextSize('fpsTxt', 28)
+	setTextBorder('fpsTxt', 0, 'FFFFFF')
+	setProperty('fpsTxt.antialiasing', false)
+	setProperty("fpsTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
+	if not gappleHUDsong then setProperty("fpsTxt.visible", false) end
+	updateHitbox('fpsTxt')
+	addLuaText('fpsTxt')
 
-			if gappleHUDsong then setPropertyFromClass("Main", "fpsVar.visible", false) end
+	makeLuaText('memoryTxt', '', 0, 18, 38)
+	setObjectCamera('memoryTxt', 'other')
+	setTextAlignment('memoryTxt', 'center')
+	setTextFont('memoryTxt', 'comic.ttf')
+	setTextSize('memoryTxt', 18)
+	setTextBorder('memoryTxt', 0, 'FFFFFF')
+	setProperty('memoryTxt.antialiasing', false)
+	setProperty("memoryTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
+	if not gappleHUDsong then setProperty("memoryTxt.visible", false) end
+	updateHitbox('memoryTxt')
+	if gappleMemoryCounter then addLuaText('memoryTxt') end
 
-			setTextFont('scoreTxt', 'comic.ttf')
-			setTextFont('timeTxt', 'comic.ttf')
+	if gappleHUDsong then setPropertyFromClass("Main", "fpsVar.visible", false) end
 
-			makeLuaText('creditsWatermark', songName, 0, 4, getProperty('healthBarBG.y') + 30)
-			setObjectCamera('creditsWatermark', 'camHUD')
-			setTextAlignment('creditsWatermark', 'center')
-			setTextFont('creditsWatermark', 'comic.ttf')
-			setTextSize('creditsWatermark', 16)
-			setTextBorder('creditsWatermark', 1.5, '000000')
-			setProperty('creditsWatermark.antialiasing', false)
-			updateHitbox('creditsWatermark')
-			addLuaText('creditsWatermark')
+	setTextFont('scoreTxt', 'comic.ttf')
+	setTextFont('timeTxt', 'comic.ttf')
 
-			if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
+	makeLuaText('creditsWatermark', songName, 0, 4, getProperty('healthBarBG.y') + 30)
+	setObjectCamera('creditsWatermark', 'camHUD')
+	setTextAlignment('creditsWatermark', 'center')
+	setTextFont('creditsWatermark', 'comic.ttf')
+	setTextSize('creditsWatermark', 16)
+	setTextBorder('creditsWatermark', 1.5, '000000')
+	setProperty('creditsWatermark.antialiasing', false)
+	updateHitbox('creditsWatermark')
+	addLuaText('creditsWatermark')
 
-			makeLuaText('creditsText', '', 0, 4, getProperty('healthBarBG.y') + 56)
-			setObjectCamera('creditsText', 'camHUD')
-			setTextAlignment('creditsText', 'center')
-			setTextFont('creditsText', 'comic.ttf')
-			setTextSize('creditsText', 16)
-			setTextBorder('creditsText', 1.5, '000000')
-			setProperty('creditsText.antialiasing', false)
-			updateHitbox('creditsText')
-			addLuaText('creditsText')
+	if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
 
-			if string.lower(songName) == 'disruption' then setProperty('creditsText.text', 'Screw you!') end
-			songMod = 'Dave and Bambi';
-			if string.lower(songName) == 'maze' then
-				setProperty('healthBarBG.visible', false)
-				makeLuaSprite('healthBarBGnew', 'daveHealth', getProperty('healthBarBG.x'), getProperty('healthBarBG.y'))
-				setObjectCamera('healthBarBGnew', 'camHUD')
-				addLuaSprite('healthBarBGnew', false)
-				setObjectOrder('healthBarBGnew', getObjectOrder('healthBarBG') + 1)
+	makeLuaText('creditsText', '', 0, 4, getProperty('healthBarBG.y') + 56)
+	setObjectCamera('creditsText', 'camHUD')
+	setTextAlignment('creditsText', 'center')
+	setTextFont('creditsText', 'comic.ttf')
+	setTextSize('creditsText', 16)
+	setTextBorder('creditsText', 1.5, '000000')
+	setProperty('creditsText.antialiasing', false)
+	updateHitbox('creditsText')
+	addLuaText('creditsText')
+
+	if string.lower(songName) == 'disruption' then setProperty('creditsText.text', 'Screw you!') end
+	songMod = 'Dave and Bambi';
+	if string.lower(songName) == 'maze' then
+		setProperty('healthBarBG.visible', false)
+		makeLuaSprite('healthBarBGnew', 'daveHealth', getProperty('healthBarBG.x'), getProperty('healthBarBG.y'))
+		setObjectCamera('healthBarBGnew', 'camHUD')
+		addLuaSprite('healthBarBGnew', false)
+		setObjectOrder('healthBarBGnew', getObjectOrder('healthBarBG') + 1)
 	
-				makeLuaSprite('iconP12', 'icons/missing', 0, 0)
-				makeLuaSprite('iconP22', 'icons/missing', 0, 0)
-				break;
-			end
+		makeLuaSprite('iconP12', 'icons/missing', 0, 0)
+		makeLuaSprite('iconP22', 'icons/missing', 0, 0)
+		return;
+	end
 
-			if getProperty('creditsText.text') == '' and string.lower(songName) ~= 'kooky' then
-				setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
-			elseif string.lower(songName) ~= 'kooky' then
-				setProperty("creditsWatermark.y", getProperty("healthBarBG.y") + 30)
-			end
+	if getProperty('creditsText.text') == '' and string.lower(songName) ~= 'kooky' then
+		setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
+	elseif string.lower(songName) ~= 'kooky' then
+		setProperty("creditsWatermark.y", getProperty("healthBarBG.y") + 30)
+	end
 
-			songMod = 'DNB: Golden Apple';
+	prevRatingPos[0] = getPropertyFromClass('ClientPrefs', 'comboOffset[0]');
+	prevRatingPos[1] = getPropertyFromClass('ClientPrefs', 'comboOffset[2]');
+	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
+	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
 
-			prevRatingPos[0] = getPropertyFromClass('ClientPrefs', 'comboOffset[0]');
-			prevRatingPos[1] = getPropertyFromClass('ClientPrefs', 'comboOffset[2]');
-			setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
-			setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
+	makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBarBG.x'), getProperty('healthBarBG.y') +5)
+	scaleObject('healthBarBGnew', getProperty('healthBarBG.scale.x') - 0.075, getProperty('healthBarBG.scale.y') - 0.15)
+	setObjectCamera('healthBarBGnew', 'camHUD')
+	addLuaSprite('healthBarBGnew', false)
+	setObjectOrder('healthBarBGnew', getObjectOrder('healthBarBG') + 1)
 
-			makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBarBG.x'), getProperty('healthBarBG.y') +5)
-			scaleObject('healthBarBGnew', getProperty('healthBarBG.scale.x') - 0.075, getProperty('healthBarBG.scale.y') - 0.15)
-			setObjectCamera('healthBarBGnew', 'camHUD')
-			addLuaSprite('healthBarBGnew', false)
-			setObjectOrder('healthBarBGnew', getObjectOrder('healthBarBG') + 1)
+	if string.lower(songName) == 'kooky' then
+		setProperty('healthBarBGnew.visible', false)
+	end
 
-			if string.lower(songName) == 'kooky' then
-				setProperty('healthBarBGnew.visible', false)
-			end
+	if has_value(CharactersWith3D, getProperty('boyfriend.curCharacter')) then
+		changeNoteSkin(true, 'NOTE_assets_3D');
+	end
 
-			if has_value(CharactersWith3D, getProperty('boyfriend.curCharacter')) then
-				changeNoteSkin(true, 'NOTE_assets_3D');
-			end
+	if has_value(CharactersWith3D, getProperty('dad.curCharacter')) then
+		changeNoteSkin(false, 'NOTE_assets_3D');
+	end
 
-			if has_value(CharactersWith3D, getProperty('dad.curCharacter')) then
-				changeNoteSkin(false, 'NOTE_assets_3D');
-			end
-
-			for i = 0, getProperty('unspawnNotes.length')-1 do
-				setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.023)
-				if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
-					setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.004)
-				end
-				setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.04 + 0.075)
-				if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
-					setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0)
-				end
-				if (((has_value(CharactersWith3D, getProperty('dad.curCharacter')) and not getPropertyFromGroup('unspawnNotes', i, 'mustHit')) or (has_value(CharactersWith3D, getProperty('boyfriend.curCharacter'))) and getPropertyFromGroup('unspawnNotes', i, 'mustHit'))) or ((has_value(CharactersWith3D, getProperty('dad.curCharacter')) or has_value(CharactersWith3D, getProperty('boyfriend.curCharacter'))) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
-					setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_assets_3D')
-				end
-			end
-
-			if downscroll then
-				setProperty("iconP1.y", getProperty('healthBar.y') -75)
-				setProperty("iconP2.y", getProperty('healthBar.y') -75)
-			end
-
-			makeLuaSprite('iconP12', 'icons/missing', 0, 0)
-			makeLuaSprite('iconP22', 'icons/missing', 0, 0)
-
-			setProperty("updateTime", false)
-			
-			setObjectOrder('scoreTxt', getObjectOrder('healthBarBG') -1)
-			setObjectOrder('timeTxt', 99)
-			if gappleHUDsong then
-				break;
-			end
-			gappleHUDsong = true;
+	for i = 0, getProperty('unspawnNotes.length')-1 do
+		setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.023)
+		if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
+			setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.004)
+		end
+		setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.04 + 0.075)
+		if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
+			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0)
+		end
+		if (((has_value(CharactersWith3D, getProperty('dad.curCharacter')) and not getPropertyFromGroup('unspawnNotes', i, 'mustHit')) or (has_value(CharactersWith3D, getProperty('boyfriend.curCharacter'))) and getPropertyFromGroup('unspawnNotes', i, 'mustHit'))) or ((has_value(CharactersWith3D, getProperty('dad.curCharacter')) or has_value(CharactersWith3D, getProperty('boyfriend.curCharacter'))) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
+			setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_assets_3D')
 		end
 	end
 
-	if string.lower(songName) == 'lore' then
-		songMod = 'D-Sides';
+	if downscroll then
+		setProperty("iconP1.y", getProperty('healthBar.y') -75)
+		setProperty("iconP2.y", getProperty('healthBar.y') -75)
 	end
 
-	if string.lower(songName) == 'close chuckle' then
-		songMod = 'Hotline-024';
+	makeLuaSprite('iconP12', 'icons/missing', 0, 0)
+	makeLuaSprite('iconP22', 'icons/missing', 0, 0)
+
+	setProperty("updateTime", false)
+			
+	setObjectOrder('scoreTxt', getObjectOrder('healthBarBG') -1)
+	setObjectOrder('timeTxt', 99)
+	if gappleHUDsong then
+		return;
 	end
+	gappleHUDsong = true;
 end
 
 function changeNoteSkin(player, skin)
@@ -328,6 +310,8 @@ function onUpdatePost(elapsed)
 		if gappleHUDsong then
 			setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
 			setTextString("memoryTxt", "Memory: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
+
+			if getDataFromSave("settings", "settingsAlert") then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
 		end
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		if string.lower(songName) == 'kooky' then
@@ -401,7 +385,7 @@ function onBeatHit()
 	end
 
 	if gappleHUDsong then
-		if string.lower(songName) == 'kooky' then
+		if string.lower(songName) == 'kooky' or string.lower(songName) == 'maze' then
 			return;
 		end
 		local iconPos = getProperty('healthBar.y') -82.5;

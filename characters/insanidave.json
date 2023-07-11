@@ -8,7 +8,7 @@
 			],
 			"anim": "idle",
 			"fps": 24,
-			"name": "IDLE",
+			"name": "idle",
 			"indices": []
 		},
 		{
@@ -19,7 +19,7 @@
 			],
 			"anim": "singLEFT",
 			"fps": 24,
-			"name": "LEFT",
+			"name": "left",
 			"indices": []
 		},
 		{
@@ -30,7 +30,7 @@
 			],
 			"anim": "singDOWN",
 			"fps": 24,
-			"name": "DOWN",
+			"name": "down",
 			"indices": []
 		},
 		{
@@ -41,7 +41,7 @@
 			],
 			"anim": "singUP",
 			"fps": 24,
-			"name": "UP",
+			"name": "up",
 			"indices": []
 		},
 		{
@@ -52,12 +52,12 @@
 			],
 			"anim": "singRIGHT",
 			"fps": 24,
-			"name": "RIGHT",
+			"name": "right",
 			"indices": []
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/insanidave",
+	"image": "characters/extras/cuberoot/insanidave",
 	"position": [
 		0,
 		0

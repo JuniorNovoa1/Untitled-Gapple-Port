@@ -170,24 +170,6 @@
 				0,
 				255
 			]
-		],
-		[	
-			"Lore",
-			"guyy",
-			[
-				245,
-				63,
-				108
-			]
-		],
-		[
-			"Close-Chuckle",
-			"charlie",
-			[
-				197,
-				167,
-				99
-			]	
 		]
 	],
 	"hideFreeplay": false,

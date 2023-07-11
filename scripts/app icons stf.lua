@@ -116,19 +116,4 @@ function changeIcon()
 			]]
 		end
 	end
-
-
-	if string.lower(songName) == 'lore' then
-		runHaxeCode[[
-			Application.current.window.title = "Friday Night Funkin' D-Sides";
-			Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/D-Sides").bitmap));
-		]]
-	end
-
-	if string.lower(songName) == 'close chuckle' then
-		runHaxeCode[[
-			Application.current.window.title = "Hotline 024";
-			Lib.application.window.setIcon(Image.fromBitmapData(Paths.image("appIcons/Hotline-024").bitmap));
-		]]
-	end
 end

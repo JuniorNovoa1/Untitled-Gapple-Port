@@ -17,7 +17,7 @@ function onStepHit()
     end
 
     if curStep == 1463 then
-        setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.15)
+        setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.2)
     end
 
     if curStep == 2240 then
@@ -49,7 +49,7 @@ end
 
 function onEvent(tag, val1, val2)
     if tag == 'Change Character' then
-        cameraFlash("hud", "FFFFFF", 1)
+        if flashingLights then cameraFlash("hud", "FFFFFF", 1) end
         if val2 == 'dave-wide' or val2 == 'awesomeBambiCrack' then
             setProperty("3d.visible", true)
             changeNoteSkin(false, 'NOTE_assets_3D')

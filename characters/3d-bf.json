@@ -101,7 +101,7 @@
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/3D_BF",
+	"image": "characters/shared/3D_BF",
 	"position": [
 		0,
 		350

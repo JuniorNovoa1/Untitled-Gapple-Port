@@ -35,7 +35,7 @@
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/3d_bf_dies",
+	"image": "characters/shared/3d_bf_dies",
 	"position": [
 		0,
 		350
