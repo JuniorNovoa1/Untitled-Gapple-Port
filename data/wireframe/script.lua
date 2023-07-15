@@ -227,7 +227,7 @@ function onStepHit()
     if curStep == 2671 then --BF IS EXAPNOGI
         doTweenAlpha('guh', 'lightColor', 1, 12.5, 'cubeInOut')
     end
-    if curStep >= 2680 and getGlobalFromScript('settings', 'screenShake') == true then
+    if curStep >= 2680 and getGlobalFromScript("Juniors Ports Stuff", 'screenShake') == true then
         triggerEvent('Screen Shake', '0.1,'..getProperty('lightColor.alpha') * 0.0085, '0.1,'..getProperty('lightColor.alpha') * 0.0085)
     end
 end
@@ -239,7 +239,7 @@ function onBeatHit()
         end
     end
     if curStep >= 1630 and curStep <= 2143 then
-        if getDataFromSave('settings', 'epilepsy') == false then
+        if getDataFromSave("Juniors Ports Stuff", 'epilepsy') == false then
             return;
         end
         if curColor >= 5 then

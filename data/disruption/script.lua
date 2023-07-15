@@ -14,7 +14,7 @@ end
 local elapsedtime = 0;
 
 function onUpdate(elapsed)
-    if getDataFromSave('settings', 'modcharts') == false then
+    if getDataFromSave("Juniors Ports Stuff", 'modcharts') == false then
         return;
     end
 
@@ -46,7 +46,7 @@ end
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
-    if getDataFromSave('settings', 'screenshake') == true then
+    if getDataFromSave("Juniors Ports Stuff", 'screenshake') == true then
         triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
     end
 end--]]

@@ -74,7 +74,7 @@ function onUpdate(elapsed)
             if i <= 3 then
                 nope = true;
             end
-            if not nope and getDataFromSave('settings', 'modcharts') == true then
+            if not nope and getDataFromSave("Juniors Ports Stuff", 'modcharts') == true then
                 local krunkThing = 60;
                 if getPropertyFromGroup('strumLineNotes', i, 'ID') % 2 == 0 then
                     setPropertyFromGroup('strumLineNotes', i, 'x', originPosX[i] + ((math.sin(elapsedtime) * (1) * krunkThing)))
@@ -95,7 +95,7 @@ function onUpdate(elapsed)
                 setPropertyFromGroup('strumLineNotes', i, 'scale.y', getPropertyFromGroup('strumLineNotes', i, 'scale.y') * 1.5)
             end
         end
-    elseif unfairPart and getDataFromSave('settings', 'modcharts') == true then
+    elseif unfairPart and getDataFromSave("Juniors Ports Stuff", 'modcharts') == true then
         for i = 0, getProperty('strumLineNotes.length') do
             setPropertyFromGroup('strumLineNotes', i, 'x', ((screenWidth / 2) - (getPropertyFromGroup('strumLineNotes', i, 'width') / 2)) + (math.sin(elapsedtime + (i)) * 300))
             setPropertyFromGroup('strumLineNotes', i, 'y', ((screenHeight / 2) - (getPropertyFromGroup('strumLineNotes', i, 'height') / 2)) + (math.cos(elapsedtime + (i)) * 300))
@@ -125,7 +125,7 @@ function onUpdatePost()
                 setProperty('bambi.holdTimer', 0)
                 strumAnim(noteDataa - 1, 'confirm', 0.15);
                 setProperty('health', getProperty('health') -(healthtolower / 2.65))
-                if getDataFromSave('settings', 'screenshake') == true then
+                if getDataFromSave("Juniors Ports Stuff", 'screenshake') == true then
                     triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
                 end
                 playAnim('bambi', singAnims[noteDataa], true)

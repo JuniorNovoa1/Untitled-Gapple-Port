@@ -15,7 +15,8 @@ local songMod = 'DNB: Golden Apple';
 local gappleMemoryCounter = false; --gapple doesn't have a memory counter...
 local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', '3d-bf-shoulder', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
 'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
-'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'dave-wide', 'awesomeBambiCrack'}
+'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'dave-wide', 'awesomeBambiCrack',
+'brob', 'barbu'}
 
 function onCreate()
 	for i = 1, #nonGappleSongs do
@@ -36,6 +37,10 @@ end
 
 function onCreatePost()
 	setProperty('showCombo', true)
+	addHaxeLibrary("ClientPrefs", '')
+	addHaxeLibrary("FlxKey", 'flixel.input.keyboard')
+	addHaxeLibrary("FlxSoundTray", 'flixel.system.ui')
+	addHaxeLibrary("FlxTween", 'flixel.tweens')
 
 	--[[for direction = 0, 3 do
 		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') - arrowXoffset)
@@ -50,7 +55,7 @@ function onCreatePost()
 	setObjectCamera('fpsTxt', 'other')
 	setTextAlignment('fpsTxt', 'center')
 	setTextFont('fpsTxt', 'comic.ttf')
-	setTextSize('fpsTxt', 28)
+	setTextSize('fpsTxt', 26)
 	setTextBorder('fpsTxt', 0, 'FFFFFF')
 	setProperty('fpsTxt.antialiasing', false)
 	setProperty("fpsTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
@@ -72,6 +77,16 @@ function onCreatePost()
 
 	if gappleHUDsong then setPropertyFromClass("Main", "fpsVar.visible", false) end
 
+	makeAnimatedLuaSprite("gappleSoundTray", "gapple_soundtray", screenWidth - 150, 0)
+	for i = 0, 9 do
+		addAnimationByPrefix("gappleSoundTray", ""..i + 1, ""..i, 24, true)
+	end
+	setObjectCamera("gappleSoundTray", "other")
+	setProperty("gappleSoundTray.visible", false)
+	updateHitbox("gappleSoundTray")
+	screenCenter("gappleSoundTray", 'y')
+	addLuaSprite("gappleSoundTray", false)
+
 	setTextFont('scoreTxt', 'comic.ttf')
 	setTextFont('timeTxt', 'comic.ttf')
 
@@ -86,6 +101,7 @@ function onCreatePost()
 	addLuaText('creditsWatermark')
 
 	if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
+	if string.lower(songName) == 'fresh-and-toasted' then setTextString("creditsWatermark", 'Fresh And Toasted') end
 
 	makeLuaText('creditsText', '', 0, 4, getProperty('healthBarBG.y') + 56)
 	setObjectCamera('creditsText', 'camHUD')
@@ -265,6 +281,32 @@ function onUpdate(elapsed)
 		end
 	end
 
+	playAnim("gappleSoundTray", ""..math.max(getPropertyFromClass("flixel.FlxG", "sound.volume") * 10) + 1, false)
+
+	runHaxeCode([[
+		var volumeUP = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_up'));
+		var volumeDOWN = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_down'));
+		var volumeMUTE = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_mute'));
+
+		if (FlxG.keys.anyJustPressed(volumeUP) || FlxG.keys.anyJustPressed(volumeDOWN) || FlxG.keys.anyJustPressed(volumeMUTE)) {
+			//var tag = "gappleSoundTray";
+			//game.modchartTweens.set(tag, FlxTween.tween(game.getLuaObject('gappleSoundTray'), {x: FlxG.width -150}, 0.25, {
+			//	onComplete: function(twn) {
+			//		game.callOnLuas('onTweenCompleted', [tag]);
+			//		game.modchartTweens.remove(tag);
+			//	}
+			//}));
+			game.getLuaObject('gappleSoundTray').visible = true;
+		}
+			
+		if (FlxG.sound.muted)
+			game.getLuaObject('gappleSoundTray', false).animation.play('1');
+
+		game.getLuaObject('gappleSoundTray', false).centerOffsets();
+		game.getLuaObject('gappleSoundTray', false).centerOrigin();
+	]])
+
+
 	--setProperty('camHUD.x', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 50)
 	--setProperty('camHUD.y', math.sin((getSongPosition() / 1000) * (getPropertyFromClass("Conductor", "bpm") / 60) * 1.0) * 15)
 	--setProperty('camHUD.angle', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 1.2)
@@ -311,7 +353,7 @@ function onUpdatePost(elapsed)
 			setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
 			setTextString("memoryTxt", "Memory: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
 
-			if getDataFromSave("settings", "settingsAlert") then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
+			if getDataFromSave("Juniors Ports Stuff", "settingsAlert") then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
 		end
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		if string.lower(songName) == 'kooky' then

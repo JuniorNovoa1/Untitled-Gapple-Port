@@ -4,13 +4,13 @@ local camZoomA = 1.25;
 
 function onUpdate(elapsed)
     if lockCam then
-        setDataFromSave('settings', 'camZoom', false)
+        setDataFromSave("Juniors Ports Stuff", 'camZoom', false)
         doTweenZoom('camZoomGame', 'camGame', camZoomA, 3, "")
     else
-        setDataFromSave('settings', 'camZoom', true)
+        setDataFromSave("Juniors Ports Stuff", 'camZoom', true)
     end
 
-    if getDataFromSave('settings', 'modcharts') ~= true then
+    if getDataFromSave("Juniors Ports Stuff", 'modcharts') ~= true then
         return;
     end
 

@@ -10,14 +10,14 @@ local newCamZoom = false; --very buggy! only used on some sections of Nice!
 
 --IGNORE EVERYTHING BELOW!!!!!!
 function onCreate()
-    initSaveData('settings')
-    if buildTarget ~= 'android' then setDataFromSave('settings', 'settingsAlert', settingsAlert) else setDataFromSave('settings', 'settingsAlert', false) end
-    setDataFromSave('settings', 'modcharts', modcharts)
-    setDataFromSave('settings', 'epilepsy', epilepsy)
-    setDataFromSave('settings', 'screenshake', screenshake)
-    setDataFromSave('settings', 'dialogue', dialogue)
-    setDataFromSave('settings', 'newCamZoom', newCamZoom)
-    setDataFromSave('settings', 'camZoom', true)
+    initSaveData("Juniors Ports Stuff")
+    if buildTarget ~= 'android' then setDataFromSave("Juniors Ports Stuff", 'settingsAlert', settingsAlert) else setDataFromSave("Juniors Ports Stuff", 'settingsAlert', false) end
+    setDataFromSave("Juniors Ports Stuff", 'modcharts', modcharts)
+    setDataFromSave("Juniors Ports Stuff", 'epilepsy', epilepsy)
+    setDataFromSave("Juniors Ports Stuff", 'screenshake', screenshake)
+    setDataFromSave("Juniors Ports Stuff", 'dialogue', dialogue)
+    setDataFromSave("Juniors Ports Stuff", 'newCamZoom', newCamZoom)
+    setDataFromSave("Juniors Ports Stuff", 'camZoom', true)
 end
 
 --THANK GOD THE INTERNET EXISTS

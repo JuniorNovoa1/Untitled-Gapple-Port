@@ -6,10 +6,10 @@ local camZoomA = 1.25;
 
 function onUpdate()
 	if lockCam then
-        setDataFromSave('settings', 'camZoom', false)
+        setDataFromSave("Juniors Ports Stuff", 'camZoom', false)
         doTweenZoom('camZoomGame', 'camGame', camZoomA, 1, "")
     else
-        setDataFromSave('settings', 'camZoom', true)
+        setDataFromSave("Juniors Ports Stuff", 'camZoom', true)
     end
 
 	runHaxeCode([[game.set_songSpeed(]]..swagSpeed..[[);]])
