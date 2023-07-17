@@ -8,6 +8,11 @@ end
 
 function moveCam(x, y)
 	triggerEvent('Camera Follow Pos', ''..x, ''..y) --didn't want to see this stupid shit everywhere
-    setProperty('camFollowPos.x', x)
-    setProperty('camFollowPos.y', y)
+    if stringStartsWith(version, '0.6') then
+        setProperty('camFollowPos.x', x)
+        setProperty('camFollowPos.y', y)
+    else
+        setProperty('camGame.scroll.x', x -(screenWidth / 2))
+        setProperty('camGame.scroll.y', y -(screenHeight / 2))
+    end
 end

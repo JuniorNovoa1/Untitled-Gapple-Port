@@ -185,7 +185,11 @@ function onStepHit()
             setPropertyFromGroup('strumLineNotes', i, 'scale.y', 0.7)
         end
         setProperty('creditsText.text', 'Ghost tapping is forced off! Screw you!')
-        setPropertyFromClass('ClientPrefs', 'ghostTapping', false)
+        if stringStartsWith(version, '0.6') then
+            setPropertyFromClass('ClientPrefs', 'ghostTapping', false)
+        else
+            setPropertyFromClass('backend.ClientPrefs', 'data.ghostTapping', false)
+        end
 
         removeLuaSprite('poop', true)
         setProperty('yeah.visible', true)
@@ -297,16 +301,31 @@ function strumAnim(direction, fool, timer)
 end
 
 function onGameOver()
-    setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
-    setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
+    if stringStartsWith(version, '0.6') then
+        setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
+        setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
+    else
+        setPropertyFromClass('backend.ClientPrefs', 'data.middleScroll', oldVal[1])
+        setPropertyFromClass('backend.ClientPrefs', 'data.ghostTapping', oldVal[2])
+    end
 end
 
 function onEndSong()
-    setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
-    setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
+    if stringStartsWith(version, '0.6') then
+        setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
+        setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
+    else
+        setPropertyFromClass('backend.ClientPrefs', 'data.middleScroll', oldVal[1])
+        setPropertyFromClass('backend.ClientPrefs', 'data.ghostTapping', oldVal[2])
+    end
 end
 
 function onDestroy()
-    setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
-    setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
+    if stringStartsWith(version, '0.6') then
+        setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
+        setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
+    else
+        setPropertyFromClass('backend.ClientPrefs', 'data.middleScroll', oldVal[1])
+        setPropertyFromClass('backend.ClientPrefs', 'data.ghostTapping', oldVal[2])
+    end
 end

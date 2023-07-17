@@ -60,7 +60,7 @@
 	"image": "characters/shared/shoulder_bf",
 	"position": [
 		0,
-		0
+		350
 	],
 	"healthicon": "3d-bf",
 	"flip_x": true,

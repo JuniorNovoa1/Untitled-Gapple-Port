@@ -39,7 +39,7 @@ function onCreatePost()
 	setProperty('showCombo', true)
 	addHaxeLibrary("ClientPrefs", '')
 	addHaxeLibrary("FlxKey", 'flixel.input.keyboard')
-	addHaxeLibrary("FlxSoundTray", 'flixel.system.ui')
+	--addHaxeLibrary("FlxSoundTray", 'flixel.system.ui')
 	addHaxeLibrary("FlxTween", 'flixel.tweens')
 
 	--[[for direction = 0, 3 do
@@ -58,7 +58,11 @@ function onCreatePost()
 	setTextSize('fpsTxt', 26)
 	setTextBorder('fpsTxt', 0, 'FFFFFF')
 	setProperty('fpsTxt.antialiasing', false)
-	setProperty("fpsTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
+	if stringStartsWith(version, '0.6') then
+		setProperty("fpsTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
+    else
+		setProperty("fpsTxt.visible", getPropertyFromClass('backend.ClientPrefs', 'data.showFPS'))
+    end
 	if not gappleHUDsong then setProperty("fpsTxt.visible", false) end
 	updateHitbox('fpsTxt')
 	addLuaText('fpsTxt')
@@ -70,7 +74,11 @@ function onCreatePost()
 	setTextSize('memoryTxt', 18)
 	setTextBorder('memoryTxt', 0, 'FFFFFF')
 	setProperty('memoryTxt.antialiasing', false)
-	setProperty("memoryTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
+	if stringStartsWith(version, '0.6') then
+		setProperty("memoryTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
+    else
+		setProperty("memoryTxt.visible", getPropertyFromClass('backend.ClientPrefs', 'data.showFPS'))
+    end
 	if not gappleHUDsong then setProperty("memoryTxt.visible", false) end
 	updateHitbox('memoryTxt')
 	if gappleMemoryCounter then addLuaText('memoryTxt') end
@@ -133,10 +141,17 @@ function onCreatePost()
 		setProperty("creditsWatermark.y", getProperty("healthBarBG.y") + 30)
 	end
 
-	prevRatingPos[0] = getPropertyFromClass('ClientPrefs', 'comboOffset[0]');
-	prevRatingPos[1] = getPropertyFromClass('ClientPrefs', 'comboOffset[2]');
-	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
-	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
+	if stringStartsWith(version, '0.6') then
+		prevRatingPos[0] = getPropertyFromClass('ClientPrefs', 'comboOffset[0]');
+		prevRatingPos[1] = getPropertyFromClass('ClientPrefs', 'comboOffset[2]');
+		setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
+		setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
+    else
+		prevRatingPos[0] = getPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]');
+		prevRatingPos[1] = getPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]');
+		setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]', ratingPos)
+		setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]', ratingPos)
+    end
 
 	makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBarBG.x'), getProperty('healthBarBG.y') +5)
 	scaleObject('healthBarBGnew', getProperty('healthBarBG.scale.x') - 0.075, getProperty('healthBarBG.scale.y') - 0.15)
@@ -147,6 +162,19 @@ function onCreatePost()
 	if string.lower(songName) == 'kooky' then
 		setProperty('healthBarBGnew.visible', false)
 	end
+
+	if downscroll then
+		setProperty("iconP1.y", getProperty('healthBar.y') -75)
+		setProperty("iconP2.y", getProperty('healthBar.y') -75)
+	end
+
+	makeLuaSprite('iconP12', 'icons/missing', 0, 0)
+	makeLuaSprite('iconP22', 'icons/missing', 0, 0)
+
+	setProperty("updateTime", false)
+			
+	setObjectOrder('scoreTxt', getObjectOrder('healthBarBG') -1)
+	setObjectOrder('timeTxt', 99)
 
 	if has_value(CharactersWith3D, getProperty('boyfriend.curCharacter')) then
 		changeNoteSkin(true, 'NOTE_assets_3D');
@@ -170,18 +198,6 @@ function onCreatePost()
 		end
 	end
 
-	if downscroll then
-		setProperty("iconP1.y", getProperty('healthBar.y') -75)
-		setProperty("iconP2.y", getProperty('healthBar.y') -75)
-	end
-
-	makeLuaSprite('iconP12', 'icons/missing', 0, 0)
-	makeLuaSprite('iconP22', 'icons/missing', 0, 0)
-
-	setProperty("updateTime", false)
-			
-	setObjectOrder('scoreTxt', getObjectOrder('healthBarBG') -1)
-	setObjectOrder('timeTxt', 99)
 	if gappleHUDsong then
 		return;
 	end
@@ -214,14 +230,14 @@ function changeNoteSkin(player, skin)
 end
 
 --THANK GOD THE INTERNET EXISTS
-function has_value (tab, val)
-    for index, value in ipairs(tab) do
-        if value == val then
-            return true
+function has_value(tab, val)
+    for i = 1, #tab do
+        if string.lower(tab[i]) == string.lower(val) then
+            return true;
         end
     end
 
-    return false
+    return false;
 end
 
 function math.lerp(from, to, t)
@@ -316,6 +332,9 @@ local offsets = {-13, -13}--{55, 43}
 
 function onUpdatePost(elapsed)
 	if string.lower(songName) == 'maze' or gappleHUDsong then
+		if gappleHUDsong then
+			iconScale()
+		end
 		runHaxeCode([[
 			for (i in 0...game.strumLineNotes.length) {
 				if (game.strumLineNotes.members[i].animation.curAnim.name == 'confirm' && (game.strumLineNotes.members[i].texture == 'NOTE_assets' || game.strumLineNotes.members[i].texture == 'NOTE_assets_3D)) {
@@ -368,7 +387,6 @@ function onUpdatePost(elapsed)
 			updateHitbox('iconP1')
 			updateHitbox('iconP2')
 		end
-		iconScale()
 	end
 end
 
@@ -516,14 +534,24 @@ end
 
 function onPause()
 	if gappleHUDsong then
-		setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
-		setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
+		if stringStartsWith(version, '0.6') then
+			setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
+			setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
+		else
+			setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]', prevRatingPos[0])
+			setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]', prevRatingPos[1])
+		end
 	end
 end
 
 function onDestroy()
 	if gappleHUDsong then
-		setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
-		setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
+		if stringStartsWith(version, '0.6') then
+			setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
+			setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
+		else
+			setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]', prevRatingPos[0])
+			setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]', prevRatingPos[1])
+		end
 	end
 end

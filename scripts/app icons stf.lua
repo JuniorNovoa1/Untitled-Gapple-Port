@@ -11,18 +11,36 @@ function onCreate()
 	clearCache();
 end
 
+function charAnialiasingShit()
+	if stringStartsWith(version, '0.6') then
+		if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
+			setProperty('boyfriend.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
+		end
+	
+		if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
+			setProperty('dad.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
+		end
+	
+		if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
+			setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
+		end
+    else
+		if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
+			setProperty('boyfriend.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.globalAntialiasing'));
+		end
+	
+		if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
+			setProperty('dad.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.globalAntialiasing'));
+		end
+	
+		if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
+			setProperty('gf.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.globalAntialiasing'));
+		end
+    end
+end
+
 function onCreatePost()
-	if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
-		setProperty('boyfriend.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-	end
-
-	if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
-		setProperty('dad.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-	end
-
-	if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
-		setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-	end
+	charAnialiasingShit()
 
 	runHaxeCode([[
 		for (integer in game.modchartSprites.keys()) {
@@ -43,17 +61,7 @@ end
 
 function onEvent(tag, val1, val2)
 	if tag == 'Change Character' then
-		if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
-			setProperty('boyfriend.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-		end
-	
-		if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
-			setProperty('dad.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-		end
-	
-		if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
-			setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-		end
+		charAnialiasingShit()
 	end
 end
 

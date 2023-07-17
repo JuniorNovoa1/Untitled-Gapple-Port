@@ -20,10 +20,17 @@ function onCreatePost()
 	setProperty('cpuControlled', true) --not gonna fucking code bf's side lmao
 
 	if not middlescroll then
-		prevRatingPos[0] = getPropertyFromClass('ClientPrefs', 'comboOffset[0]');
-		prevRatingPos[1] = getPropertyFromClass('ClientPrefs', 'comboOffset[2]');
-		setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
-		setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
+		if stringStartsWith(version, '0.6') then
+			prevRatingPos[0] = getPropertyFromClass('ClientPrefs', 'comboOffset[0]');
+			prevRatingPos[1] = getPropertyFromClass('ClientPrefs', 'comboOffset[2]');
+			setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
+			setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
+        else
+			prevRatingPos[0] = getPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]');
+			prevRatingPos[1] = getPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]');
+			setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]', ratingPos)
+			setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]', ratingPos)
+        end
 	else
 		local xOldBF = 0;
 		local xOldDAD = 0;
@@ -314,6 +321,11 @@ function onDestroy()
 		return;
 	end
 
-	setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
-	setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
+	if stringStartsWith(version, '0.6') then
+		setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
+		setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
+	else
+		setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]', prevRatingPos[0])
+		setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]', prevRatingPos[1])
+	end
 end

@@ -1,8 +1,13 @@
 local oldVAR = false;
 
 function onCreate()
-	oldVAR = getPropertyFromClass('ClientPrefs', 'downscroll');
-	setPropertyFromClass('ClientPrefs', 'downscroll', false)
+	if stringStartsWith(version, '0.6') then
+    	oldVAR = getPropertyFromClass('ClientPrefs', 'downscroll');
+		setPropertyFromClass('ClientPrefs', 'downscroll', false)
+    else
+		oldVAR = getPropertyFromClass('backend.ClientPrefs', 'data.downscroll');
+		setPropertyFromClass('backend.ClientPrefs', 'data.downscroll', false)
+    end
 end
 
 function onCreatePost()
@@ -67,5 +72,9 @@ function onUpdatePost()
 end
 
 function onEndSong()
-	setPropertyFromClass('ClientPrefs', 'downscroll', oldVAR)
+	if stringStartsWith(version, '0.6') then
+		setPropertyFromClass('ClientPrefs', 'downscroll', oldVAR)
+    else
+		setPropertyFromClass('backend.ClientPrefs', 'data.downscroll', oldVAR)
+    end
 end
