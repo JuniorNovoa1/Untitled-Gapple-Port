@@ -14,8 +14,8 @@ local loopVarThing = false;
 local shadname = "stridentCrisisWavy";
 
 function onCreatePost()
-	changeNoteSkin(false, 'NOTE_assets_3D');
-	changeNoteSkin(false, 'NOTE_assets'); --caching!!
+	changeNoteSkin(false, 'NOTE_assets_3D')
+	changeNoteSkin(false, 'NOTE_assets')
 end
 
 function onUpdate()
@@ -227,7 +227,7 @@ function onEvent(name, value1, value2)
 		end
 
 		if value2 == 'th1ft' then
-			changeNoteSkin(false, 'NOTE_assets'); --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
+			changeNoteSkin(false, 'NOTE_assets') --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
 
 			zoomStuff = zoomStuff + 0.15;
 			setProperty('defaultCamZoom', getProperty('defaultCamZoom') +zoomStuff)

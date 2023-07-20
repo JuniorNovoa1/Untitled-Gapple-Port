@@ -3,8 +3,13 @@ local enabled = false;
 function onCreatePost()
     if not enabled then return; end
 
-    addHaxeLibrary('Character')
-    addHaxeLibrary('HealthIcon')
+    if stringStartsWith(version, '0.6') then
+        addHaxeLibrary('Character')
+        addHaxeLibrary('HealthIcon')
+    else
+        addHaxeLibrary('Character', 'objects')
+        addHaxeLibrary('HealthIcon', 'objects')
+    end
     createIcon()
 end
 

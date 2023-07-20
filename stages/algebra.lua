@@ -1,6 +1,12 @@
 local bgShitters = {'diamondJunk', 'daveJunk', 'davePiss', 'monitorJunk', 'robotJunk'}
 
 function onCreate()
+	if stringStartsWith(version, '0.6') then
+        addHaxeLibrary('Character')
+    else
+        addHaxeLibrary('Character', 'objects')
+    end
+	
 	makeLuaSprite('bg', 'main/algebra/algebraBg', -600, -300);
 	setGraphicSize("bg", math.floor(getProperty("bg.width") * 1.35), math.floor(getProperty("bg.height") * 1.35))
 	updateHitbox("bg")

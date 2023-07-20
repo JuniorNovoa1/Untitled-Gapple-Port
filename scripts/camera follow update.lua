@@ -1,8 +1,5 @@
 local camMovementType = ''; --all types: '', charSize, camZoom - (charSize changes the movement amount by the size of the char, camZoom changes the movement amount by how much the value of defaultCamZoom is)
 
-local regAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'};
-local altAnims = {'singLEFT-alt', 'singDOWN-alt', 'singUP-alt', 'singRIGHT-alt'};
-
 local bfCamIdle = {};
 local dadCamIdle = {};
 

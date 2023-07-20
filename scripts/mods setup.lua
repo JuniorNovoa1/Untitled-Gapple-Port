@@ -37,10 +37,6 @@ end
 
 function onCreatePost()
 	setProperty('showCombo', true)
-	addHaxeLibrary("ClientPrefs", '')
-	addHaxeLibrary("FlxKey", 'flixel.input.keyboard')
-	--addHaxeLibrary("FlxSoundTray", 'flixel.system.ui')
-	addHaxeLibrary("FlxTween", 'flixel.tweens')
 
 	--[[for direction = 0, 3 do
 		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') - arrowXoffset)
@@ -57,7 +53,7 @@ function onCreatePost()
 	setTextFont('fpsTxt', 'comic.ttf')
 	setTextSize('fpsTxt', 26)
 	setTextBorder('fpsTxt', 0, 'FFFFFF')
-	setProperty('fpsTxt.antialiasing', false)
+	setProperty('fpsTxt.antialiasing', true)
 	if stringStartsWith(version, '0.6') then
 		setProperty("fpsTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
     else
@@ -73,7 +69,7 @@ function onCreatePost()
 	setTextFont('memoryTxt', 'comic.ttf')
 	setTextSize('memoryTxt', 18)
 	setTextBorder('memoryTxt', 0, 'FFFFFF')
-	setProperty('memoryTxt.antialiasing', false)
+	setProperty('memoryTxt.antialiasing', true)
 	if stringStartsWith(version, '0.6') then
 		setProperty("memoryTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
     else
@@ -87,7 +83,7 @@ function onCreatePost()
 
 	makeAnimatedLuaSprite("gappleSoundTray", "gapple_soundtray", screenWidth - 150, 0)
 	for i = 0, 9 do
-		addAnimationByPrefix("gappleSoundTray", ""..i + 1, ""..i, 24, true)
+		addAnimationByPrefix("gappleSoundTray", ""..(i + 1), ""..i, 24, true)
 	end
 	setObjectCamera("gappleSoundTray", "other")
 	setProperty("gappleSoundTray.visible", false)
@@ -98,7 +94,7 @@ function onCreatePost()
 	setTextFont('scoreTxt', 'comic.ttf')
 	setTextFont('timeTxt', 'comic.ttf')
 
-	makeLuaText('creditsWatermark', songName, 0, 4, getProperty('healthBarBG.y') + 30)
+	makeLuaText('creditsWatermark', songName, 0, 4, getProperty('healthBar.y') + 30)
 	setObjectCamera('creditsWatermark', 'camHUD')
 	setTextAlignment('creditsWatermark', 'center')
 	setTextFont('creditsWatermark', 'comic.ttf')
@@ -111,7 +107,7 @@ function onCreatePost()
 	if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
 	if string.lower(songName) == 'fresh-and-toasted' then setTextString("creditsWatermark", 'Fresh And Toasted') end
 
-	makeLuaText('creditsText', '', 0, 4, getProperty('healthBarBG.y') + 56)
+	makeLuaText('creditsText', '', 0, 4, getProperty('healthBar.y') + 52)
 	setObjectCamera('creditsText', 'camHUD')
 	setTextAlignment('creditsText', 'center')
 	setTextFont('creditsText', 'comic.ttf')
@@ -125,10 +121,10 @@ function onCreatePost()
 	songMod = 'Dave and Bambi';
 	if string.lower(songName) == 'maze' then
 		setProperty('healthBarBG.visible', false)
-		makeLuaSprite('healthBarBGnew', 'daveHealth', getProperty('healthBarBG.x'), getProperty('healthBarBG.y'))
+		makeLuaSprite('healthBarBGnew', 'daveHealth', getProperty('healthBar.x'), getProperty('healthBar.y'))
 		setObjectCamera('healthBarBGnew', 'camHUD')
 		addLuaSprite('healthBarBGnew', false)
-		setObjectOrder('healthBarBGnew', getObjectOrder('healthBarBG') + 1)
+		setObjectOrder('healthBarBGnew', getObjectOrder('healthBar') + 1)
 	
 		makeLuaSprite('iconP12', 'icons/missing', 0, 0)
 		makeLuaSprite('iconP22', 'icons/missing', 0, 0)
@@ -136,9 +132,9 @@ function onCreatePost()
 	end
 
 	if getProperty('creditsText.text') == '' and string.lower(songName) ~= 'kooky' then
-		setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
+		setProperty('creditsWatermark.y', getProperty('healthBar.y') + 50)
 	elseif string.lower(songName) ~= 'kooky' then
-		setProperty("creditsWatermark.y", getProperty("healthBarBG.y") + 30)
+		setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
 	end
 
 	if stringStartsWith(version, '0.6') then
@@ -153,11 +149,11 @@ function onCreatePost()
 		setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]', ratingPos)
     end
 
-	makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBarBG.x'), getProperty('healthBarBG.y') +5)
-	scaleObject('healthBarBGnew', getProperty('healthBarBG.scale.x') - 0.075, getProperty('healthBarBG.scale.y') - 0.15)
+	makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBar.x'), getProperty('healthBar.y') +5)
+	scaleObject('healthBarBGnew', getProperty('healthBar.scale.x') - 0.075, getProperty('healthBar.scale.y') - 0.15)
 	setObjectCamera('healthBarBGnew', 'camHUD')
 	addLuaSprite('healthBarBGnew', false)
-	setObjectOrder('healthBarBGnew', getObjectOrder('healthBarBG') + 1)
+	setObjectOrder('healthBarBGnew', getObjectOrder('healthBar') + 1)
 
 	if string.lower(songName) == 'kooky' then
 		setProperty('healthBarBGnew.visible', false)
@@ -168,20 +164,33 @@ function onCreatePost()
 		setProperty("iconP2.y", getProperty('healthBar.y') -75)
 	end
 
-	makeLuaSprite('iconP12', 'icons/missing', 0, 0)
-	makeLuaSprite('iconP22', 'icons/missing', 0, 0)
+	makeLuaSprite('iconP12', 'icons/missing', 0, getProperty('healthBar.y') -75)
+	makeLuaSprite('iconP22', 'icons/missing', 0, getProperty('healthBar.y') -75)
+	setObjectOrder('iconP1', getObjectOrder('healthBarBGnew') + 1)
+	setObjectOrder('iconP2', getObjectOrder('iconP1') + 1)
+	if stringStartsWith(version, "0.7") then
+		setProperty("iconP1.x", getProperty("healthBar.barCenter") + (150 * getProperty("iconP1.scale.x") - 150) / 2 - 26)
+		setProperty("iconP2.x", getProperty("healthBar.barCenter") - (150 * getProperty("iconP2.scale.x")) / 2 - 26 * 2)
+		setProperty("iconP12.x", getProperty("healthBar.barCenter") + (150 * getProperty("iconP1.scale.x") - 150) / 2 - 26)
+		setProperty("iconP22.x", getProperty("healthBar.barCenter") - (150 * getProperty("iconP2.scale.x")) / 2 - 26 * 2)
+	end
 
 	setProperty("updateTime", false)
 			
-	setObjectOrder('scoreTxt', getObjectOrder('healthBarBG') -1)
+	setObjectOrder('scoreTxt', getObjectOrder('healthBar') -1)
 	setObjectOrder('timeTxt', 99)
 
-	if has_value(CharactersWith3D, getProperty('boyfriend.curCharacter')) then
-		changeNoteSkin(true, 'NOTE_assets_3D');
-	end
+	local chars3D = {false, false}
 
-	if has_value(CharactersWith3D, getProperty('dad.curCharacter')) then
-		changeNoteSkin(false, 'NOTE_assets_3D');
+	for i = 1, #CharactersWith3D do
+		if string.lower(CharactersWith3D[i]) == string.lower(getProperty("boyfriend.curCharacter")) then 
+			changeNoteSkin(true, 'NOTE_assets_3D')
+			chars3D[1] = true;
+		end
+		if string.lower(CharactersWith3D[i]) == string.lower(getProperty("dad.curCharacter")) then 
+			changeNoteSkin(false, 'NOTE_assets_3D')
+			chars3D[2] = true;
+		end
 	end
 
 	for i = 0, getProperty('unspawnNotes.length')-1 do
@@ -193,7 +202,7 @@ function onCreatePost()
 		if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0)
 		end
-		if (((has_value(CharactersWith3D, getProperty('dad.curCharacter')) and not getPropertyFromGroup('unspawnNotes', i, 'mustHit')) or (has_value(CharactersWith3D, getProperty('boyfriend.curCharacter'))) and getPropertyFromGroup('unspawnNotes', i, 'mustHit'))) or ((has_value(CharactersWith3D, getProperty('dad.curCharacter')) or has_value(CharactersWith3D, getProperty('boyfriend.curCharacter'))) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
+		if (((chars3D[1] and not getPropertyFromGroup('unspawnNotes', i, 'mustHit')) or (chars3D[2]) and getPropertyFromGroup('unspawnNotes', i, 'mustHit'))) or ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
 			setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_assets_3D')
 		end
 	end
@@ -227,17 +236,6 @@ function changeNoteSkin(player, skin)
             setPropertyFromGroup('unspawnNotes', i, 'texture', skin)
         end
     end
-end
-
---THANK GOD THE INTERNET EXISTS
-function has_value(tab, val)
-    for i = 1, #tab do
-        if string.lower(tab[i]) == string.lower(val) then
-            return true;
-        end
-    end
-
-    return false;
 end
 
 function math.lerp(from, to, t)
@@ -278,7 +276,20 @@ local boyfriendHasMissAnims = false;
 local actualSongLength = 0;
 local songPos = 0;
 
+local iconOffset = 26;
+
 function onUpdate(elapsed)
+	if stringStartsWith(version, '0.7') then
+		doTweenX("iconMovementP1", "iconP12", getProperty("healthBar.barCenter") + (150 * getProperty("iconP12.scale.x") - 150) / 2 - iconOffset, 0.1, "sineInOut")
+		doTweenX("iconMovementP2", "iconP22", getProperty("healthBar.barCenter") - (150 * getProperty("iconP22.scale.x")) / 2 - iconOffset * 2, 0.1, "sineInOut")
+
+		for i = 0, getProperty("strumLineNotes.length") do
+			setPropertyFromGroup('strumLineNotes', i, 'rgbShader.enabled', false)
+		end
+		for i = 0, getProperty("notes.length") do
+			setPropertyFromGroup('notes', i, 'rgbShader.enabled', false)
+		end
+    end
 	setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha'))
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
 	songPos = math.toTime(getSongPosition() / 1000)
@@ -299,29 +310,39 @@ function onUpdate(elapsed)
 
 	playAnim("gappleSoundTray", ""..math.max(getPropertyFromClass("flixel.FlxG", "sound.volume") * 10) + 1, false)
 
-	runHaxeCode([[
-		var volumeUP = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_up'));
-		var volumeDOWN = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_down'));
-		var volumeMUTE = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_mute'));
-
-		if (FlxG.keys.anyJustPressed(volumeUP) || FlxG.keys.anyJustPressed(volumeDOWN) || FlxG.keys.anyJustPressed(volumeMUTE)) {
-			//var tag = "gappleSoundTray";
-			//game.modchartTweens.set(tag, FlxTween.tween(game.getLuaObject('gappleSoundTray'), {x: FlxG.width -150}, 0.25, {
-			//	onComplete: function(twn) {
-			//		game.callOnLuas('onTweenCompleted', [tag]);
-			//		game.modchartTweens.remove(tag);
-			//	}
-			//}));
-			game.getLuaObject('gappleSoundTray').visible = true;
-		}
-			
-		if (FlxG.sound.muted)
-			game.getLuaObject('gappleSoundTray', false).animation.play('1');
-
-		game.getLuaObject('gappleSoundTray', false).centerOffsets();
-		game.getLuaObject('gappleSoundTray', false).centerOrigin();
-	]])
-
+	if stringStartsWith(version, '0.6') then
+		runHaxeCode([[
+			var volumeUP = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_up'));
+			var volumeDOWN = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_down'));
+			var volumeMUTE = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_mute'));
+	
+			if (FlxG.keys.anyJustPressed(volumeUP) || FlxG.keys.anyJustPressed(volumeDOWN) || FlxG.keys.anyJustPressed(volumeMUTE)) {
+				game.getLuaObject('gappleSoundTray').visible = true;
+			}
+				
+			if (FlxG.sound.muted)
+				game.getLuaObject('gappleSoundTray', false).animation.play('1');
+	
+			game.getLuaObject('gappleSoundTray', false).centerOffsets();
+			game.getLuaObject('gappleSoundTray', false).centerOrigin();
+		]])
+    else
+		runHaxeCode([[
+			var volumeUP = backend.Controls.justPressed("volume_up");
+			var volumeDOWN = backend.Controls.justPressed("volume_down");
+			var volumeMUTE = backend.Controls.justPressed("volume_mute");
+	
+			if (FlxG.keys.anyJustPressed(volumeUP) || FlxG.keys.anyJustPressed(volumeDOWN) || FlxG.keys.anyJustPressed(volumeMUTE)) {
+				game.getLuaObject('gappleSoundTray').visible = true;
+			}
+				
+			if (FlxG.sound.muted)
+				game.getLuaObject('gappleSoundTray', false).animation.play('1');
+	
+			game.getLuaObject('gappleSoundTray', false).centerOffsets();
+			game.getLuaObject('gappleSoundTray', false).centerOrigin();
+		]])
+    end
 
 	--setProperty('camHUD.x', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 50)
 	--setProperty('camHUD.y', math.sin((getSongPosition() / 1000) * (getPropertyFromClass("Conductor", "bpm") / 60) * 1.0) * 15)
@@ -337,7 +358,7 @@ function onUpdatePost(elapsed)
 		end
 		runHaxeCode([[
 			for (i in 0...game.strumLineNotes.length) {
-				if (game.strumLineNotes.members[i].animation.curAnim.name == 'confirm' && (game.strumLineNotes.members[i].texture == 'NOTE_assets' || game.strumLineNotes.members[i].texture == 'NOTE_assets_3D)) {
+				if (game.strumLineNotes.members[i].animation.curAnim.name == 'confirm' && (game.strumLineNotes.members[i].texture == 'NOTE_assets' || game.strumLineNotes.members[i].texture == 'NOTE_assets_3D')) {
 					game.strumLineNotes.members[i].centerOffsets();
 					//game.strumLineNotes.members[i].centerOrigin();
 
@@ -348,24 +369,27 @@ function onUpdatePost(elapsed)
 		]])
 
 		if string.lower(songName) ~= 'kooky' then
-			setProperty('healthBarBG.y', screenHeight * 0.9)
-			setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
-			setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
-			setProperty('healthBarBGnew.y', screenHeight * 0.9 +1.25)
-			setProperty('healthBarBGnew.x', getProperty('healthBarBG.x'))
-			setProperty('scoreTxt.y', getProperty('healthBarBG.y') + 40)
+			setProperty('healthBar.y', screenHeight * 0.9 + 4)
+			--setProperty('healthBar.x', screenHeight * 0.4)
+			if stringStartsWith(version, '0.7') then
+				setProperty('healthBarBGnew.y', screenHeight * 0.9 +5)
+				setProperty('healthBarBGnew.x', getProperty('healthBar.x'))
+			else
+				setProperty('healthBarBGnew.y', screenHeight * 0.9 +2.5)
+				setProperty('healthBarBGnew.x', getProperty('healthBar.x') -5)
+			end
+			setProperty('scoreTxt.y', getProperty('healthBar.y') + 40)
 		end
 		if downscroll then
-			setProperty('healthBarBG.y', 50)
-			setProperty('healthBar.y', getProperty('healthBarBG.y') + 4)
-			setProperty('healthBar.x', getProperty('healthBarBG.x') + 4)
-			setProperty('healthBarBGnew.y', getProperty('healthBarBG.y') + 5.25)
-			setProperty('healthBarBGnew.x', getProperty('healthBarBG.x') + 4)
+			setProperty('healthBar.y', 54)
+			--setProperty('healthBar.x', getProperty('healthBar.x') + 4)
+			setProperty('healthBarBGnew.y', getProperty('healthBar.y') + 5.25)
+			setProperty('healthBarBGnew.x', getProperty('healthBar.x') + 4)
 		end
 		if getProperty('creditsText.text') == '' and string.lower(songName) ~= 'kooky' then
-			setProperty('creditsWatermark.y', getProperty('healthBarBG.y') + 50)
+			setProperty('creditsWatermark.y', getProperty('healthBar.y') + 46)
 		elseif string.lower(songName) ~= 'kooky' then
-			setProperty("creditsWatermark.y", getProperty("healthBarBG.y") + 30)
+			setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
 		end
 
 		if gappleHUDsong then
@@ -391,7 +415,7 @@ function onUpdatePost(elapsed)
 end
 
 function onStepHit()
-	changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+	--changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 	--changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
 
 	--setObjectOrder('strumLineNotes', getObjectOrder('notes') +1) --puts notes under strumlinenotes
@@ -414,6 +438,10 @@ function onStepHit()
 end
 
 function iconScale()
+	if stringStartsWith(version, '0.7') then
+		setProperty('iconP1.x', getProperty('iconP12.x'))
+		setProperty('iconP2.x', getProperty('iconP22.x'))
+    end
 	setProperty('iconP1.scale.x', getProperty('iconP12.scale.x'))
 	setProperty('iconP1.scale.y', getProperty('iconP12.scale.y'))
 	setProperty('iconP2.scale.x', getProperty('iconP22.scale.x'))
@@ -448,10 +476,7 @@ function onBeatHit()
 		if string.lower(songName) == 'kooky' or string.lower(songName) == 'maze' then
 			return;
 		end
-		local iconPos = getProperty('healthBar.y') -82.5;
-		if downscroll then
-			iconPos = getProperty('healthBar.y') -75;
-		end
+		local iconPos = getProperty('healthBar.y') -75;
 
 		if curBeat % getProperty('gfSpeed') == 0 then
 			local fuasd = {0.8, 1.3}

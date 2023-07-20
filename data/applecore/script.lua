@@ -6,7 +6,11 @@ local originPosX = {};
 local originPosY = {};
 
 function onCreatePost()
-    addHaxeLibrary('Character')
+    if stringStartsWith(version, '0.6') then
+        addHaxeLibrary('Character')
+    else
+        addHaxeLibrary('Character', 'objects')
+    end
     runHaxeCode([[
         var bambi = new Character(-350, -800, 'bambi-piss-3d');
         bambi.scale.set(0.85, 0.85);

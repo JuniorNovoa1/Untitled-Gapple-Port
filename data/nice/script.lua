@@ -168,7 +168,7 @@ function onStepHit()
 
     if curStep == 6447 then
         doTweenY("phoneExit", "phone", 600, 0.4, "")
-        changeNoteSkin(true, 'NOTE_assets')
+        changeNoteSkin(false, 'NOTE_assets')
         for i = 0, getProperty("strumLineNotes.length") do
             setPropertyFromGroup("strumLineNotes", i, 'alpha', 1)
         end

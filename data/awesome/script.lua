@@ -1,6 +1,10 @@
 function onCreate()
     precacheImage("NOTE_assets_3D")
-    precacheImage("NOTE_assets")
+    if stringStartsWith(version, "0.6") then
+		precacheImage('NOTE_assets');
+	else
+		precacheImage('noteSkins/NOTE_assets');
+	end
 end
 
 function onStepHit()
@@ -55,7 +59,7 @@ function onEvent(tag, val1, val2)
             changeNoteSkin(false, 'NOTE_assets_3D')
         else
             setProperty("3d.visible", false)
-            changeNoteSkin(false, 'NOTE_assets')
+            changeNoteSkin(false, 'NOTE_assets');
         end
     end
 end

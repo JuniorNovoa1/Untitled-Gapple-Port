@@ -2,7 +2,11 @@ local brobPart = true;
 
 function onCreatePost()
     addHaxeLibrary("FlxColor", 'flixel.util')
-    addHaxeLibrary('Character')
+    if stringStartsWith(version, '0.6') then
+        addHaxeLibrary('Character')
+    else
+        addHaxeLibrary('Character', 'objects')
+    end
 
     runHaxeCode([[
         var barbu = new Character(game.dad.x - 525, -500, 'barbu');

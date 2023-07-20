@@ -34,13 +34,17 @@ function onUpdate()
     --[[local maxxed = 0.95;
     setProperty('camGame.zoom', math.lerp(getProperty('defaultCamZoom'), getProperty('camGame.zoom'), maxxed))
     setProperty('camHUD.zoom', math.lerp(1, getProperty('camHUD.zoom'), maxxed))--]]
-    local duration = crochet / 1050 * getProperty('gfSpeed');
-    doTweenZoom('camZoomGame', 'camGame', getProperty('defaultCamZoom'), duration, 'sineOut')
-    doTweenZoom('camZoomHUD', 'camHUD', 1, duration, 'sineOut')
+    if stringStartsWith(version, '0.6') then
+        local duration = crochet / 1050 * getProperty('gfSpeed');
+        doTweenZoom('camZoomGame', 'camGame', getProperty('defaultCamZoom'), duration, 'sineOut')
+        doTweenZoom('camZoomHUD', 'camHUD', 1, duration, 'sineOut')
+    else
+        setProperty('camZooming', true)
+    end
 end
 
 function onSectionHit()
-    if getDataFromSave('camZoom') then
+    if getDataFromSave('camZoom') and stringStartsWith(version, '0.6') then
         setProperty('camGame.zoom', getProperty('camGame.zoom') + 0.015 * getProperty('camZoomingMult'))
         setProperty('camHUD.zoom', getProperty('camHUD.zoom') + 0.03 * getProperty('camZoomingMult'))
     end

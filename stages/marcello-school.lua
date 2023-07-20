@@ -57,7 +57,11 @@ function onCreate() --these xmls are kinda weird...
     screenCenter("phone", 'x')
     addLuaSprite("phone", false)
 
-    addHaxeLibrary('Character')
+    if stringStartsWith(version, '0.6') then
+        addHaxeLibrary('Character')
+    else
+        addHaxeLibrary('Character', 'objects')
+    end
     runHaxeCode([[
         var errung = new Character(0, 0, 'errung');
         errung.visible = false;
