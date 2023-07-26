@@ -375,7 +375,7 @@ function onUpdatePost(elapsed)
 				setProperty('healthBarBGnew.y', screenHeight * 0.9 +5)
 				setProperty('healthBarBGnew.x', getProperty('healthBar.x'))
 			else
-				setProperty('healthBarBGnew.y', screenHeight * 0.9 +2.5)
+				setProperty('healthBarBGnew.y', screenHeight * 0.9 +2)
 				setProperty('healthBarBGnew.x', getProperty('healthBar.x') -5)
 			end
 			setProperty('scoreTxt.y', getProperty('healthBar.y') + 40)

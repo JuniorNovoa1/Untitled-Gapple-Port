@@ -9,19 +9,31 @@ end
 
 function onStepHit()
     if curStep == 1216 then
-        setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.1)
+        setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.05)
     end
 
-    if curStep == 1335 or curStep == 1472 or curStep == 1691 then
+    if curStep == 1335 then
         setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.3)
     end
 
     if curStep == 1341 or curStep == 1696 then
-        setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.3)
+        setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.15)
     end
 
     if curStep == 1463 then
-        setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.225)
+        setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.25)
+    end
+
+    if curStep == 1472 then
+        setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.25)
+    end
+
+    if curStep == 1691 then
+        setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.25)
+    end
+
+    if curStep == 1728 then
+        setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.2)
     end
 
     if curStep == 2240 then
