@@ -227,7 +227,7 @@ function onStepHit()
     if curStep == 2671 then --BF IS EXAPNOGI
         doTweenAlpha('guh', 'lightColor', 1, 12.5, 'cubeInOut')
     end
-    if curStep >= 2680 and getGlobalFromScript("Juniors Ports Stuff", 'screenShake') == true then
+    if curStep >= 2680 and getGlobalFromScript("Juniors Ports Stuff", 'screenshake') == true then
         triggerEvent('Screen Shake', '0.1,'..getProperty('lightColor.alpha') * 0.0085, '0.1,'..getProperty('lightColor.alpha') * 0.0085)
     end
 end

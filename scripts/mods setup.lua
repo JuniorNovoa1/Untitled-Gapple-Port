@@ -7,9 +7,6 @@ local gappleHUDsong = true;
 local arrowXoffset = 35;
 local no_splashes = true;
 
-local ratingPos = 575;
-local prevRatingPos = {};
-
 local songMod = 'DNB: Golden Apple';
 
 local gappleMemoryCounter = false; --gapple doesn't have a memory counter...
@@ -36,8 +33,6 @@ end
 
 
 function onCreatePost()
-	setProperty('showCombo', true)
-
 	--[[for direction = 0, 3 do
 		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') - arrowXoffset)
 		setPropertyFromGroup('opponentStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') - arrowXoffset -5)
@@ -137,18 +132,6 @@ function onCreatePost()
 		setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
 	end
 
-	if stringStartsWith(version, '0.6') then
-		prevRatingPos[0] = getPropertyFromClass('ClientPrefs', 'comboOffset[0]');
-		prevRatingPos[1] = getPropertyFromClass('ClientPrefs', 'comboOffset[2]');
-		setPropertyFromClass('ClientPrefs', 'comboOffset[0]', ratingPos)
-		setPropertyFromClass('ClientPrefs', 'comboOffset[2]', ratingPos)
-    else
-		prevRatingPos[0] = getPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]');
-		prevRatingPos[1] = getPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]');
-		setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]', ratingPos)
-		setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]', ratingPos)
-    end
-
 	makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBar.x'), getProperty('healthBar.y') +5)
 	scaleObject('healthBarBGnew', getProperty('healthBar.scale.x') - 0.075, getProperty('healthBar.scale.y') - 0.15)
 	setObjectCamera('healthBarBGnew', 'camHUD')
@@ -202,10 +185,12 @@ function onCreatePost()
 		if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0)
 		end
-		if (((chars3D[1] and not getPropertyFromGroup('unspawnNotes', i, 'mustHit')) or (chars3D[2]) and getPropertyFromGroup('unspawnNotes', i, 'mustHit'))) or ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
+		if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
 			setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_assets_3D')
 		end
 	end
+
+	addLuaScript("activatedScripts/Gapple Rating", true)
 
 	if gappleHUDsong then
 		return;
@@ -555,28 +540,4 @@ function noteMissedStuff(direction)
 	setProperty('boyfriend.color', getColorFromHex('9400d3'))
 	setProperty('boyfriend.holdTimer', 0)
 	prevAnim = getProperty('boyfriend.animation.curAnim.name')
-end
-
-function onPause()
-	if gappleHUDsong then
-		if stringStartsWith(version, '0.6') then
-			setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
-			setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
-		else
-			setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]', prevRatingPos[0])
-			setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]', prevRatingPos[1])
-		end
-	end
-end
-
-function onDestroy()
-	if gappleHUDsong then
-		if stringStartsWith(version, '0.6') then
-			setPropertyFromClass('ClientPrefs', 'comboOffset[0]', prevRatingPos[0])
-			setPropertyFromClass('ClientPrefs', 'comboOffset[2]', prevRatingPos[1])
-		else
-			setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[0]', prevRatingPos[0])
-			setPropertyFromClass('backend.ClientPrefs', 'data.comboOffset[2]', prevRatingPos[1])
-		end
-	end
 end

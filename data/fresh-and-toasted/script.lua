@@ -1,6 +1,7 @@
 local brobPart = true;
 
 function onCreatePost()
+    precacheMusic("freshAndToasted/win-brobgonal")
     addHaxeLibrary("FlxColor", 'flixel.util')
     if stringStartsWith(version, '0.6') then
         addHaxeLibrary('Character')

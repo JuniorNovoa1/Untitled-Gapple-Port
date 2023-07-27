@@ -20,7 +20,7 @@ function enableEyeSores(thing)
 end
 function onEvent(n)
    if n == 'eyesores' then
-      if not shadersEnabled then
+      if not shadersEnabled or not getDataFromSave('Juniors Ports Stuff', 'epilepsy') then
          return;
       end
       isEnabled = not isEnabled
@@ -34,10 +34,12 @@ function onUpdate()
 
     if getShaderBool("PulseShaderSpr", "uEnabled") then
       setShaderFloat("PulseShaderSpr", "uampmul", 0.5)
-		runHaxeCode[[
-			FlxG.camera.shake(0.010, 0.010);
-		]]
-		--playAnim('gf', 'scared', false)
+      if getDataFromSave('Juniors Ports Stuff', 'screenshake') then
+		   runHaxeCode[[
+			   FlxG.camera.shake(0.010, 0.010);
+		   ]]
+      end
+      playAnim('gf', 'scared', false)
    else
       setShaderFloat("PulseShaderSpr", "uampmul", getShaderFloat("PulseShaderSpr", "uampmul") - 0.01)
    end

@@ -1,8 +1,8 @@
 --settings!!
-local settingsAlert = true; --disable to remove message in the top left!!! (GOTTA FIND A WAY TO LET PEOPLE KNOW TO CHANGE THEIR SETTINGS!!!!)
+local settingsAlert = true; --disable to remove message in the top left!!!
 --main settings
 local modcharts = true; --determines wether modcharts are enabled.
-local epilepsy = false; --determines if screen flashes many colors at once. (disable if you have epilepsy)
+local epilepsy = false; --determines if screen flashes many colors at once. (disable if you have Epilepsy)
 local screenshake = true; --determines wether the screen can shake.
 local dialogue = true; --determine wether dialogue pops up on compatible songs.
 --dave and bambi settings
@@ -11,7 +11,6 @@ local newCamZoom = false; --very buggy! only used on some sections of Nice!
 --IGNORE EVERYTHING BELOW!!!!!!
 function onCreate()
     initSaveData("Juniors Ports Stuff")
-    if buildTarget ~= 'android' then setDataFromSave("Juniors Ports Stuff", 'settingsAlert', settingsAlert) else setDataFromSave("Juniors Ports Stuff", 'settingsAlert', false) end
     setDataFromSave("Juniors Ports Stuff", 'modcharts', modcharts)
     setDataFromSave("Juniors Ports Stuff", 'epilepsy', epilepsy)
     setDataFromSave("Juniors Ports Stuff", 'screenshake', screenshake)
