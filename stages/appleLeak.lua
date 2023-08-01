@@ -1,7 +1,7 @@
 local shadname = "glitchEffect";
 
 function onCreate()   
-    makeLuaSprite('portal', 'appleLeak/cave/portal', 0, 0)
+    makeLuaSprite('portal', 'iykyk/appleLeak/cave/portal', 0, 0)
     setProperty('portal.visible', false)
     setProperty('portal.scale.x', 0)
     setProperty('portal.scale.y', 0)
@@ -10,19 +10,19 @@ function onCreate()
         addLuaSprite('portal', true)
     end
 
-    makeLuaSprite('th1ft', 'appleLeak/th1ft_room', 0, 150)
+    makeLuaSprite('th1ft', 'iykyk/appleLeak/th1ft_room', 0, 150)
     screenCenter('th1ft', 'X')
     updateHitbox('th1ft')
     addLuaSprite('th1ft', false)
 
-    makeLuaSprite('r1', 'appleLeak/r1', 50, 125)
+    makeLuaSprite('r1', 'iykyk/appleLeak/r1', 50, 125)
     setProperty('r1.antialiasing', false)
     setProperty('r1.scale.x', 0.75)
     setProperty('r1.scale.y', 0.8)
     updateHitbox('r1')
     addLuaSprite('r1', false)
 
-    makeLuaSprite('r2', 'appleLeak/r2', 50, 200)
+    makeLuaSprite('r2', 'iykyk/appleLeak/r2', 50, 200)
     setProperty('r2.antialiasing', false)
     setProperty('r2.visible', false)
     setProperty('r2.scale.x', 0.9)
@@ -32,7 +32,7 @@ function onCreate()
         addLuaSprite('r2', true)
     end
 
-    makeLuaSprite('garryLeak', 'appleLeak/gary_leak', 0, 150)
+    makeLuaSprite('garryLeak', 'iykyk/appleLeak/gary_leak', 0, 150)
     screenCenter('garryLeak', 'X')
     setProperty('garryLeak.x', getProperty('garryLeak.x') + 100)
     updateHitbox('garryLeak')
@@ -43,12 +43,12 @@ function onCreate()
     setShaderFloat('garryLeak', 'uFrequency', 5)
     setShaderFloat('garryLeak', 'uSpeed', 2)
 
-    makeLuaSprite('gasStation', 'appleLeak/gas_station', 0, 0)
+    makeLuaSprite('gasStation', 'iykyk/appleLeak/gas_station', 0, 0)
     screenCenter('gasStation')
     updateHitbox('gasStation')
     addLuaSprite('gasStation', false)
 
-    makeLuaSprite('wavyApplecore', 'appleLeak/wavyApplecore', 0, 150)
+    makeLuaSprite('wavyApplecore', 'iykyk/appleLeak/wavyApplecore', 0, 150)
     setProperty('wavyApplecore.visible', false)
     screenCenter('wavyApplecore', 'X')
     updateHitbox('wavyApplecore')
@@ -65,21 +65,21 @@ function onCreate()
         addLuaSprite('jamboul', false)
     end
 
-    makeLuaSprite('kineMaster', 'appleLeak/DICKmaster', 1150, 25)
+    makeLuaSprite('kineMaster', 'iykyk/appleLeak/DICKmaster', 1150, 25)
     setProperty('kineMaster.antialiasing', false)
     setObjectCamera('kineMaster', 'camother')
     if not lowQuality then
         addLuaSprite('kineMaster', false)
     end
 
-    makeLuaSprite('ytVids', 'appleLeak/trolled/bgthing', 175 * 2, 250 * 2) -- -175, -250
+    makeLuaSprite('ytVids', 'iykyk/appleLeak/trolled/bgthing', 175 * 2, 250 * 2) -- -175, -250
     --setProperty('ytVids.visible', false)
     setProperty('ytVids.scale.x', 0)
     setProperty('ytVids.scale.y', 0)
     updateHitbox('ytVids')
     addLuaSprite('ytVids', true)
 
-    makeLuaSprite('ytStatic', 'appleLeak/trolled/bg2', -175, 1075)
+    makeLuaSprite('ytStatic', 'iykyk/appleLeak/trolled/bg2', -175, 1075)
     setProperty('ytStatic.visible', false)
     --setProperty('ytStatic.scale.x', 1.25)
     --setProperty('ytStatic.scale.y', 1.25)
@@ -91,11 +91,11 @@ function onCreate()
 	setShaderFloat('ytStatic', 'uFrequency', 5)
 	setShaderFloat('ytStatic', 'uSpeed', 2)
 
-    makeLuaSprite('ytBox', 'appleLeak/trolled/bg1', -175, 1075)
+    makeLuaSprite('ytBox', 'iykyk/appleLeak/trolled/bg1', -175, 1075)
     setProperty('ytBox.visible', false)
     addLuaSprite('ytBox', false)
 
-    makeLuaSprite('funkipedia', 'appleLeak/funkipedia', -175, 1940)
+    makeLuaSprite('funkipedia', 'iykyk/appleLeak/funkipedia', -175, 1940)
     setProperty('funkipedia.visible', false)
     addLuaSprite('funkipedia', false)
 end

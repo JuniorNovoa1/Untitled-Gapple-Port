@@ -4,7 +4,7 @@ function onCreatePost()
     --Iterate over all notes
     for i = 0, getProperty('unspawnNotes.length')-1 do
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'police note' then
-            setPropertyFromGroup('unspawnNotes', i, 'texture', 'funnyAnimal/palooseNote');
+            setPropertyFromGroup('unspawnNotes', i, 'texture', 'main/funnyAnimal/palooseNote');
             if getPropertyFromGroup('unspawnNotes', i, 'noteData') == 0 then
                 setPropertyFromGroup('unspawnNotes', i, 'angle', -90);
             end

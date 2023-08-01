@@ -20,18 +20,18 @@ function onStartCountdown()
 		updateHitbox('greenScreen')
 		addLuaSprite('greenScreen', false)
 
-		makeLuaSprite('garrett1', 'funnyAnimal/fat_guy', 0, 0)
+		makeLuaSprite('garrett1', 'main/funnyAnimal/fat_guy', 0, 0)
 		setObjectCamera('garrett1', 'camother')
 		screenCenter('garrett1', 'x')
 		screenCenter('garrett1', 'y')
 		updateHitbox('garrett1')
 		addLuaSprite('garrett1', false)
 
-		makeLuaSprite('canYou', 'funnyAnimal/canYouBeat', 250, 450)
+		makeLuaSprite('canYou', 'main/funnyAnimal/canYouBeat', 250, 450)
 		setObjectCamera('canYou', 'camother')
 		addLuaSprite('canYou', false)
 
-		makeLuaSprite('garrett2', 'funnyAnimal/obese_guy', 0, 0)
+		makeLuaSprite('garrett2', 'main/funnyAnimal/obese_guy', 0, 0)
 		setProperty('garrett2.visible', false)
 		setObjectCamera('garrett2', 'camother')
 		screenCenter('garrett2', 'x')
@@ -39,7 +39,7 @@ function onStartCountdown()
 		updateHitbox('garrett2')
 		addLuaSprite('garrett2', false)
 
-		makeLuaSprite('horray', 'funnyAnimal/hooray', 250, 450)
+		makeLuaSprite('horray', 'main/funnyAnimal/hooray', 250, 450)
 		setObjectCamera('horray', 'camother')
 		setProperty('horray.visible', false)
 		addLuaSprite('horray', false)
@@ -53,8 +53,8 @@ end
 
 function onCreate()
 	--heheheha
-	precacheImage('funnyAnimal/zunkity')
-	precacheImage('funnyAnimal/palooseCar')
+	precacheImage('main/funnyAnimal/zunkity')
+	precacheImage('main/funnyAnimal/palooseCar')
 
 	if downscroll then
 		normalStrumY = screenHeight -150;
@@ -164,10 +164,10 @@ function onStepHit()
 		changeNoteSkin(true, 'NOTE_assets_3D')
 		for i = 0, getProperty('unspawnNotes.length') -1 do
 			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'magic note' then
-				setPropertyFromGroup('unspawnNotes', i, 'texture', 'funnyAnimal/magicNote')
+				setPropertyFromGroup('unspawnNotes', i, 'texture', 'main/funnyAnimal/magicNote')
 			end
 			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'police note' then
-				setPropertyFromGroup('unspawnNotes', i, 'texture', 'funnyAnimal/palooseNote')
+				setPropertyFromGroup('unspawnNotes', i, 'texture', 'main/funnyAnimal/palooseNote')
 			end
 		end
 		for i = 0, 4, 1 do
@@ -245,7 +245,7 @@ function onStepHit()
 		removeLuaSprite('RUNBITCHSTATIC', true)
 		setProperty('RUNBITCH.visible', true)
 
-		makeAnimatedLuaSprite('POLICECAR', 'funnyAnimal/palooseCar', getProperty('dad.x'), getProperty('dad.y'))
+		makeAnimatedLuaSprite('POLICECAR', 'main/funnyAnimal/palooseCar', getProperty('dad.x'), getProperty('dad.y'))
 		addAnimationByPrefix('POLICECAR', 'run', 'idle0', 24, true)
 		playAnim('POLICECAR', 'run', true)
 		addLuaSprite('POLICECAR', true)
@@ -272,7 +272,7 @@ end
 --[[
 function onEndSong()
 	if not allowSongEnd then --Block the first countdown
-		makeLuaSprite('VICTORY', 'funnyAnimal/end', 0, 0)
+		makeLuaSprite('VICTORY', 'main/funnyAnimal/end', 0, 0)
 		setObjectCamera('VICTORY', 'camhud')
 		setProperty('VICTORY.width', 1280)
 		setProperty('VICTORY.height', 720)
@@ -301,7 +301,7 @@ function onEvent(n, v1, v2)
 			end
 
 			if v2 == 'pedophile' then
-				makeAnimatedLuaSprite('PEDOPHILESTATIC', 'funnyAnimal/zunkity', getProperty('dad.x') -300, getProperty('dad.y'))
+				makeAnimatedLuaSprite('PEDOPHILESTATIC', 'main/funnyAnimal/zunkity', getProperty('dad.x') -300, getProperty('dad.y'))
 				addAnimationByPrefix('PEDOPHILESTATIC', 'hey its the toddler', 'FAKE LOADING SCREEN0000', 24, false)
 				addAnimationByPrefix('PEDOPHILESTATIC', 'hhmm', 'FAKE LOADING SCREEN0001', 24, false)
 				addAnimationByPrefix('PEDOPHILESTATIC', 'smile', 'FAKE LOADING SCREEN0002', 24, false)
@@ -370,24 +370,24 @@ end
 function changeNoteSkin(player, skin)
 	if player == true then
 		for i = 0, 4, 1 do
-			setPropertyFromGroup('playerStrums', i, 'texture', skin)
+			setPropertyFromGroup('playerStrums', i, 'texture', 'noteSkins/'..skin)
 		end
 	end
     if not player then
 		for i = 0, 4, 1 do
-			setPropertyFromGroup('opponentStrums', i, 'texture', skin)
+			setPropertyFromGroup('opponentStrums', i, 'texture', 'noteSkins/'..skin)
 		end
 	end
 
     for i = 0, getProperty('notes.length') -1 do
         if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('notes', i, 'texture', skin)
+            setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin)
         end
     end
 
     for i = 0, getProperty('unspawnNotes.length') -1 do
         if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('unspawnNotes', i, 'texture', skin)
+            setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin)
         end
     end
 end

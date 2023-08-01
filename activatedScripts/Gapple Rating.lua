@@ -1,3 +1,5 @@
+local ratingFolder = 'ratings/';
+
 function onCreatePost()
     addHaxeLibrary("FlxRandom", 'flixel.math')
     addHaxeLibrary("FlxMath", 'flixel.math')
@@ -16,12 +18,12 @@ function onCreatePost()
 
     --caching ratings!!
     for i = 0, getProperty('ratingsData.length') do
-        precacheImage(getPropertyFromGroup("ratingsData", i, 'image'))
-        precacheImage('3dUi/'..getPropertyFromGroup("ratingsData", i, 'image')..'-3d')
+        precacheImage(ratingFolder..getPropertyFromGroup("ratingsData", i, 'image'))
+        precacheImage(ratingFolder..'3dUi/'..getPropertyFromGroup("ratingsData", i, 'image')..'-3d')
     end
     for i = 0, 9 do
-        precacheImage('num'..i)
-        precacheImage('3dUi/num'..i..'-3d')
+        precacheImage(ratingFolder..'num'..i)
+        precacheImage(ratingFolder..'3dUi/num'..i..'-3d')
     end
 
     setProperty('showComboNum', false)
@@ -37,6 +39,8 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
     runHaxeCode([[
         var membersIndex = ]]..membersIndex..[[;
         var note = game.notes.members[membersIndex];
+        var ratingFolder = "]]..ratingFolder..[[";
+        var targetAlpha = 0.5;
 
         var texture = note.texture;
         //importing shit from lua!!!
@@ -54,35 +58,35 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
 
         var pathFirst = "";
         var pathSecond = "";
-        if (texture == 'NOTE_assets_3D') {
+        if (texture == 'noteSkins/NOTE_assets_3D') {
             pathFirst = "3dUi/";
             pathSecond = "-3d";
         }
 
-        var rating = new FlxSprite(975 - (daRating.score / 2), 250).loadGraphic(Paths.image(pathFirst + daRating.image + pathSecond));
+        var rating = new FlxSprite(1000 - (daRating.score / 1.5), 350).loadGraphic(Paths.image(ratingFolder + pathFirst + daRating.image + pathSecond));
         rating.cameras = [game.camHUD];
         rating.acceleration.y = 550;
         rating.velocity.y -= FlxG.random.int(140, 175);
         rating.velocity.x -= FlxG.random.int(0, 10);
-		rating.alpha = 0.6;
+		rating.alpha = targetAlpha;
 		game.add(rating);
-        if (texture == 'NOTE_assets_3D') {
+        if (texture == 'noteSkins/NOTE_assets_3D') {
             rating.x -= 20;
             rating.y -= 5;
         }
 
-        var comboSpr = new FlxSprite(rating.x + 5, rating.y + 100).loadGraphic(Paths.image(pathFirst + 'combo' + pathSecond));
+        var comboSpr = new FlxSprite(rating.x + 5, rating.y - 85).loadGraphic(Paths.image(ratingFolder + pathFirst + 'combo' + pathSecond));
         comboSpr.cameras = [game.camHUD];
         comboSpr.acceleration.y = 600;
         comboSpr.velocity.y -= 150;
         comboSpr.velocity.x += FlxG.random.int(1, 10);
-		comboSpr.alpha = 0.6;
+		comboSpr.alpha = targetAlpha;
         if (game.combo >= 10 || game.combo == 0)
 		    game.add(comboSpr);
-        if (texture == 'NOTE_assets_3D') {
+        if (texture == 'noteSkins/NOTE_assets_3D') {
             comboSpr.x -= 20;
             comboSpr.y -= 5;
-        }    
+        }
 
         FlxTween.tween(rating, {alpha: 0}, 0.2 / game.playbackRate, {
 			startDelay: Conductor.crochet * 0.001 / game.playbackRate,
@@ -109,15 +113,15 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
         seperatedScore.push(game.combo % 10);
 
         for (i in seperatedScore) {
-            var numScore = new FlxSprite(comboSpr.x + 280, comboSpr.y + 10).loadGraphic(Paths.image(pathFirst + 'num' + i + pathSecond));
+            var numScore = new FlxSprite(rating.x + 315, rating.y + 10).loadGraphic(Paths.image(ratingFolder + pathFirst + 'num' + i + pathSecond));
             numScore.cameras = [game.camHUD];
-            if (texture == 'NOTE_assets_3D')
-                numScore.x += 25;
+            if (texture == 'noteSkins/NOTE_assets_3D')
+                numScore.x += 16 + (6 * daLoop);
             numScore.x += (44 * daLoop);
             numScore.acceleration.y = FlxG.random.int(200, 300);
             numScore.velocity.y -= FlxG.random.int(140, 160);
             numScore.velocity.x = FlxG.random.float(-5, 5);
-            numScore.alpha = 0.6;
+            numScore.alpha = targetAlpha;
             if (game.combo >= 10 || game.combo == 0)
                 game.add(numScore);
             FlxTween.tween(numScore, {alpha: 0}, 0.2 / game.playbackRate, {

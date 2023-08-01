@@ -195,10 +195,23 @@ function onCreatePost()
 end
 
 function onSongStart()
-	if not dialogueBool or buildTarget == 'android' or getDataFromSave(saveFileName, 'dialogue') == false then
+	if getDataFromSave("Juniors Ports Stuff", 'unfinishedStuff') and not getDataFromSave("Juniors Ports Stuff", "debugMode") then
+		openCustomSubstate("charSelect", false)
+	elseif not getDataFromSave("Juniors Ports Stuff", "debugMode") then
+		callOnLuas("onDialogueReadyChar")
+	end
+	if getDataFromSave("Juniors Ports Stuff", "debugMode") then
 		callOnLuas('onCountdownTick', {69})
 		return;
 	end
+end
+
+function onDialogueReadyChar()
+	if not dialogueBool or buildTarget == 'android' or getDataFromSave("Juniors Ports Stuff", 'dialogue') == false or getDataFromSave("Juniors Ports Stuff", "debugMode") then
+		callOnLuas('onCountdownTick', {69})
+		return;
+	end
+
 	openCustomSubstate('dialogue', false)
 	inDialogue = true;
 end
@@ -313,6 +326,11 @@ function onCustomSubstateUpdate(tag, elapsed)
 
 		if luaSoundExists('song') == false then
 			playSound(song, 1, 'song')
+			runHaxeCode([[
+				FlxG.sound.music.volume = 0;
+				game.vocals.volume = 0;
+				//game.setSongTime(Conductor.crochet * 5);
+			]])
 		end
 
 		if getProperty('dialogueTxtTEXT.text') ~= dialogueTXT[curDialogue] and not spam then

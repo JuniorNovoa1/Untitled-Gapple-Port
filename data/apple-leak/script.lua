@@ -85,7 +85,7 @@ function onStepHit()
 
 	if curStep == 7488 then
 		--portal
-		makeLuaSprite('portal', 'appleLeak/cave/portal', getProperty('boyfriend.x') + 205, getProperty('boyfriend.y') + 205)
+		makeLuaSprite('portal', 'iykyk/appleLeak/cave/portal', getProperty('boyfriend.x') + 205, getProperty('boyfriend.y') + 205)
 		setProperty('portal.scale.x', 0)
 		setProperty('portal.scale.y', 0)
 		updateHitbox('portal')
@@ -101,7 +101,7 @@ function onStepHit()
 	end
 
 	if curStep == 9520 then --3d and 2d
-		makeAnimatedLuaSprite('staticAnim', 'appleLeak/dookie/give_me_all_your_zunk', -175, -100)
+		makeAnimatedLuaSprite('staticAnim', 'iykyk/appleLeak/dookie/give_me_all_your_zunk', -175, -100)
 		setScrollFactor('staticAnim', 0, 0)
 		addAnimationByPrefix('staticAnim', 'idle', 'static0', 24, true)
 		playAnim('staticAnim', 'idle', true)
@@ -171,9 +171,9 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		setProperty("staticAnim.visible", false)
 
 		triggerEvent("Change Character", "bf", "bf")
-		makeLuaSprite('blackNwhite', 'appleLeak/dookie/bgs/2d-and-3d/ying and yang makes a comeback', getProperty("boyfriend.x") * 0.9, getProperty("boyfriend.y") / 2)
+		makeLuaSprite('blackNwhite', 'iykyk/appleLeak/dookie/bgs/2d-and-3d/ying and yang makes a comeback', getProperty("boyfriend.x") * 0.9, getProperty("boyfriend.y") / 2)
 		addLuaSprite('blackNwhite', false)
-		makeAnimatedLuaSprite('2dThing', 'appleLeak/dookie/fixed i things', 0, 0)
+		makeAnimatedLuaSprite('2dThing', 'iykyk/appleLeak/dookie/fixed i things', 0, 0)
 		setScrollFactor('2dThing', 0, 0)
     	addAnimationByPrefix('2dThing', 'idle', 'Symbol 1', 24, true)
     	playAnim('2dThing', 'idle', true)
@@ -261,7 +261,7 @@ function onEvent(name, value1, value2)
 			
 			setProperty('boyfriend.x', 1400)
 			setProperty('boyfriend.y', 1625)
-			makeLuaSprite('boyfond', 'appleLeak/trolled/boyfranon', bfX, bfY)
+			makeLuaSprite('boyfond', 'iykyk/appleLeak/trolled/boyfranon', bfX, bfY)
 			addLuaSprite('boyfond', false)
 
 			setProperty('ytStatic.visible', true)
@@ -282,13 +282,13 @@ function onEvent(name, value1, value2)
 			removeLuaSprite('funkipedia', true)
 			removeLuaSprite('ytStatic', true)
 			removeLuaSprite('ytBox', true)
-			makeLuaSprite('caveBG', 'appleLeak/cave/caveBG', -750, 100)
+			makeLuaSprite('caveBG', 'iykyk/appleLeak/cave/caveBG', -750, 100)
 			setProperty('caveBG.scale.x', 2.25)
 			setProperty('caveBG.scale.y', 2.25)
 			updateHitbox('caveBG')
 			addLuaSprite('caveBG', false)
 		
-			makeAnimatedLuaSprite('brob', 'appleLeak/cave/brob', getProperty('caveBG.x') +1925, getProperty('caveBG.y') + 575)
+			makeAnimatedLuaSprite('brob', 'iykyk/appleLeak/cave/brob', getProperty('caveBG.x') +1925, getProperty('caveBG.y') + 575)
 			addAnimationByPrefix('brob', 'idle', 'brob0', 24, false)
 			playAnim('brob', 'idle', true)
 			setProperty('brob.scale.x', 0.5)
@@ -298,7 +298,7 @@ function onEvent(name, value1, value2)
 				addLuaSprite('brob', false)
 			end
 		
-			makeAnimatedLuaSprite('monkey', 'appleLeak/cave/monkey', getProperty('caveBG.x') +1590, getProperty('caveBG.y') + 425)
+			makeAnimatedLuaSprite('monkey', 'iykyk/appleLeak/cave/monkey', getProperty('caveBG.x') +1590, getProperty('caveBG.y') + 425)
 			addAnimationByPrefix('monkey', 'idle', 'monkey0', 24, false)
 			playAnim('monkey', 'idle', true)
 			setProperty('monkey.scale.x', 0.35)
@@ -308,7 +308,7 @@ function onEvent(name, value1, value2)
 				addLuaSprite('monkey', false)
 			end
 		
-			makeAnimatedLuaSprite('ohyeah', 'appleLeak/cave/ohyeah', getProperty('caveBG.x') +950, getProperty('caveBG.y') + 500)
+			makeAnimatedLuaSprite('ohyeah', 'iykyk/appleLeak/cave/ohyeah', getProperty('caveBG.x') +950, getProperty('caveBG.y') + 500)
 			addAnimationByPrefix('ohyeah', 'idle', 'ohyeah0', 24, false)
 			playAnim('ohyeah', 'idle', true)
 			--setProperty('ohyeah.scale.x', 0.75)
@@ -318,7 +318,7 @@ function onEvent(name, value1, value2)
 				addLuaSprite('ohyeah', false)
 			end
 		
-			makeAnimatedLuaSprite('wrath', 'appleLeak/cave/wrath', getProperty('caveBG.x') +475, getProperty('caveBG.y') + 500)
+			makeAnimatedLuaSprite('wrath', 'iykyk/appleLeak/cave/wrath', getProperty('caveBG.x') +475, getProperty('caveBG.y') + 500)
 			addAnimationByPrefix('wrath', 'idle', 'wrath0', 24, false)
 			playAnim('wrath', 'idle', true)
 			setProperty('wrath.scale.x', 0.5)
@@ -328,13 +328,13 @@ function onEvent(name, value1, value2)
 				addLuaSprite('wrath', false)
 			end
 		
-			makeLuaSprite('caveFloor', 'appleLeak/cave/caveGround', getProperty('caveBG.x') +300, getProperty('caveBG.y') + 350)
+			makeLuaSprite('caveFloor', 'iykyk/appleLeak/cave/caveGround', getProperty('caveBG.x') +300, getProperty('caveBG.y') + 350)
 			setProperty('caveFloor.scale.x', 1.75)
 			setProperty('caveFloor.scale.y', 1.75)
 			updateHitbox('caveFloor')
 			addLuaSprite('caveFloor', false)
 		
-			makeAnimatedLuaSprite('norman', 'appleLeak/cave/norman', getProperty('caveFloor.x') + 950, getProperty('caveFloor.y') + 110)
+			makeAnimatedLuaSprite('norman', 'iykyk/appleLeak/cave/norman', getProperty('caveFloor.x') + 950, getProperty('caveFloor.y') + 110)
 			addAnimationByPrefix('norman', 'idle', 'idle0', 24, false)
 			playAnim('norman', 'idle', true)
 			setProperty('norman.scale.x', 0.25)
@@ -369,7 +369,7 @@ function onEvent(name, value1, value2)
 				removeLuaSprite('wrath', true)
 				removeLuaSprite('caveFloor', true)
 				removeLuaSprite('norman', true)
-				makeAnimatedLuaSprite('fire', 'appleLeak/dookie/FLAMESFLAMESBURNINGFLAMES', 75, -100)
+				makeAnimatedLuaSprite('fire', 'iykyk/appleLeak/dookie/FLAMESFLAMESBURNINGFLAMES', 75, -100)
 				addAnimationByPrefix('fire', 'idle', 'FlamesBurn0', 24, true)
 				playAnim('fire', 'idle', true)
 				setProperty('fire.antialiasing', false)
@@ -509,24 +509,24 @@ end
 function changeNoteSkin(player, skin)
 	if player == true then
 		for i = 0, 4, 1 do
-			setPropertyFromGroup('playerStrums', i, 'texture', skin)
+			setPropertyFromGroup('playerStrums', i, 'texture', 'noteSkins/'..skin)
 		end
 	end
     if not player then
 		for i = 0, 4, 1 do
-			setPropertyFromGroup('opponentStrums', i, 'texture', skin)
+			setPropertyFromGroup('opponentStrums', i, 'texture', 'noteSkins/'..skin)
 		end
 	end
 
     for i = 0, getProperty('notes.length') -1 do
         if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('notes', i, 'texture', skin)
+            setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin)
         end
     end
 
     for i = 0, getProperty('unspawnNotes.length') -1 do
         if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('unspawnNotes', i, 'texture', skin)
+            setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin)
         end
     end
 end

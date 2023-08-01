@@ -34,7 +34,7 @@ function onCreatePost()
             end
         end
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') ~= '' then
-            setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_assets_3D')
+            setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D')
         end
     end
 
@@ -57,7 +57,7 @@ function onCreatePost()
     end 
 
     for i = 4, 7, 1 do
-        setPropertyFromGroup('opponentStrums', i, 'texture', 'NOTE_assets_3D')
+        setPropertyFromGroup('opponentStrums', i, 'texture', 'noteSkins/NOTE_assets_3D')
     end
 end
 

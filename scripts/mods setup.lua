@@ -1,6 +1,6 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
-local nonGappleSongs = {}
+local nonGappleSongs = {''};
 local songSplashNames = {''};
 local oldFNFPos = {''};
 local gappleHUDsong = true;
@@ -10,10 +10,8 @@ local no_splashes = true;
 local songMod = 'DNB: Golden Apple';
 
 local gappleMemoryCounter = false; --gapple doesn't have a memory counter...
-local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', '3d-bf-shoulder', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
-'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
-'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'dave-wide', 'awesomeBambiCrack',
-'brob', 'barbu'}
+
+local CharactersWith3D = {};
 
 function onCreate()
 	for i = 1, #nonGappleSongs do
@@ -33,6 +31,7 @@ end
 
 
 function onCreatePost()
+	CharactersWith3D = getDataFromSave("Juniors Ports Stuff", "CharactersWith3D");
 	--[[for direction = 0, 3 do
 		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') - arrowXoffset)
 		setPropertyFromGroup('opponentStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') - arrowXoffset -5)
@@ -186,7 +185,7 @@ function onCreatePost()
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0)
 		end
 		if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
-			setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_assets_3D')
+			setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D')
 		end
 	end
 
@@ -201,24 +200,24 @@ end
 function changeNoteSkin(player, skin)
 	if player == true then
 		for i = 0, 4, 1 do
-			setPropertyFromGroup('playerStrums', i, 'texture', skin)
+			setPropertyFromGroup('playerStrums', i, 'texture', 'noteSkins/'..skin)
 		end
 	end
     if not player then
 		for i = 0, 4, 1 do
-			setPropertyFromGroup('opponentStrums', i, 'texture', skin)
+			setPropertyFromGroup('opponentStrums', i, 'texture', 'noteSkins/'..skin)
 		end
 	end
 
     for i = 0, getProperty('notes.length') -1 do
         if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('notes', i, 'texture', skin)
+            setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin)
         end
     end
 
     for i = 0, getProperty('unspawnNotes.length') -1 do
         if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('unspawnNotes', i, 'texture', skin)
+            setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin)
         end
     end
 end
@@ -341,17 +340,6 @@ function onUpdatePost(elapsed)
 		if gappleHUDsong then
 			iconScale()
 		end
-		runHaxeCode([[
-			for (i in 0...game.strumLineNotes.length) {
-				if (game.strumLineNotes.members[i].animation.curAnim.name == 'confirm' && (game.strumLineNotes.members[i].texture == 'NOTE_assets' || game.strumLineNotes.members[i].texture == 'NOTE_assets_3D')) {
-					game.strumLineNotes.members[i].centerOffsets();
-					//game.strumLineNotes.members[i].centerOrigin();
-
-					game.strumLineNotes.members[i].offset.x -= 2;
-					game.strumLineNotes.members[i].offset.y -= 2;
-				}
-			}
-		]])
 
 		if string.lower(songName) ~= 'kooky' then
 			setProperty('healthBar.y', screenHeight * 0.9 + 4)
@@ -381,6 +369,7 @@ function onUpdatePost(elapsed)
 			setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
 			setTextString("memoryTxt", "Memory: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
 
+			if getDataFromSave("Juniors Ports Stuff", "debugMode") then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
 			if getDataFromSave("Juniors Ports Stuff", "settingsAlert") then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
 		end
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")

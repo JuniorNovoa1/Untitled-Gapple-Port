@@ -1,4 +1,4 @@
-local gappleSongs = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'nice', 'ferocious', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'awesome', 'badcorn', 'crap!', 'ticking', 'kooky'}
+local gappleSongs = {};
 
 function onCreate()
 	addHaxeLibrary('Application', 'lime.app')
@@ -7,39 +7,11 @@ function onCreate()
 	addHaxeLibrary('System', 'openfl.system')
 	addHaxeLibrary('Lib', 'openfl')
 	addHaxeLibrary('ClientPrefs')
-
-	clearCache();
-end
-
-function charAnialiasingShit()
-	if stringStartsWith(version, '0.6') then
-		if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
-			setProperty('boyfriend.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-		end
-	
-		if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
-			setProperty('dad.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-		end
-	
-		if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
-			setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-		end
-    else
-		if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
-			setProperty('boyfriend.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.antialiasing'));
-		end
-	
-		if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
-			setProperty('dad.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.antialiasing'));
-		end
-	
-		if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
-			setProperty('gf.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.antialiasing'));
-		end
-    end
 end
 
 function onCreatePost()
+	gappleSongs = getDataFromSave("Juniors Ports Stuff", "gappleSongs")
+	clearCache();
 	charAnialiasingShit()
 
 	if stringStartsWith(version, '0.6') then
@@ -140,4 +112,32 @@ function changeIcon()
 			]]
 		end
 	end
+end
+
+function charAnialiasingShit()
+	if stringStartsWith(version, '0.6') then
+		if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
+			setProperty('boyfriend.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
+		end
+	
+		if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
+			setProperty('dad.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
+		end
+	
+		if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
+			setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
+		end
+    else
+		if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
+			setProperty('boyfriend.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.antialiasing'));
+		end
+	
+		if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
+			setProperty('dad.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.antialiasing'));
+		end
+	
+		if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
+			setProperty('gf.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.antialiasing'));
+		end
+    end
 end
