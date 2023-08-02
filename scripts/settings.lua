@@ -8,7 +8,7 @@ local dialogue = true; --determine wether dialogue pops up on compatible songs.
 --dave and bambi settings
 local newCamZoom = false; --very buggy! only used on some sections of "Nice!"
 --misc
-local unfinishedStuff = false; --determines if anything unfinished gets activated, enabling this might lead to crashes, high memory usage, high cpu usage, and more bad stuff. 
+local unfinishedStuff = false; --determines if anything unfinished gets activated, enabling this might lead to crashes, high memory usage, high cpu usage, or more bad stuff. 
 --modding!!!
 local debugMode = false; --wether to enable modding tools to help out me (Junior) import songs!!! (DISABLES MANY THINGS TO HURRY UP LOADING!!)
 

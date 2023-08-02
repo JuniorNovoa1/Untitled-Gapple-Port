@@ -197,12 +197,8 @@ end
 function onSongStart()
 	if getDataFromSave("Juniors Ports Stuff", 'unfinishedStuff') and not getDataFromSave("Juniors Ports Stuff", "debugMode") then
 		openCustomSubstate("charSelect", false)
-	elseif not getDataFromSave("Juniors Ports Stuff", "debugMode") then
+	else
 		callOnLuas("onDialogueReadyChar")
-	end
-	if getDataFromSave("Juniors Ports Stuff", "debugMode") then
-		callOnLuas('onCountdownTick', {69})
-		return;
 	end
 end
 

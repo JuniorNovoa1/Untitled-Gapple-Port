@@ -36,6 +36,13 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
 		return;
 	end
 
+    local ratingOffset = 0;
+    if stringStartsWith(version, '0.7') then
+	    ratingOffset = getPropertyFromClass("backend.ClientPrefs", "data.ratingOffset")
+	else
+        ratingOffset = getPropertyFromClass("ClientPrefs", "ratingOffset")
+    end
+
     runHaxeCode([[
         var membersIndex = ]]..membersIndex..[[;
         var note = game.notes.members[membersIndex];
@@ -45,16 +52,8 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
         var texture = note.texture;
         //importing shit from lua!!!
 
-        var noteDiff = note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset;
+        var noteDiff = note.strumTime - Conductor.songPosition + ]]..ratingOffset..[[;
 		var daRating = Conductor.judgeNote(note, noteDiff / game.playbackRate);
-
-        var noteRating = 4;
-        if (daRating.name == 'good')
-            noteRating = 3;
-        if (daRating.name == 'bad')
-            noteRating = 2;
-        if (daRating.name == 'shit')
-            noteRating = 1;
 
         var pathFirst = "";
         var pathSecond = "";
@@ -75,7 +74,7 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
             rating.y -= 5;
         }
 
-        var comboSpr = new FlxSprite(rating.x + 5, rating.y - 85).loadGraphic(Paths.image(ratingFolder + pathFirst + 'combo' + pathSecond));
+        var comboSpr = new FlxSprite(rating.x + 15, rating.y - 85).loadGraphic(Paths.image(ratingFolder + pathFirst + 'combo' + pathSecond));
         comboSpr.cameras = [game.camHUD];
         comboSpr.acceleration.y = 600;
         comboSpr.velocity.y -= 150;

@@ -31,7 +31,11 @@ end
 
 
 function onCreatePost()
-	CharactersWith3D = getDataFromSave("Juniors Ports Stuff", "CharactersWith3D");
+	CharactersWith3D = getDataFromSave("Juniors Ports Stuff", "CharactersWith3D")
+	if stringStartsWith(version, '0.7') then
+		changeDiscordClientID("1136119974763708478")
+	end
+	addLuaScript("activatedScripts/Gapple Rating", true)
 	--[[for direction = 0, 3 do
 		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') - arrowXoffset)
 		setPropertyFromGroup('opponentStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') - arrowXoffset -5)
@@ -112,8 +116,8 @@ function onCreatePost()
 	addLuaText('creditsText')
 
 	if string.lower(songName) == 'disruption' then setProperty('creditsText.text', 'Screw you!') end
-	songMod = 'Dave and Bambi';
 	if string.lower(songName) == 'maze' then
+		songMod = 'Dave and Bambi';
 		setProperty('healthBarBG.visible', false)
 		makeLuaSprite('healthBarBGnew', 'daveHealth', getProperty('healthBar.x'), getProperty('healthBar.y'))
 		setObjectCamera('healthBarBGnew', 'camHUD')
@@ -188,8 +192,6 @@ function onCreatePost()
 			setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D')
 		end
 	end
-
-	addLuaScript("activatedScripts/Gapple Rating", true)
 
 	if gappleHUDsong then
 		return;
@@ -292,29 +294,13 @@ function onUpdate(elapsed)
 		end
 	end
 
-	playAnim("gappleSoundTray", ""..math.max(getPropertyFromClass("flixel.FlxG", "sound.volume") * 10) + 1, false)
-
 	if stringStartsWith(version, '0.6') then
+		playAnim("gappleSoundTray", ""..math.max(getPropertyFromClass("flixel.FlxG", "sound.volume") * 10) + 1, false)
+
 		runHaxeCode([[
 			var volumeUP = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_up'));
 			var volumeDOWN = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_down'));
 			var volumeMUTE = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_mute'));
-	
-			if (FlxG.keys.anyJustPressed(volumeUP) || FlxG.keys.anyJustPressed(volumeDOWN) || FlxG.keys.anyJustPressed(volumeMUTE)) {
-				game.getLuaObject('gappleSoundTray').visible = true;
-			}
-				
-			if (FlxG.sound.muted)
-				game.getLuaObject('gappleSoundTray', false).animation.play('1');
-	
-			game.getLuaObject('gappleSoundTray', false).centerOffsets();
-			game.getLuaObject('gappleSoundTray', false).centerOrigin();
-		]])
-    else
-		runHaxeCode([[
-			var volumeUP = backend.Controls.justPressed("volume_up");
-			var volumeDOWN = backend.Controls.justPressed("volume_down");
-			var volumeMUTE = backend.Controls.justPressed("volume_mute");
 	
 			if (FlxG.keys.anyJustPressed(volumeUP) || FlxG.keys.anyJustPressed(volumeDOWN) || FlxG.keys.anyJustPressed(volumeMUTE)) {
 				game.getLuaObject('gappleSoundTray').visible = true;
@@ -389,8 +375,13 @@ function onUpdatePost(elapsed)
 end
 
 function onStepHit()
-	--changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
-	--changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
+	if stringStartsWith(version, '0.7') then
+		changeDiscordPresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+		changeDiscordPresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
+    else
+		changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+		changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
+	end
 
 	--setObjectOrder('strumLineNotes', getObjectOrder('notes') +1) --puts notes under strumlinenotes
 
