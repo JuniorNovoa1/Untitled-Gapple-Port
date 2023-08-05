@@ -10,7 +10,7 @@ local newCamZoom = false; --very buggy! only used on some sections of "Nice!"
 --misc
 local unfinishedStuff = false; --determines if anything unfinished gets activated, enabling this might lead to crashes, high memory usage, high cpu usage, or more bad stuff. 
 --modding!!!
-local debugMode = true; --wether to enable modding tools to help out me (Junior) import songs!!! (DISABLES MANY THINGS TO HURRY UP LOADING!!)
+local debugMode = false; --wether to enable modding tools to help out me (Junior) import songs!!! (DISABLES MANY THINGS TO HURRY UP LOADING!!)
 
 --cross script shit
 local gappleSongs = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'nice', 'ferocious', 'glamrock', 'sugar-rush', 'gift-card', 'ready-loud', 'cuberoot', 'sart-producer', 'og', 'mine', 
