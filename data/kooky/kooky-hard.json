@@ -5483,7 +5483,7 @@
 		"splashSkin": "noteSplashes",
 		"song": "Kooky",
 		"needsVoices": true,
-		"arrowSkin": "BEVEL_NOTES",
+		"arrowSkin": "noteSkins/BEVEL_NOTES",
 		"stage": "kooky",
 		"validScore": true,
 		"bpm": 110,

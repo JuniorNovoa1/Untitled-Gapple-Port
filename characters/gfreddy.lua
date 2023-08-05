@@ -9,11 +9,11 @@ function onCreatePost()
     setProperty('freddyIcon.visible', false)
     addLuaSprite('freddyIcon', false)
 
-    setObjectOrder('freddyIcon', getObjectOrder('iconP2'))
+    setObjectOrder('freddyIcon', getObjectOrder('iconP22'))
 end
 
 function onUpdate()
     for i = 1, #stuff do
-        setProperty('freddyIcon.'..stuff[i], getProperty('iconP2.'..stuff[i]))
+        setProperty('freddyIcon.'..stuff[i], getProperty('iconP22.'..stuff[i]))
     end
 end

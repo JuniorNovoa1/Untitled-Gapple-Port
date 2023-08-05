@@ -110,7 +110,6 @@ function onTweenCompleted(tag)
             setProperty("oldIconP2."..arrayItem, getProperty("iconP2."..arrayItem))
         end
 
-
         doTweenX("oldIconP2x", "oldIconP2", getProperty("oldIconP2.x") - 235, timerTime * 1.65, ease)
         doTweenY("oldIconP2y", "oldIconP2", getProperty("oldIconP2.y") - 175, timerTime, ease)
     end

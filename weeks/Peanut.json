@@ -1,0 +1,40 @@
+{
+	"songs": [
+		[
+			"--Peanut Paywall--",
+			"missing",
+			[
+				255,
+				255,
+				255
+			]	
+		],
+		[
+			"Kooky",
+			"rubber",
+			[
+				128,
+				0,
+				255
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"storyName": "Junior's Funny Ports",
+	"weekName": "Junior's Funny Ports",
+	"difficulties": "hard",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": true,
+	"weekBefore": "Joke",
+	"startUnlocked": true
+}

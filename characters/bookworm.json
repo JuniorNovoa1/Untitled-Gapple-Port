@@ -1,0 +1,133 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "bambi idle0"
+		},
+		{
+			"offsets": [
+				50,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "bambi left0"
+		},
+		{
+			"offsets": [
+				30,
+				-13
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "bambi down0"
+		},
+		{
+			"offsets": [
+				27,
+				47
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "bambi up0"
+		},
+		{
+			"offsets": [
+				107,
+				-10
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "bambi right0"
+		},
+		{
+			"offsets": [
+				90,
+				-30
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle-alt",
+			"loop": false,
+			"name": "bambi idle mad0"
+		},
+		{
+			"offsets": [
+				47,
+				-3
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT-alt",
+			"loop": false,
+			"name": "bambi left mad0"
+		},
+		{
+			"offsets": [
+				31,
+				-8
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN-alt",
+			"loop": false,
+			"name": "bambi down mad0"
+		},
+		{
+			"offsets": [
+				30,
+				44
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP-alt",
+			"loop": false,
+			"name": "bambi up mad0"
+		},
+		{
+			"offsets": [
+				107,
+				-10
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT-alt",
+			"loop": false,
+			"name": "bambi right mad0"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/extras/bookworm",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "bookworm",
+	"flip_x": false,
+	"healthbar_colors": [
+		85,
+		219,
+		116
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

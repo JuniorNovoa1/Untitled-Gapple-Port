@@ -10,6 +10,15 @@
 			]
 		],
 		[
+			"--Main Songs--",
+			"missing",
+			[
+				255,
+				255,
+				255
+			]	
+		],
+		[
 			"Disruption",
 			"bambi-pissboy",
 			[
@@ -64,12 +73,12 @@
 			]
 		],
 		[
-			"Nice",
-			"marsolo",
+			"Deformation",
+			"not-done",
 			[
-				246,
-				182,
-				4
+				255,
+				255,
+				255
 			]
 		],
 		[
@@ -82,111 +91,12 @@
 			]
 		],
 		[
-			"Glamrock",
-			"glamrock",
+			"Nice",
+			"marsolo",
 			[
-				255,
-				180,
-				40
-			]
-		],
-		[
-			"Sugar-Rush",
-			"cigar-rush",
-			[
-				48,
-				195,
-				30
-			]	
-		],
-		[
-			"Cuberoot",
-			"disability",
-			[
-				255,
-				183,
-				210
-			]
-		],
-		[
-			"Sart-Producer",
-			"sartys_icon_static",
-			[
-				15,
-				0,
-				55
-			]
-		],
-		[
-			"OG",
-			"prealpha",
-			[
-				236,
-				236,
-				236
-			]
-		],
-		[
-			"Mine",
-			"dinner",
-			[
-				34,
-				215,
-				0
-			]
-		],
-		[
-			"Apple-Leak",
-			"brob",
-			[
-				37,
-				191,
-				55
-			]
-		],
-		[
-			"Awesome",
-			"wheels",
-			[
-				63,
-				72,
-				204
-			]
-		],
-		[
-			"Badcorn",
-			"awesomefrend",
-			[
-				34,
-				255,
-				0
-			]
-		],
-		[
-			"Crap!",
-			"awesomefrend",
-			[
-				34,
-				255,
-				0
-			]
-		],
-		[
-			"Ticking",
-			"ouch",
-			[
-				236,
-				236,
-				236
-			]
-		],
-		[
-			"Kooky",
-			"rubber",
-			[
-				128,
-				0,
-				255
+				246,
+				182,
+				4
 			]
 		]
 	],

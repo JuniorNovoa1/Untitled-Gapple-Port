@@ -6,7 +6,7 @@ function onCreatePost()
     setProperty('iconFAKErubber.visible', false)
     addLuaSprite('iconFAKErubber')
 
-    setObjectOrder('iconFAKErubber', getObjectOrder('iconP1'))
+    setObjectOrder('iconFAKErubber', getObjectOrder('iconP12'))
 end
 
 function onBeatHit()
@@ -20,7 +20,7 @@ end
 
 function onUpdate()
     for i = 1, #stuff do
-        setProperty('iconFAKErubber.'..stuff[i], getProperty('iconP1.'..stuff[i]))
+        setProperty('iconFAKErubber.'..stuff[i], getProperty('iconP12.'..stuff[i]))
         if i == 1 then
             setProperty('iconFAKErubber.x', getProperty('iconFAKErubber.x') * 1.1)
         end
@@ -28,9 +28,9 @@ function onUpdate()
 
     if getProperty('healthBar.percent') > 80 then
         setProperty('iconFAKErubber.visible', true)
-        setProperty('iconP1.visible', false)
+        setProperty('iconP12.visible', false)
     else
         setProperty('iconFAKErubber.visible', false)
-        setProperty('iconP1.visible', true)
+        setProperty('iconP12.visible', true)
     end
 end

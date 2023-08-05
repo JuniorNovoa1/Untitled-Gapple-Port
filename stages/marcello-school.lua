@@ -15,40 +15,42 @@ function onCreate() --these xmls are kinda weird...
     screenCenter("schoolEntrance")
     addLuaSprite('schoolEntrance', false)
 
-    for i = 1, 2 do
-        makeLuaSprite("cornBG"..i, "main/marcloo/mista/farm", 0, 0)
-        setObjectCamera("cornBG"..i, "hud")
-        updateHitbox("cornBG"..i)
-        screenCenter("cornBG"..i)
-        if i == 2 then setProperty("cornBG"..i..'.x', getProperty("cornBG"..i..'.x') - (screenWidth * 1.503)) end
-        addLuaSprite("cornBG"..i, false)
-        setProperty("cornBG"..i..'.visible', false)
-    end
-
-    makeAnimatedLuaSprite("funGames", "main/marcloo/mista/funGames", 0, 0)
-    addAnimationByPrefix("funGames", "dance", "Dance", 24, true)
-    playAnim("funGames", "dance")
-    setObjectCamera("funGames", "hud")
-    updateHitbox("funGames")
-    screenCenter("funGames")
-    addLuaSprite("funGames", false)
-    setProperty("funGames.visible", false)
-
-    makeAnimatedLuaSprite("bambiCutscene", "main/marcloo/mista/mista_bambi_awesome", 0, 0)
-    addAnimationByPrefix("bambiCutscene", "grr", "the penis elf is staring at me", 24, false)
-    setObjectCamera("bambiCutscene", "hud")
-    updateHitbox("bambiCutscene")
-    screenCenter("bambiCutscene")
-    addLuaSprite("bambiCutscene", false)
-    setProperty("bambiCutscene.x", getProperty("bambiCutscene.x") -50)
-    setProperty("bambiCutscene.alpha", 0)
-
-    makeLuaSprite("bfCutscene", "main/marcloo/mista/OUGH_IM_BROWNING", 0, 0)
-    setObjectCamera("bfCutscene", "hud")
-    updateHitbox("bfCutscene")
-    screenCenter("bfCutscene")
-    addLuaSprite("bfCutscene", false)
-    setProperty("bfCutscene.visible", false)
+    if not lowQuality then
+        for i = 1, 2 do
+            makeLuaSprite("cornBG"..i, "main/marcloo/mista/farm", 0, 0)
+            setObjectCamera("cornBG"..i, "hud")
+            updateHitbox("cornBG"..i)
+            screenCenter("cornBG"..i)
+            if i == 2 then setProperty("cornBG"..i..'.x', getProperty("cornBG"..i..'.x') - (screenWidth * 1.503)) end
+            addLuaSprite("cornBG"..i, false)
+            setProperty("cornBG"..i..'.visible', false)
+        end
+    
+        makeAnimatedLuaSprite("funGames", "main/marcloo/mista/funGames", 0, 0)
+        addAnimationByPrefix("funGames", "dance", "Dance", 24, true)
+        playAnim("funGames", "dance")
+        setObjectCamera("funGames", "hud")
+        updateHitbox("funGames")
+        screenCenter("funGames")
+        addLuaSprite("funGames", false)
+        setProperty("funGames.visible", false)
+    
+        makeAnimatedLuaSprite("bambiCutscene", "main/marcloo/mista/mista_bambi_awesome", 0, 0)
+        addAnimationByPrefix("bambiCutscene", "grr", "the penis elf is staring at me", 24, false)
+        setObjectCamera("bambiCutscene", "hud")
+        updateHitbox("bambiCutscene")
+        screenCenter("bambiCutscene")
+        addLuaSprite("bambiCutscene", false)
+        setProperty("bambiCutscene.x", getProperty("bambiCutscene.x") -50)
+        setProperty("bambiCutscene.alpha", 0)
+    
+        makeLuaSprite("bfCutscene", "main/marcloo/mista/OUGH_IM_BROWNING", 0, 0)
+        setObjectCamera("bfCutscene", "hud")
+        updateHitbox("bfCutscene")
+        screenCenter("bfCutscene")
+        addLuaSprite("bfCutscene", false)
+        setProperty("bfCutscene.visible", false)
+	end
 
     makeLuaSprite("phone", "main/marcloo/modly/pad", 0, 600)
     setObjectCamera("phone", "hud")

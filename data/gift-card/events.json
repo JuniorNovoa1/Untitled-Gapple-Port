@@ -1,0 +1,46 @@
+{
+	"song": {
+		"events": [
+			[
+				75681.8181818181,
+				[
+					[
+						"Change Character",
+						"dad",
+						"chipper"
+					],
+					[
+						"Change Character",
+						"bf",
+						"bf-pixel-white"
+					],
+					[
+						"Change Character",
+						"gf",
+						"gf-pixel-white"
+					]
+				]
+			],
+			[
+				109090.909090909,
+				[
+					[
+						"Change Character",
+						"dad",
+						"bandu-card"
+					],
+					[
+						"Change Character",
+						"bf",
+						"bf"
+					],
+					[
+						"Change Character",
+						"gf",
+						"gf-only"
+					]
+				]
+			]
+		]
+	}
+}

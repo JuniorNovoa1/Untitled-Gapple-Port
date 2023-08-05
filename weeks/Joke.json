@@ -1,0 +1,58 @@
+{
+	"songs": [
+		[
+			"--Joke Songs--",
+			"missing",
+			[
+				255,
+				255,
+				255
+			]	
+		],
+		[
+			"Awesome",
+			"wheels",
+			[
+				63,
+				72,
+				204
+			]
+		],
+		[
+			"Badcorn",
+			"awesomefrend",
+			[
+				34,
+				255,
+				0
+			]
+		],
+		[
+			"Crap!",
+			"awesomefrend",
+			[
+				34,
+				255,
+				0
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"storyName": "Junior's Funny Ports",
+	"weekName": "Junior's Funny Ports",
+	"difficulties": "hard",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": true,
+	"weekBefore": "Iykyk",
+	"startUnlocked": true
+}

@@ -10,3 +10,7 @@ end
 function takeFromVal(prop, val)
     setProperty(prop, getProperty(prop) - val)
 end
+
+function moveCam(x, y)
+	triggerEvent('Camera Follow Pos', ''..x, ''..y) --didn't want to see this stupid shit everywhere
+end

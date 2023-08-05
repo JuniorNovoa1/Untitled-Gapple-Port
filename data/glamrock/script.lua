@@ -26,21 +26,21 @@ function onBeatHit()
     if isCrazy ~= true then
         if luaSpriteExists("cameoIcon") then
             setProperty('cameoIcon.visible', false)
-            setProperty('iconP1.visible', true)
+            setProperty('iconP1.alpha', 1)
         end
         if luaSpriteExists("freddyIcon") then
             setProperty('freddyIcon.visible', false)
-            setProperty('iconP2.visible', true)
+            setProperty('iconP2.alpha', 1)
         end
         return; 
     else
         if luaSpriteExists("cameoIcon") then
             setProperty('cameoIcon.visible', true)
-            setProperty('iconP1.visible', false)
+            setProperty('iconP1.alpha', 0)
         end
         if luaSpriteExists("freddyIcon") then
             setProperty('freddyIcon.visible', true)
-            setProperty('iconP2.visible', false)
+            setProperty('iconP2.alpha', 0)
         end
     end
     if curThing then

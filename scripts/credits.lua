@@ -5,9 +5,11 @@ local txtOffset = 65;
 --local midSongPopUp = false;
 local time = 1;
 local waitTime = 3;
-local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'nice', 'ferocious', 'glamrock', 'sugar-rush', 'cuberoot', 'sart-producer', 'og', 'mine', 'apple-leak', 'awesome', 'badcorn', 'crap!', 'ticking', 'kooky'};
+local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'nice', 'ferocious', 'glamrock', 'sugar-rush', 'gift-card', 'ready-loud', 'cuberoot', 'sart-producer', 
+'mine', 'ticking', 'og', 'apple-leak', 'awesome', 'badcorn', 'crap!', 'kooky'};
 local songTxt = {
 	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello', --Maze
+	----MAIN SONGS--
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --Disruption
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --Applecore
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nT5mpler', --Disability
@@ -16,17 +18,24 @@ local songTxt = {
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nVillezen\n\nCharter\nProject Tea', --Fresh and Toasted
 	"Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\nWildey\nand TecheVent\n\nSong\nSky!\n\nCharter\nProject Tea\n\nBased off Marcello's The Nice\nAND COLLECT\nOFGAMER AcT:ONE THE\nSTORE GAME MUN by\nMarcello_TimeNice30", --Nice!
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord\n\nGarrett\'s Funny Animal Game\nJumpman25', --Ferocious
+	----EXTRA SONGS--
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nTecheVent\nLancey\n\nSong\nSky!\n\nCharter\nProject Tea\n\nBased off TecheVent\nplaying as Glamrock\nFreddy in CRIDAB', --Glamrock
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nPointyyESMa', --Sugar-Rush
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\nOsp\n\nSong\nCval\n\nCharter\nLogman', --Gift-Card
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\nAadsta\n\nSong\nMoldyGH\n\nCharter\nLogman', --Ready-Loud
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nLexicord', --Cuberoot
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nCynda', --Sart-Producer
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --OG
 	"Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\nCynda\n\nSong\nSky!\n\nCharter\nCynda\n\nBased off Dinnerbambi\nFunkin' by Anton Bildziuk", --Mine
+	----SECRET SONGS--
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nProject Tea', --Ticking
+	----IYKYK SONGS--
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nLexicord', --OG
 	'Mod\nDave and Bambi Golden Apple\n\nPart\nSilly Squirmer\n\nVisuals\nSAMMYPIGZY\nArty Squirmer\n\nCharter\nCharty Squirmer\n\nBased off\nHigh Effort Poopers', --Apple-Leak
+	----JOKE SONGS--
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nRuby\nAadsta\n\nCharter\nRuby', --Awesome
 	'Fake song!\n\nMod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nCrapler\n\nCharter\nUnknown', --Badcorn
 	'Fake song?\n\nMod\nDave and Bambi Golden Apple\n\nArt\nLancey\nBluHairMan\n\nSong\nSky!\n\nCharter\nColin09\n\nBased off Golden Apple?\nMore like Golden Crapple!', --Crap!
-	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nProject Tea', --Ticking
+	----PEANUT PAYWALL--
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nProject Tea', --Kooky
 };
 local txt = 'nil';

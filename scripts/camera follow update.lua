@@ -30,10 +30,10 @@ function onUpdate() --camera now follows characters!!!!
 		dadCamIdle[1] = 625;
 	end
 	if mustHitSection == true and getProperty('boyfriend.animation.curAnim.name') == 'idle' then
-		moveCam(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] -yoffset);
+		callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] -yoffset);
 	end
 	if mustHitSection == false and (getProperty('dad.animation.curAnim.name') == 'idle' or (dadName == 'bandu' or dadName == 'bandu-sad')) then
-		moveCam(dadCamIdle[1] -yoffset, dadCamIdle[2] -yoffset);
+		callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] -yoffset);
 	end
 
 	camShit()
@@ -59,16 +59,16 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 			offsets = 30 / getProperty('defaultCamZoom');
 		end
 		if direction == 0 then
-			moveCam(bfCamIdle[1] -offsets -(yoffset * 2.5), bfCamIdle[2] -yoffset);
+			callCamMovemt(bfCamIdle[1] -offsets -(yoffset * 2.5), bfCamIdle[2] -yoffset);
 		end
 		if direction == 1 then
-			moveCam(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] +offsets -yoffset);
+			callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] +offsets -yoffset);
 		end
 		if direction == 2 then
-			moveCam(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] -offsets -yoffset);
+			callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] -offsets -yoffset);
 		end
 		if direction == 3 then
-			moveCam(bfCamIdle[1] +offsets -(yoffset * 2.5), bfCamIdle[2] -yoffset);
+			callCamMovemt(bfCamIdle[1] +offsets -(yoffset * 2.5), bfCamIdle[2] -yoffset);
 		end
 	end
 end
@@ -84,20 +84,20 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 			offsets = 30 / (getProperty('defaultCamZoom') * 0.8);
 		end
 		if direction == 0 then
-			moveCam(dadCamIdle[1] -offsets -yoffset, dadCamIdle[2] -yoffset);
+			callCamMovemt(dadCamIdle[1] -offsets -yoffset, dadCamIdle[2] -yoffset);
 		end
 		if direction == 1 then
-			moveCam(dadCamIdle[1] -yoffset, dadCamIdle[2] +offsets -yoffset);
+			callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] +offsets -yoffset);
 		end
 		if direction == 2 then
-			moveCam(dadCamIdle[1] -yoffset, dadCamIdle[2] -offsets -yoffset);
+			callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] -offsets -yoffset);
 		end
 		if direction == 3 then
-			moveCam(dadCamIdle[1] +offsets -yoffset, dadCamIdle[2] -yoffset);
+			callCamMovemt(dadCamIdle[1] +offsets -yoffset, dadCamIdle[2] -yoffset);
 		end
 	end
 end
 
-function moveCam(x, y)
-	triggerEvent('Camera Follow Pos', ''..x, ''..y) --didn't want to see this stupid shit everywhere
+function callCamMovemt(x, y)
+	callOnLuas("moveCam", {x, y})
 end

@@ -43,6 +43,12 @@ function onCreatePost()
 
 	if not gappleHUDsong then return; end
 
+	if stringStartsWith(version, '0.6') then
+        addHaxeLibrary('HealthIcon')
+    else
+        addHaxeLibrary('HealthIcon', 'objects')
+    end
+
 	--White Hex Code: FFFFFF, Black Hex Code: 000000
 
 	makeLuaText('fpsTxt', '', 0, 18, 6)
@@ -124,8 +130,7 @@ function onCreatePost()
 		addLuaSprite('healthBarBGnew', false)
 		setObjectOrder('healthBarBGnew', getObjectOrder('healthBar') + 1)
 	
-		makeLuaSprite('iconP12', 'icons/missing', 0, 0)
-		makeLuaSprite('iconP22', 'icons/missing', 0, 0)
+		createIcons()
 		return;
 	end
 
@@ -150,21 +155,13 @@ function onCreatePost()
 		setProperty("iconP2.y", getProperty('healthBar.y') -75)
 	end
 
-	makeLuaSprite('iconP12', 'icons/missing', 0, getProperty('healthBar.y') -75)
-	makeLuaSprite('iconP22', 'icons/missing', 0, getProperty('healthBar.y') -75)
-	setObjectOrder('iconP1', getObjectOrder('healthBarBGnew') + 1)
-	setObjectOrder('iconP2', getObjectOrder('iconP1') + 1)
-	if stringStartsWith(version, "0.7") then
-		setProperty("iconP1.x", getProperty("healthBar.barCenter") + (150 * getProperty("iconP1.scale.x") - 150) / 2 - 26)
-		setProperty("iconP2.x", getProperty("healthBar.barCenter") - (150 * getProperty("iconP2.scale.x")) / 2 - 26 * 2)
-		setProperty("iconP12.x", getProperty("healthBar.barCenter") + (150 * getProperty("iconP1.scale.x") - 150) / 2 - 26)
-		setProperty("iconP22.x", getProperty("healthBar.barCenter") - (150 * getProperty("iconP2.scale.x")) / 2 - 26 * 2)
-	end
+	createIcons()
 
 	setProperty("updateTime", false)
 			
 	setObjectOrder('scoreTxt', getObjectOrder('healthBar') -1)
-	setObjectOrder('timeTxt', 99)
+	setProperty("timeTxt.y", getProperty("timeTxt.y") - 10)
+	--setObjectOrder('timeTxt', 99)
 
 	local chars3D = {false, false}
 
@@ -199,6 +196,37 @@ function onCreatePost()
 	gappleHUDsong = true;
 end
 
+local canMessWithDups = false;
+
+function createIcons()
+	canMessWithDups = false;
+	if luaSpriteExists("iconP12") then
+		cancelTween("iconMovementP1")
+		cancelTween("iconMovementP2")
+		setProperty("iconP12.visible", false)
+		setProperty("iconP22.visible", false)
+	end
+	setProperty("iconP1.visible", false)
+	setProperty("iconP2.visible", false)
+	runHaxeCode([[
+		var iconP12 = new HealthIcon(game.boyfriend.healthIcon, true);
+		iconP12.x = game.iconP1.x;
+		iconP12.y = game.iconP1.y;
+        game.add(iconP12);
+        game.modchartSprites.set('iconP12', iconP12);
+		var iconP22 = new HealthIcon(game.dad.healthIcon, false);
+		iconP22.x = game.iconP2.x;
+		iconP22.y = game.iconP2.y;
+        game.add(iconP22);
+        game.modchartSprites.set('iconP22', iconP22);
+	]])
+	setObjectOrder('iconP12', getObjectOrder('healthBarBGnew') + 1)
+	setObjectOrder('iconP22', getObjectOrder('iconP12') + 1)
+	setObjectCamera("iconP12", 'hud')
+	setObjectCamera("iconP22", 'hud')
+	canMessWithDups = true;
+end
+
 function changeNoteSkin(player, skin)
 	if player == true then
 		for i = 0, 4, 1 do
@@ -222,6 +250,15 @@ function changeNoteSkin(player, skin)
             setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin)
         end
     end
+end
+
+function iconPropertys()
+	if not canMessWithDups then return; end
+	local props = {'alpha'}
+	for i = 1, #props do
+		setProperty("iconP12."..props[i], getProperty('iconP1.'..props[i]))
+		setProperty("iconP22."..props[i], getProperty('iconP2.'..props[i]))
+	end
 end
 
 function math.lerp(from, to, t)
@@ -262,13 +299,14 @@ local boyfriendHasMissAnims = false;
 local actualSongLength = 0;
 local songPos = 0;
 
-local iconOffset = 26;
-
 function onUpdate(elapsed)
+	setProperty("iconP12.animation.curAnim.curFrame", getProperty("iconP1.animation.curAnim.curFrame"))
+    setProperty("iconP22.animation.curAnim.curFrame", getProperty("iconP2.animation.curAnim.curFrame"))
+	if canMessWithDups then
+		doTweenX("iconMovementP1", "iconP12", getProperty("iconP1.x"), 0.1, "sineInOut")
+		doTweenX("iconMovementP2", "iconP22", getProperty("iconP2.x"), 0.1, "sineInOut")
+	end
 	if stringStartsWith(version, '0.7') then
-		doTweenX("iconMovementP1", "iconP12", getProperty("healthBar.barCenter") + (150 * getProperty("iconP12.scale.x") - 150) / 2 - iconOffset, 0.1, "sineInOut")
-		doTweenX("iconMovementP2", "iconP22", getProperty("healthBar.barCenter") - (150 * getProperty("iconP22.scale.x")) / 2 - iconOffset * 2, 0.1, "sineInOut")
-
 		for i = 0, getProperty("strumLineNotes.length") do
 			setPropertyFromGroup('strumLineNotes', i, 'rgbShader.enabled', false)
 		end
@@ -281,7 +319,7 @@ function onUpdate(elapsed)
 	songPos = math.toTime(getSongPosition() / 1000)
 
 	if gappleHUDsong then
-		iconScale()
+		iconPropertys()
 		setProperty('timeBarBG.visible', false)
 		setProperty('timeBar.visible', false)
 		setTextString('timeTxt', songPos.." / "..actualSongLength)
@@ -324,7 +362,7 @@ local offsets = {-13, -13}--{55, 43}
 function onUpdatePost(elapsed)
 	if string.lower(songName) == 'maze' or gappleHUDsong then
 		if gappleHUDsong then
-			iconScale()
+			iconPropertys()
 		end
 
 		if string.lower(songName) ~= 'kooky' then
@@ -368,8 +406,6 @@ function onUpdatePost(elapsed)
 			setGraphicSize('iconP12', math.floor(math.lerp(150, getProperty('iconP12.width'), thingy)), math.floor(math.lerp(150, getProperty('iconP12.height'), thingy)))
 			updateHitbox('iconP12')
 			updateHitbox('iconP22')
-			updateHitbox('iconP1')
-			updateHitbox('iconP2')
 		end
 	end
 end
@@ -402,17 +438,6 @@ function onStepHit()
     end
 end
 
-function iconScale()
-	if stringStartsWith(version, '0.7') then
-		setProperty('iconP1.x', getProperty('iconP12.x'))
-		setProperty('iconP2.x', getProperty('iconP22.x'))
-    end
-	setProperty('iconP1.scale.x', getProperty('iconP12.scale.x'))
-	setProperty('iconP1.scale.y', getProperty('iconP12.scale.y'))
-	setProperty('iconP2.scale.x', getProperty('iconP22.scale.x'))
-	setProperty('iconP2.scale.y', getProperty('iconP22.scale.y'))
-end
-
 function onSectionHit()
 	if gappleHUDsong then
 		cancelTween('timeTxtScaleX')
@@ -434,7 +459,7 @@ function onBeatHit()
 		updateHitbox('iconP22')
 		updateHitbox('iconP1')
 		updateHitbox('iconP2')
-		iconScale()
+		iconPropertys()
 	end
 
 	if gappleHUDsong then
@@ -451,34 +476,32 @@ function onBeatHit()
 			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
 				scaleObject('iconP12', 1.1, fuasd[1])
 				scaleObject('iconP22', 1.1, fuasd[2])
-				setProperty('iconP1.angle', -angl)
-				setProperty('iconP2.angle', angl)
-				setProperty('iconP1.y', iconPos - yOffset)
-				setProperty('iconP2.y', iconPos + yOffset)
+				setProperty('iconP12.angle', -angl)
+				setProperty('iconP22.angle', angl)
+				setProperty('iconP12.y', iconPos - yOffset)
+				setProperty('iconP22.y', iconPos + yOffset)
 			else
 				scaleObject('iconP12', 1.1, fuasd[2])
 				scaleObject('iconP22', 1.1, fuasd[1])
-				setProperty('iconP1.angle', angl)
-				setProperty('iconP2.angle', -angl)
-				setProperty('iconP1.y', iconPos + yOffset)
-				setProperty('iconP2.y', iconPos - yOffset)
+				setProperty('iconP12.angle', angl)
+				setProperty('iconP22.angle', -angl)
+				setProperty('iconP12.y', iconPos + yOffset)
+				setProperty('iconP22.y', iconPos - yOffset)
 			end
 		end
 
-		doTweenY('iconP1yREAL', 'iconP1', iconPos, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-		doTweenY('iconP2yREAL', 'iconP2', iconPos, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-		doTweenAngle('iconP1', 'iconP1', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-		doTweenAngle('iconP2', 'iconP2', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
+		doTweenY('iconP1yREAL', 'iconP12', iconPos, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
+		doTweenY('iconP2yREAL', 'iconP22', iconPos, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
+		doTweenAngle('iconP1', 'iconP12', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
+		doTweenAngle('iconP2', 'iconP22', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
 		doTweenX('iconP1x', 'iconP12.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
 		doTweenX('iconP2x', 'iconP22.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
 		doTweenY('iconP1y', 'iconP12.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
 		doTweenY('iconP2y', 'iconP22.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
 
-		updateHitbox('iconP1')
-		updateHitbox('iconP2')
 		updateHitbox('iconP12')
 		updateHitbox('iconP22')
-		iconScale()
+		iconPropertys()
 	end
 	if curBeat % 2 == 0 then
 		if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
@@ -491,6 +514,12 @@ function onBeatHit()
 			end
 			playAnim('dad', 'idle', true)
 		end
+	end
+end
+
+function onEvent(eventName, value1, value2, strumTime)
+	if eventName == 'Change Character' then
+		createIcons()
 	end
 end
 
