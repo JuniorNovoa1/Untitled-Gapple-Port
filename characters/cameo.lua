@@ -9,7 +9,7 @@ function onCreatePost()
     setProperty('cameoIcon.visible', false)
     addLuaSprite('cameoIcon', false)
 
-    setObjectOrder('cameoIcon', getObjectOrder('iconP12'))
+    setObjectOrder('cameoIcon', getObjectOrder('iconP1') + 1)
 end
 
 function onUpdate()

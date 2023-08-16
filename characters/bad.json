@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "IDLE0"
+		},
+		{
+			"offsets": [
+				671,
+				111
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "LEFT0"
+		},
+		{
+			"offsets": [
+				130,
+				81
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "DOWN0"
+		},
+		{
+			"offsets": [
+				439,
+				262
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "UP0"
+		},
+		{
+			"offsets": [
+				220,
+				450
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "RIGHT0"
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/main/deformation/badtrix",
+	"position": [
+		100,
+		100
+	],
+	"healthicon": "bad",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		0,
+		0
+	],
+	"camera_position": [
+		350,
+		325
+	],
+	"sing_duration": 6.1,
+	"scale": 0.8
+}

@@ -6,7 +6,6 @@ function onCreatePost()
     playAnim('sartICON', 'idle', true);
     setObjectCamera('sartICON', 'hud')
     setProperty('sartICON.visible', true)
-    setProperty('iconP2.visible', false)
     addLuaSprite('sartICON', false)
     setProperty('sartICON.offset.y', 25)
 
@@ -14,7 +13,8 @@ function onCreatePost()
 end
 
 function onUpdate()
+    setProperty('iconP22.visible', false)
     for i = 1, #stuff do
-        setProperty('sartICON.'..stuff[i], getProperty('iconP2.'..stuff[i]))
+        setProperty('sartICON.'..stuff[i], getProperty('iconP22.'..stuff[i]))
     end
 end

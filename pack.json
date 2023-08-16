@@ -1,7 +1,7 @@
 {
 	"name": "Junior's Funny Mod Ports",
-	"description": "This is where I add all my mod ports lol",
-	"restart": false,
+	"description": "This is where I add all my mod ports lol\n",
+	"restart": true,
 	"runsGlobally": false,
 	"color": [170, 0, 255]
 }

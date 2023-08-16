@@ -1,0 +1,100 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "IDLE0"
+		},
+		{
+			"offsets": [
+				282,
+				-109
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "LEFT0"
+		},
+		{
+			"offsets": [
+				-5,
+				-39
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "DOWN0"
+		},
+		{
+			"offsets": [
+				100,
+				294
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "UP0"
+		},
+		{
+			"offsets": [
+				13,
+				-136
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "RIGHT0"
+		},
+		{
+			"offsets": [
+				-47,
+				-126
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "boo",
+			"loop": false,
+			"name": "BOO0"
+		},
+		{
+			"offsets": [
+				38,
+				24
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "hah",
+			"loop": false,
+			"name": "HAH0"
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/main/deformation/algebraicaitrix",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "alge",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		0,
+		0
+	],
+	"camera_position": [
+		350,
+		325
+	],
+	"sing_duration": 6.1,
+	"scale": 0.8
+}

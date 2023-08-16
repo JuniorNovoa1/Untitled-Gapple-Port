@@ -35,7 +35,8 @@ function onCreatePost()
 	if stringStartsWith(version, '0.7') then
 		changeDiscordClientID("1136119974763708478")
 	end
-	addLuaScript("activatedScripts/Gapple Rating", true)
+	addLuaScript("scripts/gappleScripts/Gapple Bop", true)
+	addLuaScript("scripts/gappleScripts/Rating", true)
 	--[[for direction = 0, 3 do
 		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') - arrowXoffset)
 		setPropertyFromGroup('opponentStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') - arrowXoffset -5)
@@ -129,8 +130,6 @@ function onCreatePost()
 		setObjectCamera('healthBarBGnew', 'camHUD')
 		addLuaSprite('healthBarBGnew', false)
 		setObjectOrder('healthBarBGnew', getObjectOrder('healthBar') + 1)
-	
-		createIcons()
 		return;
 	end
 
@@ -155,24 +154,39 @@ function onCreatePost()
 		setProperty("iconP2.y", getProperty('healthBar.y') -75)
 	end
 
-	createIcons()
-
 	setProperty("updateTime", false)
 			
 	setObjectOrder('scoreTxt', getObjectOrder('healthBar') -1)
 	setProperty("timeTxt.y", getProperty("timeTxt.y") - 10)
 	--setObjectOrder('timeTxt', 99)
 
+	changeNoteSkinsOnChange()
+
+	if gappleHUDsong then
+		return;
+	end
+	gappleHUDsong = true;
+end
+
+function changeNoteSkinsOnChange()
 	local chars3D = {false, false}
 
 	for i = 1, #CharactersWith3D do
 		if string.lower(CharactersWith3D[i]) == string.lower(getProperty("boyfriend.curCharacter")) then 
 			changeNoteSkin(true, 'NOTE_assets_3D')
 			chars3D[1] = true;
+			break;
+		else
+			changeNoteSkin(true, 'NOTE_assets')
 		end
+	end
+	for i = 1, #CharactersWith3D do
 		if string.lower(CharactersWith3D[i]) == string.lower(getProperty("dad.curCharacter")) then 
 			changeNoteSkin(false, 'NOTE_assets_3D')
 			chars3D[2] = true;
+			break;
+		else
+			changeNoteSkin(false, 'NOTE_assets')
 		end
 	end
 
@@ -186,45 +200,64 @@ function onCreatePost()
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0)
 		end
 		if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
-			setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D')
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D') end
 		end
 	end
-
-	if gappleHUDsong then
-		return;
-	end
-	gappleHUDsong = true;
 end
 
-local canMessWithDups = false;
+local cached = false;
 
-function createIcons()
-	canMessWithDups = false;
-	if luaSpriteExists("iconP12") then
-		cancelTween("iconMovementP1")
-		cancelTween("iconMovementP2")
-		setProperty("iconP12.visible", false)
-		setProperty("iconP22.visible", false)
+function onEventPushed(eventName, value1, value2, strumTime)
+	if eventName == 'Change Character' and not cached then
+		precacheImage("noteSkins/NOTE_assets")
+		precacheImage("noteSkins/NOTE_assets_3D")
+		cached = true;
 	end
-	setProperty("iconP1.visible", false)
-	setProperty("iconP2.visible", false)
-	runHaxeCode([[
-		var iconP12 = new HealthIcon(game.boyfriend.healthIcon, true);
-		iconP12.x = game.iconP1.x;
-		iconP12.y = game.iconP1.y;
-        game.add(iconP12);
-        game.modchartSprites.set('iconP12', iconP12);
-		var iconP22 = new HealthIcon(game.dad.healthIcon, false);
-		iconP22.x = game.iconP2.x;
-		iconP22.y = game.iconP2.y;
-        game.add(iconP22);
-        game.modchartSprites.set('iconP22', iconP22);
-	]])
-	setObjectOrder('iconP12', getObjectOrder('healthBarBGnew') + 1)
-	setObjectOrder('iconP22', getObjectOrder('iconP12') + 1)
-	setObjectCamera("iconP12", 'hud')
-	setObjectCamera("iconP22", 'hud')
-	canMessWithDups = true;
+end
+
+function onEvent(eventName, value1, value2, strumTime)
+	if eventName == 'Change Character' then
+		changeNoteSkinsOnChange()
+	end
+end
+
+local objectsCountown = {'countdownReady', 'countdownSet', 'countdownGo'}
+
+function onCountdownTick(swagCounter)
+	if gappleHUDsong then
+		local bfCamIdle = getDataFromSave("Juniors Ports Stuff", "bf cam");
+		local dadCamIdle = getDataFromSave("Juniors Ports Stuff", "dad cam");
+		if swagCounter == 0 then
+			setDataFromSave("Juniors Ports Stuff", "cameraMovementEnabled", false)
+			callOnLuas("moveCam", {dadCamIdle[1], dadCamIdle[2]})
+		elseif swagCounter == 1 then
+			callOnLuas("moveCam", {bfCamIdle[1], bfCamIdle[2]})
+		elseif swagCounter == 2 then
+			callOnLuas("moveCam", {dadCamIdle[1], dadCamIdle[2]})
+		elseif swagCounter == 3 then
+			callOnLuas("moveCam", {bfCamIdle[1], bfCamIdle[2]})
+			runHaxeCode([[
+				if (game.boyfriend.animOffsets.exists("hey"))
+					game.boyfriend.playAnim("hey");
+				else
+					game.boyfriend.playAnim("singUP");
+				end
+			]])
+			setProperty(objectsCountown[3]..".scale.x", 0)
+			setProperty(objectsCountown[3]..".scale.y", 0)
+			doTweenX("lastCountScaleX", objectsCountown[3]..".scale", 1.35, crochet / 2000 / getProperty("playbackRate"), "")
+			doTweenY("lastCountScaleY", objectsCountown[3]..".scale", 1.35, crochet / 2000 / getProperty("playbackRate"), "")
+		elseif swagCounter == 4 then
+			setDataFromSave("Juniors Ports Stuff", "cameraMovementEnabled", true)
+		end
+	end
+end
+
+function onTweenCompleted(tag)
+	if tag == 'lastCountScaleY' then
+		doTweenX("lastCountScaleX2", objectsCountown[3]..".scale", 1, crochet / 2000 / getProperty("playbackRate"), "")
+		doTweenY("lastCountScaleY2", objectsCountown[3]..".scale", 1, crochet / 2000 / getProperty("playbackRate"), "")
+	end
 end
 
 function changeNoteSkin(player, skin)
@@ -241,24 +274,15 @@ function changeNoteSkin(player, skin)
 
     for i = 0, getProperty('notes.length') -1 do
         if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin)
+            if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'normal' or getPropertyFromGroup('notes', i, 'noteType') == nil then setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin) end
         end
     end
 
     for i = 0, getProperty('unspawnNotes.length') -1 do
         if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin)
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin) end
         end
     end
-end
-
-function iconPropertys()
-	if not canMessWithDups then return; end
-	local props = {'alpha'}
-	for i = 1, #props do
-		setProperty("iconP12."..props[i], getProperty('iconP1.'..props[i]))
-		setProperty("iconP22."..props[i], getProperty('iconP2.'..props[i]))
-	end
 end
 
 function math.lerp(from, to, t)
@@ -302,10 +326,6 @@ local songPos = 0;
 function onUpdate(elapsed)
 	setProperty("iconP12.animation.curAnim.curFrame", getProperty("iconP1.animation.curAnim.curFrame"))
     setProperty("iconP22.animation.curAnim.curFrame", getProperty("iconP2.animation.curAnim.curFrame"))
-	if canMessWithDups then
-		doTweenX("iconMovementP1", "iconP12", getProperty("iconP1.x"), 0.1, "sineInOut")
-		doTweenX("iconMovementP2", "iconP22", getProperty("iconP2.x"), 0.1, "sineInOut")
-	end
 	if stringStartsWith(version, '0.7') then
 		for i = 0, getProperty("strumLineNotes.length") do
 			setPropertyFromGroup('strumLineNotes', i, 'rgbShader.enabled', false)
@@ -319,7 +339,6 @@ function onUpdate(elapsed)
 	songPos = math.toTime(getSongPosition() / 1000)
 
 	if gappleHUDsong then
-		iconPropertys()
 		setProperty('timeBarBG.visible', false)
 		setProperty('timeBar.visible', false)
 		setTextString('timeTxt', songPos.." / "..actualSongLength)
@@ -361,10 +380,6 @@ local offsets = {-13, -13}--{55, 43}
 
 function onUpdatePost(elapsed)
 	if string.lower(songName) == 'maze' or gappleHUDsong then
-		if gappleHUDsong then
-			iconPropertys()
-		end
-
 		if string.lower(songName) ~= 'kooky' then
 			setProperty('healthBar.y', screenHeight * 0.9 + 4)
 			--setProperty('healthBar.x', screenHeight * 0.4)
@@ -459,50 +474,8 @@ function onBeatHit()
 		updateHitbox('iconP22')
 		updateHitbox('iconP1')
 		updateHitbox('iconP2')
-		iconPropertys()
 	end
 
-	if gappleHUDsong then
-		if string.lower(songName) == 'kooky' or string.lower(songName) == 'maze' then
-			return;
-		end
-		local iconPos = getProperty('healthBar.y') -75;
-
-		if curBeat % getProperty('gfSpeed') == 0 then
-			local fuasd = {0.8, 1.3}
-			local angl = 15;
-			local yOffset = 20;
-
-			if curBeat % (getProperty('gfSpeed') * 2) == 0 then
-				scaleObject('iconP12', 1.1, fuasd[1])
-				scaleObject('iconP22', 1.1, fuasd[2])
-				setProperty('iconP12.angle', -angl)
-				setProperty('iconP22.angle', angl)
-				setProperty('iconP12.y', iconPos - yOffset)
-				setProperty('iconP22.y', iconPos + yOffset)
-			else
-				scaleObject('iconP12', 1.1, fuasd[2])
-				scaleObject('iconP22', 1.1, fuasd[1])
-				setProperty('iconP12.angle', angl)
-				setProperty('iconP22.angle', -angl)
-				setProperty('iconP12.y', iconPos + yOffset)
-				setProperty('iconP22.y', iconPos - yOffset)
-			end
-		end
-
-		doTweenY('iconP1yREAL', 'iconP12', iconPos, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-		doTweenY('iconP2yREAL', 'iconP22', iconPos, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-		doTweenAngle('iconP1', 'iconP12', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-		doTweenAngle('iconP2', 'iconP22', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-		doTweenX('iconP1x', 'iconP12.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
-		doTweenX('iconP2x', 'iconP22.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
-		doTweenY('iconP1y', 'iconP12.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
-		doTweenY('iconP2y', 'iconP22.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
-
-		updateHitbox('iconP12')
-		updateHitbox('iconP22')
-		iconPropertys()
-	end
 	if curBeat % 2 == 0 then
 		if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
 			playAnim('boyfriend', 'idle', true)
@@ -514,12 +487,6 @@ function onBeatHit()
 			end
 			playAnim('dad', 'idle', true)
 		end
-	end
-end
-
-function onEvent(eventName, value1, value2, strumTime)
-	if eventName == 'Change Character' then
-		createIcons()
 	end
 end
 

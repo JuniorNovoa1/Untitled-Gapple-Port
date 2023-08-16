@@ -11,8 +11,6 @@ local camY = 0;
 
 local loopVarThing = false;
 
-local shadname = "stridentCrisisWavy";
-
 function onCreatePost()
 	changeNoteSkin(false, 'NOTE_assets_3D')
 	changeNoteSkin(false, 'NOTE_assets')

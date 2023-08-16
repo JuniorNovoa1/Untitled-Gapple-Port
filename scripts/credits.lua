@@ -5,7 +5,7 @@ local txtOffset = 65;
 --local midSongPopUp = false;
 local time = 1;
 local waitTime = 3;
-local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'ferocious', 'nice', 'glamrock', 'sugar-rush', 'gift-card', 'ready-loud', 'bookworm', 'cuberoot', 'sart-producer', 
+local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'deformation', 'ferocious', 'nice', 'glamrock', 'sugar-rush', 'gift-card', 'ready-loud', 'bookworm', 'cuberoot', 'sart-producer', 
 'mine', 'ticking', 'og', 'apple-leak', 'awesome', 'badcorn', 'crap!', 'kooky'};
 local songTxt = {
 	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello', --Maze

@@ -99,5 +99,6 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 end
 
 function callCamMovemt(x, y)
+	if not getDataFromSave("Juniors Ports Stuff", "cameraMovementEnabled") then return; end
 	callOnLuas("moveCam", {x, y})
 end
