@@ -3,6 +3,6 @@ function onUpdate(elapsed)
     elapsedtime = elapsedtime +elapsed;
 
     if dadName == 'bad' then
-        callOnLuas("takeFromVal", {"dad.y", math.sin(elapsedtime) * 0.25})
+        callOnLuas("takeFromVal", {"dad.y", math.sin(elapsedtime) * 0.325})
     end
 end

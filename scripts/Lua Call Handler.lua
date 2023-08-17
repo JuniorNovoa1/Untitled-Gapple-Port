@@ -3,7 +3,7 @@ function addToCamZoom(zoom)
     setProperty("defaultCamZoom", getProperty("defaultCamZoom") + zoom)
 end
 
-function addToVal(prop, val)
+function addToVal(prop, val) --old
     setProperty(prop, getProperty(prop) + val)
 end
 
