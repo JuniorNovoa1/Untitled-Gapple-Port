@@ -5,6 +5,18 @@ local lastSinger = '';
 local bfPos = {};
 local dadPos = {};
 
+local hasSeenVideo = false
+function onStartCountdown()
+	if not hasSeenVideo then
+		startVideo("mazeCutscene")
+		hasSeenVideo = true;
+	else
+		return Function_Continue;
+	end
+
+	return Function_Stop;
+end
+
 function onUpdate()
 	if angleRandom == 6 or angleRandom == 8 and spotLightPart then
 		doTweenAngle('angleSpotlight', 'spotLight', 4, timeSpot, 'expoInOut')

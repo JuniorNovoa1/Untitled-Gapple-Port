@@ -98,6 +98,7 @@ function onCreatePost()
 
 	setTextFont('scoreTxt', 'comic.ttf')
 	setTextFont('timeTxt', 'comic.ttf')
+	setTextSize("timeTxt", getTextSize("timeTxt"))
 
 	makeLuaText('creditsWatermark', songName, 0, 4, getProperty('healthBar.y') + 30)
 	setObjectCamera('creditsWatermark', 'camHUD')
@@ -156,11 +157,11 @@ function onCreatePost()
 
 	setProperty("updateTime", false)
 			
-	setObjectOrder('scoreTxt', getObjectOrder('healthBar') -1)
+	--setObjectOrder('scoreTxt', getObjectOrder('healthBar') -1)
 	setProperty("timeTxt.y", getProperty("timeTxt.y") - 10)
 	--setObjectOrder('timeTxt', 99)
 
-	changeNoteSkinsOnChange()
+	if string.lower(songName) ~= 'kooky' then changeNoteSkinsOnChange() end
 
 	if gappleHUDsong then
 		return;
@@ -168,37 +169,58 @@ function onCreatePost()
 	gappleHUDsong = true;
 end
 
+function onStrumsCreate()
+	for i = 0, 3 do
+		setPropertyFromGroup("opponentStrums", i, "x", getPropertyFromGroup("opponentStrums", i, "x") - 35)
+		setPropertyFromGroup("playerStrums", i, "x", getPropertyFromGroup("playerStrums", i, "x") + 40) -- 5 more than opponentStrums
+	end
+end
+
 function changeNoteSkinsOnChange()
 	local chars3D = {false, false}
 
 	for i = 1, #CharactersWith3D do
-		if string.lower(CharactersWith3D[i]) == string.lower(getProperty("boyfriend.curCharacter")) then 
+		if string.lower(CharactersWith3D[i]) == string.lower(getProperty("boyfriend.curCharacter")) then
+			setProperty("boyfriend.antialiasing", false)
 			changeNoteSkin(true, 'NOTE_assets_3D')
+			for i = 0, 3 do
+				setPropertyFromGroup("playerStrums", i, "antialiasing", false)
+			end
 			chars3D[1] = true;
 			break;
 		else
 			changeNoteSkin(true, 'NOTE_assets')
+			for i = 0, 3 do
+				setPropertyFromGroup("playerStrums", i, "antialiasing", true)
+			end
 		end
 	end
 	for i = 1, #CharactersWith3D do
-		if string.lower(CharactersWith3D[i]) == string.lower(getProperty("dad.curCharacter")) then 
+		if string.lower(CharactersWith3D[i]) == string.lower(getProperty("dad.curCharacter")) then
+			setProperty("dad.antialiasing", false)
 			changeNoteSkin(false, 'NOTE_assets_3D')
+			for i = 0, 3 do
+				setPropertyFromGroup("opponentStrums", i, "antialiasing", false)
+			end
 			chars3D[2] = true;
 			break;
 		else
 			changeNoteSkin(false, 'NOTE_assets')
+			for i = 0, 3 do
+				setPropertyFromGroup("opponentStrums", i, "antialiasing", true)
+			end
 		end
 	end
 
 	for i = 0, getProperty('unspawnNotes.length')-1 do
-		setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.023)
+		--[[setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.023)
 		if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
 			setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.004)
 		end
 		setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.04 + 0.075)
 		if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0)
-		end
+		end--]]
 		if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
 			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D') end
 		end
@@ -342,6 +364,8 @@ function onUpdate(elapsed)
 		setProperty('timeBarBG.visible', false)
 		setProperty('timeBar.visible', false)
 		setTextString('timeTxt', songPos.." / "..actualSongLength)
+		updateHitbox("timeTxt")
+		screenCenter("timeTxt", 'x')
 	end
 
 	for i = 1, #singAnims do

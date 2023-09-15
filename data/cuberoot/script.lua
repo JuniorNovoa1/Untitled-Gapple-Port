@@ -1,6 +1,6 @@
 local originPosX = {};
 local originPosY = {};
-function onCreatePost()
+function onStrumsCreate()
     for i = 0, getProperty('strumLineNotes.length') do
         originPosX[i] = getPropertyFromGroup('strumLineNotes', i, 'x')
         originPosY[i] = getPropertyFromGroup('strumLineNotes', i, 'y')

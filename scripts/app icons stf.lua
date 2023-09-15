@@ -11,8 +11,7 @@ end
 
 function onCreatePost()
 	gappleSongs = getDataFromSave("Juniors Ports Stuff", "gappleSongs")
-	clearCache();
-	charAnialiasingShit()
+	clearCache()
 
 	if stringStartsWith(version, '0.6') then
 		runHaxeCode([[
@@ -45,12 +44,6 @@ function onUpdatePost(elapsed)
 			}
 		]])
     end
-end
-
-function onEvent(tag, val1, val2)
-	if tag == 'Change Character' then
-		charAnialiasingShit()
-	end
 end
 
 function onPause()
@@ -112,32 +105,4 @@ function changeIcon()
 			]]
 		end
 	end
-end
-
-function charAnialiasingShit()
-	if stringStartsWith(version, '0.6') then
-		if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
-			setProperty('boyfriend.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-		end
-	
-		if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
-			setProperty('dad.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-		end
-	
-		if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
-			setProperty('gf.antialiasing', getPropertyFromClass('ClientPrefs', 'globalAntialiasing'));
-		end
-    else
-		if getProperty('boyfriend.antialiasing') == true then --no point if antialiasing is off
-			setProperty('boyfriend.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.antialiasing'));
-		end
-	
-		if getProperty('dad.antialiasing') == true then --no point if antialiasing is off
-			setProperty('dad.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.antialiasing'));
-		end
-	
-		if getProperty('gf.antialiasing') == true then --no point if antialiasing is off
-			setProperty('gf.antialiasing', getPropertyFromClass('backend.ClientPrefs', 'data.antialiasing'));
-		end
-    end
 end

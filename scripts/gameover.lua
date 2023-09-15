@@ -1,6 +1,6 @@
 function onUpdate()
-	if boyfriendName == '3d-bf' then
-		setPropertyFromClass('GameOverSubstate', 'characterName', '3d-bf-dead')
+	if boyfriendName == '3d-bf' or boyfriendName == 'shoulder-bf' then
+		setPropertyFromClass('GameOverSubstate', 'characterName', '3d-bf-death')
 	else
 		setPropertyFromClass('GameOverSubstate', 'characterName', 'bf-dead')
 	end

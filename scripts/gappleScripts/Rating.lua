@@ -44,6 +44,9 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
     end
 
     runHaxeCode([[
+        game.modchartSprites.set('ratingLuaSpr', null);
+        game.modchartSprites.set('comboLuaSpr', null);
+
         var membersIndex = ]]..membersIndex..[[;
         var note = game.notes.members[membersIndex];
         var ratingFolder = "]]..ratingFolder..[[";
@@ -62,13 +65,14 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
             pathSecond = "-3d";
         }
 
-        var rating = new FlxSprite(1000 - (daRating.score / 1.5), 350).loadGraphic(Paths.image(ratingFolder + pathFirst + daRating.image + pathSecond));
+        var rating = new FlxSprite(1000 - (daRating.score / 1.5), 300).loadGraphic(Paths.image(ratingFolder + pathFirst + daRating.image + pathSecond));
         rating.cameras = [game.camHUD];
         rating.acceleration.y = 550;
         rating.velocity.y -= FlxG.random.int(140, 175);
         rating.velocity.x -= FlxG.random.int(0, 10);
 		rating.alpha = targetAlpha;
-		game.add(rating);
+		game.insert(game.members.indexOf(game.strumLineNotes), rating);
+        game.modchartSprites.set('ratingLuaSpr', rating);
         if (texture == 'noteSkins/NOTE_assets_3D') {
             rating.x -= 20;
             rating.y -= 5;
@@ -80,8 +84,10 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
         comboSpr.velocity.y -= 150;
         comboSpr.velocity.x += FlxG.random.int(1, 10);
 		comboSpr.alpha = targetAlpha;
-        if (game.combo >= 10 || game.combo == 0)
-		    game.add(comboSpr);
+        if (game.combo >= 10 || game.combo == 0) {
+            game.insert(game.members.indexOf(game.strumLineNotes), comboSpr);
+            game.modchartSprites.set('comboLuaSpr', comboSpr);
+        }
         if (texture == 'noteSkins/NOTE_assets_3D') {
             comboSpr.x -= 20;
             comboSpr.y -= 5;
@@ -115,79 +121,16 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
             var numScore = new FlxSprite(rating.x + 315, rating.y + 10).loadGraphic(Paths.image(ratingFolder + pathFirst + 'num' + i + pathSecond));
             numScore.cameras = [game.camHUD];
             if (texture == 'noteSkins/NOTE_assets_3D')
-                numScore.x += 16 + (6 * daLoop);
+                numScore.x += 12 + (6 * daLoop);
             numScore.x += (44 * daLoop);
             numScore.acceleration.y = FlxG.random.int(200, 300);
             numScore.velocity.y -= FlxG.random.int(140, 160);
             numScore.velocity.x = FlxG.random.float(-5, 5);
             numScore.alpha = targetAlpha;
-            if (game.combo >= 10 || game.combo == 0)
-                game.add(numScore);
-            FlxTween.tween(numScore, {alpha: 0}, 0.2 / game.playbackRate, {
-                startDelay: Conductor.crochet * 0.002,
-                onComplete: function(twn)
-                {
-                    numScore.destroy();
-                }
-            });
-			daLoop++;
-            numScore.scale.set(0.6, 0.6);
-        }
-
-        rating.scale.set(0.7, 0.7);
-        comboSpr.scale.set(0.7, 0.7);
-    ]])
-end
-
-function noteMiss(membersIndex, noteData, noteType, isSustainNote)
-    runHaxeCode([[
-        var membersIndex = ]]..membersIndex..[[;
-        var note = game.notes.members[membersIndex];
-        var texture = note.texture;
-
-        var pathFirst = "";
-        var pathSecond = "";
-        if (texture == 'NOTE_assets_3D') {
-            pathFirst = "3dUi/";
-            pathSecond = "-3d";
-        }
-
-        var comboSpr = new FlxSprite(975 - (350 / 2), 350).loadGraphic(Paths.image(pathFirst + 'combo' + pathSecond));
-        comboSpr.cameras = [game.camHUD];
-        comboSpr.acceleration.y = 600;
-        comboSpr.velocity.y -= 150;
-        comboSpr.velocity.x += FlxG.random.int(1, 10);
-		comboSpr.alpha = 0.6;
-        if (game.combo >= 10 || game.combo == 0)
-		    game.add(comboSpr);
-        if (texture == 'NOTE_assets_3D') {
-            comboSpr.x -= 20;
-            comboSpr.y -= 5;
-        }    
-
-        FlxTween.tween(comboSpr, {alpha: 0}, 0.2 / game.playbackRate, {
-			startDelay: Conductor.crochet * 0.001 / game.playbackRate,
-            onComplete: function(twn)
-            {
-                comboSpr.destroy();
+            if (game.combo >= 10 || game.combo == 0) {
+                game.insert(game.members.indexOf(game.strumLineNotes), numScore);
+                game.modchartSprites.set('numLuaSpr' + i, numScore);
             }
-		});
-
-        var daLoop = 0;
-        var seperatedScore = [0, 0, 0];
-
-        for (i in seperatedScore) {
-            var numScore = new FlxSprite(comboSpr.x + 280, comboSpr.y + 10).loadGraphic(Paths.image(pathFirst + 'num' + i + pathSecond));
-            numScore.cameras = [game.camHUD];
-            if (texture == 'NOTE_assets_3D')
-                numScore.x += 25;
-            numScore.x += (44 * daLoop);
-            numScore.acceleration.y = FlxG.random.int(200, 300);
-            numScore.velocity.y -= FlxG.random.int(140, 160);
-            numScore.velocity.x = FlxG.random.float(-5, 5);
-            numScore.alpha = 0.6;
-            if (game.combo >= 10 || game.combo == 0)
-                game.add(numScore);
             FlxTween.tween(numScore, {alpha: 0}, 0.2 / game.playbackRate, {
                 startDelay: Conductor.crochet * 0.002,
                 onComplete: function(twn)
@@ -198,7 +141,17 @@ function noteMiss(membersIndex, noteData, noteType, isSustainNote)
 			daLoop++;
             numScore.scale.set(0.6, 0.6);
         }
-
-        comboSpr.scale.set(0.7, 0.7);
     ]])
+
+    setGraphicSize("ratingLuaSpr", math.floor(getProperty("ratingLuaSpr.width") * 0.7), math.floor(getProperty("ratingLuaSpr.height") * 0.7))
+    setGraphicSize("comboLuaSpr", math.floor(getProperty("comboLuaSpr.width") * 0.7), math.floor(getProperty("comboLuaSpr.height") * 0.7))
+    --[[for i = 0, 2 do
+        setGraphicSize("numLuaSpr"..i, math.floor(getProperty("numLuaSpr"..i..".width") * 0.5), math.floor(getProperty("numLuaSpr"..i..".height") * 0.5))
+    end--]]
+
+    --[[setObjectOrder("ratingLuaSpr", 1)
+    setObjectOrder("comboLuaSpr", 2)
+    setObjectOrder("numLuaSpr1", 0)
+    setObjectOrder("numLuaSpr2", 0)
+    setObjectOrder("numLuaSpr3", 0)--]]
 end

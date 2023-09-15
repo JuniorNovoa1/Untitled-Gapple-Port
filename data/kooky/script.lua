@@ -14,7 +14,7 @@ function onCreatePost()
 	local scaleXY = 0.65;
 	for direction = 0, 3 do
 		setPropertyFromGroup('opponentStrums', direction, 'visible', false)
-		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') + 24)
+		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') + 55)
 		setPropertyFromGroup('playerStrums', direction, 'y', getPropertyFromGroup('playerStrums', direction, 'y') - 115)
 		setPropertyFromGroup('playerStrums', direction, 'scale.x', scaleXY)
 		setPropertyFromGroup('playerStrums', direction, 'scale.y', scaleXY)
@@ -61,10 +61,10 @@ function onUpdate()
 end
 
 function onUpdatePost()
-	setProperty('iconP1.x', getProperty('healthBarBG.x') * 1.1625)
-	setProperty('iconP2.x', getProperty('healthBarBG.x') * 1.225)
-	setProperty('iconP1.y', getProperty('healthBarBG.y') / 1.925)
-	setProperty('iconP2.y', getProperty('healthBarBG.y') * 1.225)
+	setProperty('iconP1.x', getProperty('healthBar.x') * 1.1625)
+	setProperty('iconP2.x', getProperty('healthBar.x') * 1.225)
+	setProperty('iconP1.y', getProperty('healthBar.y') / 1.925)
+	setProperty('iconP2.y', getProperty('healthBar.y') * 1.225)
 
 	for i = 1, getProperty('notes.length') -1 do
 		setObjectCamera('notes.members['..i..']', 'camGame')

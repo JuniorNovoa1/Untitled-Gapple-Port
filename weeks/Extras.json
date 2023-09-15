@@ -64,12 +64,22 @@
 			]
 		],
 		[
-			"Sart-Producer",
-			"sartys_icon_static",
+			"Apprentice",
+			"tristan",
 			[
-				15,
-				0,
-				55
+				255,
+				19,
+				15
+			]
+
+		],
+		[
+			"Too-Shiny",
+			"diamond",
+			[
+				129,
+				180,
+				227
 			]
 		],
 		[
@@ -79,6 +89,15 @@
 				34,
 				215,
 				0
+			]
+		],
+		[
+			"Sart-Producer",
+			"sartys_icon_static",
+			[
+				15,
+				0,
+				55
 			]
 		]
 	],

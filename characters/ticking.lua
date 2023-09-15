@@ -7,14 +7,3 @@ function onCreatePost()
         game.add(tickTrail);
     ]])
 end
-
-local elapsedtime = 0.0;
-
-function onUpdate(elapsed)
-    elapsedtime = elapsedtime +elapsed;
-
-    if dadName == 'ticking' then
-        setProperty("dad.x", getProperty("dad.x") - (math.sin(elapsedtime) * 0.35))
-        setProperty("dad.y", getProperty("dad.y") + (math.cos(elapsedtime) * 0.35))
-    end
-end

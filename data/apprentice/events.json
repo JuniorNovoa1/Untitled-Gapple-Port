@@ -1,0 +1,36 @@
+{
+	"song": {
+		"events": [
+			[
+				62823.5294117647,
+				[
+					[
+						"Change Character",
+						"dad",
+						"3d-tristan"
+					],
+					[
+						"Change Character",
+						"bf",
+						"3d-bf"
+					]
+				]
+			],
+			[
+				133500,
+				[
+					[
+						"Change Character",
+						"dad",
+						"da-apprentice"
+					],
+					[
+						"Change Character",
+						"bf",
+						"bf"
+					]
+				]
+			]
+		]
+	}
+}

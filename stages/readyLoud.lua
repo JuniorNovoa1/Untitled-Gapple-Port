@@ -29,21 +29,6 @@ function onCreate()
     setProperty("owl.visible", false)
     addLuaSprite('owl', true)
 end
-function onCreatePost()
-    setProperty("dad.visible", false)
-    for i = 0, 3 do
-        setPropertyFromGroup("playerStrums", i, 'x', getPropertyFromGroup("playerStrums", i, 'x') - 315)
-    end
-    for i = 0, 3 do
-        setPropertyFromGroup("opponentStrums", i, 'visible', false)
-    end
-    for i = 0, getProperty("unspawnNotes.length") do
-        if not getPropertyFromGroup("unspawnNotes", i, 'mustPress') then
-            setPropertyFromGroup("unspawnNotes", i, 'visible', false)
-        end
-    end
-    setProperty("health", 2)
-end
 
 function onUpdate(elapsed)
     callOnLuas("moveCam", {getProperty("flumpBG.x") + (getProperty("flumpBG.width") / 2), getProperty("flumpBG.y") + (getProperty("flumpBG.height") / 2)})

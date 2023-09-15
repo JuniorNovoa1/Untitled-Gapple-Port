@@ -1,37 +1,40 @@
 --settings!!
-local settingsAlert = true; --disable to remove message in the top left!!!
+local settingsAlert = false; --disable to remove message in the top left!!!
 --main settings
 local modcharts = true; --determines wether modcharts are enabled.
 local epilepsy = false; --determines if screen flashes many colors at once. (disable if you have Epilepsy)
 local screenshake = true; --determines wether the screen can shake.
 local dialogue = true; --determine wether dialogue pops up on compatible songs.
 --dave and bambi golden apple settings
+local charSelect = true; --determines wether the char select screen pops up before a song begins.
 local newCamZoom = false; --very buggy! only used on some sections of "Nice!"
 --misc
-local unfinishedStuff = false; --determines if anything unfinished gets activated, enabling this might lead to crashes, high memory usage, high cpu usage, or more bad stuff. 
+local unfinishedStuff = true; --determines if anything unfinished gets activated, enabling this might lead to crashes, high memory usage, high cpu usage, or more bad stuff. 
 --modding!!!
 local debugMode = false; --wether to enable modding tools to help out me (Junior) import songs!!! (DISABLES MANY THINGS TO HURRY UP LOADING!!, DECREASES MEMORY)
 
-local settingStringArray = {"modcharts", "epilepsy", "screenshake", "dialogue", "newCamZoom", "unfinishedStuff", "debugMode"}
+local settingStringArray = {"modcharts", "epilepsy", "screenshake", "dialogue", "charSelect", "newCamZoom", "unfinishedStuff", "debugMode"}
 
 --cross script shit
 local gappleSongs = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'deformation', 'ferocious', 'nice', 'glamrock', 'sugar-rush', 'gift-card', 'ready-loud', 'bookworm', 'cuberoot', 'sart-producer', 'og', 'mine', 
 'apple-leak', 'awesome', 'badcorn', 'crap!', 'ticking', 'kooky'}
 local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', 'shoulder-bf', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
 'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
-'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'dave-wide', 'awesomeBambiCrack',
-'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad'}
+'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'too-shiny', 'dave-wide', 'awesomeBambiCrack',
+'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad', "3d-tristan"}
 local cameraMovementEnabled = false;
 
 --IGNORE EVERYTHING BELOW!!!!!!
 function onCreate()
     initSaveData("Juniors Ports Stuff")
     --main
+    setDataFromSave("Juniors Ports Stuff", 'settingsAlert', settingsAlert)
     setDataFromSave("Juniors Ports Stuff", 'modcharts', modcharts)
     setDataFromSave("Juniors Ports Stuff", 'epilepsy', epilepsy)
     setDataFromSave("Juniors Ports Stuff", 'screenshake', screenshake)
     setDataFromSave("Juniors Ports Stuff", 'dialogue', dialogue)
     --dave and bambi settings
+    setDataFromSave("Juniors Ports Stuff", 'charSelect', charSelect)
     setDataFromSave("Juniors Ports Stuff", 'newCamZoom', newCamZoom)
     --misc
     setDataFromSave("Juniors Ports Stuff", 'camZoom', true)
@@ -44,7 +47,13 @@ function onCreate()
     setDataFromSave("Juniors Ports Stuff", "CharactersWith3D", CharactersWith3D)
     setDataFromSave("Juniors Ports Stuff", "cameraMovementEnabled", cameraMovementEnabled)
 
+    if buildTarget == 'android' then
+        setDataFromSave("Juniors Ports Stuff", 'dialogue', false)
+        setDataFromSave("Juniors Ports Stuff", 'charSelect', false)
+    end
     if getDataFromSave("Juniors Ports Stuff", "debugMode") then
+        setDataFromSave("Juniors Ports Stuff", 'dialogue', false)
+        setDataFromSave("Juniors Ports Stuff", 'charSelect', false)
         luaDebugMode = true;
         luaDeprecatedWarnings = true;
     end
@@ -99,7 +108,7 @@ end
 
 local floorIt = false;
 
-function onUpdatePost(elapsed)
+function onStepHit()
     if getDataFromSave("Juniors Ports Stuff", "debugMode") then --using math.floor to round up character values, 80% accurate
         setProperty("debugTxt2.x", getProperty("debugTxt.x") + getProperty("debugTxt.width") + 16)
         if floorIt then

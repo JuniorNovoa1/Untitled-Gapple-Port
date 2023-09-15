@@ -39,14 +39,14 @@ function onBeatHit()
     	end
     end
 
-    doTweenY('iconP1yREAL', 'iconP12', iconPos, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-    doTweenY('iconP2yREAL', 'iconP22', iconPos, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-    doTweenAngle('iconP1', 'iconP12', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-    doTweenAngle('iconP2', 'iconP22', 0, crochet / 1300 * getProperty('gfSpeed'), 'quadOut')
-    doTweenX('iconP1x', 'iconP12.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
-    doTweenX('iconP2x', 'iconP22.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
-    doTweenY('iconP1y', 'iconP12.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
-    doTweenY('iconP2y', 'iconP22.scale', 1, crochet / 1250 * getProperty('gfSpeed'), 'quadOut')
+    doTweenY('iconP1yREAL', 'iconP12', iconPos, (crochet / 1300 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenY('iconP2yREAL', 'iconP22', iconPos, (crochet / 1300 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenAngle('iconP1', 'iconP12', 0, (crochet / 1300 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenAngle('iconP2', 'iconP22', 0, (crochet / 1300 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenX('iconP1x', 'iconP12.scale', 1, (crochet / 1250 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenX('iconP2x', 'iconP22.scale', 1, (crochet / 1250 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenY('iconP1y', 'iconP12.scale', 1, (crochet / 1250 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenY('iconP2y', 'iconP22.scale', 1, (crochet / 1250 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
 
     updateHitbox('iconP12')
     updateHitbox('iconP22')

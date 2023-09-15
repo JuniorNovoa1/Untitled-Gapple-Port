@@ -3,10 +3,10 @@ function onCreatePost()
 	for i = 0, getProperty('unspawnNotes.length')-1 do
 		--Check if the note is an Instakill Note
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'sticker' then
-			setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/STICKERassets'); --Change texture
+			setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/sticker_notes'); --Change texture
 			setPropertyFromGroup('unspawnNotes', i, 'hitHealth', '0.023'); --Default value is: 0.023, health gained on hit
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', '0.0475'); --Default value is: 0.0475, health lost on miss
-			if getPropertyFromGroup('unspawnNotes', i, 'noteData') == 0 then
+			--[[if getPropertyFromGroup('unspawnNotes', i, 'noteData') == 0 then
 				setPropertyFromGroup('unspawnNotes', i, 'offset.x', 85); --offset
 			elseif getPropertyFromGroup('unspawnNotes', i, 'noteData') == 1 then
 				setPropertyFromGroup('unspawnNotes', i, 'offset.x', 80); --offset
@@ -15,7 +15,7 @@ function onCreatePost()
 			elseif getPropertyFromGroup('unspawnNotes', i, 'noteData') == 3 then
 				setPropertyFromGroup('unspawnNotes', i, 'offset.x', 75); --offset
 			end
-			setPropertyFromGroup('unspawnNotes', i, 'offset.y', 0); --offset
+			setPropertyFromGroup('unspawnNotes', i, 'offset.y', 0); --offset--]]
 			setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', false);
 
 			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') then --Doesn't let Dad/Opponent notes get ignored

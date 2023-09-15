@@ -1,4 +1,4 @@
---DON'T STEAL KIDS!
+ --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 
 local dialogueSongs = {'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'apple-leak'};
@@ -151,7 +151,7 @@ function onCreatePost()
 		images = {'marclooPort', 'bf_reg_port'}
 		offsets = {0, 35,  0, 0}
 	elseif string.lower(songName) == 'ferocious' then
-		dialogueBool = true; --change to true to have unused ferocious dialogue
+		--dialogueBool = true; --change to true to have unused ferocious dialogue
 
 		dialogueTXT = {
 			"Oh, hi! Welcome to my playhouse!",
@@ -194,93 +194,81 @@ function onCreatePost()
 	addHaxeLibrary('FlxTimer', 'flixel.util')
 end
 
-function onSongStart()
-	if getDataFromSave("Juniors Ports Stuff", 'unfinishedStuff') and not getDataFromSave("Juniors Ports Stuff", "debugMode") then
-		openCustomSubstate("charSelect", false)
+local hasExitDialogue = false;
+function onStartCountdown()
+	if not hasExitDialogue and dialogueBool then
+		return Function_Stop;
 	else
-		callOnLuas("onDialogueReadyChar")
+		return Function_Continue;
 	end
 end
 
 function onDialogueReadyChar()
-	if not dialogueBool or buildTarget == 'android' or getDataFromSave("Juniors Ports Stuff", 'dialogue') == false or getDataFromSave("Juniors Ports Stuff", "debugMode") then
+	if not dialogueBool or getDataFromSave("Juniors Ports Stuff", 'dialogue') == false then
 		callOnLuas('onCountdownTick', {69})
+		hasExitDialogue = true;
+		runHaxeCode([[game.startCountdown();]])
+		callOnLuas("changeNoteSkinsOnChange")
+		callOnLuas("onStrumsCreate")
 		return;
 	end
+		
+	makeLuaSprite('background', '', 0, 0)
+	makeGraphic('background', '1280', '720', 'FFFFFF')
+	setObjectCamera('background', 'other')
+	setProperty('background.alpha', 0.6)
+	addLuaSprite('background', false)
 
-	openCustomSubstate('dialogue', false)
+	makeAnimatedLuaSprite('dadDialogue', 'dialogue/'..images[1], 100 + offsets[1], 175 + offsets[2])
+	addAnimationByPrefix('dadDialogue', 'idle', 'portrait', 24, false);
+	playAnim('dadDialogue', 'idle', false);
+	setObjectCamera('dadDialogue', 'other')
+	addLuaSprite('dadDialogue', false)
+
+	makeAnimatedLuaSprite('bfDialogue', 'dialogue/'..images[2], 625 + offsets[3], 175 + offsets[4])
+	addAnimationByPrefix('bfDialogue', 'idle', 'portrait', 24, false);
+	playAnim('bfDialogue', 'idle', false);
+	setObjectCamera('bfDialogue', 'other')
+	addLuaSprite('bfDialogue', false)
+
+	makeAnimatedLuaSprite('speech_bubble', 'speech_bubble', 100, 350)
+	addAnimationByPrefix('speech_bubble', 'idle', 'speech bubble normal', 24, true);
+	addAnimationByPrefix('speech_bubble', 'idle2', 'AHH speech bubble0', 24, true);
+	playAnim('speech_bubble', 'idle', true);
+	scaleObject('speech_bubble', 0.9, 0.9)
+	setObjectCamera('speech_bubble', 'other')
+	addLuaSprite('speech_bubble', false)
+	
+	makeLuaText('dialogueTxtTEXT', dialogueTXT[1], 720, 275, 465)
+	setObjectCamera('dialogueTxtTEXT', 'camother')
+	setTextAlignment('dialogueTxtTEXT', 'left')
+	setTextColor('dialogueTxtTEXT', '000000')
+	setTextBorder("dialogueTxtTEXT", 1, "0000ff")
+	setTextFont('dialogueTxtTEXT', 'comic.ttf')
+	setTextSize('dialogueTxtTEXT', 28)
+	updateHitbox('dialogueTxtTEXT')
+	addLuaText('dialogueTxtTEXT')
+
+	if crazyBubble then
+		playAnim('speech_bubble', 'idle2', true);
+
+		setProperty('dadDialogue.x', getProperty('dadDialogue.x') -25)
+		setProperty('bfDialogue.x', getProperty('bfDialogue.x') -25)
+		setProperty('speech_bubble.x', getProperty('speech_bubble.x') -25)
+		setProperty('dialogueTxtTEXT.x', getProperty('dialogueTxtTEXT.x') -25)
+		setProperty('dadDialogue.y', getProperty('dadDialogue.y') +50)
+		setProperty('bfDialogue.y', getProperty('bfDialogue.y') +50)
+		setProperty('speech_bubble.y', getProperty('speech_bubble.y') -15)
+		setProperty('dialogueTxtTEXT.y', getProperty('dialogueTxtTEXT.y') +50)
+	end
+
+	dialogueProps()
+
+	changeTxt(dialogueTXT[1])
+
+	playSound(song, 1, 'song')
+
 	inDialogue = true;
-end
-
-function onUpdate()
-	if inDialogue then
-		runHaxeCode([[FlxG.sound.music.pause();]])
-		runHaxeCode([[game.vocals.pause();]])
-		runHaxeCode([[game.setSongTime(0)]])
-		runHaxeCode([[FlxG.sound.music.pause();]])
-		runHaxeCode([[game.vocals.pause();]])
-	end
-end
-
-function onCustomSubstateCreate(tag)
-	if tag == 'dialogue' then
-		setProperty('canPause', false)
-		
-		makeLuaSprite('background', '', 0, 0)
-		makeGraphic('background', '1280', '720', 'FFFFFF')
-		setObjectCamera('background', 'other')
-		setProperty('background.alpha', 0.6)
-		addLuaSprite('background', false)
-
-		makeAnimatedLuaSprite('dadDialogue', 'dialogue/'..images[1], 100 + offsets[1], 175 + offsets[2])
-        addAnimationByPrefix('dadDialogue', 'idle', 'portrait', 24, false);
-        playAnim('dadDialogue', 'idle', false);
-		setObjectCamera('dadDialogue', 'other')
-        addLuaSprite('dadDialogue', false)
-
-		makeAnimatedLuaSprite('bfDialogue', 'dialogue/'..images[2], 625 + offsets[3], 175 + offsets[4])
-        addAnimationByPrefix('bfDialogue', 'idle', 'portrait', 24, false);
-        playAnim('bfDialogue', 'idle', false);
-		setObjectCamera('bfDialogue', 'other')
-        addLuaSprite('bfDialogue', false)
-
-		makeAnimatedLuaSprite('speech_bubble', 'speech_bubble', 100, 350)
-        addAnimationByPrefix('speech_bubble', 'idle', 'speech bubble normal', 24, true);
-		addAnimationByPrefix('speech_bubble', 'idle2', 'AHH speech bubble0', 24, true);
-        playAnim('speech_bubble', 'idle', true);
-		scaleObject('speech_bubble', 0.9, 0.9)
-		setObjectCamera('speech_bubble', 'other')
-        addLuaSprite('speech_bubble', false)
-		
-		makeLuaText('dialogueTxtTEXT', dialogueTXT[1], 720, 275, 465)
-		setObjectCamera('dialogueTxtTEXT', 'camother')
-		setTextAlignment('dialogueTxtTEXT', 'left')
-		setTextColor('dialogueTxtTEXT', '000000')
-		setTextBorder("dialogueTxtTEXT", 1, "0000ff")
-		setTextFont('dialogueTxtTEXT', 'comic.ttf')
-		setTextSize('dialogueTxtTEXT', 28)
-		updateHitbox('dialogueTxtTEXT')
-		addLuaText('dialogueTxtTEXT')
-
-		if crazyBubble then
-			playAnim('speech_bubble', 'idle2', true);
-
-			setProperty('dadDialogue.x', getProperty('dadDialogue.x') -25)
-			setProperty('bfDialogue.x', getProperty('bfDialogue.x') -25)
-			setProperty('speech_bubble.x', getProperty('speech_bubble.x') -25)
-			setProperty('dialogueTxtTEXT.x', getProperty('dialogueTxtTEXT.x') -25)
-			setProperty('dadDialogue.y', getProperty('dadDialogue.y') +50)
-			setProperty('bfDialogue.y', getProperty('bfDialogue.y') +50)
-			setProperty('speech_bubble.y', getProperty('speech_bubble.y') -15)
-			setProperty('dialogueTxtTEXT.y', getProperty('dialogueTxtTEXT.y') +50)
-		end
-
-		dialogueProps()
-
-		changeTxt(dialogueTXT[1])
-
-		playSound(song, 1, 'song')
-	end
 end
 
 function dialogueProps()
@@ -297,8 +285,8 @@ local spam = false;
 
 local canContinue = false;
 
-function onCustomSubstateUpdate(tag, elapsed)
-	if tag == 'dialogue' then
+function onUpdate(elapsed)
+	if not hasExitDialogue and inDialogue then
 		if keyboardJustPressed('ENTER') == true and canContinue and not spam then
 			curDialogue = curDialogue +1;
 
@@ -362,11 +350,8 @@ function onTweenCompleted(tag)
 		inDialogue = false;
 		dialogueBool = false;
 		callOnLuas('onCountdownTick', {69})
-		runHaxeCode([[
-			FlxG.sound.music.time = 0;
-			game.vocals.time = 0;
-			//game.setSongTime(Conductor.crochet * 5);
-		]])
-		setProperty('canPause', true)
+		runHaxeCode([[game.startCountdown();]])
+		callOnLuas("changeNoteSkinsOnChange")
+		callOnLuas("onStrumsCreate")
 	end
 end

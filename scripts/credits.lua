@@ -1,11 +1,10 @@
---DON'T STEAL KIDS!
---BY JUNIORNOVOA
+--removed this for now as this was to much work to handle
 
 local txtOffset = 65;
 --local midSongPopUp = false;
 local time = 1;
 local waitTime = 3;
-local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'deformation', 'ferocious', 'nice', 'glamrock', 'sugar-rush', 'gift-card', 'ready-loud', 'bookworm', 'cuberoot', 'sart-producer', 
+local songNames = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'deformation', 'ferocious', 'nice', 'glamrock', 'sugar-rush', 'gift-card', 'ready-loud', 'bookworm', 'cuberoot', 'apprentice', 'too-shiny', 'sart-producer', 
 'mine', 'ticking', 'og', 'apple-leak', 'awesome', 'badcorn', 'crap!', 'kooky'};
 local songTxt = {
 	'Mod\nDave and Bambi\n\nArt\nrapparep lol\n\nSong\nMoldyGH\n\nCharter\nthe real PointyyESM\n\nBambi Voice\nMarcello', --Maze
@@ -26,6 +25,8 @@ local songTxt = {
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\nAadsta\n\nSong\nMoldyGH\n\nCharter\nLog man', --Ready-Loud
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nSquisyZumorizu and\nJukebox\n\nSong\nSky!\n\nCharter\nLog man', --Bookworm
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nLexicord', --Cuberoot
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nAadsta\n\nCharter\nAadsta', --Apprentice
+	'Mod\nDave and Bambi Golden Apple\n\nArt\nWillow\n\nSong\nGorbini\n\nCharter\nLog man', --Too-Shiny
 	'Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\n\nSong\nSky!\n\nCharter\nCynda', --Sart-Producer
 	"Mod\nDave and Bambi Golden Apple\n\nArt\nLancey\nCynda\n\nSong\nSky!\n\nCharter\nCynda\n\nBased off Dinnerbambi\nFunkin' by Anton Bildziuk", --Mine
 	----SECRET SONGS--
@@ -101,7 +102,7 @@ local offsesss = 150;
 
 function onCountdownTick(tick)
 	if tick == 69 then
-		moveStuff(waitTime);
+		--moveStuff(waitTime);
 	end
 end
 
