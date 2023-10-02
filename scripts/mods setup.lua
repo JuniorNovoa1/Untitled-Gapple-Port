@@ -2,10 +2,7 @@
 --BY JUNIORNOVOA
 local nonGappleSongs = {''};
 local songSplashNames = {''};
-local oldFNFPos = {''};
 local gappleHUDsong = true;
-local arrowXoffset = 35;
-local no_splashes = true;
 
 local songMod = 'DNB: Golden Apple';
 
@@ -51,50 +48,6 @@ function onCreatePost()
     end
 
 	--White Hex Code: FFFFFF, Black Hex Code: 000000
-
-	makeLuaText('fpsTxt', '', 0, 18, 6)
-	setObjectCamera('fpsTxt', 'other')
-	setTextAlignment('fpsTxt', 'center')
-	setTextFont('fpsTxt', 'comic.ttf')
-	setTextSize('fpsTxt', 26)
-	setTextBorder('fpsTxt', 0, 'FFFFFF')
-	setProperty('fpsTxt.antialiasing', true)
-	if stringStartsWith(version, '0.6') then
-		setProperty("fpsTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
-    else
-		setProperty("fpsTxt.visible", getPropertyFromClass('backend.ClientPrefs', 'data.showFPS'))
-    end
-	if not gappleHUDsong then setProperty("fpsTxt.visible", false) end
-	updateHitbox('fpsTxt')
-	addLuaText('fpsTxt')
-
-	makeLuaText('memoryTxt', '', 0, 18, 38)
-	setObjectCamera('memoryTxt', 'other')
-	setTextAlignment('memoryTxt', 'center')
-	setTextFont('memoryTxt', 'comic.ttf')
-	setTextSize('memoryTxt', 18)
-	setTextBorder('memoryTxt', 0, 'FFFFFF')
-	setProperty('memoryTxt.antialiasing', true)
-	if stringStartsWith(version, '0.6') then
-		setProperty("memoryTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
-    else
-		setProperty("memoryTxt.visible", getPropertyFromClass('backend.ClientPrefs', 'data.showFPS'))
-    end
-	if not gappleHUDsong then setProperty("memoryTxt.visible", false) end
-	updateHitbox('memoryTxt')
-	if gappleMemoryCounter then addLuaText('memoryTxt') end
-
-	if gappleHUDsong then setPropertyFromClass("Main", "fpsVar.visible", false) end
-
-	makeAnimatedLuaSprite("gappleSoundTray", "gapple_soundtray", screenWidth - 150, 0)
-	for i = 0, 9 do
-		addAnimationByPrefix("gappleSoundTray", ""..(i + 1), ""..i, 24, true)
-	end
-	setObjectCamera("gappleSoundTray", "other")
-	setProperty("gappleSoundTray.visible", false)
-	updateHitbox("gappleSoundTray")
-	screenCenter("gappleSoundTray", 'y')
-	addLuaSprite("gappleSoundTray", false)
 
 	setTextFont('scoreTxt', 'comic.ttf')
 	setTextFont('timeTxt', 'comic.ttf')
@@ -161,6 +114,70 @@ function onCreatePost()
 	setProperty("timeTxt.y", getProperty("timeTxt.y") - 10)
 	--setObjectOrder('timeTxt', 99)
 
+	runHaxeCode([[
+        var badai = new Character(-350, -800, 'bambi-piss-3d');
+        badai.visible = false;
+        game.add(badai);
+        game.modchartSprites.set('badai', badai);
+    ]])
+
+	makeLuaSprite('gappleTransition', 'gapple_transition', 0, 0)
+	setProperty("gappleTransition.antialiasing", false)
+	setObjectCamera("gappleTransition", "other")
+	updateHitbox("gappleTransition")
+	screenCenter("gappleTransition", 'xy')
+	addLuaSprite('gappleTransition', true)
+
+	addHaxeLibrary("Type")
+	makeLuaText('fpsTxt', '', 0, 18, 6)
+	setObjectCamera('fpsTxt', 'other')
+	setTextAlignment('fpsTxt', 'center')
+	setTextFont('fpsTxt', 'comic.ttf')
+	setTextSize('fpsTxt', 26)
+    runHaxeCode([[game.getLuaObject('fpsTxt').setBorderStyle(Type.resolveEnum('flixel.text.FlxTextBorderStyle').NONE);]]) --Collin09 POG
+	setProperty('fpsTxt.antialiasing', true)
+	if stringStartsWith(version, '0.6') then
+		setProperty("fpsTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
+    else
+		setProperty("fpsTxt.visible", getPropertyFromClass('backend.ClientPrefs', 'data.showFPS'))
+    end
+	if not gappleHUDsong then setProperty("fpsTxt.visible", false) end
+	updateHitbox('fpsTxt')
+	addLuaText('fpsTxt')
+
+	makeLuaText('memoryTxt', '', 0, 18, 38)
+	setObjectCamera('memoryTxt', 'other')
+	setTextAlignment('memoryTxt', 'center')
+	setTextFont('memoryTxt', 'comic.ttf')
+	setTextSize('memoryTxt', 18)
+	--setProperty("memoryTxt.scale.x", getProperty("memoryTxt.scale.x") + 0.15)
+	--setTextWidth("memoryTxt", getTextWidth("memoryTxt") + 6)
+    runHaxeCode([[game.getLuaObject('memoryTxt').setBorderStyle(Type.resolveEnum('flixel.text.FlxTextBorderStyle').NONE);]]) --Collin09 POG
+	setProperty('memoryTxt.antialiasing', true)
+	if stringStartsWith(version, '0.6') then
+		setProperty("memoryTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
+    else
+		setProperty("memoryTxt.visible", getPropertyFromClass('backend.ClientPrefs', 'data.showFPS'))
+    end
+	if not gappleHUDsong then setProperty("memoryTxt.visible", false) end
+	updateHitbox('memoryTxt')
+	if gappleMemoryCounter then addLuaText('memoryTxt') end
+
+	if gappleHUDsong then setPropertyFromClass("Main", "fpsVar.visible", false) end
+
+	makeAnimatedLuaSprite("gappleSoundTray", "gapple_soundtray", screenWidth - 150, 0)
+	for i = 0, 9 do
+		addAnimationByPrefix("gappleSoundTray", ""..(i + 1), ""..i, 24, true)
+	end
+	setObjectCamera("gappleSoundTray", "other")
+	setProperty("gappleSoundTray.visible", false)
+	updateHitbox("gappleSoundTray")
+	screenCenter("gappleSoundTray", 'y')
+	addLuaSprite("gappleSoundTray", false)
+
+	doTweenX("gappleTransitionX", "gappleTransition.scale", 35, (crochet / 400 * getProperty('gfSpeed')) / playbackRate, "")
+	doTweenY("gappleTransitionY", "gappleTransition.scale", 35, (crochet / 400 * getProperty('gfSpeed')) / playbackRate, "")
+
 	if string.lower(songName) ~= 'kooky' then changeNoteSkinsOnChange() end
 
 	if gappleHUDsong then
@@ -169,11 +186,15 @@ function onCreatePost()
 	gappleHUDsong = true;
 end
 
+local donezo = false;
+
 function onStrumsCreate()
+	if donezo then return; end
 	for i = 0, 3 do
 		setPropertyFromGroup("opponentStrums", i, "x", getPropertyFromGroup("opponentStrums", i, "x") - 35)
 		setPropertyFromGroup("playerStrums", i, "x", getPropertyFromGroup("playerStrums", i, "x") + 40) -- 5 more than opponentStrums
 	end
+	donezo = true;
 end
 
 function changeNoteSkinsOnChange()
@@ -275,7 +296,22 @@ function onCountdownTick(swagCounter)
 	end
 end
 
+local hasFinishedExitTween = false;
+function onEndSong()
+	doTweenX("gappleTransitionXEnd", "gappleTransition.scale", 1, 1, "")
+	doTweenY("gappleTransitionYEnd", "gappleTransition.scale", 1, 1, "")
+	if not hasFinishedExitTween then
+		return Function_Stop;
+	else
+		return Function_Continue;
+	end
+end
+
 function onTweenCompleted(tag)
+	if tag == 'gappleTransitionYEnd' then
+		hasFinishedExitTween = true;
+		runHaxeCode([[game.endSong();]])
+	end
 	if tag == 'lastCountScaleY' then
 		doTweenX("lastCountScaleX2", objectsCountown[3]..".scale", 1, crochet / 2000 / getProperty("playbackRate"), "")
 		doTweenY("lastCountScaleY2", objectsCountown[3]..".scale", 1, crochet / 2000 / getProperty("playbackRate"), "")
@@ -432,8 +468,8 @@ function onUpdatePost(elapsed)
 			setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
 			setTextString("memoryTxt", "Memory: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
 
-			if getDataFromSave("Juniors Ports Stuff", "debugMode") then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
-			if getDataFromSave("Juniors Ports Stuff", "settingsAlert") then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
+			if getDataFromSave("Juniors Ports Stuff", "debugMode", false) then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
+			if getDataFromSave("Juniors Ports Stuff", "settingsAlert", buildTarget ~= 'android') then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
 		end
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		if string.lower(songName) == 'kooky' then
@@ -518,10 +554,8 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 	if getProperty('boyfriend.color') == getColorFromHex('9400d3') then
 		setProperty('boyfriend.color', getColorFromHex('FFFFFF'))
 	end
-	
-	if no_splashes then
-		removeFromGroup('grpNoteSplashes', getProperty('grpNoteSplashes.length') -1, false); --insta killed
-	end
+
+	removeFromGroup('grpNoteSplashes', getProperty('grpNoteSplashes.length') -1, false); --insta killed
 end
 
 function noteMissPress(direction)

@@ -9,6 +9,8 @@ local posBFY = {}
 
 local yoffset = 0;
 
+local curNoteData = 0;
+
 function onUpdate() --camera now follows characters!!!!
 	bfCamIdle = getDataFromSave("Juniors Ports Stuff", "bf cam");
 	dadCamIdle = getDataFromSave("Juniors Ports Stuff", "dad cam");
@@ -31,9 +33,45 @@ function onUpdate() --camera now follows characters!!!!
 	end
 	if mustHitSection == true and getProperty('boyfriend.animation.curAnim.name') == 'idle' then
 		callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] -yoffset);
+	elseif mustHitSection == true then
+		if camMovementType == 'charSize' then
+			offsets = 30 + (0.000025 * getProperty('boyfriend.width') * getProperty('boyfriend.height'));
+		elseif camMovementType == 'camZoom' then
+			offsets = 30 / getProperty('defaultCamZoom');
+		end
+		if curNoteData == 0 then
+			callCamMovemt(bfCamIdle[1] -offsets -(yoffset * 2.5), bfCamIdle[2] -yoffset);
+		end
+		if curNoteData == 1 then
+			callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] +offsets -yoffset);
+		end
+		if curNoteData == 2 then
+			callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] -offsets -yoffset);
+		end
+		if curNoteData == 3 then
+			callCamMovemt(bfCamIdle[1] +offsets -(yoffset * 2.5), bfCamIdle[2] -yoffset);
+		end
 	end
 	if mustHitSection == false and (getProperty('dad.animation.curAnim.name') == 'idle' or (dadName == 'bandu' or dadName == 'bandu-sad')) then
 		callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] -yoffset);
+	elseif mustHitSection == false and dadName ~= 'bandu' and dadName ~= 'bandu-sad' then
+		if camMovementType == 'charSize' then
+			offsets = 30 + (0.000025 * getProperty('dad.width') * getProperty('dad.height'));
+		elseif camMovementType == 'camZoom' then
+			offsets = 30 / (getProperty('defaultCamZoom') * 0.8);
+		end
+		if curNoteData == 0 then
+			callCamMovemt(dadCamIdle[1] -offsets -yoffset, dadCamIdle[2] -yoffset);
+		end
+		if curNoteData == 1 then
+			callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] +offsets -yoffset);
+		end
+		if curNoteData == 2 then
+			callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] -offsets -yoffset);
+		end
+		if curNoteData == 3 then
+			callCamMovemt(dadCamIdle[1] +offsets -yoffset, dadCamIdle[2] -yoffset);
+		end
 	end
 
 	camShit()
@@ -52,53 +90,17 @@ function camShit()
 end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
-	if mustHitSection == true then
-		if camMovementType == 'charSize' then
-			offsets = 30 + (0.000025 * getProperty('boyfriend.width') * getProperty('boyfriend.height'));
-		elseif camMovementType == 'camZoom' then
-			offsets = 30 / getProperty('defaultCamZoom');
-		end
-		if direction == 0 then
-			callCamMovemt(bfCamIdle[1] -offsets -(yoffset * 2.5), bfCamIdle[2] -yoffset);
-		end
-		if direction == 1 then
-			callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] +offsets -yoffset);
-		end
-		if direction == 2 then
-			callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] -offsets -yoffset);
-		end
-		if direction == 3 then
-			callCamMovemt(bfCamIdle[1] +offsets -(yoffset * 2.5), bfCamIdle[2] -yoffset);
-		end
-	end
+	if mustHitSection then curNoteData = direction; end
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if getProperty('dad.curCharacter') == 'bandu-sad' then
 		return;
 	end
-	if mustHitSection == false then
-		if camMovementType == 'charSize' then
-			offsets = 30 + (0.000025 * getProperty('dad.width') * getProperty('dad.height'));
-		elseif camMovementType == 'camZoom' then
-			offsets = 30 / (getProperty('defaultCamZoom') * 0.8);
-		end
-		if direction == 0 then
-			callCamMovemt(dadCamIdle[1] -offsets -yoffset, dadCamIdle[2] -yoffset);
-		end
-		if direction == 1 then
-			callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] +offsets -yoffset);
-		end
-		if direction == 2 then
-			callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] -offsets -yoffset);
-		end
-		if direction == 3 then
-			callCamMovemt(dadCamIdle[1] +offsets -yoffset, dadCamIdle[2] -yoffset);
-		end
-	end
+	if not mustHitSection then curNoteData = direction; end
 end
 
 function callCamMovemt(x, y)
-	if not getDataFromSave("Juniors Ports Stuff", "cameraMovementEnabled") then return; end
+	if not getDataFromSave("Juniors Ports Stuff", "cameraMovementEnabled", false) then return; end
 	callOnLuas("moveCam", {x, y})
 end

@@ -12,11 +12,11 @@ local originDad = ''
 function onCreatePost()
     originDad = getProperty('dad.curCharacter')
     addCharacterToList('awesomeBambiCrack', 'dad')
-    if getDataFromSave("Juniors Ports Stuff", 'screenshake') then
+    if getDataFromSave("Juniors Ports Stuff", 'screenshake', true) then
         doTweenAngle('camHUD1', 'camHUD', camAngle, camTimer, tween)
         doTweenAngle('camGame1', 'camGame', camAngle, camTimer, tween)
     end
-    if getDataFromSave("Juniors Ports Stuff", 'modcharts') then
+    if getDataFromSave("Juniors Ports Stuff", 'modcharts', true) then
         for i = 1, getProperty('strumLineNotes.length') do
             notesX[i] = getPropertyFromGroup('strumLineNotes', i-1, 'x')
             notesY[i] = getPropertyFromGroup('strumLineNotes', i-1, 'y')
@@ -28,7 +28,7 @@ end
 
 local shake = 0.0125;
 function onUpdate()
-    if getDataFromSave("Juniors Ports Stuff", 'screenshake') then
+    if getDataFromSave("Juniors Ports Stuff", 'screenshake', true) then
         triggerEvent('Screen Shake', '0.1,'..shake, '0.1,'..shake / 1.35)
     end
 end

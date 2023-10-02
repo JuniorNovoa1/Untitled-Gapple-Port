@@ -60,6 +60,10 @@ function onUpdate(elapsed)
     if dadNameLowerCase == 'tunnel-bf' then
         setProperty("dad.y", getProperty("dad.y") + (math.sin(elapsedtimeDAD) * 0.6))
     end
+    if dadNameLowerCase == 'dambai' then
+        callOnLuas("takeFromVal", {"dad.x", math.sin(elapsedtimeDAD * 0.2)})
+        setProperty("dad.y", (math.cos(elapsedtimeDAD) * 50) + 100)
+    end
     if dadNameLowerCase == 'bad' then
         callOnLuas("takeFromVal", {"dad.y", math.sin(elapsedtimeDAD) * 0.325})
     end

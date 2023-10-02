@@ -1,10 +1,8 @@
-local shadname = "stridentCrisisWavy";
 local objects = {'daveFuckingDies', 'redTunnel', 'dad', 'boyfriend'}
-local camObjs = {'timeTxt', 'scoreTxt', 'creditsWatermark'}
+local camObjs = {'timeTxt', 'scoreTxt', 'creditsWatermark', 'creditsText'}
 local invisObjs = {'healthBar', 'healthBarBG', 'iconP2', 'iconP1'}
 local colors = {'00ff00', '00FFFF', '800080', 'FFFFFF'}
 local curColor = 1;
-local curTxt = 0;
 
 function onCreate()
     addCharacterToList('badai', 'dad')
@@ -219,6 +217,7 @@ function onStepHit()
         cancelTween('DAVESF')
         removeLuaSprite('daveFuckingDies', true)
         triggerEvent('Change Character', 'dad', 'tunnel-dave')
+        setProperty('creditsText.text', '')
         if flashingLights then
 			cameraFlash('other', 'FFFFFF', 1)
 		end
@@ -239,7 +238,7 @@ function onBeatHit()
         end
     end
     if curStep >= 1630 and curStep <= 2143 then
-        if getDataFromSave("Juniors Ports Stuff", 'epilepsy') == false then
+        if getDataFromSave("Juniors Ports Stuff", 'epilepsy', false) == false then
             return;
         end
         if curColor >= 5 then
@@ -275,6 +274,7 @@ function onTweenCompleted(tag)
         setProperty('dad.y', getProperty('badaiComes.y'))
         setProperty('daveFuckingDies.visible', true)
         setProperty('badaiComes.visible', false)
+        setProperty('creditsText.text', 'Screw you!')
         --removeLuaSprite('badaiComes', true)
         doTweenY('davefuckinggoesup', 'daveFuckingDies', -125, 2.5, 'cubeInOut')
     end

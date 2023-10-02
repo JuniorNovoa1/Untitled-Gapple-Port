@@ -14,6 +14,72 @@ local poip = true;
 
 function onCreate()
     initLuaShader(shadname)
+
+    if string.lower(songName) == 'applecore' then
+        --credit Drawoon_ later
+        addHaxeLibrary('Song')
+        addHaxeLibrary('SwagSong','Song')
+        addHaxeLibrary('Section')
+        addHaxeLibrary('SwagSection', 'Section')
+        addHaxeLibrary('Note')
+        addHaxeLibrary('Std')
+        addHaxeLibrary('Math')
+        addHaxeLibrary('FlxMath','flixel.math')
+        runHaxeCode([[
+            var SecondSong:SwagSong;
+            //SecondSong = Song.loadFromJson("bopeebo-hard", "bopeebo");
+            SecondSong = Song.loadFromJson("alt-notes", "applecore");
+            var Notedata:Array<SwagSection>=SecondSong.notes;
+            for (Section in Notedata)
+            {
+                for (songNotes in Section.sectionNotes)
+                {
+                  var Strum:Float =songNotes[0];
+                  var NoteData:Int = Std.int(songNotes[1] % 4);
+                  var LastNote:Note;
+                  if (game.unspawnNotes.length > 0) LastNote = game.unspawnNotes[Std.int(game.unspawnNotes.length - 1)];
+                  else LastNote = null;
+                  var NewNote:Note = new Note(Strum, NoteData, LastNote);
+                  NewNote.mustPress = false;
+                  NewNote.sustainLength = songNotes[2];
+                  NewNote.gfNote = false;
+                  NewNote.noteType = 'GF Sing';
+                  NewNote.scrollFactor.set();
+                  var Length:Float = NewNote.sustainLength;
+                  Length=Length / Conductor.stepCrochet;
+                  game.unspawnNotes.push(NewNote);
+                  var floor:Int = Math.floor(Length);
+                    if(floor > 0) {
+                        for (susNote in 0...floor+1)
+                        {
+                            LastNote = game.unspawnNotes[Std.int(game.unspawnNotes.length - 1)];
+                            var NewSustan:Note = new Note(Strum + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(]]..getProperty('songSpeed')..[[, 2)), NoteData, LastNote, true);
+                            NewSustan.mustPress = false;
+                            NewSustan.gfNote = false;
+                            NewSustan.noteType = NewNote.noteType;
+                            NewSustan.noteType = 'GF Sing';
+                            NewSustan.scrollFactor.set();
+                            NewNote.tail.push(NewSustan);
+                            NewSustan.parent = NewNote;
+                            game.unspawnNotes.push(NewSustan);
+                            if (NewSustan.mustPress) NewSustan.x += FlxG.width / 2;
+                            else if(ClientPrefs.middleScroll) 
+                            {
+                                NewSustan.x += 310;
+                                if(NoteData > 1) NewSustan.x += FlxG.width / 2 + 25;
+                            }
+                        }
+                    }
+                    if (NewNote.mustPress) NewNote.x += FlxG.width / 2;
+                    else if(ClientPrefs.middleScroll)
+                    {
+                        NewNote.x += 310;
+                        if(Notedata > 1) NewNote.x += FlxG.width / 2 + 25;
+                    }
+                }
+            }
+        ]])
+    end
     for i = 1, #items do
         makeLuaSprite(items[i], 'main/applecore/'..items[i], 0, -250)
         setProperty(items[i]..'.visible', false)

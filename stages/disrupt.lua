@@ -16,6 +16,11 @@ function onCreate()
     addLuaSprite('poop', false)
 end
 
+--[[function onCreatePost()
+    makeLuaSprite('disruption_cube', 'main/disruptor_cube', getProperty("boyfriend.x"), getProperty("boyfriend.y") * 1.365)
+    addLuaSprite('disruption_cube', false)
+end--]]
+
 local elapsedtime = 0;
 
 function onUpdatePost(elapsed)

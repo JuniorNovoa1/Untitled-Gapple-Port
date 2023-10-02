@@ -11,8 +11,9 @@ function onCreatePost()
     else
         addHaxeLibrary('Character', 'objects')
     end
+    --100 (-800)
     runHaxeCode([[
-        var bambi = new Character(-350, -800, 'bambi-piss-3d');
+        var bambi = new Character(-500, -800, 'bambi-piss-3d');
         bambi.scale.set(0.85, 0.85);
         bambi.visible = false;
         game.add(bambi);
@@ -24,27 +25,22 @@ function onCreatePost()
     addCharacterToList('unfair-junker', 'dad')
     oldVal[1] = middleScroll;
     oldVal[2] = ghostTapping;
-    
+end
+
+function onSongStart()
     for i = 0, getProperty('unspawnNotes.length') -1 do
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'GF Sing' then
             setPropertyFromGroup('unspawnNotes', i, 'scrollFactor.x', 0.9)
             setPropertyFromGroup('unspawnNotes', i, 'scrollFactor.y', 0.9)
-            if not downscroll then
-                setPropertyFromGroup('unspawnNotes', i, 'offset.y', -400)
-            end
         end
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') ~= '' then
             setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D')
         end
     end
-
-    runHaxeCode([[
-        game.generateStaticArrows(0);
-    ]])
-
+    runHaxeCode([[game.generateStaticArrows(0);]])
     for direction = 4, 7 do
-        setPropertyFromGroup('opponentStrums', direction, 'x', -125 + getPropertyFromGroup('opponentStrums', direction, 'x'))
-        setPropertyFromGroup('opponentStrums', direction, 'y', 500)
+        setPropertyFromGroup('opponentStrums', direction, 'x', getProperty("bambi.x") + 235 + getPropertyFromGroup('opponentStrums', direction, 'x'))
+        setPropertyFromGroup('opponentStrums', direction, 'y', getProperty("bambi.y") + 100)
         setPropertyFromGroup('opponentStrums', direction, 'scrollFactor.x', 0.9)
         setPropertyFromGroup('opponentStrums', direction, 'scrollFactor.y', 0.9)
         setPropertyFromGroup('opponentStrums', direction, 'visible', false)
@@ -78,7 +74,7 @@ function onUpdate(elapsed)
             if i <= 3 then
                 nope = true;
             end
-            if not nope and getDataFromSave("Juniors Ports Stuff", 'modcharts') == true then
+            if not nope and getDataFromSave("Juniors Ports Stuff", 'modcharts', true) then
                 local krunkThing = 60;
                 if getPropertyFromGroup('strumLineNotes', i, 'ID') % 2 == 0 then
                     setPropertyFromGroup('strumLineNotes', i, 'x', originPosX[i] + ((math.sin(elapsedtime) * (1) * krunkThing)))
@@ -99,7 +95,7 @@ function onUpdate(elapsed)
                 setPropertyFromGroup('strumLineNotes', i, 'scale.y', getPropertyFromGroup('strumLineNotes', i, 'scale.y') * 1.5)
             end
         end
-    elseif unfairPart and getDataFromSave("Juniors Ports Stuff", 'modcharts') == true then
+    elseif unfairPart and getDataFromSave("Juniors Ports Stuff", 'modcharts', true) then
         for i = 0, getProperty('strumLineNotes.length') do
             setPropertyFromGroup('strumLineNotes', i, 'x', ((screenWidth / 2) - (getPropertyFromGroup('strumLineNotes', i, 'width') / 2)) + (math.sin(elapsedtime + (i)) * 300))
             setPropertyFromGroup('strumLineNotes', i, 'y', ((screenHeight / 2) - (getPropertyFromGroup('strumLineNotes', i, 'height') / 2)) + (math.cos(elapsedtime + (i)) * 300))
@@ -112,7 +108,7 @@ end
 
 function onUpdatePost()
     for i = 0, getProperty('notes.length') -1 do
-        if getPropertyFromGroup('notes', i, 'noteType') == 'GF Sing' then
+        if getPropertyFromGroup('notes', i, 'noteType') == 'GF Sing' and not getPropertyFromGroup('notes', i, 'mustPress') then
             setObjectCamera('notes.members['..i..']', 'camGame')
             setPropertyFromGroup('notes', i, 'hitByOpponent', true)
 			local earlyHitMult = getPropertyFromGroup('notes', i, 'earlyHitMult');
@@ -123,21 +119,24 @@ function onUpdatePost()
 				setPropertyFromGroup('notes', i, 'canBeHit', false);
 			end
             local healthtolower = 0.02;
-            local noteDataa = getPropertyFromGroup('notes', i, 'noteData') + 1;
+            local daNoteDataa = getPropertyFromGroup('notes', i, 'noteData') + 1;
             if getPropertyFromGroup('notes', i, 'canBeHit') then
                 setProperty('vocals.volume', 1)
                 setProperty('bambi.holdTimer', 0)
-                strumAnim(noteDataa - 1, 'confirm', 0.15);
+                strumAnim(daNoteDataa - 1, 'confirm', 0.15);
                 setProperty('health', getProperty('health') -(healthtolower / 2.65))
-                if getDataFromSave("Juniors Ports Stuff", 'screenshake') == true then
+                if getDataFromSave("Juniors Ports Stuff", 'screenshake', true) then
                     triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
                 end
-                playAnim('bambi', singAnims[noteDataa], true)
+                playAnim('bambi', singAnims[daNoteDataa], true)
                 removeFromGroup('notes', i, false)
             end
-            setPropertyFromGroup('notes', i, 'x', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'x') - 147.5)
-            setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
-            setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
+            setPropertyFromGroup('notes', i, 'x', getPropertyFromGroup('opponentStrums', 4 + getPropertyFromGroup('notes', i, 'noteData'), 'x'))
+            setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('opponentStrums', 4 + getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
+            setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', 4 + getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
+            if not downscroll then
+                setPropertyFromGroup('notes', i, 'offset.y', getPropertyFromGroup('opponentStrums', 4 + getPropertyFromGroup('notes', i, 'noteData'), 'y') - 275)
+            end
         end
     end
 
@@ -172,7 +171,7 @@ function onStepHit()
 
     if curStep == 800 then
         setProperty('bambi.visible', true)
-        doTweenY('bambi', 'bambi', 350, 1.35, 'sineIn')
+        doTweenY('bambi', 'bambi', 100, 1.35, 'sineIn')
     end
 
     if curStep == 1984 then
@@ -256,6 +255,8 @@ end
 function onTweenCompleted(tag)
     if tag == 'bambi' then
         for direction = 4, 7 do
+            setPropertyFromGroup('opponentStrums', direction, 'x', getProperty("bambi.x") + 235 + getPropertyFromGroup('opponentStrums', direction, 'x'))
+            setPropertyFromGroup('opponentStrums', direction, 'y', getProperty("bambi.y") + 100)
             setPropertyFromGroup('opponentStrums', direction, 'visible', true)
         end
     end
@@ -265,6 +266,7 @@ function onTweenCompleted(tag)
         setObjectOrder('dadGroup', getObjectOrder('gfGroup') -1)
         setProperty('dad.x', -125)
         setProperty('dad.y', 200)
+        setProperty('bambi.visible', false)
         setProperty('monkey_guy.visible', true)
         setProperty('monkey_person.visible', true)
 

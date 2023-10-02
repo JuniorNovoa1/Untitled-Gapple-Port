@@ -10,7 +10,7 @@ function onUpdate(elapsed)
         setDataFromSave("Juniors Ports Stuff", 'camZoom', true)
     end
 
-    if getDataFromSave("Juniors Ports Stuff", 'modcharts') ~= true then
+    if getDataFromSave("Juniors Ports Stuff", 'modcharts', true) ~= true then
         return;
     end
 

@@ -15,6 +15,11 @@ local characterOffsets = { --put offsets here, idjiot2
 local funnyReturnString = { --put text here, idjiot3
 	["bf"] = "Boyfriend"
 }
+local nativeCharacters = {
+	["bf"] = true;
+	["odd-bf"] = true;
+	["3d-bf"] = true;
+}
 local curSelected = 1;
 local curSelectedVer = 1;
 local confirmed = false;
@@ -23,15 +28,24 @@ local confirmed = false;
 tweenArg1 = 1.2;
 tweenArg2 = "circInOut";
 
+function onCreate()
+	addLuaScript("scripts/gappleScripts/dialogue")
+end
+
 function onCreatePost()
 	for i = 1, #nonCharSelectSongs do
 		if string.lower(songName) == nonCharSelectSongs[i] then gappleSong = false; end
 	end
-	if not getDataFromSave("Juniors Ports Stuff", "charSelect") or not gappleSong then
+	if not getDataFromSave("Juniors Ports Stuff", "charSelect", true) or not gappleSong then
 		callOnLuas('onDialogueReadyChar')
 		runHaxeCode([[game.startCountdown();]])
+		callOnLuas('onCountdownTick', {69})
+		callOnLuas("changeNoteSkinsOnChange")
+		callOnLuas("onStrumsCreate")
 		return;
 	end
+
+	addHaxeLibrary("FlxG", 'flixel')
 	
 	if stringStartsWith(version, '0.6') then
         addHaxeLibrary('Character')
@@ -60,15 +74,52 @@ function onCreatePost()
 	setObjectCamera("charSelectGuide", 'other')
 	addLuaSprite('charSelectGuide', false)
 
-	makeLuaSprite('screenTrans', '', 0, 0)
+	makeLuaSprite('screenTrans', '', screenWidth, 0)
 	makeGraphic('screenTrans', '1280', '720', '000000')
 	setObjectCamera("screenTrans", "other")
 	updateHitbox("screenTrans")
-	screenCenter("screenTrans", 'xy')
+	screenCenter("screenTrans", 'y')
 	addLuaSprite('screenTrans', true)
 	createChar()
 	setObjectOrder("screenTrans", 99)
-	doTweenX("screenTrans", "screenTrans", screenWidth, tweenArg1, tweenArg2)
+
+	local buttonPos = {125, 275}--{890, 500}
+	local buttonObjs = {'changeLeft', 'changeDown', 'changeUp', 'changeRight', 'confirmButton'}
+	local buttonObjScale = 0.75;
+
+	if buildTarget == 'android' then
+		makeLuaSprite('changeLeft', 'touchDirectionArrow', buttonPos[1] - (142 * buttonObjScale), buttonPos[2])
+		setProperty("changeLeft.angle", -90)
+		setObjectCamera("changeLeft", 'other')
+		addLuaSprite('changeLeft', false)
+	
+		makeLuaSprite('changeRight', 'touchDirectionArrow', buttonPos[1] + (142 * buttonObjScale), buttonPos[2])
+		setProperty("changeRight.angle", 90)
+		setObjectCamera("changeRight", 'other')
+		addLuaSprite('changeRight', false)
+
+		makeLuaSprite('changeUp', 'touchDirectionArrow', buttonPos[1], buttonPos[2] - (142 * buttonObjScale))
+		setObjectCamera("changeUp", 'other')
+		addLuaSprite('changeUp', false)
+	
+		makeLuaSprite('changeDown', 'touchDirectionArrow', buttonPos[1], buttonPos[2] + (142 * buttonObjScale))
+		setProperty("changeDown.flipY", true)
+		setObjectCamera("changeDown", 'other')
+		addLuaSprite('changeDown', false)
+	
+		makeLuaSprite('confirmButton', 'androidConfirm', 1150, 25 * buttonObjScale)
+		setObjectCamera("confirmButton", 'other')
+		addLuaSprite('confirmButton', false)
+	
+		makeLuaSprite("fakeMouse", "", 0, 0)
+		makeGraphic('fakeMouse', 1, 1, '000000')
+		setObjectCamera("fakeMouse", 'other')
+		addLuaSprite("fakeMouse", false)
+		for i = 1, #buttonObjs do
+			scaleObject(buttonObjs[i], buttonObjScale, buttonObjScale)
+			updateHitbox(buttonObjs[i])
+		end
+	end
 end
 
 function createChar()
@@ -102,24 +153,15 @@ end
 
 local hasExitCharSelect = false;
 function onStartCountdown()
-	if not hasExitCharSelect and getDataFromSave("Juniors Ports Stuff", "charSelect") and gappleSong then
+	if not hasExitCharSelect and getDataFromSave("Juniors Ports Stuff", "charSelect", true) and gappleSong then
 		return Function_Stop;
 	else
 		return Function_Continue;
 	end
 end
 
-function onUpdate(elapsed)
-	if hasExitCharSelect or not getDataFromSave("Juniors Ports Stuff", "charSelect") or not gappleSong then return; end
-	if luaSoundExists('charSelectSound') == false then
-		playSound("character_select", 1, "charSelectSound")
-	end
-
-	if not confirmed then
-		if funnyReturnString[characters[curSelected][curSelectedVer]] ~= nil then setTextString("charTxt", funnyReturnString[characters[curSelected][curSelectedVer]]) else setTextString("charTxt", "Char not in array!") end
-	end
-	
-	if keyJustPressed('left') and not confirmed then
+function triggerKeyThingy(key)
+	if key == 'left' then
 		curSelectedVer = 1;
 		curSelected = curSelected - 1;
 		if curSelected == 0 then
@@ -127,7 +169,7 @@ function onUpdate(elapsed)
 		end
 		createChar()
 	end
-	if keyJustPressed('right') and not confirmed then
+	if key == 'right' then
 		curSelectedVer = 1;
 		curSelected = curSelected + 1;
 		if curSelected == #characters +1 then
@@ -135,14 +177,14 @@ function onUpdate(elapsed)
 		end
 		createChar()
 	end
-	if keyJustPressed('up') and not confirmed then
+	if key == 'up' then
 		curSelectedVer = curSelectedVer +1;
 		if curSelectedVer == #characters[curSelected] +1 then
 			curSelectedVer = 1;
 		end
 		createChar()
 	end
-	if keyJustPressed('down') and not confirmed then
+	if key == 'down' then
 		curSelectedVer = curSelectedVer -1;
 		if curSelectedVer == 0 then
 			curSelectedVer = #characters[curSelected];
@@ -150,7 +192,7 @@ function onUpdate(elapsed)
 		createChar()
 	end
 	
-	if keyJustPressed('accept') and not confirmed then
+	if key == 'accept' then
 		local posBF = {getProperty("boyfriend.x"), getProperty("boyfriend.y")}
 		local bfSCALE = {getProperty("boyfriend.width"), getProperty("boyfriend.height")}
 		playAnim("char", "hey", false)
@@ -165,6 +207,38 @@ function onUpdate(elapsed)
 		runTimer("soundchar", 1.6)
 		
 		confirmed = true;
+		removeLuaSprite("changeLeft", true)
+		removeLuaSprite("changeDown", true)
+		removeLuaSprite("changeUp", true)
+		removeLuaSprite("changeRight", true)
+		removeLuaSprite("confirmButton", true)
+		removeLuaSprite("fakeMouse", true)
+	end
+end
+
+function onUpdate(elapsed)
+	if hasExitCharSelect or not getDataFromSave("Juniors Ports Stuff", "charSelect", true) or not gappleSong then return; end
+	setProperty("fakeMouse.x", getMouseX("other"))
+	setProperty("fakeMouse.y", getMouseY("other"))
+	if luaSoundExists('charSelectSound') == false then
+		playSound("character_select", 1, "charSelectSound")
+	end
+
+	if not confirmed then
+		if funnyReturnString[characters[curSelected][curSelectedVer]] ~= nil then setTextString("charTxt", funnyReturnString[characters[curSelected][curSelectedVer]]) else setTextString("charTxt", "Char not in array!") end
+	end
+	
+	if (keyJustPressed('left') or (mouseClicked("left") and objectsOverlap("fakeMouse", "changeLeft"))) and not confirmed then triggerKeyThingy('left') end
+	if (keyJustPressed('right') or (mouseClicked("left") and objectsOverlap("fakeMouse", "changeRight"))) and not confirmed then triggerKeyThingy('right') end
+	if (keyJustPressed('up') or (mouseClicked("left") and objectsOverlap("fakeMouse", "changeUp"))) and not confirmed then triggerKeyThingy('up') end
+	if (keyJustPressed('down') or (mouseClicked("left") and objectsOverlap("fakeMouse", "changeDown"))) and not confirmed then triggerKeyThingy('down') end
+	if (keyJustPressed('accept') or (mouseClicked("left") and objectsOverlap("fakeMouse", "confirmButton"))) and not confirmed then triggerKeyThingy('accept') end
+end
+
+local singAnims = {"singRIGHT", "singDOWN", "singUP", "singLEFT"}
+function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
+	if nativeCharacters[characters[curSelected][curSelectedVer]] ~= true and confirmed then
+		playAnim("boyfriend", singAnims[noteData + 1])
 	end
 end
 
@@ -199,7 +273,5 @@ function onTweenCompleted(tag)
 		hasExitCharSelect = true;
 		callOnLuas('onDialogueReadyChar', {})
 		runHaxeCode([[game.startCountdown();]])
-		callOnLuas("changeNoteSkinsOnChange")
-		callOnLuas("onStrumsCreate")
 	end
 end

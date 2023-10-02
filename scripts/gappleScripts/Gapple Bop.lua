@@ -3,11 +3,21 @@ function onCreatePost()
     createIcons()
 end
 
+function math.clamp(x,min,max)return math.max(min,math.min(x,max))end
+function math.lerp(from, to, t)
+	return from + (to - from) * math.clamp(t, 0, 1)
+end
+
 function onUpdatePost(elapsed)
 	if canMessWithDups then
 		doTweenX("iconMovementP1", "iconP12", getProperty("iconP1.x") - 20 + (getProperty("iconP1.width") / 4), 0.08, "sineInOut")
 		doTweenX("iconMovementP2", "iconP22", getProperty("iconP2.x") + 20 - (getProperty("iconP2.width") / 4), 0.08, "sineInOut")
 	end
+	--[[for i = 0, 7 do
+		setPropertyFromGroup("strumLineNotes", i, 'scale.x', math.lerp(0.7, getPropertyFromGroup('strumLineNotes', i, 'scale.x'), 0.9))
+		setPropertyFromGroup("strumLineNotes", i, 'scale.y', math.lerp(0.7, getPropertyFromGroup('strumLineNotes', i, 'scale.y'), 0.9))
+		setPropertyFromGroup("strumLineNotes", i, 'angle', math.lerp(0, getPropertyFromGroup('strumLineNotes', i, 'angle'), 0.9))
+	end--]]
     iconPropertys()
 end
 
@@ -37,6 +47,12 @@ function onBeatHit()
             setProperty('iconP12.y', iconPos + yOffset)
             setProperty('iconP22.y', iconPos - yOffset)
     	end
+
+		--[[for i = 0, 7 do
+			setPropertyFromGroup("strumLineNotes", i, 'scale.x', getPropertyFromGroup("strumLineNotes", i, 'scale.x') + getRandomFloat(0.1, 0.35))
+			setPropertyFromGroup("strumLineNotes", i, 'scale.y', getPropertyFromGroup("strumLineNotes", i, 'scale.y') + getRandomFloat(0.1, 0.35))
+			if curBeat % (getProperty('gfSpeed') * 2) == 0 then setPropertyFromGroup("strumLineNotes", i, 'angle', angl * 1.5) else setPropertyFromGroup("strumLineNotes", i, 'angle', -(angl * 1.5)) end
+		end--]]
     end
 
     doTweenY('iconP1yREAL', 'iconP12', iconPos, (crochet / 1300 * getProperty('gfSpeed')) / playbackRate, 'quadOut')

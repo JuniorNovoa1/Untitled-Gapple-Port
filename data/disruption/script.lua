@@ -14,7 +14,7 @@ end
 local elapsedtime = 0;
 
 function onUpdate(elapsed)
-    if getDataFromSave("Juniors Ports Stuff", 'modcharts') == false then
+    if getDataFromSave("Juniors Ports Stuff", 'modcharts', true) == false then
         return;
     end
 
