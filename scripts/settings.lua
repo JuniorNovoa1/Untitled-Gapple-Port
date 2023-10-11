@@ -4,9 +4,9 @@ local settingsAlert = false; --disable to remove message in the top left!!!
 local modcharts = true; --determines wether modcharts are enabled.
 local epilepsy = true; --determines if screen flashes many colors at once. (disable if you have Epilepsy)
 local screenshake = true; --determines wether the screen can shake.
-local dialogue = true; --determine wether dialogue pops up on compatible songs.
+local dialogue = false; --determine wether dialogue pops up on compatible songs.
 --dave and bambi golden apple settings
-local charSelect = true; --determines wether the char select screen pops up before a song begins.
+local charSelect = false; --determines wether the char select screen pops up before a song begins. (increases memory usage)
 local newCamZoom = false; --very buggy! only used on some sections of "Nice!"
 --misc
 local unfinishedStuff = false; --determines if anything unfinished gets activated, enabling this might lead to crashes, high memory usage, high cpu usage, or more bad stuff. 
@@ -43,6 +43,8 @@ function onCreate()
     setDataFromSave("Juniors Ports Stuff", 'debugMode', debugMode)
 
     --cross script shit
+    setDataFromSave("Juniors Ports Stuff", "canFloat", true)
+    setDataFromSave("Juniors Ports Stuff", "badaiTime", false)
     setDataFromSave("Juniors Ports Stuff", "gappleSongs", gappleSongs)
     setDataFromSave("Juniors Ports Stuff", "CharactersWith3D", CharactersWith3D)
     setDataFromSave("Juniors Ports Stuff", "cameraMovementEnabled", cameraMovementEnabled)
@@ -85,8 +87,9 @@ function math.lerp(from, to, t)
 end
 
 function onUpdate()
-    if getDataFromSave("Juniors Ports Stuff", "debugMode", false) and getProperty("health") < 0 then
-        setProperty("health", 0.01)
+    if getDataFromSave("Juniors Ports Stuff", "debugMode", false) then
+        if getProperty("health") <= 0 then setProperty("health", 0.01) end
+        if keyboardJustPressed("P") then setProperty("cpuControlled", not getProperty("cpuControlled")) end
     end
 
     setProperty('camZooming', false)

@@ -10,6 +10,12 @@ local gappleMemoryCounter = false; --gapple doesn't have a memory counter...
 
 local CharactersWith3D = {};
 
+local badaiSongs = {
+	["applecore"] = '3d-bambi-piss',
+	["fresh-and-toasted"] = 'barbu',
+	["resumed"] = 'dambu'
+}
+
 function onCreate()
 	for i = 1, #nonGappleSongs do
 		if string.lower(songName) == nonGappleSongs[i] then gappleHUDsong = false; end
@@ -114,12 +120,14 @@ function onCreatePost()
 	setProperty("timeTxt.y", getProperty("timeTxt.y") - 10)
 	--setObjectOrder('timeTxt', 99)
 
-	runHaxeCode([[
-        var badai = new Character(-350, -800, 'bambi-piss-3d');
-        badai.visible = false;
-        game.add(badai);
-        game.modchartSprites.set('badai', badai);
-    ]])
+	if badaiSongs[string.lower(songName)] ~= nil then
+		runHaxeCode([[
+			var badai = new Character(0, 0, ']]..badaiSongs[string.lower(songName)]..[[');
+			game.add(badai);
+			game.modchartSprites.set('badai', badai);
+		]])
+		callOnLuas("onBadaiCreate")
+	end
 
 	makeLuaSprite('gappleTransition', 'gapple_transition', 0, 0)
 	setProperty("gappleTransition.antialiasing", false)
@@ -184,6 +192,10 @@ function onCreatePost()
 		return;
 	end
 	gappleHUDsong = true;
+end
+
+function badaiPlayAnim(anim)
+	runHaxeCode([[game.getLuaObject("badai", false).playAnim("]]..anim..[[", true);]])
 end
 
 local donezo = false;
@@ -261,6 +273,14 @@ end
 function onEvent(eventName, value1, value2, strumTime)
 	if eventName == 'Change Character' then
 		changeNoteSkinsOnChange()
+		if string.lower(value1) == 'badai' then
+			runHaxeCode([[
+				game.getLuaObject('badai', false).destroy();
+				var badai = new Character(0, 0, ']]..value2..[[');
+				game.add(badai);
+				game.modchartSprites.set('badai', badai);
+			]])
+		end
 	end
 end
 
@@ -382,6 +402,9 @@ local actualSongLength = 0;
 local songPos = 0;
 
 function onUpdate(elapsed)
+	for i = 0, getProperty('notes.length')-1 do
+		if (getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'normal' or getPropertyFromGroup('notes', i, 'noteType') == nil) and getPropertyFromGroup('notes', i, 'mustPress') == false then setPropertyFromGroup('notes', i, 'noAnimation', true) end
+	end
 	setProperty("iconP12.animation.curAnim.curFrame", getProperty("iconP1.animation.curAnim.curFrame"))
     setProperty("iconP22.animation.curAnim.curFrame", getProperty("iconP2.animation.curAnim.curFrame"))
 	if stringStartsWith(version, '0.7') then
@@ -402,6 +425,10 @@ function onUpdate(elapsed)
 		setTextString('timeTxt', songPos.." / "..actualSongLength)
 		updateHitbox("timeTxt")
 		screenCenter("timeTxt", 'x')
+	end
+
+	if getRandomBool(25) then
+		--badaiPlayAnim(singAnims[getRandomInt(1, 4)])
 	end
 
 	for i = 1, #singAnims do
@@ -547,6 +574,10 @@ function onBeatHit()
 			end
 			playAnim('dad', 'idle', true)
 		end
+
+		if badaiSongs[string.lower(songName)] ~= nil or luaSpriteExists("badai") then
+			if getProperty("badai.animation.curAnim.name") == 'idle' and not getProperty("badai.skipDance") then badaiPlayAnim('idle') end
+		end
 	end
 end
 
@@ -556,6 +587,16 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 	end
 
 	removeFromGroup('grpNoteSplashes', getProperty('grpNoteSplashes.length') -1, false); --insta killed
+end
+
+function opponentNoteHit(membersIndex, noteData, noteType, isSustainNote)
+	if getDataFromSave("Juniors Ports Stuff", "badaiTime") then
+		setProperty("badai.holdTimer", 0)
+		badaiPlayAnim(singAnims[noteData + 1])
+	else
+		setProperty("dad.holdTimer", 0)
+		playAnim("dad", singAnims[noteData + 1], true)
+	end
 end
 
 function noteMissPress(direction)

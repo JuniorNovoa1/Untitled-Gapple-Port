@@ -5,21 +5,16 @@ local unfairPart = false;
 local originPosX = {};
 local originPosY = {};
 
+function onBadaiCreate()
+    setProperty("badai.x", -500)
+    setProperty("badai.y", -800)
+    setProperty("badai.scale.x", 0.85)
+    setProperty("badai.scale.y", 0.85)
+    setProperty("badai.visible", false)
+    setObjectOrder('badai', getObjectOrder('boyfriendGroup'))
+end
+
 function onCreatePost()
-    if stringStartsWith(version, '0.6') then
-        addHaxeLibrary('Character')
-    else
-        addHaxeLibrary('Character', 'objects')
-    end
-    --100 (-800)
-    runHaxeCode([[
-        var bambi = new Character(-500, -800, 'bambi-piss-3d');
-        bambi.scale.set(0.85, 0.85);
-        bambi.visible = false;
-        game.add(bambi);
-        game.modchartSprites.set('bambi', bambi);
-    ]])
-    setObjectOrder('bambi', getObjectOrder('boyfriendGroup'))
     addLuaScript('activatedScripts/VG');
     setProperty('vg.visible', false)
     addCharacterToList('unfair-junker', 'dad')

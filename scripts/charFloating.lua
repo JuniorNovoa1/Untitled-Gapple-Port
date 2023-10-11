@@ -1,9 +1,11 @@
 local bfNameLowerCase = "";
 local dadNameLowerCase = "";
+local badaiNameLowerCase = ""
 
 function onCreatePost()
     bfNameLowerCase = string.lower(boyfriendName)
     dadNameLowerCase = string.lower(dadName)
+    badaiNameLowerCase = string.lower(getProperty("badai.curCharacter"))
 
     if dadNameLowerCase == 'bambi-piss-3d' or dadNameLowerCase == 'tunnel-dave' then
         setObjectOrder("dadGroup", getObjectOrder("boyfriendGroup") + 1)
@@ -13,12 +15,16 @@ end
 local elapsedtime = 0.0;
 local elapsedtimeBF = 0.0;
 local elapsedtimeDAD = 0.0;
+local elapsedtimeBADAI = 0.0;
 function onUpdate(elapsed)
+    if not getDataFromSave("Juniors Ports Stuff", "canFloat") then return; end
     elapsedtime = elapsedtime + elapsed;
     elapsedtimeBF = elapsedtimeBF + elapsed;
     elapsedtimeDAD = elapsedtimeDAD + elapsed;
+    if getDataFromSave("Juniors Ports Stuff", "badaiTime") then elapsedtimeBADAI = elapsedtimeBADAI + elapsed; end
     bfNameLowerCase = string.lower(boyfriendName)
     dadNameLowerCase = string.lower(dadName)
+    badaiNameLowerCase = string.lower(getProperty("badai.curCharacter"))
 
     --char floating
     if bfNameLowerCase == 'tunnel-bf' then
@@ -60,10 +66,13 @@ function onUpdate(elapsed)
     if dadNameLowerCase == 'tunnel-bf' then
         setProperty("dad.y", getProperty("dad.y") + (math.sin(elapsedtimeDAD) * 0.6))
     end
-    if dadNameLowerCase == 'dambai' then
-        callOnLuas("takeFromVal", {"dad.x", math.sin(elapsedtimeDAD * 0.2)})
-        setProperty("dad.y", (math.cos(elapsedtimeDAD) * 50) + 100)
+    if dadNameLowerCase == 'dambai' and not getDataFromSave("Juniors Ports Stuff", "badaiTime") then
+        callOnLuas("takeFromVal", {"dad.x", math.sin(elapsedtimeDAD * 0.5) * 2.15})
+        callOnLuas("addToVal", {"dad.y", math.cos(elapsedtimeDAD * 0.5) * 0.75})
+    elseif dadNameLowerCase == 'dambai' and getDataFromSave("Juniors Ports Stuff", "badaiTime") then
+        --setProperty("dad.y", getProperty("dad.y") - math.sin(elapsedtimeDAD) * 0.6)
     end
+
     if dadNameLowerCase == 'bad' then
         callOnLuas("takeFromVal", {"dad.y", math.sin(elapsedtimeDAD) * 0.325})
     end
@@ -95,6 +104,10 @@ function onUpdate(elapsed)
         setProperty("dad.x", 200 + math.sin(elapsedtimeDAD) * 425)
         setProperty("dad.y", getProperty("dad.y") + math.sin(elapsedtimeDAD) * 0.75)
     end
+
+    if badaiNameLowerCase == 'dambu' and getDataFromSave("Juniors Ports Stuff", "badaiTime") then
+        setProperty("badai.y", getProperty("badai.y") - math.sin(elapsedtimeBADAI) * 0.6)
+    end
 end
 
 function onEvent(eventName, value1, value2, strumTime)
@@ -104,6 +117,9 @@ function onEvent(eventName, value1, value2, strumTime)
         end
         if value1 == 'dad' then
             elapsedtimeDAD = 0;
+        end
+        if value1 == 'badai' then
+            elapsedtimeBADAI = 0;
         end
     end
 end

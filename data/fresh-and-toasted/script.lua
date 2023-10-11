@@ -1,20 +1,13 @@
 local brobPart = true;
 
+function onBadaiCreate()
+    setProperty("badai.x", getProperty("dad.x") - 525)
+    setProperty("badai.y", -500)
+end
+
 function onCreatePost()
     precacheMusic("freshAndToasted/win-brobgonal")
     addHaxeLibrary("FlxColor", 'flixel.util')
-    if stringStartsWith(version, '0.6') then
-        addHaxeLibrary('Character')
-    else
-        addHaxeLibrary('Character', 'objects')
-    end
-
-    runHaxeCode([[
-        var barbu = new Character(game.dad.x - 525, -500, 'barbu');
-		//barbu.visible = false;
-		game.add(barbu);
-		game.modchartSprites.set('barbu', barbu);
-    ]])
 
     for i = 0, getProperty("unspawnNotes.length") do
         if not getPropertyFromGroup("unspawnNotes", i, 'mustPress') then
@@ -28,8 +21,8 @@ local elapsedtime = 0;
 function onUpdatePost(elapsed)
     elapsedtime = elapsedtime + elapsed;
     if not brobPart then
-        setDataFromSave("Juniors Ports Stuff", "dad cam", {getProperty("barbu.x") + 500, getProperty('barbu.y') + 325})
-        setProperty("barbu.x", getProperty("barbu.x") - (math.sin(elapsedtime) * 0.9))
+        setDataFromSave("Juniors Ports Stuff", "dad cam", {getProperty("badai.x") + 500, getProperty('badai.y') + 325})
+        setProperty("badai.x", getProperty("badai.x") - (math.sin(elapsedtime) * 0.9))
     end
 
     if curStep >= 1647 then
@@ -38,7 +31,7 @@ function onUpdatePost(elapsed)
 
     
     if curStep >= 2767 then
-        setDataFromSave("Juniors Ports Stuff", "dad cam", {getProperty("barbu.x") + 500, getProperty('barbu.y') + 325})
+        setDataFromSave("Juniors Ports Stuff", "dad cam", {getProperty("badai.x") + 500, getProperty('badai.y') + 325})
         local dadCamZ = getDataFromSave("Juniors Ports Stuff", "dad cam")
         dadCamZ[2] = dadCamZ[2] - 25;
         setDataFromSave("Juniors Ports Stuff", "dad cam", dadCamZ)
@@ -56,7 +49,7 @@ function onStepHit()
     end
 
     if curStep == 1663 then
-        doTweenY('barbu', 'barbu', getProperty("boyfriend.y") - 200, 2)
+        doTweenY('badai', 'badai', getProperty("boyfriend.y") - 200, 2)
     end
 
     if curStep == 1711 then
@@ -73,7 +66,7 @@ function onStepHit()
     end
 
     if curStep >= 2783 then
-        playAnim("barbu", "stare", true)
+        playAnim("badai", "stare", true)
         setProperty("vocals.volume", 0)
     end
     if curStep == 2782 then
@@ -93,17 +86,17 @@ end
 
 function onBeatHit()
     if curBeat % 1 == 0 then
-        playAnim('barbu', 'idle', true)
+        playAnim('badai', 'idle', true)
     end
 end
 
 function onTweenCompleted(tag)
-    if tag == 'barbu' then 
+    if tag == 'badai' then 
         brobPart = false;
         runHaxeCode([[
-            game.iconP2.changeIcon('barbu');
+            game.iconP2.changeIcon('badai');
 
-            game.healthBar.createFilledBar(FlxColor.fromRGB(getLuaObject('barbu', false).healthColorArray[0], getLuaObject('barbu', false).healthColorArray[1], getLuaObject('barbu', false).healthColorArray[2]), FlxColor.fromRGB(game.boyfriend.healthColorArray[0], game.boyfriend.healthColorArray[1], game.boyfriend.healthColorArray[2]));
+            game.healthBar.createFilledBar(FlxColor.fromRGB(getLuaObject('badai', false).healthColorArray[0], getLuaObject('badai', false).healthColorArray[1], getLuaObject('badai', false).healthColorArray[2]), FlxColor.fromRGB(game.boyfriend.healthColorArray[0], game.boyfriend.healthColorArray[1], game.boyfriend.healthColorArray[2]));
 		    game.healthBar.updateBar();
         ]])
     end
@@ -128,8 +121,8 @@ function opponentNoteHit(membersIndex, noteData, noteType, isSustainNote)
         playAnim("dad", singAnim[noteData + 1], true)
         setProperty("dad.holdTimer", 0)
     else
-        playAnim("barbu", singAnim[noteData + 1], true)
-        setProperty("barbu.holdTimer", 0)
+        playAnim("badai", singAnim[noteData + 1], true)
+        setProperty("badai.holdTimer", 0)
     end
 end
 

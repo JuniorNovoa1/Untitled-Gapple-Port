@@ -2,6 +2,7 @@ local camMovementType = ''; --all types: '', charSize, camZoom - (charSize chang
 
 local bfCamIdle = {};
 local dadCamIdle = {};
+local badaiCamIdle = {};
 
 local offsets = 30;
 local posBFX = {}
@@ -14,6 +15,7 @@ local curNoteData = 0;
 function onUpdate() --camera now follows characters!!!!
 	bfCamIdle = getDataFromSave("Juniors Ports Stuff", "bf cam");
 	dadCamIdle = getDataFromSave("Juniors Ports Stuff", "dad cam");
+	badaiCamIdle = getDataFromSave("Juniors Ports Stuff", "badai cam");
 
 	if string.lower(songName) == 'nice' and curStep >= 7628 then
 		dadCamIdle[1] = getMidpointX('errung') + 150 + getProperty('errung.cameraPosition[0]') + getProperty('opponentCameraOffset[0]') + 200;
@@ -52,25 +54,49 @@ function onUpdate() --camera now follows characters!!!!
 			callCamMovemt(bfCamIdle[1] +offsets -(yoffset * 2.5), bfCamIdle[2] -yoffset);
 		end
 	end
-	if mustHitSection == false and (getProperty('dad.animation.curAnim.name') == 'idle' or (dadName == 'bandu' or dadName == 'bandu-sad')) then
-		callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] -yoffset);
-	elseif mustHitSection == false and dadName ~= 'bandu' and dadName ~= 'bandu-sad' then
-		if camMovementType == 'charSize' then
-			offsets = 30 + (0.000025 * getProperty('dad.width') * getProperty('dad.height'));
-		elseif camMovementType == 'camZoom' then
-			offsets = 30 / (getProperty('defaultCamZoom') * 0.8);
+	if not getDataFromSave("Juniors Ports Stuff", "badaiTime") then
+		if mustHitSection == false and (getProperty('dad.animation.curAnim.name') == 'idle' or (dadName == 'bandu' or dadName == 'bandu-sad')) then
+			callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] -yoffset);
+		elseif mustHitSection == false and dadName ~= 'bandu' and dadName ~= 'bandu-sad' then
+			if camMovementType == 'charSize' then
+				offsets = 30 + (0.000025 * getProperty('dad.width') * getProperty('dad.height'));
+			elseif camMovementType == 'camZoom' then
+				offsets = 30 / (getProperty('defaultCamZoom') * 0.8);
+			end
+			if curNoteData == 0 then
+				callCamMovemt(dadCamIdle[1] -offsets -yoffset, dadCamIdle[2] -yoffset);
+			end
+			if curNoteData == 1 then
+				callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] +offsets -yoffset);
+			end
+			if curNoteData == 2 then
+				callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] -offsets -yoffset);
+			end
+			if curNoteData == 3 then
+				callCamMovemt(dadCamIdle[1] +offsets -yoffset, dadCamIdle[2] -yoffset);
+			end
 		end
-		if curNoteData == 0 then
-			callCamMovemt(dadCamIdle[1] -offsets -yoffset, dadCamIdle[2] -yoffset);
-		end
-		if curNoteData == 1 then
-			callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] +offsets -yoffset);
-		end
-		if curNoteData == 2 then
-			callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] -offsets -yoffset);
-		end
-		if curNoteData == 3 then
-			callCamMovemt(dadCamIdle[1] +offsets -yoffset, dadCamIdle[2] -yoffset);
+	else
+		if mustHitSection == false and getProperty('badai.animation.curAnim.name') == 'idle' then
+			callCamMovemt(badaiCamIdle[1] -yoffset, badaiCamIdle[2] -yoffset);
+		elseif mustHitSection == false then
+			if camMovementType == 'charSize' then
+				offsets = 30 + (0.000025 * getProperty('dad.width') * getProperty('dad.height'));
+			elseif camMovementType == 'camZoom' then
+				offsets = 30 / (getProperty('defaultCamZoom') * 0.8);
+			end
+			if curNoteData == 0 then
+				callCamMovemt(badaiCamIdle[1] -offsets -yoffset, badaiCamIdle[2] -yoffset);
+			end
+			if curNoteData == 1 then
+				callCamMovemt(badaiCamIdle[1] -yoffset, badaiCamIdle[2] +offsets -yoffset);
+			end
+			if curNoteData == 2 then
+				callCamMovemt(badaiCamIdle[1] -yoffset, badaiCamIdle[2] -offsets -yoffset);
+			end
+			if curNoteData == 3 then
+				callCamMovemt(badaiCamIdle[1] +offsets -yoffset, badaiCamIdle[2] -yoffset);
+			end
 		end
 	end
 
@@ -84,9 +110,15 @@ function camShit()
 	local dadCamStuff = {};
 	dadCamStuff[1] = getMidpointX('dad') + 150 + getProperty('dad.cameraPosition[0]') + getProperty('opponentCameraOffset[0]')
 	dadCamStuff[2] = getMidpointY('dad') - 100 + getProperty('dad.cameraPosition[1]') + getProperty('opponentCameraOffset[1]')
+	local badaiCamStuff = {};
+	if luaSpriteExists("badai") then
+		badaiCamStuff[1] = getMidpointX('badai') + 150 + getProperty('badai.cameraPosition[0]') + getProperty('opponentCameraOffset[0]')
+		badaiCamStuff[2] = getMidpointY('badai') - 100 + getProperty('badai.cameraPosition[1]') + getProperty('opponentCameraOffset[1]')
+	end
 
 	setDataFromSave("Juniors Ports Stuff", "bf cam", bfCamStuff)
 	setDataFromSave("Juniors Ports Stuff", "dad cam", dadCamStuff)
+	setDataFromSave("Juniors Ports Stuff", "badai cam", badaiCamStuff)
 end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
