@@ -102,8 +102,8 @@ function onStepHit()
         end
     end
 
-    if curStep == 2180 or curStep == 2184 or curStep == 2188 then
-        if curStep == 2180 then camZoomA = getProperty("defaultCamZoom") end 
+    if curStep == 2176 or curStep == 2180 or curStep == 2184 or curStep == 2188 then
+        if curStep == 2176 then camZoomA = getProperty("defaultCamZoom") end 
         camZoomA = camZoomA + (0.015 * 10);
         camZoomTime = 0.1;
         lockCam = true;
