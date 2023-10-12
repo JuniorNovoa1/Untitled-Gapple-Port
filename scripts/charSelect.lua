@@ -36,7 +36,7 @@ function onCreatePost()
 	for i = 1, #nonCharSelectSongs do
 		if string.lower(songName) == nonCharSelectSongs[i] then gappleSong = false; end
 	end
-	if not getDataFromSave("Juniors Ports Stuff", "charSelect", true) or not gappleSong then
+	if not getDataFromSave("UnNamedGapplePortSettings", "charSelect", true) or not gappleSong then
 		callOnLuas('onDialogueReadyChar')
 		runHaxeCode([[game.startCountdown();]])
 		callOnLuas('onCountdownTick', {69})
@@ -153,7 +153,7 @@ end
 
 local hasExitCharSelect = false;
 function onStartCountdown()
-	if not hasExitCharSelect and getDataFromSave("Juniors Ports Stuff", "charSelect", true) and gappleSong then
+	if not hasExitCharSelect and getDataFromSave("UnNamedGapplePortSettings", "charSelect", true) and gappleSong then
 		return Function_Stop;
 	else
 		return Function_Continue;
@@ -217,7 +217,7 @@ function triggerKeyThingy(key)
 end
 
 function onUpdate(elapsed)
-	if hasExitCharSelect or not getDataFromSave("Juniors Ports Stuff", "charSelect", true) or not gappleSong then return; end
+	if hasExitCharSelect or not getDataFromSave("UnNamedGapplePortSettings", "charSelect", true) or not gappleSong then return; end
 	setProperty("fakeMouse.x", getMouseX("other"))
 	setProperty("fakeMouse.y", getMouseY("other"))
 	if luaSoundExists('charSelectSound') == false then

@@ -47,8 +47,3 @@ end
 function onCreate()
 	createDeformartionSprites("alge")
 end
-
-function onUpdate(elapsed)
-	setDataFromSave("Juniors Ports Stuff", 'dad cam', {650, 375})
-	setDataFromSave("Juniors Ports Stuff", 'bf cam', {650, 375})
-end

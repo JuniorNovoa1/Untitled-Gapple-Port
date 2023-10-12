@@ -1,9 +1,9 @@
 --settings!!
-local settingsAlert = false; --disable to remove message in the top left!!!
+local settingsAlert = true; --disable to remove message in the top left!!!
 --main settings
 local modcharts = true; --determines wether modcharts are enabled.
-local epilepsy = true; --determines if screen flashes many colors at once. (disable if you have Epilepsy)
-local screenshake = true; --determines wether the screen can shake.
+local epilepsy = false; --determines if screen flashes many colors at once. (disable if you have Epilepsy)
+local screenshake = false; --determines wether the screen can shake.
 local dialogue = false; --determine wether dialogue pops up on compatible songs.
 --dave and bambi golden apple settings
 local charSelect = false; --determines wether the char select screen pops up before a song begins. (increases memory usage)
@@ -22,44 +22,46 @@ local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad',
 'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
 'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'too-shiny', 'dave-wide', 'awesomeBambiCrack',
 'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad', "3d-tristan", 'dambai', 'dambu'}
-local cameraMovementEnabled = false;
 
 --IGNORE EVERYTHING BELOW!!!!!!
 function onCreate()
-    initSaveData("Juniors Ports Stuff")
+    luaDebugMode = true;
+    luaDeprecatedWarnings = true;
+    initSaveData("UnNamedGapplePortSettings", "UnNamedGapplePort")
     --main
-    setDataFromSave("Juniors Ports Stuff", 'settingsAlert', settingsAlert)
-    setDataFromSave("Juniors Ports Stuff", 'modcharts', modcharts)
-    setDataFromSave("Juniors Ports Stuff", 'epilepsy', epilepsy)
-    setDataFromSave("Juniors Ports Stuff", 'screenshake', screenshake)
-    setDataFromSave("Juniors Ports Stuff", 'dialogue', dialogue)
+    setDataFromSave("UnNamedGapplePortSettings", 'hasBeenCreated', true) 
+    setDataFromSave("UnNamedGapplePortSettings", 'settingsAlert', settingsAlert)
+    setDataFromSave("UnNamedGapplePortSettings", 'modcharts', modcharts)
+    setDataFromSave("UnNamedGapplePortSettings", 'epilepsy', epilepsy)
+    setDataFromSave("UnNamedGapplePortSettings", 'screenshake', screenshake)
+    setDataFromSave("UnNamedGapplePortSettings", 'dialogue', dialogue)
     --dave and bambi settings
-    setDataFromSave("Juniors Ports Stuff", 'charSelect', charSelect)
-    setDataFromSave("Juniors Ports Stuff", 'newCamZoom', newCamZoom)
+    setDataFromSave("UnNamedGapplePortSettings", 'charSelect', charSelect)
+    setDataFromSave("UnNamedGapplePortSettings", 'newCamZoom', newCamZoom)
     --misc
-    setDataFromSave("Juniors Ports Stuff", 'camZoom', true)
-    setDataFromSave("Juniors Ports Stuff", 'unfinishedStuff', unfinishedStuff)
+    setDataFromSave("UnNamedGapplePortSettings", 'camZoom', true)
+    setDataFromSave("UnNamedGapplePortSettings", 'unfinishedStuff', unfinishedStuff)
     --modding
-    setDataFromSave("Juniors Ports Stuff", 'debugMode', debugMode)
+    setDataFromSave("UnNamedGapplePortSettings", 'debugMode', debugMode)
 
     --cross script shit
-    setDataFromSave("Juniors Ports Stuff", "canFloat", true)
-    setDataFromSave("Juniors Ports Stuff", "badaiTime", false)
-    setDataFromSave("Juniors Ports Stuff", "gappleSongs", gappleSongs)
-    setDataFromSave("Juniors Ports Stuff", "CharactersWith3D", CharactersWith3D)
-    setDataFromSave("Juniors Ports Stuff", "cameraMovementEnabled", cameraMovementEnabled)
+    setDataFromSave("UnNamedGapplePortSettings", "canFloat", true)
+    setDataFromSave("UnNamedGapplePortSettings", "badaiTime", false)
+    setDataFromSave("UnNamedGapplePortSettings", "gappleSongs", gappleSongs)
+    setDataFromSave("UnNamedGapplePortSettings", "CharactersWith3D", CharactersWith3D)
 
-    if getDataFromSave("Juniors Ports Stuff", "debugMode") then
-        setDataFromSave("Juniors Ports Stuff", 'dialogue', false)
-        setDataFromSave("Juniors Ports Stuff", 'charSelect', false)
+    if debugMode then
+        setDataFromSave("UnNamedGapplePortSettings", 'dialogue', false)
+        setDataFromSave("UnNamedGapplePortSettings", 'charSelect', false)
         luaDebugMode = true;
         luaDeprecatedWarnings = true;
     end
-    flushSaveData("Juniors Ports Stuff")
+    --flushSaveData("UnNamedGapplePortSettings")
+    --initSaveData("UnNamedGapplePortSettings")
 end
 
 function onCreatePost()
-    if getDataFromSave("Juniors Ports Stuff", "debugMode", false) then
+    if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then
         makeLuaText('debugTxt', '', 0, 18, 164) --18, 32
 	    setObjectCamera('debugTxt', 'other')
 	    setTextAlignment('debugTxt', 'center')
@@ -87,13 +89,13 @@ function math.lerp(from, to, t)
 end
 
 function onUpdate()
-    if getDataFromSave("Juniors Ports Stuff", "debugMode", false) then
+    if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then
         if getProperty("health") <= 0 then setProperty("health", 0.01) end
         if keyboardJustPressed("P") then setProperty("cpuControlled", not getProperty("cpuControlled")) end
     end
 
     setProperty('camZooming', false)
-    if getDataFromSave("Juniors Ports Stuff", 'camZoom', true) == false then
+    if getDataFromSave("UnNamedGapplePortSettings", 'camZoom', true) == false then
         return;
     end
     if stringStartsWith(version, '0.6') then
@@ -108,7 +110,7 @@ end
 local floorIt = false;
 
 function onStepHit()
-    if getDataFromSave("Juniors Ports Stuff", "debugMode", false) then --using math.floor to round up character values, 80% accurate
+    if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then --using math.floor to round up character values, 80% accurate
         setProperty("debugTxt2.x", getProperty("debugTxt.x") + getProperty("debugTxt.width") + 16)
         if floorIt then
             setTextString("debugTxt", "Debug\nCharacter\nDad Pos = ["..math.floor(getProperty("dad.x"), 2)..", "..math.floor(getProperty("dad.y"), 2).."]\nBf Pos = ["..math.floor(getProperty("boyfriend.x"), 2)..", "..math.floor(getProperty("boyfriend.y"), 2).."]".."\nGf Pos = ["..math.floor(getProperty("gf.x"), 2)..", "..math.floor(getProperty("gf.y"), 2).."]")
@@ -118,7 +120,7 @@ function onStepHit()
         setTextString("debugTxt2", 'Stage\nCam Zoom: '..getProperty("defaultCamZoom")..'\nStage: "'..curStage..'"\nDad: "'..dadName..'"\nBf: "'..boyfriendName..'"\nGf: "'..gfName..'"')
         setTextString("debugTxt", getTextString("debugTxt").."\nSettings\n")
         for i = 1, #settingStringArray do
-            local settingBool = getDataFromSave("Juniors Ports Stuff", settingStringArray[i])
+            local settingBool = getDataFromSave("UnNamedGapplePortSettings", settingStringArray[i])
             local boolIntoString = "true";
             if settingBool ~= true then boolIntoString = "false"; end
             setTextString("debugTxt", getTextString("debugTxt")..settingStringArray[i]..": "..boolIntoString.."\n")

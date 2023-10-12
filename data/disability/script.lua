@@ -7,13 +7,13 @@ local camFlashTimes = {128, 640, 1152}
 
 function onUpdate(elapsed)
     if lockCam then
-        setDataFromSave("Juniors Ports Stuff", 'camZoom', false)
+        setDataFromSave("UnNamedGapplePortSettings", 'camZoom', false)
         doTweenZoom('camZoomGame', 'camGame', camZoomA, camZoomTime, "")
     else
-        setDataFromSave("Juniors Ports Stuff", 'camZoom', true)
+        setDataFromSave("UnNamedGapplePortSettings", 'camZoom', true)
     end
 
-    if getDataFromSave("Juniors Ports Stuff", 'modcharts', true) ~= true then
+    if getDataFromSave("UnNamedGapplePortSettings", 'modcharts', true) ~= true then
         return;
     end
 

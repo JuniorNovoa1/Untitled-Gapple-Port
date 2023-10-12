@@ -17,11 +17,11 @@ local elapsedtimeBF = 0.0;
 local elapsedtimeDAD = 0.0;
 local elapsedtimeBADAI = 0.0;
 function onUpdate(elapsed)
-    if not getDataFromSave("Juniors Ports Stuff", "canFloat") then return; end
+    if not getDataFromSave("UnNamedGapplePortSettings", "canFloat") then return; end
     elapsedtime = elapsedtime + elapsed;
     elapsedtimeBF = elapsedtimeBF + elapsed;
     elapsedtimeDAD = elapsedtimeDAD + elapsed;
-    if getDataFromSave("Juniors Ports Stuff", "badaiTime") then elapsedtimeBADAI = elapsedtimeBADAI + elapsed; end
+    if getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then elapsedtimeBADAI = elapsedtimeBADAI + elapsed; end
     bfNameLowerCase = string.lower(boyfriendName)
     dadNameLowerCase = string.lower(dadName)
     badaiNameLowerCase = string.lower(getProperty("badai.curCharacter"))
@@ -66,10 +66,10 @@ function onUpdate(elapsed)
     if dadNameLowerCase == 'tunnel-bf' then
         setProperty("dad.y", getProperty("dad.y") + (math.sin(elapsedtimeDAD) * 0.6))
     end
-    if dadNameLowerCase == 'dambai' and not getDataFromSave("Juniors Ports Stuff", "badaiTime") then
+    if dadNameLowerCase == 'dambai' and not getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then
         callOnLuas("takeFromVal", {"dad.x", math.sin(elapsedtimeDAD * 0.5) * 2.15})
         callOnLuas("addToVal", {"dad.y", math.cos(elapsedtimeDAD * 0.5) * 0.75})
-    elseif dadNameLowerCase == 'dambai' and getDataFromSave("Juniors Ports Stuff", "badaiTime") then
+    elseif dadNameLowerCase == 'dambai' and getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then
         --setProperty("dad.y", getProperty("dad.y") - math.sin(elapsedtimeDAD) * 0.6)
     end
 
@@ -105,7 +105,7 @@ function onUpdate(elapsed)
         setProperty("dad.y", getProperty("dad.y") + math.sin(elapsedtimeDAD) * 0.75)
     end
 
-    if badaiNameLowerCase == 'dambu' and getDataFromSave("Juniors Ports Stuff", "badaiTime") then
+    if badaiNameLowerCase == 'dambu' and getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then
         setProperty("badai.y", getProperty("badai.y") - math.sin(elapsedtimeBADAI) * 0.6)
     end
 end

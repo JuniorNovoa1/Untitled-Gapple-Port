@@ -204,7 +204,7 @@ function onStartCountdown()
 end
 
 function onDialogueReadyChar()
-	if not dialogueBool or not getDataFromSave("Juniors Ports Stuff", 'dialogue', true) then
+	if not dialogueBool or not getDataFromSave("UnNamedGapplePortSettings", 'dialogue', true) then
 		hasExitDialogue = true;
 		runHaxeCode([[game.startCountdown();]])
 		callOnLuas('onCountdownTick', {69})

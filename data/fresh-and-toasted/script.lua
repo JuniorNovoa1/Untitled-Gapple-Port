@@ -20,23 +20,13 @@ local elapsedtime = 0;
 
 function onUpdatePost(elapsed)
     elapsedtime = elapsedtime + elapsed;
+    setDataFromSave("UnNamedGapplePortSettings", "badaiTime", not brobPart)
     if not brobPart then
-        setDataFromSave("Juniors Ports Stuff", "dad cam", {getProperty("badai.x") + 500, getProperty('badai.y') + 325})
         setProperty("badai.x", getProperty("badai.x") - (math.sin(elapsedtime) * 0.9))
     end
 
     if curStep >= 1647 then
         setShaderFloat('fresh1', 'uTime', 0)
-    end
-
-    
-    if curStep >= 2767 then
-        setDataFromSave("Juniors Ports Stuff", "dad cam", {getProperty("badai.x") + 500, getProperty('badai.y') + 325})
-        local dadCamZ = getDataFromSave("Juniors Ports Stuff", "dad cam")
-        dadCamZ[2] = dadCamZ[2] - 25;
-        setDataFromSave("Juniors Ports Stuff", "dad cam", dadCamZ)
-        setDataFromSave("Juniors Ports Stuff", "bf cam", dadCamZ)
-        triggerEvent('Camera Follow Pos', ''..(dadCamZ[1]), ''..dadCamZ[2])
     end
 end
 

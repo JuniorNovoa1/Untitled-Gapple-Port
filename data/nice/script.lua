@@ -9,7 +9,7 @@ function onUpdate(elapsed)
     if lockCam then moveCam(650, 450) end
 
     if zoomCam then
-        setDataFromSave("Juniors Ports Stuff", 'camZoom', false)
+        setDataFromSave("UnNamedGapplePortSettings", 'camZoom', false)
         doTweenZoom('camZoomGame', 'camGame', zoomCamVal, zoomCamTime, "")
     end
 end
@@ -50,7 +50,7 @@ function onStepHit()
         setProperty("boyfriend.visible", false)
         setProperty("dad.visible", false)
         playAnim("schoolEntrance", "animEnter", true)
-        setDataFromSave("Juniors Ports Stuff", 'newCamZoom', true) --this is where this shit needs to kick in
+        setDataFromSave("UnNamedGapplePortSettings", 'newCamZoom', true) --this is where this shit needs to kick in
     end
 
     if curStep == 2144 then

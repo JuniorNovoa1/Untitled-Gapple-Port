@@ -34,7 +34,7 @@ end
 
 
 function onCreatePost()
-	CharactersWith3D = getDataFromSave("Juniors Ports Stuff", "CharactersWith3D")
+	CharactersWith3D = getDataFromSave("UnNamedGapplePortSettings", "CharactersWith3D")
 	if stringStartsWith(version, '0.7') then
 		changeDiscordClientID("1136119974763708478")
 	end
@@ -288,17 +288,7 @@ local objectsCountown = {'countdownReady', 'countdownSet', 'countdownGo'}
 
 function onCountdownTick(swagCounter)
 	if gappleHUDsong then
-		local bfCamIdle = getDataFromSave("Juniors Ports Stuff", "bf cam");
-		local dadCamIdle = getDataFromSave("Juniors Ports Stuff", "dad cam");
-		if swagCounter == 0 then
-			setDataFromSave("Juniors Ports Stuff", "cameraMovementEnabled", false)
-			callOnLuas("moveCam", {dadCamIdle[1], dadCamIdle[2]})
-		elseif swagCounter == 1 then
-			callOnLuas("moveCam", {bfCamIdle[1], bfCamIdle[2]})
-		elseif swagCounter == 2 then
-			callOnLuas("moveCam", {dadCamIdle[1], dadCamIdle[2]})
-		elseif swagCounter == 3 then
-			callOnLuas("moveCam", {bfCamIdle[1], bfCamIdle[2]})
+		if swagCounter == 3 then
 			runHaxeCode([[
 				if (game.boyfriend.animOffsets.exists("hey"))
 					game.boyfriend.playAnim("hey");
@@ -310,8 +300,6 @@ function onCountdownTick(swagCounter)
 			setProperty(objectsCountown[3]..".scale.y", 0)
 			doTweenX("lastCountScaleX", objectsCountown[3]..".scale", 1.35, crochet / 2000 / getProperty("playbackRate"), "")
 			doTweenY("lastCountScaleY", objectsCountown[3]..".scale", 1.35, crochet / 2000 / getProperty("playbackRate"), "")
-		elseif swagCounter == 4 then
-			setDataFromSave("Juniors Ports Stuff", "cameraMovementEnabled", true)
 		end
 	end
 end
@@ -495,8 +483,8 @@ function onUpdatePost(elapsed)
 			setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
 			setTextString("memoryTxt", "Memory: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
 
-			if getDataFromSave("Juniors Ports Stuff", "debugMode", false) then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
-			if getDataFromSave("Juniors Ports Stuff", "settingsAlert", buildTarget ~= 'android') then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
+			if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
+			if getDataFromSave("UnNamedGapplePortSettings", "settingsAlert", buildTarget ~= 'android') then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
 		end
 		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		if string.lower(songName) == 'kooky' then
@@ -590,7 +578,7 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 end
 
 function opponentNoteHit(membersIndex, noteData, noteType, isSustainNote)
-	if getDataFromSave("Juniors Ports Stuff", "badaiTime") then
+	if getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
 		setProperty("badai.holdTimer", 0)
 		badaiPlayAnim(singAnims[noteData + 1])
 	else

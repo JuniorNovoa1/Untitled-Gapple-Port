@@ -20,7 +20,7 @@ function onStepHit()
 
     if curStep == 1808 then --1808
         if flashingLights then cameraFlash("hud", "FFFFFF", 1) end
-        setDataFromSave("Juniors Ports Stuff", "canFloat", false)
+        setDataFromSave("UnNamedGapplePortSettings", "canFloat", false)
         doTweenY("dambu", "badai", 150, 1.5, "sineOut")
         doTweenX("dadFloaty", "dad", -675, 1.5, "sineOut")
         doTweenY("dadFloatyY", "dad", 100, 1.5, "sineOut")
@@ -34,8 +34,8 @@ end
 
 function onTweenCompleted(tag)
     if tag == 'dadFloatyY' then
-        setDataFromSave("Juniors Ports Stuff", "badaiTime", true)
-        setDataFromSave("Juniors Ports Stuff", "canFloat", true)
+        setDataFromSave("UnNamedGapplePortSettings", "badaiTime", true)
+        setDataFromSave("UnNamedGapplePortSettings", "canFloat", true)
         setProperty("dad.healthColorArray[0]", getProperty("badai.healthColorArray[0]"))
         setProperty("dad.healthColorArray[1]", getProperty("badai.healthColorArray[1]"))
         setProperty("dad.healthColorArray[2]", getProperty("badai.healthColorArray[2]"))
