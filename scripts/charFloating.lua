@@ -67,10 +67,10 @@ function onUpdate(elapsed)
         setProperty("dad.y", getProperty("dad.y") + (math.sin(elapsedtimeDAD) * 0.6))
     end
     if dadNameLowerCase == 'dambai' and not getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then
-        callOnLuas("takeFromVal", {"dad.x", math.sin(elapsedtimeDAD * 0.5) * 2.15})
-        callOnLuas("addToVal", {"dad.y", math.cos(elapsedtimeDAD * 0.5) * 0.75})
+        callOnLuas("takeFromVal", {"dad.x", math.sin(elapsedtimeDAD) * 5})
+        callOnLuas("addToVal", {"dad.y", math.cos(elapsedtimeDAD) * 1})
     elseif dadNameLowerCase == 'dambai' and getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then
-        --setProperty("dad.y", getProperty("dad.y") - math.sin(elapsedtimeDAD) * 0.6)
+        setProperty("dad.y", getProperty("dad.y") - math.sin(elapsedtimeDAD) * 0.6)
     end
 
     if dadNameLowerCase == 'bad' then
@@ -106,7 +106,7 @@ function onUpdate(elapsed)
     end
 
     if badaiNameLowerCase == 'dambu' and getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then
-        setProperty("badai.y", getProperty("badai.y") - math.sin(elapsedtimeBADAI) * 0.6)
+        setProperty("badai.y", getProperty("badai.y") + math.sin(elapsedtimeBADAI) * 0.6)
     end
 end
 
