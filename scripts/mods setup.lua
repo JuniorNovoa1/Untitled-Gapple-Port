@@ -1,19 +1,19 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 local nonGappleSongs = {''};
-local songSplashNames = {''};
 local gappleHUDsong = true;
 
 local songMod = 'DNB: Golden Apple';
 
-local gappleMemoryCounter = false; --gapple doesn't have a memory counter...
+local gappleMemoryCounter = true; --gapple doesn't have a memory counter... ITS REAL LANCE YPOSTED  IYT OPMGGGG	
 
 local CharactersWith3D = {};
 
 local badaiSongs = {
-	["applecore"] = '3d-bambi-piss',
+	["applecore"] = 'bambi-piss-3d',
 	["fresh-and-toasted"] = 'barbu',
-	["resumed"] = 'dambu'
+	["resumed"] = 'dambu',
+	["the-big-dingle"] = 'donk'
 }
 
 function onCreate()
@@ -32,6 +32,8 @@ function onCreate()
 	end
 end
 
+local oldFPS = 60;
+local overrideFPS = 126;
 
 function onCreatePost()
 	CharactersWith3D = getDataFromSave("UnNamedGapplePortSettings", "CharactersWith3D")
@@ -71,6 +73,7 @@ function onCreatePost()
 
 	if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
 	if string.lower(songName) == 'fresh-and-toasted' then setTextString("creditsWatermark", 'Fresh And Toasted') end
+	if string.lower(songName) == 'the-big-dingle' then setTextString("creditsWatermark", 'The Big Dingle') end
 
 	makeLuaText('creditsText', '', 0, 4, getProperty('healthBar.y') + 52)
 	setObjectCamera('creditsText', 'camHUD')
@@ -83,15 +86,6 @@ function onCreatePost()
 	addLuaText('creditsText')
 
 	if string.lower(songName) == 'disruption' then setProperty('creditsText.text', 'Screw you!') end
-	if string.lower(songName) == 'maze' then
-		songMod = 'Dave and Bambi';
-		setProperty('healthBarBG.visible', false)
-		makeLuaSprite('healthBarBGnew', 'daveHealth', getProperty('healthBar.x'), getProperty('healthBar.y'))
-		setObjectCamera('healthBarBGnew', 'camHUD')
-		addLuaSprite('healthBarBGnew', false)
-		setObjectOrder('healthBarBGnew', getObjectOrder('healthBar') + 1)
-		return;
-	end
 
 	if getProperty('creditsText.text') == '' and string.lower(songName) ~= 'kooky' then
 		setProperty('creditsWatermark.y', getProperty('healthBar.y') + 50)
@@ -124,6 +118,7 @@ function onCreatePost()
 		runHaxeCode([[
 			var badai = new Character(0, 0, ']]..badaiSongs[string.lower(songName)]..[[');
 			game.add(badai);
+			game.startCharacterLua(']]..badaiSongs[string.lower(songName)]..[[');
 			game.modchartSprites.set('badai', badai);
 		]])
 		callOnLuas("onBadaiCreate")
@@ -136,12 +131,19 @@ function onCreatePost()
 	screenCenter("gappleTransition", 'xy')
 	addLuaSprite('gappleTransition', true)
 
+	if stringStartsWith(version, '0.6') then oldFPS = getPropertyFromClass("ClientPrefs", "framerate") else oldFPS = getPropertyFromClass("backend.ClientPrefs", "data.framerate") end
+	if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', overrideFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', overrideFPS) end
+	runHaxeCode([[
+		ClientPrefs.saveSettings();
+		ClientPrefs.loadPrefs();
+	]])
+
 	addHaxeLibrary("Type")
 	makeLuaText('fpsTxt', '', 0, 18, 6)
 	setObjectCamera('fpsTxt', 'other')
 	setTextAlignment('fpsTxt', 'center')
 	setTextFont('fpsTxt', 'comic.ttf')
-	setTextSize('fpsTxt', 26)
+	setTextSize('fpsTxt', 24)
     runHaxeCode([[game.getLuaObject('fpsTxt').setBorderStyle(Type.resolveEnum('flixel.text.FlxTextBorderStyle').NONE);]]) --Collin09 POG
 	setProperty('fpsTxt.antialiasing', true)
 	if stringStartsWith(version, '0.6') then
@@ -153,13 +155,11 @@ function onCreatePost()
 	updateHitbox('fpsTxt')
 	addLuaText('fpsTxt')
 
-	makeLuaText('memoryTxt', '', 0, 18, 38)
+	makeLuaText('memoryTxt', '', 0, 18, 32)
 	setObjectCamera('memoryTxt', 'other')
 	setTextAlignment('memoryTxt', 'center')
 	setTextFont('memoryTxt', 'comic.ttf')
-	setTextSize('memoryTxt', 18)
-	--setProperty("memoryTxt.scale.x", getProperty("memoryTxt.scale.x") + 0.15)
-	--setTextWidth("memoryTxt", getTextWidth("memoryTxt") + 6)
+	setTextSize('memoryTxt', 16)
     runHaxeCode([[game.getLuaObject('memoryTxt').setBorderStyle(Type.resolveEnum('flixel.text.FlxTextBorderStyle').NONE);]]) --Collin09 POG
 	setProperty('memoryTxt.antialiasing', true)
 	if stringStartsWith(version, '0.6') then
@@ -278,6 +278,7 @@ function onEvent(eventName, value1, value2, strumTime)
 				game.getLuaObject('badai', false).destroy();
 				var badai = new Character(0, 0, ']]..value2..[[');
 				game.add(badai);
+				game.startCharacterLua(']]..value2..[[');
 				game.modchartSprites.set('badai', badai);
 			]])
 		end
@@ -454,7 +455,7 @@ end
 local offsets = {-13, -13}--{55, 43}
 
 function onUpdatePost(elapsed)
-	if string.lower(songName) == 'maze' or gappleHUDsong then
+	if gappleHUDsong then
 		if string.lower(songName) ~= 'kooky' then
 			setProperty('healthBar.y', screenHeight * 0.9 + 4)
 			--setProperty('healthBar.x', screenHeight * 0.4)
@@ -481,7 +482,10 @@ function onUpdatePost(elapsed)
 
 		if gappleHUDsong then
 			setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
-			setTextString("memoryTxt", "Memory: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
+			setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
+			if math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)) >= 1000 then
+				setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000000, 1)).."."..(math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 10000000, 1)) - (math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000000, 1)) * 100)).." GB")
+			end
 
 			if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
 			if getDataFromSave("UnNamedGapplePortSettings", "settingsAlert", buildTarget ~= 'android') then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
@@ -490,23 +494,14 @@ function onUpdatePost(elapsed)
 		if string.lower(songName) == 'kooky' then
 			setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 		end
-		if string.lower(songName) == 'maze' then
-			local thingy = 0.8;
-			setGraphicSize('iconP22', math.floor(math.lerp(150, getProperty('iconP22.width'), thingy)), math.floor(math.lerp(150, getProperty('iconP22.height'), thingy)))
-			setGraphicSize('iconP12', math.floor(math.lerp(150, getProperty('iconP12.width'), thingy)), math.floor(math.lerp(150, getProperty('iconP12.height'), thingy)))
-			updateHitbox('iconP12')
-			updateHitbox('iconP22')
-		end
 	end
 end
 
 function onStepHit()
 	if stringStartsWith(version, '0.7') then
-		changeDiscordPresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
-		changeDiscordPresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
+		changeDiscordPresence(songName.." - Unnamed Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
     else
-		changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
-		changePresence(songName.." ("..songMod..") - Junior's Funny Mod Folder Ports", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
+		changePresence(songName.." - Unnamed Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
 	end
 
 	--setObjectOrder('strumLineNotes', getObjectOrder('notes') +1) --puts notes under strumlinenotes
@@ -540,17 +535,6 @@ function onSectionHit()
 end
 
 function onBeatHit()
-	if string.lower(songName) == 'maze' then
-		local funny = math.max(math.min(getProperty('healthBar.value'), 1.9), 0.1)
-		setGraphicSize('iconP12', math.floor(getProperty('iconP12.width') + (50 * funny)), math.floor(getProperty('iconP12.height') - (25 * funny)))
-		setGraphicSize('iconP22', math.floor(getProperty('iconP22.width') + (50 * ((2 - funny) + 0.1))), math.floor(getProperty('iconP22.height') - (25 * ((2 - funny) + 0.1))))
-
-		updateHitbox('iconP12')
-		updateHitbox('iconP22')
-		updateHitbox('iconP1')
-		updateHitbox('iconP2')
-	end
-
 	if curBeat % 2 == 0 then
 		if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
 			playAnim('boyfriend', 'idle', true)
@@ -603,4 +587,29 @@ function noteMissedStuff(direction)
 	setProperty('boyfriend.color', getColorFromHex('9400d3'))
 	setProperty('boyfriend.holdTimer', 0)
 	prevAnim = getProperty('boyfriend.animation.curAnim.name')
+end
+
+function onResume()
+	if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', overrideFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', overrideFPS) end
+	runHaxeCode([[
+		ClientPrefs.saveSettings();
+		ClientPrefs.loadPrefs();
+	]])
+	setPropertyFromClass("Main", "fpsVar.visible", false)
+end
+
+function onGameOver()
+    if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', oldFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', oldFPS) end
+	runHaxeCode([[
+		ClientPrefs.saveSettings();
+		ClientPrefs.loadPrefs();
+	]])
+end
+
+function onDestroy()
+    if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', oldFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', oldFPS) end
+	runHaxeCode([[
+		ClientPrefs.saveSettings();
+		ClientPrefs.loadPrefs();
+	]])
 end

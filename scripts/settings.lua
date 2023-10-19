@@ -16,12 +16,12 @@ local debugMode = false; --wether to enable modding tools to help out me (Junior
 local settingStringArray = {"modcharts", "epilepsy", "screenshake", "dialogue", "charSelect", "newCamZoom", "unfinishedStuff", "debugMode"}
 
 --cross script shit
-local gappleSongs = {'maze', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'deformation', 'ferocious', 'nice', 'glamrock', 'sugar-rush', 'gift-card', 'ready-loud', 'bookworm', 'cuberoot', 'sart-producer', 'og', 'mine', 
+local gappleSongs = {'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'deformation', 'ferocious', 'nice', 'glamrock', 'sugar-rush', 'gift-card', 'ready-loud', 'bookworm', 'cuberoot', 'sart-producer', 'og', 'mine', 
 'apple-leak', 'awesome', 'badcorn', 'crap!', 'ticking', 'kooky'}
 local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', 'shoulder-bf', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
 'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
 'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'too-shiny', 'dave-wide', 'awesomeBambiCrack',
-'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad', "3d-tristan", 'dambai', 'dambu', 'dale'}
+'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad', "3d-tristan", 'dambai', 'dambu', 'dale', 'dingle', 'froing'}
 
 --IGNORE EVERYTHING BELOW!!!!!!
 function onCreate()

@@ -237,7 +237,7 @@ end
 
 local singAnims = {"singRIGHT", "singDOWN", "singUP", "singLEFT"}
 function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
-	if nativeCharacters[characters[curSelected][curSelectedVer]] ~= true and confirmed then
+	if nativeCharacters[boyfriendName] ~= true and confirmed then
 		playAnim("boyfriend", singAnims[noteData + 1])
 	end
 end

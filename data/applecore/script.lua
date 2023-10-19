@@ -1,5 +1,5 @@
 local oldVal = {false, false}
-local bambiPissed = false;
+local badaiPissed = false;
 local unfairPart = false;
 
 local originPosX = {};
@@ -34,8 +34,8 @@ function onSongStart()
     end
     runHaxeCode([[game.generateStaticArrows(0);]])
     for direction = 4, 7 do
-        setPropertyFromGroup('opponentStrums', direction, 'x', getProperty("bambi.x") + 235 + getPropertyFromGroup('opponentStrums', direction, 'x'))
-        setPropertyFromGroup('opponentStrums', direction, 'y', getProperty("bambi.y") + 100)
+        setPropertyFromGroup('opponentStrums', direction, 'x', getProperty("badai.x") + 235 + getPropertyFromGroup('opponentStrums', direction, 'x'))
+        setPropertyFromGroup('opponentStrums', direction, 'y', getProperty("badai.y") + 100)
         setPropertyFromGroup('opponentStrums', direction, 'scrollFactor.x', 0.9)
         setPropertyFromGroup('opponentStrums', direction, 'scrollFactor.y', 0.9)
         setPropertyFromGroup('opponentStrums', direction, 'visible', false)
@@ -63,7 +63,7 @@ local camLock = false;
 
 function onUpdate(elapsed)
     elapsedtime = elapsedtime +elapsed;
-    if bambiPissed then
+    if badaiPissed then
         for i = 0, getProperty('strumLineNotes.length') do
             local nope = false;
             if i <= 3 then
@@ -96,8 +96,8 @@ function onUpdate(elapsed)
             setPropertyFromGroup('strumLineNotes', i, 'y', ((screenHeight / 2) - (getPropertyFromGroup('strumLineNotes', i, 'height') / 2)) + (math.cos(elapsedtime + (i)) * 300))
         end
     end
-    if bambiPissed or unfairPart then
-        setProperty("bambi.y", getProperty("bambi.y") - (math.sin(elapsedtime) * 0.6))
+    if badaiPissed or unfairPart then
+        setProperty("badai.y", getProperty("badai.y") - (math.sin(elapsedtime) * 0.6))
     end
 end
 
@@ -107,7 +107,7 @@ function onUpdatePost()
             setObjectCamera('notes.members['..i..']', 'camGame')
             setPropertyFromGroup('notes', i, 'hitByOpponent', true)
 			local earlyHitMult = getPropertyFromGroup('notes', i, 'earlyHitMult');
-			earlyHitMult = 0.125; --bambi hit notes early
+			earlyHitMult = 0.125; --badai hit notes early
             if getPropertyFromGroup('notes', i, 'strumTime') > getPropertyFromClass('Conductor', 'songPosition') - (getPropertyFromClass('Conductor', 'safeZoneOffset') * getPropertyFromGroup('notes', i, 'lateHitMult')) and getPropertyFromGroup('notes', i, 'strumTime') < getPropertyFromClass('Conductor', 'songPosition') + (getPropertyFromClass('Conductor', 'safeZoneOffset') * earlyHitMult) then
 				setPropertyFromGroup('notes', i, 'canBeHit', true);
 			else
@@ -117,13 +117,13 @@ function onUpdatePost()
             local daNoteDataa = getPropertyFromGroup('notes', i, 'noteData') + 1;
             if getPropertyFromGroup('notes', i, 'canBeHit') then
                 setProperty('vocals.volume', 1)
-                setProperty('bambi.holdTimer', 0)
+                setProperty('badai.holdTimer', 0)
                 strumAnim(daNoteDataa - 1, 'confirm', 0.15);
                 setProperty('health', getProperty('health') -(healthtolower / 2.65))
                 if getDataFromSave("UnNamedGapplePortSettings", 'screenshake', true) then
                     triggerEvent('Screen Shake', '0.1, 0.0075', '0.1, 0.0045')
                 end
-                playAnim('bambi', singAnims[daNoteDataa], true)
+                playAnim('badai', singAnims[daNoteDataa], true)
                 removeFromGroup('notes', i, false)
             end
             setPropertyFromGroup('notes', i, 'x', getPropertyFromGroup('opponentStrums', 4 + getPropertyFromGroup('notes', i, 'noteData'), 'x'))
@@ -149,7 +149,7 @@ function onStepHit()
     end
 
     if curStep == 767 then
-        bambiPissed = true;
+        badaiPissed = true;
         setProperty('pizza.visible', false)
         setProperty('pizza1.visible', false)
         setProperty('minion.visible', true)
@@ -165,15 +165,15 @@ function onStepHit()
     end
 
     if curStep == 800 then
-        setProperty('bambi.visible', true)
-        doTweenY('bambi', 'bambi', 100, 1.35, 'sineIn')
+        setProperty('badai.visible', true)
+        doTweenY('badaiTween', 'badai', 100, 1.35, 'sineIn')
     end
 
     if curStep == 1984 then
         for direction = 4, 7 do
             setPropertyFromGroup('opponentStrums', direction, 'visible', false)
         end
-        bambiPissed = false;
+        badaiPissed = false;
         unfairPart = true;
         setProperty('gfSpeed', 1)
         setProperty('minion.visible', false)
@@ -211,8 +211,8 @@ function onStepHit()
         setProperty('monkey_guy.visible', false)
 		addLuaSprite('monkey_guy', true)
 
-        makeLuaSprite('monkey_person', 'main/applecore/monkey_person', getProperty('bambi.x'), getProperty('bambi.y'))
-        scaleObject('monkey_person', getProperty('bambi.scale.x'), getProperty('bambi.scale.y'))
+        makeLuaSprite('monkey_person', 'main/applecore/monkey_person', getProperty('badai.x'), getProperty('badai.y'))
+        scaleObject('monkey_person', getProperty('badai.scale.x'), getProperty('badai.scale.y'))
         setProperty('monkey_person.visible', false)
 		addLuaSprite('monkey_person', true)
     end
@@ -228,10 +228,7 @@ function onStepHit()
     end
 
     if curStep == 2127 then
-        for direction = 4, 7 do
-            setPropertyFromGroup('opponentStrums', direction, 'visible', false)
-        end
-        setProperty('bambi.visible', false)
+        setProperty('badai.visible', false)
     end
 
     if curStep >= 2128 and curStep <= 2146 then
@@ -241,18 +238,19 @@ end
 
 function onBeatHit()
     if curBeat % 2 == 0 then
-		if getProperty('bambi.animation.curAnim.name') == 'idle' then
-			playAnim('bambi', 'idle', true)
+		if getProperty('badai.animation.curAnim.name') == 'idle' then
+			playAnim('badai', 'idle', true)
 		end
 	end
 end
 
 function onTweenCompleted(tag)
-    if tag == 'bambi' then
+    if tag == 'badaiTween' then
         for direction = 4, 7 do
-            setPropertyFromGroup('opponentStrums', direction, 'x', getProperty("bambi.x") + 235 + getPropertyFromGroup('opponentStrums', direction, 'x'))
-            setPropertyFromGroup('opponentStrums', direction, 'y', getProperty("bambi.y") + 100)
+            setPropertyFromGroup('opponentStrums', direction, 'x', getProperty("badai.x") + 235 + getPropertyFromGroup('opponentStrums', direction, 'x'))
+            setPropertyFromGroup('opponentStrums', direction, 'y', getProperty("badai.y") + 100)
             setPropertyFromGroup('opponentStrums', direction, 'visible', true)
+            setPropertyFromGroup('opponentStrums', direction, 'alpha', 1)
         end
     end
 
@@ -261,7 +259,7 @@ function onTweenCompleted(tag)
         setObjectOrder('dadGroup', getObjectOrder('gfGroup') -1)
         setProperty('dad.x', -125)
         setProperty('dad.y', 200)
-        setProperty('bambi.visible', false)
+        setProperty('badai.visible', false)
         setProperty('monkey_guy.visible', true)
         setProperty('monkey_person.visible', true)
 
