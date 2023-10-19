@@ -1,8 +1,6 @@
 function onBadaiCreate()
     setProperty("badai.x", 100)
     setProperty("badai.visible", false)
-
-    setProperty("cpuControlled", true)
 end
 
 function onStepHit()
