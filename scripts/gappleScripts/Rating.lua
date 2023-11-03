@@ -2,10 +2,11 @@ local ratingFolder = 'ratings/';
 
 function onCreatePost()
     addHaxeLibrary("FlxRandom", 'flixel.math')
-    addHaxeLibrary("FlxMath", 'flixel.math')
     addHaxeLibrary("FlxObject", 'flixel')
     addHaxeLibrary("FlxBasic", 'flixel')
-    addHaxeLibrary("Math", 'flixel')
+	addHaxeLibrary("Std")
+	addHaxeLibrary("Math")
+    addHaxeLibrary('FlxMath', 'flixel.math')
 
     --Source Code stuff
     if stringStartsWith(version, '0.6') then
@@ -71,8 +72,8 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
         rating.velocity.y -= FlxG.random.int(140, 175);
         rating.velocity.x -= FlxG.random.int(0, 10);
 		rating.alpha = targetAlpha;
+        rating.setGraphicSize(Std.int(rating.width * 0.7), Std.int(rating.height * 0.7));
 		game.insert(game.members.indexOf(game.strumLineNotes), rating);
-        game.modchartSprites.set('ratingLuaSpr', rating);
         if (texture == 'noteSkins/NOTE_assets_3D') {
             rating.x -= 20;
             rating.y -= 5;
@@ -84,9 +85,9 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
         comboSpr.velocity.y -= 150;
         comboSpr.velocity.x += FlxG.random.int(1, 10);
 		comboSpr.alpha = targetAlpha;
+        comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7), Std.int(comboSpr.height * 0.7));
         if (game.combo >= 10 || game.combo == 0) {
             game.insert(game.members.indexOf(game.strumLineNotes), comboSpr);
-            game.modchartSprites.set('comboLuaSpr', comboSpr);
         }
         if (texture == 'noteSkins/NOTE_assets_3D') {
             comboSpr.x -= 20;
@@ -127,9 +128,9 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
             numScore.velocity.y -= FlxG.random.int(140, 160);
             numScore.velocity.x = FlxG.random.float(-5, 5);
             numScore.alpha = targetAlpha;
+            numScore.setGraphicSize(Std.int(numScore.width * 0.5), Std.int(numScore.height * 0.5));
             if (game.combo >= 10 || game.combo == 0) {
                 game.insert(game.members.indexOf(game.strumLineNotes), numScore);
-                game.modchartSprites.set('numLuaSpr' + i, numScore);
             }
             FlxTween.tween(numScore, {alpha: 0}, 0.2 / game.playbackRate, {
                 startDelay: Conductor.crochet * 0.002,
@@ -139,12 +140,8 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
                 }
             });
 			daLoop++;
-            numScore.scale.set(0.6, 0.6);
         }
     ]])
-
-    setGraphicSize("ratingLuaSpr", math.floor(getProperty("ratingLuaSpr.width") * 0.7), math.floor(getProperty("ratingLuaSpr.height") * 0.7))
-    setGraphicSize("comboLuaSpr", math.floor(getProperty("comboLuaSpr.width") * 0.7), math.floor(getProperty("comboLuaSpr.height") * 0.7))
     --[[for i = 0, 2 do
         setGraphicSize("numLuaSpr"..i, math.floor(getProperty("numLuaSpr"..i..".width") * 0.5), math.floor(getProperty("numLuaSpr"..i..".height") * 0.5))
     end--]]
