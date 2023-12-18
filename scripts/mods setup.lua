@@ -36,16 +36,14 @@ local oldFPS = 60;
 local overrideFPS = 126;
 
 function onCreatePost()
+	addHaxeLibrary("FlxEase", 'flixel.tweens')
+	addHaxeLibrary("FlxTween", 'flixel.tweens')
 	CharactersWith3D = getDataFromSave("UnNamedGapplePortSettings", "CharactersWith3D")
 	if stringStartsWith(version, '0.7') then
 		changeDiscordClientID("1136119974763708478")
 	end
 	addLuaScript("scripts/gappleScripts/Gapple Bop", true)
 	addLuaScript("scripts/gappleScripts/Rating", true)
-	--[[for direction = 0, 3 do
-		setPropertyFromGroup('playerStrums', direction, 'x', getPropertyFromGroup('playerStrums', direction, 'x') - arrowXoffset)
-		setPropertyFromGroup('opponentStrums', direction, 'x', getPropertyFromGroup('opponentStrums', direction, 'x') - arrowXoffset -5)
-	end--]]
 
 	if not gappleHUDsong then return; end
 
@@ -109,10 +107,7 @@ function onCreatePost()
 	end
 
 	setProperty("updateTime", false)
-			
-	--setObjectOrder('scoreTxt', getObjectOrder('healthBar') -1)
 	setProperty("timeTxt.y", getProperty("timeTxt.y") - 10)
-	--setObjectOrder('timeTxt', 99)
 
 	if badaiSongs[string.lower(songName)] ~= nil then
 		runHaxeCode([[
@@ -246,14 +241,7 @@ function changeNoteSkinsOnChange()
 	end
 
 	for i = 0, getProperty('unspawnNotes.length')-1 do
-		--[[setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.023)
-		if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
-			setPropertyFromGroup('unspawnNotes', i, 'hitHealth', 0.004)
-		end
-		setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.04 + 0.075)
-		if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
-			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0)
-		end--]]
+		setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', true)
 		if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
 			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D') end
 		end
@@ -557,8 +545,20 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 	if getProperty('boyfriend.color') == getColorFromHex('9400d3') then
 		setProperty('boyfriend.color', getColorFromHex('FFFFFF'))
 	end
-
-	removeFromGroup('grpNoteSplashes', getProperty('grpNoteSplashes.length') -1, false); --insta killed
+	if isSustainNote then return; end
+	runHaxeCode([[
+		if(game.scoreTxtTween != null) {
+			game.scoreTxtTween.cancel();
+		}
+		game.scoreTxt.scale.x = 1.275;
+		game.scoreTxt.scale.y = 1.075;
+		game.scoreTxtTween = FlxTween.tween(game.scoreTxt.scale, {x: 1, y: 1}, 0.2, {
+			ease: FlxEase.cubeInOut,
+			onComplete: function(twn) {
+				game.scoreTxtTween = null;
+			}
+		});
+	]])
 end
 
 function opponentNoteHit(membersIndex, noteData, noteType, isSustainNote)

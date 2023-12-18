@@ -10,8 +10,10 @@ end
 
 function onUpdatePost(elapsed)
 	if canMessWithDups then
-		doTweenX("iconMovementP1", "iconP12", getProperty("iconP1.x") - 20 + (getProperty("iconP1.width") / 4), 0.08, "sineInOut")
-		doTweenX("iconMovementP2", "iconP22", getProperty("iconP2.x") + 20 - (getProperty("iconP2.width") / 4), 0.08, "sineInOut")
+		doTweenX("iconMovementP1", "iconP12", getProperty("iconP1.x"), 0.08, "sineInOut")
+		doTweenX("iconMovementP2", "iconP22", getProperty("iconP2.x"), 0.08, "sineInOut")
+		--doTweenX("iconMovementP1", "iconP12", getProperty("iconP1.x") - 20 + (getProperty("iconP1.width") / 4), 0.08, "sineInOut")
+		--doTweenX("iconMovementP2", "iconP22", getProperty("iconP2.x") + 20 - (getProperty("iconP2.width") / 4), 0.08, "sineInOut")
 	end
 	--[[for i = 0, 7 do
 		setPropertyFromGroup("strumLineNotes", i, 'scale.x', math.lerp(0.7, getPropertyFromGroup('strumLineNotes', i, 'scale.x'), 0.9))

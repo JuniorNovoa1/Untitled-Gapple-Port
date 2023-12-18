@@ -60,8 +60,7 @@ function onUpdate() --camera now follows characters!!!!
 		bfCamIdle[2] = dadCamIdle[2];
 	end
 	if getProperty('dad.curCharacter') == 'bandu' then
-		dadCamIdle[1] = bfCamIdle[1];
-		dadCamIdle[2] = bfCamIdle[2];
+		dadCamIdle = bfCamIdle;
 	end
 	if getProperty('dad.curCharacter') == 'bandu-sad' then
 		dadCamIdle[1] = 625;
