@@ -1,5 +1,3 @@
-local ratingFolder = 'ratings/';
-
 function onCreatePost()
     addHaxeLibrary("FlxRandom", 'flixel.math')
     addHaxeLibrary("FlxObject", 'flixel')
@@ -55,7 +53,6 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
     runHaxeCode([[
         var membersIndex = ]]..membersIndex..[[;
         var note = game.notes.members[membersIndex];
-        var ratingFolder = "]]..ratingFolder..[[";
         var noteDiff = note.strumTime - Conductor.songPosition + ]]..ratingOffset..[[;
 		var daRating = Conductor.judgeNote(note, noteDiff / game.playbackRate);
         var text = "Sick!";
