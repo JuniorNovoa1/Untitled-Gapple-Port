@@ -66,5 +66,5 @@ function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
     ]])
     cancelTween("ratingTxt")
     setProperty("ratingTxt.alpha", 1)
-    alphaTimer = alphaTimer + 0.125;
+    alphaTimer = 0.5 * playbackRate;
 end
