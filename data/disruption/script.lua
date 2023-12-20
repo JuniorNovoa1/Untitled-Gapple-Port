@@ -9,6 +9,7 @@ end
 
 function onSongStart()
     setProperty('gfSpeed', 2)
+    if originPosX[0] == nil then onStrumsCreate() end
 end
 
 local elapsedtime = 0;

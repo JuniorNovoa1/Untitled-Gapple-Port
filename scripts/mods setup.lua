@@ -5,7 +5,7 @@ local gappleHUDsong = true;
 
 local songMod = 'DNB: Golden Apple';
 
-local gappleMemoryCounter = true; --gapple doesn't have a memory counter... ITS REAL LANCE YPOSTED  IYT OPMGGGG	
+local gappleMemoryCounter = true; --doesnt matter --gapple doesn't have a memory counter... ITS REAL LANCE YPOSTED  IYT OPMGGGG	
 
 local CharactersWith3D = {};
 
@@ -84,8 +84,9 @@ function onCreatePost()
 	addLuaText('creditsText')
 
 	if string.lower(songName) == 'disruption' then setProperty('creditsText.text', 'Screw you!') end
+	if getTextString("creditsText") == "" and string.lower(songName) ~= "applecore" and string.lower(songName) ~= "wireframe" then removeLuaText("creditsText", true) end
 
-	if getProperty('creditsText.text') == '' and string.lower(songName) ~= 'kooky' then
+	if (getProperty('creditsText.text') == '' or not luaTextExists("creditsText")) and string.lower(songName) ~= 'kooky' then
 		setProperty('creditsWatermark.y', getProperty('healthBar.y') + 50)
 	elseif string.lower(songName) ~= 'kooky' then
 		setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
@@ -97,9 +98,7 @@ function onCreatePost()
 	addLuaSprite('healthBarBGnew', false)
 	setObjectOrder('healthBarBGnew', getObjectOrder('healthBar') + 1)
 
-	if string.lower(songName) == 'kooky' then
-		setProperty('healthBarBGnew.visible', false)
-	end
+	if string.lower(songName) == 'kooky' then setProperty('healthBarBGnew.visible', false) end
 
 	if downscroll then
 		setProperty("iconP1.y", getProperty('healthBar.y') -75)
@@ -129,8 +128,14 @@ function onCreatePost()
 	if stringStartsWith(version, '0.6') then oldFPS = getPropertyFromClass("ClientPrefs", "framerate") else oldFPS = getPropertyFromClass("backend.ClientPrefs", "data.framerate") end
 	if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', overrideFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', overrideFPS) end
 	runHaxeCode([[
-		ClientPrefs.saveSettings();
-		ClientPrefs.loadPrefs();
+		var framerate = ]]..overrideFPS..[[;
+		if(framerate > FlxG.drawFramerate) {
+			FlxG.updateFramerate = framerate;
+			FlxG.drawFramerate = framerate;
+		} else {
+			FlxG.drawFramerate = framerate;
+			FlxG.updateFramerate = framerate;
+		}
 	]])
 
 	addHaxeLibrary("Type")
@@ -150,13 +155,13 @@ function onCreatePost()
 	updateHitbox('fpsTxt')
 	addLuaText('fpsTxt')
 
-	makeLuaText('memoryTxt', '', 0, 18, 32)
+	--[[makeLuaText('memoryTxt', '', 0, 18, 32)
 	setObjectCamera('memoryTxt', 'other')
 	setTextAlignment('memoryTxt', 'center')
 	setTextFont('memoryTxt', 'comic.ttf')
 	setTextSize('memoryTxt', 16)
-    runHaxeCode([[game.getLuaObject('memoryTxt').setBorderStyle(Type.resolveEnum('flixel.text.FlxTextBorderStyle').NONE);]]) --Collin09 POG
-	setProperty('memoryTxt.antialiasing', true)
+	--runHaxeCode([[game.getLuaObject('memoryTxt').setBorderStyle(Type.resolveEnum('flixel.text.FlxTextBorderStyle').NONE);]]--) --Collin09 POG
+	--[[setProperty('memoryTxt.antialiasing', true)
 	if stringStartsWith(version, '0.6') then
 		setProperty("memoryTxt.visible", getPropertyFromClass('ClientPrefs', 'showFPS'))
     else
@@ -164,7 +169,7 @@ function onCreatePost()
     end
 	if not gappleHUDsong then setProperty("memoryTxt.visible", false) end
 	updateHitbox('memoryTxt')
-	if gappleMemoryCounter then addLuaText('memoryTxt') end
+	if gappleMemoryCounter then addLuaText('memoryTxt') end--]]
 
 	if gappleHUDsong then setPropertyFromClass("Main", "fpsVar.visible", false) end
 
@@ -241,20 +246,23 @@ function changeNoteSkinsOnChange()
 	end
 
 	for i = 0, getProperty('unspawnNotes.length')-1 do
+		if stringStartsWith(version, '0.7') then setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false) end
 		setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', true)
-		if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
-			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D') end
+		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then 
+			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == false then 
+				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true) 
+			end
+			if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
+				setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D')
+			end
 		end
 	end
 end
-
-local cached = false;
 
 function onEventPushed(eventName, value1, value2, strumTime)
 	if eventName == 'Change Character' and not cached then
 		precacheImage("noteSkins/NOTE_assets")
 		precacheImage("noteSkins/NOTE_assets_3D")
-		cached = true;
 	end
 end
 
@@ -295,6 +303,13 @@ end
 
 local hasFinishedExitTween = false;
 function onEndSong()
+	makeLuaSprite('gappleTransition', 'gapple_transition', 0, 0)
+	setProperty("gappleTransition.antialiasing", false)
+	setObjectCamera("gappleTransition", "other")
+	scaleObject("gappleTransition", 35, 35, true)
+	updateHitbox("gappleTransition")
+	screenCenter("gappleTransition", 'xy')
+	addLuaSprite('gappleTransition', true)
 	doTweenX("gappleTransitionXEnd", "gappleTransition.scale", 1, 1, "")
 	doTweenY("gappleTransitionYEnd", "gappleTransition.scale", 1, 1, "")
 	if not hasFinishedExitTween then
@@ -305,9 +320,13 @@ function onEndSong()
 end
 
 function onTweenCompleted(tag)
+	if tag == 'gappleTransitionY' then
+		removeLuaSprite("gappleTransition", true)
+	end
 	if tag == 'gappleTransitionYEnd' then
 		hasFinishedExitTween = true;
 		runHaxeCode([[game.endSong();]])
+		removeLuaSprite("gappleTransition", true)
 	end
 	if tag == 'lastCountScaleY' then
 		doTweenX("lastCountScaleX2", objectsCountown[3]..".scale", 1, crochet / 2000 / getProperty("playbackRate"), "")
@@ -329,14 +348,20 @@ function changeNoteSkin(player, skin)
 
     for i = 0, getProperty('notes.length') -1 do
         if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'normal' or getPropertyFromGroup('notes', i, 'noteType') == nil then setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin) end
+            if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('notes', i, 'noteType') == nil then setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin) end
         end
     end
 
     for i = 0, getProperty('unspawnNotes.length') -1 do
         if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin) end
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin) end
         end
+    end
+
+	if stringStartsWith(version, '0.7') then
+		for i = 0, getProperty("strumLineNotes.length") do
+			setPropertyFromGroup('strumLineNotes', i, 'rgbShader.enabled', false)
+		end
     end
 end
 
@@ -379,19 +404,8 @@ local actualSongLength = 0;
 local songPos = 0;
 
 function onUpdate(elapsed)
-	for i = 0, getProperty('notes.length')-1 do
-		if (getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'normal' or getPropertyFromGroup('notes', i, 'noteType') == nil) and getPropertyFromGroup('notes', i, 'mustPress') == false then setPropertyFromGroup('notes', i, 'noAnimation', true) end
-	end
 	setProperty("iconP12.animation.curAnim.curFrame", getProperty("iconP1.animation.curAnim.curFrame"))
     setProperty("iconP22.animation.curAnim.curFrame", getProperty("iconP2.animation.curAnim.curFrame"))
-	if stringStartsWith(version, '0.7') then
-		for i = 0, getProperty("strumLineNotes.length") do
-			setPropertyFromGroup('strumLineNotes', i, 'rgbShader.enabled', false)
-		end
-		for i = 0, getProperty("notes.length") do
-			setPropertyFromGroup('notes', i, 'rgbShader.enabled', false)
-		end
-    end
 	setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha'))
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
 	songPos = math.toTime(getSongPosition() / 1000)
@@ -402,10 +416,6 @@ function onUpdate(elapsed)
 		setTextString('timeTxt', songPos.." / "..actualSongLength)
 		updateHitbox("timeTxt")
 		screenCenter("timeTxt", 'x')
-	end
-
-	if getRandomBool(25) then
-		--badaiPlayAnim(singAnims[getRandomInt(1, 4)])
 	end
 
 	for i = 1, #singAnims do
@@ -462,7 +472,7 @@ function onUpdatePost(elapsed)
 			setProperty('healthBarBGnew.y', getProperty('healthBar.y') + 5.25)
 			setProperty('healthBarBGnew.x', getProperty('healthBar.x') + 4)
 		end
-		if getProperty('creditsText.text') == '' and string.lower(songName) ~= 'kooky' then
+		if (getProperty('creditsText.text') == '' or not luaTextExists("creditsText")) and string.lower(songName) ~= 'kooky' then
 			setProperty('creditsWatermark.y', getProperty('healthBar.y') + 46)
 		elseif string.lower(songName) ~= 'kooky' then
 			setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
@@ -470,10 +480,10 @@ function onUpdatePost(elapsed)
 
 		if gappleHUDsong then
 			setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
-			setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
+			--[[setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
 			if math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)) >= 1000 then
 				setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000000, 1)).."."..(math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 10000000, 1)) - (math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000000, 1)) * 100)).." GB")
-			end
+			end--]]
 
 			if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
 			if getDataFromSave("UnNamedGapplePortSettings", "settingsAlert", buildTarget ~= 'android') then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
@@ -486,29 +496,31 @@ function onUpdatePost(elapsed)
 end
 
 function onStepHit()
-	if stringStartsWith(version, '0.7') then
+	--[[if stringStartsWith(version, '0.7') then
 		changeDiscordPresence(songName.." - Unnamed Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
     else
 		changePresence(songName.." - Unnamed Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
-	end
+	end--]] --trying to optimize
 
 	--setObjectOrder('strumLineNotes', getObjectOrder('notes') +1) --puts notes under strumlinenotes
 
-	for i = 0, getProperty('notes.length') do --why doesn't psych do this already???
-        for iStrum = 0, 3 do
-            if getPropertyFromGroup('notes', i, 'mustPress') then
-                setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
-				if getPropertyFromGroup('notes', i, 'isSustainNote') ~= true then
-                	setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
+	if string.lower(songName) == 'disruption' or string.lower(songName) == 'applecore' or string.lower(songName) == 'nice' then
+		for i = 0, getProperty('notes.length') do --why doesn't psych do this already??? (performance issues thats why!)
+			for iStrum = 0, 3 do
+				if getPropertyFromGroup('notes', i, 'mustPress') then
+					setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
+					if getPropertyFromGroup('notes', i, 'isSustainNote') ~= true then
+						setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('playerStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
+					end
+				else
+					setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
+					if getPropertyFromGroup('notes', i, 'isSustainNote') ~= true then
+						setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
+					end
 				end
-            else
-                setPropertyFromGroup('notes', i, 'scale.x', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.x'))
-				if getPropertyFromGroup('notes', i, 'isSustainNote') ~= true then
-                	setPropertyFromGroup('notes', i, 'scale.y', getPropertyFromGroup('opponentStrums', getPropertyFromGroup('notes', i, 'noteData'), 'scale.y'))
-				end
-            end
-        end
-    end
+			end
+		end
+	end
 end
 
 function onSectionHit()
@@ -592,8 +604,14 @@ end
 function onResume()
 	if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', overrideFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', overrideFPS) end
 	runHaxeCode([[
-		ClientPrefs.saveSettings();
-		ClientPrefs.loadPrefs();
+		var framerate = ]]..overrideFPS..[[;
+		if(framerate > FlxG.drawFramerate) {
+			FlxG.updateFramerate = framerate;
+			FlxG.drawFramerate = framerate;
+		} else {
+			FlxG.drawFramerate = framerate;
+			FlxG.updateFramerate = framerate;
+		}
 	]])
 	setPropertyFromClass("Main", "fpsVar.visible", false)
 end
@@ -601,15 +619,27 @@ end
 function onGameOver()
     if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', oldFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', oldFPS) end
 	runHaxeCode([[
-		ClientPrefs.saveSettings();
-		ClientPrefs.loadPrefs();
+		var framerate = ]]..oldFPS..[[;
+		if(framerate > FlxG.drawFramerate) {
+			FlxG.updateFramerate = framerate;
+			FlxG.drawFramerate = framerate;
+		} else {
+			FlxG.drawFramerate = framerate;
+			FlxG.updateFramerate = framerate;
+		}
 	]])
 end
 
 function onDestroy()
     if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', oldFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', oldFPS) end
 	runHaxeCode([[
-		ClientPrefs.saveSettings();
-		ClientPrefs.loadPrefs();
+		var framerate = ]]..oldFPS..[[;
+		if(framerate > FlxG.drawFramerate) {
+			FlxG.updateFramerate = framerate;
+			FlxG.drawFramerate = framerate;
+		} else {
+			FlxG.drawFramerate = framerate;
+			FlxG.updateFramerate = framerate;
+		}
 	]])
 end

@@ -6,6 +6,9 @@ function onStrumsCreate()
         originPosY[i] = getPropertyFromGroup('strumLineNotes', i, 'y')
     end
 end
+function onSongStart()
+    if originPosX[0] == nil then onStrumsCreate() end
+end
 
 local elapsedtime = 0;
 
