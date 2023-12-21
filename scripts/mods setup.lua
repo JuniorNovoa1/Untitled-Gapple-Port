@@ -302,16 +302,20 @@ function onCountdownTick(swagCounter)
 end
 
 local hasFinishedExitTween = false;
+local alreadyCreatedEnding = false;
 function onEndSong()
-	makeLuaSprite('gappleTransition', 'gapple_transition', 0, 0)
-	setProperty("gappleTransition.antialiasing", false)
-	setObjectCamera("gappleTransition", "other")
-	scaleObject("gappleTransition", 35, 35, true)
-	updateHitbox("gappleTransition")
-	screenCenter("gappleTransition", 'xy')
-	addLuaSprite('gappleTransition', true)
-	doTweenX("gappleTransitionXEnd", "gappleTransition.scale", 1, 1, "")
-	doTweenY("gappleTransitionYEnd", "gappleTransition.scale", 1, 1, "")
+	if not alreadyCreatedEnding then
+		makeLuaSprite('gappleTransition', 'gapple_transition', 0, 0)
+		setProperty("gappleTransition.antialiasing", false)
+		setObjectCamera("gappleTransition", "other")
+		scaleObject("gappleTransition", 35, 35, true)
+		updateHitbox("gappleTransition")
+		screenCenter("gappleTransition", 'xy')
+		addLuaSprite('gappleTransition', true)
+		doTweenX("gappleTransitionXEnd", "gappleTransition.scale", 1, 1, "")
+		doTweenY("gappleTransitionYEnd", "gappleTransition.scale", 1, 1, "")
+		alreadyCreatedEnding = true;
+	end
 	if not hasFinishedExitTween then
 		return Function_Stop;
 	else
@@ -321,12 +325,12 @@ end
 
 function onTweenCompleted(tag)
 	if tag == 'gappleTransitionY' then
-		removeLuaSprite("gappleTransition", true)
+		removeLuaSprite("gappleTransition", true) --assuming sprite uses shit ton of memory
 	end
 	if tag == 'gappleTransitionYEnd' then
 		hasFinishedExitTween = true;
 		runHaxeCode([[game.endSong();]])
-		removeLuaSprite("gappleTransition", true)
+		--removeLuaSprite("gappleTransition", true) --no need since song is about to end anyway
 	end
 	if tag == 'lastCountScaleY' then
 		doTweenX("lastCountScaleX2", objectsCountown[3]..".scale", 1, crochet / 2000 / getProperty("playbackRate"), "")
@@ -404,9 +408,9 @@ local actualSongLength = 0;
 local songPos = 0;
 
 function onUpdate(elapsed)
-	setProperty("iconP12.animation.curAnim.curFrame", getProperty("iconP1.animation.curAnim.curFrame"))
-    setProperty("iconP22.animation.curAnim.curFrame", getProperty("iconP2.animation.curAnim.curFrame"))
-	setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha'))
+	if getProperty('iconP12.animation.curAnim.curFrame') ~= getProperty('iconP1.animation.curAnim.curFrame') then setProperty("iconP12.animation.curAnim.curFrame", getProperty("iconP1.animation.curAnim.curFrame")) end
+    if getProperty('iconP12.animation.curAnim.curFrame') ~= getProperty('iconP12.animation.curAnim.curFrame') then setProperty("iconP22.animation.curAnim.curFrame", getProperty("iconP2.animation.curAnim.curFrame")) end
+	if getProperty('healthBarBGnew.alpha') ~= getProperty('healthBar.alpha') then setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha')) end
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
 	songPos = math.toTime(getSongPosition() / 1000)
 
