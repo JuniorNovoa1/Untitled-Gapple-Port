@@ -1,14 +1,29 @@
 local canMessWithDups = false;
 function onCreatePost()
+	addHaxeLibrary("Std")
+	addHaxeLibrary("Math")
+    addHaxeLibrary('FlxMath', 'flixel.math')
+	addHaxeLibrary("FlxEase", 'flixel.tweens')
+	addHaxeLibrary('FlxTween', 'flixel.tweens')
+	addHaxeLibrary("FlxColor", 'flixel.util')
     createIcons()
 end
 
 function math.clamp(x,min,max)return math.max(min,math.min(x,max))end
-function math.lerp(from, to, t)
+function math.lerp(to, from, t)
 	return from + (to - from) * math.clamp(t, 0, 1)
 end
 
 function onUpdatePost(elapsed)
+	runHaxeCode([[
+		var iconOffset = 26;
+		setVar("playerIconPos", game.healthBar.x + (game.healthBar.width * (FlxMath.remapToRange(game.healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * game.iconP1.scale.x - 150) / 2 - iconOffset);
+		setVar("dadIconPos", game.healthBar.x + (game.healthBar.width * (FlxMath.remapToRange(game.healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * game.iconP2.scale.x) / 2 - iconOffset * 2);
+		//game.boyfriend.alpha = 0.7;
+	]])
+	--doTweenX("iconMovementP12vhv", "iconP1", getProperty("playerIconPos"), 0.08, "sineInOut")
+	--doTweenX("iconMovementP12hvh", "iconP12", getProperty("playerIconPos"), 0.08, "sineInOut")
+	--setProperty("iconP1.x", math.lerp(getProperty("playerIconPos"), getProperty("iconP1.x"), 0.33))
 	if canMessWithDups then
 		doTweenX("iconMovementP1", "iconP12", getProperty("iconP1.x"), 0.08, "sineInOut")
 		doTweenX("iconMovementP2", "iconP22", getProperty("iconP2.x"), 0.08, "sineInOut")
@@ -24,9 +39,7 @@ function onUpdatePost(elapsed)
 end
 
 function onBeatHit()
-    if string.lower(songName) == 'kooky' or string.lower(songName) == 'maze' then
-    	return;
-    end
+    if string.lower(songName) == 'kooky' or not canMessWithDups then return;end
     local iconPos = getProperty('healthBar.y') -75;
 
     if curBeat % getProperty('gfSpeed') == 0 then
@@ -76,8 +89,16 @@ function createIcons()
 	if luaSpriteExists("iconP12") then
 		cancelTween("iconMovementP1")
 		cancelTween("iconMovementP2")
-		setProperty("iconP12.visible", false)
-		setProperty("iconP22.visible", false)
+		for i = 1, 2 do
+			cancelTween("iconP"..tostring(i).."yREAL")
+			cancelTween("iconP"..tostring(i))
+			cancelTween("iconP"..tostring(i).."x")
+			cancelTween("iconP"..tostring(i).."y")
+		end
+		runHaxeCode([[ //not doing this might've caused a memory leak..
+			game.getLuaObject("iconP12", false).destroy();
+			game.getLuaObject("iconP22", false).destroy();
+		]])
 	end
 	setProperty("iconP1.visible", false)
 	setProperty("iconP2.visible", false)
@@ -100,9 +121,50 @@ function createIcons()
 	canMessWithDups = true;
 end
 
+function createSeperateIcon(i)
+	canMessWithDups = false;
+	local shitters = {
+		[1] = "iconP12",
+		[2] = "iconP22"
+	}
+	if luaSpriteExists(shitters[i]) then
+		cancelTween("iconMovementP"..tostring(i))
+		cancelTween("iconP"..tostring(i).."yREAL")
+		cancelTween("iconP"..tostring(i))
+		cancelTween("iconP"..tostring(i).."x")
+		cancelTween("iconP"..tostring(i).."y")
+		runHaxeCode([[ //not doing this might've caused a memory leak..
+			game.getLuaObject("]]..shitters[i]..[[", false).destroy();
+		]])
+	end
+	if i == 1 then
+		runHaxeCode([[
+			var iconP12 = new HealthIcon(game.boyfriend.healthIcon, true);
+			iconP12.x = game.iconP1.x;
+			iconP12.y = game.iconP1.y;
+			game.add(iconP12);
+			game.modchartSprites.set('iconP12', iconP12);
+		]])
+		setObjectOrder('iconP12', getObjectOrder('healthBarBGnew') + 1)
+	else
+		runHaxeCode([[
+			var iconP22 = new HealthIcon(game.dad.healthIcon, false);
+			iconP22.x = game.iconP2.x;
+			iconP22.y = game.iconP2.y;
+			game.add(iconP22);
+			game.modchartSprites.set('iconP22', iconP22);
+		]])
+		setObjectOrder('iconP22', getObjectOrder('iconP12') + 1)
+	end
+	setObjectCamera(shitters[i], 'hud')
+	canMessWithDups = true;
+end
+
 function onEvent(eventName, value1, value2, strumTime)
 	if eventName == 'Change Character' then
-		createIcons()
+		--createIcons() --so stupid to do both at once
+		if string.lower(value1) == "bf" then createSeperateIcon(1) end
+		if string.lower(value1) == "dad" then createSeperateIcon(2) end
 	end
 end
 

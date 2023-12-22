@@ -45,7 +45,7 @@ function onSongStart()
     for i = 0, getProperty('strumLineNotes.length') do
         originPosX[i] = getPropertyFromGroup('strumLineNotes', i, 'x')
         originPosY[i] = getPropertyFromGroup('strumLineNotes', i, 'y')
-    end 
+    end
 
     for i = 4, 7, 1 do
         setPropertyFromGroup('opponentStrums', i, 'texture', 'noteSkins/NOTE_assets_3D')
@@ -166,7 +166,7 @@ function onStepHit()
 
     if curStep == 800 then
         setProperty('badai.visible', true)
-        doTweenY('badaiTween', 'badai', 100, 1.35, 'sineIn')
+        doTweenY('badaiTweenEYSYSYWORKALREADY', 'badai', 100, 1.35, 'sineIn')
     end
 
     if curStep == 1984 then
@@ -245,10 +245,10 @@ function onBeatHit()
 end
 
 function onTweenCompleted(tag)
-    if tag == 'badaiTween' then
+    if tag == 'badaiTweenEYSYSYWORKALREADY' then
         for direction = 4, 7 do
-            setPropertyFromGroup('opponentStrums', direction, 'x', getProperty("badai.x") + 235 + getPropertyFromGroup('opponentStrums', direction, 'x'))
-            setPropertyFromGroup('opponentStrums', direction, 'y', getProperty("badai.y") + 100)
+            originPosX[4+direction] = getProperty("badai.x") + 500 + getPropertyFromGroup('opponentStrums', direction, 'x')
+            originPosY[4+direction] = getProperty("badai.y") + 100;
             setPropertyFromGroup('opponentStrums', direction, 'visible', true)
             setPropertyFromGroup('opponentStrums', direction, 'alpha', 1)
         end

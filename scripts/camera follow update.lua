@@ -16,13 +16,13 @@ local camMovement = true;
 function onCountdownTick(swagCounter)
 	if swagCounter == 0 then
 		camMovement = false;
-		callOnLuas("moveCam", {getMidpointX('dad') + 150 + getProperty('dad.cameraPosition[0]') + getProperty('opponentCameraOffset[0]'), getMidpointY('dad') - 100 + getProperty('dad.cameraPosition[1]') + getProperty('opponentCameraOffset[1]')})
+		callOnLuas("moveCam", {dadCamIdle[1], dadCamIdle[2]})
 	elseif swagCounter == 1 then
-		callOnLuas("moveCam", {getMidpointX('boyfriend') - 100 - getProperty('boyfriend.cameraPosition[0]') - getProperty('boyfriendCameraOffset[0]'), getMidpointY('boyfriend') - 100 + getProperty('boyfriend.cameraPosition[1]') + getProperty('boyfriendCameraOffset[1]')})
+		callOnLuas("moveCam", {bfCamIdle[1], bfCamIdle[2]})
 	elseif swagCounter == 2 then
-		callOnLuas("moveCam", {getMidpointX('dad') + 150 + getProperty('dad.cameraPosition[0]') + getProperty('opponentCameraOffset[0]'), getMidpointY('dad') - 100 + getProperty('dad.cameraPosition[1]') + getProperty('opponentCameraOffset[1]')})
+		callOnLuas("moveCam", {dadCamIdle[1], dadCamIdle[2]})
 	elseif swagCounter == 3 then
-		callOnLuas("moveCam", {getMidpointX('boyfriend') - 100 - getProperty('boyfriend.cameraPosition[0]') - getProperty('boyfriendCameraOffset[0]'), getMidpointY('boyfriend') - 100 + getProperty('boyfriend.cameraPosition[1]') + getProperty('boyfriendCameraOffset[1]')})
+		callOnLuas("moveCam", {bfCamIdle[1], bfCamIdle[2]})
 	elseif swagCounter == 4 then
 		camMovement = true;
 	end
@@ -49,22 +49,22 @@ function onUpdate() --camera now follows characters!!!!
 		bfCamIdle[2] = getProperty("bg.y") + (getProperty("bg.height") / 2)
 		dadCamIdle[2] = getProperty("bg.y") + (getProperty("bg.height") / 2)
 	end
-
 	if string.lower(songName) == 'nice' and curStep >= 7628 then
 		dadCamIdle[1] = getMidpointX('errung') + 150 + getProperty('errung.cameraPosition[0]') + getProperty('opponentCameraOffset[0]') + 200;
 		dadCamIdle[2] = getMidpointY('errung') - 100 + getProperty('errung.cameraPosition[1]') + getProperty('opponentCameraOffset[1]') + 200;
 	end
-	if getDataFromSave("UnNamedGapplePortSettings", "newCamZoom") then yoffset = 105 / getProperty("defaultCamZoom") end
 	if getProperty('dad.curCharacter') == 'sart-producer-glitch' then
 		bfCamIdle[1] = dadCamIdle[1];
 		bfCamIdle[2] = dadCamIdle[2];
 	end
 	if getProperty('dad.curCharacter') == 'bandu' then
-		dadCamIdle = bfCamIdle;
+		dadCamIdle[1] = getMidpointX('boyfriend') - 100 - getProperty('boyfriend.cameraPosition[0]') - getProperty('boyfriendCameraOffset[0]')
+		dadCamIdle[2] = getMidpointY('boyfriend') - 100 + getProperty('boyfriend.cameraPosition[1]') + getProperty('boyfriendCameraOffset[1]')
 	end
 	if getProperty('dad.curCharacter') == 'bandu-sad' then
 		dadCamIdle[1] = 625;
 	end
+	if getDataFromSave("UnNamedGapplePortSettings", "newCamZoom") then yoffset = 105 / getProperty("defaultCamZoom") end
 	if mustHitSection == true and getProperty('boyfriend.animation.curAnim.name') == 'idle' then
 		callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] -yoffset);
 	elseif mustHitSection == true then
