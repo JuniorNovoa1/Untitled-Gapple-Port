@@ -14,6 +14,6 @@ end
 
 function onUpdate()
     for i = 1, #stuff do
-        setProperty('freddyIcon.'..stuff[i], getProperty('iconP22.'..stuff[i]))
+        setProperty('freddyIcon.'..stuff[i], getProperty('iconP2.'..stuff[i]))
     end
 end

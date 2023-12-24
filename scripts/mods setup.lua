@@ -96,7 +96,7 @@ function onCreatePost()
 	scaleObject('healthBarBGnew', getProperty('healthBar.scale.x') - 0.075, getProperty('healthBar.scale.y') - 0.15)
 	setObjectCamera('healthBarBGnew', 'camHUD')
 	addLuaSprite('healthBarBGnew', false)
-	setObjectOrder('healthBarBGnew', getObjectOrder('healthBar') + 1)
+	setObjectOrder('healthBarBGnew', getObjectOrder('healthBar'))
 
 	if string.lower(songName) == 'kooky' then setProperty('healthBarBGnew.visible', false) end
 
@@ -408,8 +408,6 @@ local actualSongLength = 0;
 local songPos = 0;
 
 function onUpdate(elapsed)
-	if getProperty('iconP12.animation.curAnim.curFrame') ~= getProperty('iconP1.animation.curAnim.curFrame') then setProperty("iconP12.animation.curAnim.curFrame", getProperty("iconP1.animation.curAnim.curFrame")) end
-    if getProperty('iconP12.animation.curAnim.curFrame') ~= getProperty('iconP12.animation.curAnim.curFrame') then setProperty("iconP22.animation.curAnim.curFrame", getProperty("iconP2.animation.curAnim.curFrame")) end
 	if getProperty('healthBarBGnew.alpha') ~= getProperty('healthBar.alpha') then setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha')) end
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
 	songPos = math.toTime(getSongPosition() / 1000)

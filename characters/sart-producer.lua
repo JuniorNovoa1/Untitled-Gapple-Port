@@ -13,8 +13,8 @@ function onCreatePost()
 end
 
 function onUpdate()
-    setProperty('iconP22.visible', false)
+    setProperty('iconP2.visible', false)
     for i = 1, #stuff do
-        setProperty('sartICON.'..stuff[i], getProperty('iconP22.'..stuff[i]))
+        setProperty('sartICON.'..stuff[i], getProperty('iconP2.'..stuff[i]))
     end
 end

@@ -4,9 +4,9 @@ local settingsAlert = false; --disable to remove message in the top left!!!
 local modcharts = true; --determines wether modcharts are enabled.
 local epilepsy = true; --determines if screen flashes many colors at once. (disable if you have Epilepsy)
 local screenshake = true; --determines wether the screen can shake.
-local dialogue = true; --determine wether dialogue pops up on compatible songs.
+local dialogue = false; --determine wether dialogue pops up on compatible songs.
 local sensitiveContent = true; --determines if sensitive content gets enabled (ie gore)
-local charSelect = true; --determines wether the char select screen pops up before a song begins. (increases memory usage)
+local charSelect = false; --determines wether the char select screen pops up before a song begins. (increases memory usage)
 local newCamZoom = false; --very buggy! only used on some sections of "Nice!"
 --
 local unfinishedStuff = false; --determines if anything unfinished gets activated, enabling this might lead to crashes, high memory usage, high cpu usage, or more bad stuff. 

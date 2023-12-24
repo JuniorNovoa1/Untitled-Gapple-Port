@@ -36,8 +36,8 @@ function onCreatePost()
 	setObjectCamera('scoreTxt', 'camGame')
 	setObjectCamera('healthBarBG', 'camGame')
 	setObjectCamera('healthBar', 'camGame')
-	setObjectCamera('iconP12', 'camGame')
-	setObjectCamera('iconP22', 'camGame')
+	setObjectCamera('iconP1', 'camGame')
+	setObjectCamera('iconP2', 'camGame')
 	setObjectOrder('grid', getObjectOrder('iconP2') +2)
 
 	scaleObject('healthBarBG', 0.8, 3)
@@ -58,21 +58,15 @@ end
 function onUpdate()
 	setProperty('camFollow.x', 750);
 	setProperty('camFollow.y', 340);
-
-	if getProperty('healthBar.percent') > 80 then
-        setProperty('iconFAKErubber.visible', true)
-        setProperty('iconP12.visible', false)
-    else
-        setProperty('iconFAKErubber.visible', false)
-        setProperty('iconP12.visible', true)
-    end
+	setProperty('camFollowPos.x', 750);
+	setProperty('camFollowPos.y', 340);
 end
 
 function onUpdatePost()
-	setProperty('iconP12.x', getProperty('healthBar.x') * 1.1625)
-	setProperty('iconP22.x', getProperty('healthBar.x') * 1.225)
-	setProperty('iconP12.y', getProperty('healthBar.y') / 1.925)
-	setProperty('iconP22.y', getProperty('healthBar.y') * 1.225)
+	setProperty('iconP1.x', getProperty('healthBar.x') * 1.1625)
+	setProperty('iconP2.x', getProperty('healthBar.x') * 1.225)
+	setProperty('iconP1.y', getProperty('healthBar.y') / 1.925)
+	setProperty('iconP2.y', getProperty('healthBar.y') * 1.225)
 
 	for i = 1, getProperty('notes.length') -1 do
 		setObjectCamera('notes.members['..i..']', 'camGame')

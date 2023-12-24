@@ -14,6 +14,6 @@ end
 
 function onUpdate()
     for i = 1, #stuff do
-        setProperty('cameoIcon.'..stuff[i], getProperty('iconP12.'..stuff[i]))
+        setProperty('cameoIcon.'..stuff[i], getProperty('iconP1.'..stuff[i]))
     end
 end

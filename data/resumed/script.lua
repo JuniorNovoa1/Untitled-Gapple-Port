@@ -65,17 +65,10 @@ function onStepHit()
         setProperty("dad.healthColorArray[0]", getProperty("badai.healthColorArray[0]"))
         setProperty("dad.healthColorArray[1]", getProperty("badai.healthColorArray[1]"))
         setProperty("dad.healthColorArray[2]", getProperty("badai.healthColorArray[2]"))
-		setProperty("iconP22.visible", false)
         runHaxeCode([[
-            var iconP22 = new HealthIcon(game.getLuaObject('badai', false).healthIcon, false);
-            iconP22.x = game.iconP2.x;
-            iconP22.y = game.iconP2.y;
-            game.add(iconP22);
-            game.modchartSprites.set('iconP22', iconP22);
+            game.iconP2.changeIcon(game.getLuaObject('badai', false).healthIcon);
             game.reloadHealthBarColors();
         ]])
-        setObjectOrder('iconP22', getObjectOrder('iconP12') + 1)
-        setObjectCamera("iconP22", 'hud')
     end
 
     if curStep == 3114 then --3114
