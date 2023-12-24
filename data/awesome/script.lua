@@ -53,7 +53,7 @@ function onStepHit()
     end
 
     if curStep == 2528 then --night
-        setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.6)
+        setProperty("defaultCamZoom", 0.8)
         setProperty("farmNight.visible", true)
         setProperty("thunderBlack.alpha", 0.35)
     end

@@ -1,10 +1,5 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
-local nonGappleSongs = {''};
-local gappleHUDsong = true;
-
-local songMod = 'DNB: Golden Apple';
-
 local gappleMemoryCounter = true; --doesnt matter --gapple doesn't have a memory counter... ITS REAL LANCE YPOSTED  IYT OPMGGGG	
 
 local CharactersWith3D = {};
@@ -17,19 +12,16 @@ local badaiSongs = {
 }
 
 function onCreate()
-	for i = 1, #nonGappleSongs do
-		if string.lower(songName) == nonGappleSongs[i] then gappleHUDsong = false; end
-	end
+	makeLuaSprite('thunderBlack', '', 0, 0)
+	makeGraphic('thunderBlack', '1280', '720', '000000')
+	setProperty('thunderBlack.alpha', 0)
+	setObjectCamera("thunderBlack", "hud")
+	updateHitbox("thunderBlack")
+	screenCenter("thunderBlack", 'xy')
+	addLuaSprite('thunderBlack', true)
 
-	if gappleHUDsong then
-		makeLuaSprite('thunderBlack', '', 0, 0)
-		makeGraphic('thunderBlack', '1280', '720', '000000')
-		setProperty('thunderBlack.alpha', 0)
-		setObjectCamera("thunderBlack", "hud")
-		updateHitbox("thunderBlack")
-		screenCenter("thunderBlack", 'xy')
-		addLuaSprite('thunderBlack', true)
-	end
+	precacheImage("noteSkins/NOTE_assets")
+	precacheImage("noteSkins/NOTE_assets_3D")
 end
 
 local oldFPS = 60;
@@ -44,8 +36,6 @@ function onCreatePost()
 	end
 	addLuaScript("scripts/gappleScripts/Gapple Bop", true)
 	addLuaScript("scripts/gappleScripts/Rating", true)
-
-	if not gappleHUDsong then return; end
 
 	if stringStartsWith(version, '0.6') then
         addHaxeLibrary('HealthIcon')
@@ -151,7 +141,6 @@ function onCreatePost()
     else
 		setProperty("fpsTxt.visible", getPropertyFromClass('backend.ClientPrefs', 'data.showFPS'))
     end
-	if not gappleHUDsong then setProperty("fpsTxt.visible", false) end
 	updateHitbox('fpsTxt')
 	addLuaText('fpsTxt')
 
@@ -167,11 +156,10 @@ function onCreatePost()
     else
 		setProperty("memoryTxt.visible", getPropertyFromClass('backend.ClientPrefs', 'data.showFPS'))
     end
-	if not gappleHUDsong then setProperty("memoryTxt.visible", false) end
 	updateHitbox('memoryTxt')
 	if gappleMemoryCounter then addLuaText('memoryTxt') end--]]
 
-	if gappleHUDsong then setPropertyFromClass("Main", "fpsVar.visible", false) end
+	setPropertyFromClass("Main", "fpsVar.visible", false)
 
 	makeAnimatedLuaSprite("gappleSoundTray", "gapple_soundtray", screenWidth - 150, 0)
 	for i = 0, 9 do
@@ -187,11 +175,15 @@ function onCreatePost()
 	doTweenY("gappleTransitionY", "gappleTransition.scale", 35, (crochet / 400 * getProperty('gfSpeed')) / playbackRate, "")
 
 	if string.lower(songName) ~= 'kooky' then changeNoteSkinsOnChange() end
-
-	if gappleHUDsong then
-		return;
+	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
+		if stringStartsWith(version, '0.7') then setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false) end
+		setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', true)
+		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then 
+			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == false then 
+				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true) 
+			end
+		end
 	end
-	gappleHUDsong = true;
 end
 
 function badaiPlayAnim(anim)
@@ -209,49 +201,48 @@ function onStrumsCreate()
 	donezo = true;
 end
 
-function changeNoteSkinsOnChange()
+function changeNoteSkinsOnChange(idForPerson)
 	local chars3D = {false, false}
 
-	for i = 1, #CharactersWith3D do
-		if string.lower(CharactersWith3D[i]) == string.lower(getProperty("boyfriend.curCharacter")) then
-			setProperty("boyfriend.antialiasing", false)
-			changeNoteSkin(true, 'NOTE_assets_3D')
-			for i = 0, 3 do
-				setPropertyFromGroup("playerStrums", i, "antialiasing", false)
-			end
-			chars3D[1] = true;
-			break;
-		else
-			changeNoteSkin(true, 'NOTE_assets')
-			for i = 0, 3 do
-				setPropertyFromGroup("playerStrums", i, "antialiasing", true)
+	if idForPerson == 1 or idForPerson == nil then
+		for i = 1, #CharactersWith3D do
+			if string.lower(CharactersWith3D[i]) == string.lower(getProperty("boyfriend.curCharacter")) then
+				setProperty("boyfriend.antialiasing", false)
+				changeNoteSkin(true, 'NOTE_assets_3D')
+				for i = 0, 3 do
+					setPropertyFromGroup("playerStrums", i, "antialiasing", false)
+				end
+				chars3D[1] = true;
+				break;
+			else
+				changeNoteSkin(true, 'NOTE_assets')
+				for i = 0, 3 do
+					setPropertyFromGroup("playerStrums", i, "antialiasing", true)
+				end
 			end
 		end
 	end
-	for i = 1, #CharactersWith3D do
-		if string.lower(CharactersWith3D[i]) == string.lower(getProperty("dad.curCharacter")) then
-			setProperty("dad.antialiasing", false)
-			changeNoteSkin(false, 'NOTE_assets_3D')
-			for i = 0, 3 do
-				setPropertyFromGroup("opponentStrums", i, "antialiasing", false)
-			end
-			chars3D[2] = true;
-			break;
-		else
-			changeNoteSkin(false, 'NOTE_assets')
-			for i = 0, 3 do
-				setPropertyFromGroup("opponentStrums", i, "antialiasing", true)
+	if idForPerson == 2 or idForPerson == nil then
+		for i = 1, #CharactersWith3D do
+			if string.lower(CharactersWith3D[i]) == string.lower(getProperty("dad.curCharacter")) then
+				setProperty("dad.antialiasing", false)
+				changeNoteSkin(false, 'NOTE_assets_3D')
+				for i = 0, 3 do
+					setPropertyFromGroup("opponentStrums", i, "antialiasing", false)
+				end
+				chars3D[2] = true;
+				break;
+			else
+				changeNoteSkin(false, 'NOTE_assets')
+				for i = 0, 3 do
+					setPropertyFromGroup("opponentStrums", i, "antialiasing", true)
+				end
 			end
 		end
 	end
 
-	for i = 0, getProperty('unspawnNotes.length')-1 do
-		if stringStartsWith(version, '0.7') then setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false) end
-		setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', true)
+	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then 
-			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == false then 
-				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true) 
-			end
 			if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
 				setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D')
 			end
@@ -259,16 +250,10 @@ function changeNoteSkinsOnChange()
 	end
 end
 
-function onEventPushed(eventName, value1, value2, strumTime)
-	if eventName == 'Change Character' and not cached then
-		precacheImage("noteSkins/NOTE_assets")
-		precacheImage("noteSkins/NOTE_assets_3D")
-	end
-end
-
 function onEvent(eventName, value1, value2, strumTime)
-	if eventName == 'Change Character' then
-		changeNoteSkinsOnChange()
+	if eventName == 'Change Character' and string.lower(songName) ~= 'badcorn' then
+		if string.lower(value1) == "bf" then changeNoteSkinsOnChange(1) end --changing both because of one character change = lag
+		if string.lower(value1) == "dad" then changeNoteSkinsOnChange(2) end
 		if string.lower(value1) == 'badai' then
 			runHaxeCode([[
 				game.getLuaObject('badai', false).destroy();
@@ -284,20 +269,18 @@ end
 local objectsCountown = {'countdownReady', 'countdownSet', 'countdownGo'}
 
 function onCountdownTick(swagCounter)
-	if gappleHUDsong then
-		if swagCounter == 3 then
-			runHaxeCode([[
-				if (game.boyfriend.animOffsets.exists("hey"))
-					game.boyfriend.playAnim("hey");
-				else
-					game.boyfriend.playAnim("singUP");
-				end
-			]])
-			setProperty(objectsCountown[3]..".scale.x", 0)
-			setProperty(objectsCountown[3]..".scale.y", 0)
-			doTweenX("lastCountScaleX", objectsCountown[3]..".scale", 1.35, crochet / 2000 / getProperty("playbackRate"), "")
-			doTweenY("lastCountScaleY", objectsCountown[3]..".scale", 1.35, crochet / 2000 / getProperty("playbackRate"), "")
-		end
+	if swagCounter == 3 then
+		runHaxeCode([[
+			if (game.boyfriend.animOffsets.exists("hey"))
+				game.boyfriend.playAnim("hey");
+			else
+				game.boyfriend.playAnim("singUP");
+			end
+		]])
+		setProperty(objectsCountown[3]..".scale.x", 0)
+		setProperty(objectsCountown[3]..".scale.y", 0)
+		doTweenX("lastCountScaleX", objectsCountown[3]..".scale", 1.35, crochet / 2000 / getProperty("playbackRate"), "")
+		doTweenY("lastCountScaleY", objectsCountown[3]..".scale", 1.35, crochet / 2000 / getProperty("playbackRate"), "")
 	end
 end
 
@@ -412,13 +395,11 @@ function onUpdate(elapsed)
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
 	songPos = math.toTime(getSongPosition() / 1000)
 
-	if gappleHUDsong then
-		setProperty('timeBarBG.visible', false)
-		setProperty('timeBar.visible', false)
-		setTextString('timeTxt', songPos.." / "..actualSongLength)
-		updateHitbox("timeTxt")
-		screenCenter("timeTxt", 'x')
-	end
+	setProperty('timeBarBG.visible', false)
+	setProperty('timeBar.visible', false)
+	setTextString('timeTxt', songPos.." / "..actualSongLength)
+	updateHitbox("timeTxt")
+	screenCenter("timeTxt", 'x')
 
 	for i = 1, #singAnims do
 		boyfriendHasMissAnims = getProperty('boyfriend.hasMissAnimations')
@@ -455,53 +436,49 @@ end
 local offsets = {-13, -13}--{55, 43}
 
 function onUpdatePost(elapsed)
-	if gappleHUDsong then
-		if string.lower(songName) ~= 'kooky' then
-			setProperty('healthBar.y', screenHeight * 0.9 + 4)
-			--setProperty('healthBar.x', screenHeight * 0.4)
-			if stringStartsWith(version, '0.7') then
-				setProperty('healthBarBGnew.y', screenHeight * 0.9 +5)
-				setProperty('healthBarBGnew.x', getProperty('healthBar.x'))
-			else
-				setProperty('healthBarBGnew.y', screenHeight * 0.9 +2)
-				setProperty('healthBarBGnew.x', getProperty('healthBar.x') -5)
-			end
-			setProperty('scoreTxt.y', getProperty('healthBar.y') + 40)
+	if string.lower(songName) ~= 'kooky' then
+		setProperty('healthBar.y', screenHeight * 0.9 + 4)
+		--setProperty('healthBar.x', screenHeight * 0.4)
+		if stringStartsWith(version, '0.7') then
+			setProperty('healthBarBGnew.y', screenHeight * 0.9 +5)
+			setProperty('healthBarBGnew.x', getProperty('healthBar.x'))
+		else
+			setProperty('healthBarBGnew.y', screenHeight * 0.9 +2)
+			setProperty('healthBarBGnew.x', getProperty('healthBar.x') -5)
 		end
-		if downscroll then
-			setProperty('healthBar.y', 54)
-			--setProperty('healthBar.x', getProperty('healthBar.x') + 4)
-			setProperty('healthBarBGnew.y', getProperty('healthBar.y') + 5.25)
-			setProperty('healthBarBGnew.x', getProperty('healthBar.x') + 4)
-		end
-		if (getProperty('creditsText.text') == '' or not luaTextExists("creditsText")) and string.lower(songName) ~= 'kooky' then
-			setProperty('creditsWatermark.y', getProperty('healthBar.y') + 46)
-		elseif string.lower(songName) ~= 'kooky' then
-			setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
-		end
+		setProperty('scoreTxt.y', getProperty('healthBar.y') + 40)
+	end
+	if downscroll then
+		setProperty('healthBar.y', 54)
+		--setProperty('healthBar.x', getProperty('healthBar.x') + 4)
+		setProperty('healthBarBGnew.y', getProperty('healthBar.y') + 5.25)
+		setProperty('healthBarBGnew.x', getProperty('healthBar.x') + 4)
+	end
+	if (getProperty('creditsText.text') == '' or not luaTextExists("creditsText")) and string.lower(songName) ~= 'kooky' then
+		setProperty('creditsWatermark.y', getProperty('healthBar.y') + 46)
+	elseif string.lower(songName) ~= 'kooky' then
+		setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
+	end
 
-		if gappleHUDsong then
-			setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
-			--[[setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
-			if math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)) >= 1000 then
-				setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000000, 1)).."."..(math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 10000000, 1)) - (math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000000, 1)) * 100)).." GB")
-			end--]]
+	setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
+	--[[setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
+	if math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)) >= 1000 then
+		setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000000, 1)).."."..(math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 10000000, 1)) - (math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000000, 1)) * 100)).." GB")
+	end--]]
 
-			if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
-			if getDataFromSave("UnNamedGapplePortSettings", "settingsAlert", buildTarget ~= 'android') then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
-		end
-		setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
-		if string.lower(songName) == 'kooky' then
-			setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
-		end
+	if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
+	if getDataFromSave("UnNamedGapplePortSettings", "settingsAlert", buildTarget ~= 'android') then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
+	setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+	if string.lower(songName) == 'kooky' then
+		setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 	end
 end
 
 function onStepHit()
 	--[[if stringStartsWith(version, '0.7') then
-		changeDiscordPresence(songName.." - Unnamed Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
+		changeDiscordPresence(songName.." - Untitled Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
     else
-		changePresence(songName.." - Unnamed Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
+		changePresence(songName.." - Untitled Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
 	end--]] --trying to optimize
 
 	--setObjectOrder('strumLineNotes', getObjectOrder('notes') +1) --puts notes under strumlinenotes
@@ -526,14 +503,12 @@ function onStepHit()
 end
 
 function onSectionHit()
-	if gappleHUDsong then
-		cancelTween('timeTxtScaleX')
-		cancelTween('timeTxtScaleY')
-		setProperty('timeTxt.scale.x', 1.1)
-		setProperty('timeTxt.scale.y', 1.1)
-		doTweenX('timeTxtScaleX', 'timeTxt.scale', 1, 0.2)
-		doTweenY('timeTxtScaleY', 'timeTxt.scale', 1, 0.2)
-	end
+	cancelTween('timeTxtScaleX')
+	cancelTween('timeTxtScaleY')
+	setProperty('timeTxt.scale.x', 1.1)
+	setProperty('timeTxt.scale.y', 1.1)
+	doTweenX('timeTxtScaleX', 'timeTxt.scale', 1, 0.2)
+	doTweenY('timeTxtScaleY', 'timeTxt.scale', 1, 0.2)
 end
 
 function onBeatHit()
