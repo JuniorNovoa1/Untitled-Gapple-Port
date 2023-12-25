@@ -10,10 +10,9 @@ function onUpdatePost(elapsed)
 		var iconOffset = 26;
 		setVar("playerIconPos", game.healthBar.x + (game.healthBar.width * (FlxMath.remapToRange(game.healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * game.iconP1.scale.x - 150) / 2 - iconOffset);
 		setVar("dadIconPos", game.healthBar.x + (game.healthBar.width * (FlxMath.remapToRange(game.healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * game.iconP2.scale.x) / 2 - iconOffset * 2);
-		//game.boyfriend.alpha = 0.7;
 	]])
-	--doTweenX("iconMovementP12vhv", "iconP1", getProperty("playerIconPos"), 0.08, "sineInOut")
-	--doTweenX("iconMovementP22hvh", "iconP2", getProperty("dadIconPos"), 0.08, "sineInOut")
+	doTweenX("iconMovementP12vhv", "iconP12", getProperty("playerIconPos"), 0.08, "sineInOut")
+	doTweenX("iconMovementP22hvh", "iconP22", getProperty("dadIconPos"), 0.08, "sineInOut")
     iconPropertys()
 end
 
@@ -58,7 +57,7 @@ function onBeatHit()
 end
 
 function iconPropertys()
-	local props = {'scale.x', 'scale.y'}
+	local props = {'scale.x', 'scale.y', 'x'}
 	for i = 1, #props do
 		setProperty("iconP1."..props[i], getProperty('iconP12.'..props[i]))
 		setProperty("iconP2."..props[i], getProperty('iconP22.'..props[i]))
