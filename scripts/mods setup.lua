@@ -34,7 +34,7 @@ function onCreatePost()
 	if stringStartsWith(version, '0.7') then
 		changeDiscordClientID("1136119974763708478")
 	end
-	addLuaScript("scripts/gappleScripts/Gapple Bop", true)
+	if string.lower(songName) ~= 'apple-leak' then addLuaScript("scripts/gappleScripts/Gapple Bop", true) end
 	addLuaScript("scripts/gappleScripts/Rating", true)
 
 	if stringStartsWith(version, '0.6') then
@@ -44,10 +44,6 @@ function onCreatePost()
     end
 
 	--White Hex Code: FFFFFF, Black Hex Code: 000000
-
-	setTextFont('scoreTxt', 'comic.ttf')
-	setTextFont('timeTxt', 'comic.ttf')
-	setTextSize("timeTxt", getTextSize("timeTxt"))
 
 	makeLuaText('creditsWatermark', songName, 0, 4, getProperty('healthBar.y') + 30)
 	setObjectCamera('creditsWatermark', 'camHUD')
@@ -96,7 +92,12 @@ function onCreatePost()
 	end
 
 	setProperty("updateTime", false)
-	setProperty("timeTxt.y", getProperty("timeTxt.y") - 10)
+	setTextFont('scoreTxt', 'comic.ttf')
+	setProperty('timeBarBG.visible', false)
+	setProperty('timeBar.visible', false)
+	setTextFont('timeTxt', 'comic.ttf')
+	setTextSize("timeTxt", getTextSize("timeTxt"))
+	--setProperty("timeTxt.y", getProperty("timeTxt.y") - 10)
 
 	if badaiSongs[string.lower(songName)] ~= nil then
 		runHaxeCode([[
@@ -107,7 +108,6 @@ function onCreatePost()
 		]])
 		callOnLuas("onBadaiCreate")
 	end
-
 	makeLuaSprite('gappleTransition', 'gapple_transition', 0, 0)
 	setProperty("gappleTransition.antialiasing", false)
 	setObjectCamera("gappleTransition", "other")
@@ -202,6 +202,7 @@ function onStrumsCreate()
 end
 
 function changeNoteSkinsOnChange(idForPerson)
+	if string.lower(songName) == "apple-leak" then return; end
 	local chars3D = {false, false}
 
 	if idForPerson == 1 or idForPerson == nil then
@@ -395,8 +396,8 @@ function onUpdate(elapsed)
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
 	songPos = math.toTime(getSongPosition() / 1000)
 
-	setProperty('timeBarBG.visible', false)
-	setProperty('timeBar.visible', false)
+	if string.lower(songName) == "apple-leak" then actualSongLength = "13:06" end
+
 	setTextString('timeTxt', songPos.." / "..actualSongLength)
 	updateHitbox("timeTxt")
 	screenCenter("timeTxt", 'x')

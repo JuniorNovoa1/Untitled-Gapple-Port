@@ -12,19 +12,22 @@ local camY = 0;
 local loopVarThing = false;
 
 function onCreatePost()
-	changeNoteSkin(false, 'NOTE_assets_3D')
-	changeNoteSkin(false, 'NOTE_assets')
+	removeLuaSprite("thunderBlack", true)
+	setProperty("fpsTxt.visible", false)
+	setPropertyFromClass("Main", "fpsVar.visible", true)
+	setProperty('creditsWatermark.visible', false)
+	setProperty("healthBarBGnew.visible", false)
+	setProperty('timeBarBG.visible', true)
+	setProperty('timeBar.visible', true)
+	setTextFont('scoreTxt', 'vcr.ttf')
+	setTextFont('timeTxt', 'vcr.ttf')
 end
 
-function onUpdate()
-	local time = 1.5;
-
-	if alphaChange and getProperty('dad.alpha') == 1 then
-		doTweenAlpha('lmaoDad', 'dad', 0, time)
-	end
-
-	if alphaChange and getProperty('dad.alpha') == 0 then
-		doTweenAlpha('lmaoDad', 'dad', 1, time)
+local elapsed2 = 0.0;
+function onUpdate(elapsed)
+	elapsed2 = elapsed2 + elapsed;
+	if alphaChange then
+		setProperty("dad.alpha", math.sin(elapsed2))
 	end
 
 	if stayOnCam then
@@ -189,7 +192,6 @@ function onEvent(name, value1, value2)
 		if value2 == 'fat-bandu-3d' then
 			cancelTween('banduFat')
 			thisNewPsychUpdateFuckedME(dadX, dadY)
-			changeNoteSkin(false, 'NOTE_assets_3D'); --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
 			setProperty('wavyApplecore.visible', true)
 		end
 
@@ -225,8 +227,6 @@ function onEvent(name, value1, value2)
 		end
 
 		if value2 == 'th1ft' then
-			changeNoteSkin(false, 'NOTE_assets') --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
-
 			zoomStuff = zoomStuff + 0.15;
 			setProperty('defaultCamZoom', getProperty('defaultCamZoom') +zoomStuff)
 			thisNewPsychUpdateFuckedME(dadX -400, dadY -35)
@@ -245,8 +245,6 @@ function onEvent(name, value1, value2)
 		end
 
 		if value2 == 'bandu-trolled' then
-			changeNoteSkin(false, 'NOTE_assets_3D'); --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
-
 			setProperty('ytVids.scale.x', 2)
 			setProperty('ytVids.scale.y', 2)
 			doTweenX('ytVidsWidth', 'ytVids.scale', 1, 1)
@@ -349,17 +347,28 @@ function onEvent(name, value1, value2)
 			setProperty('portal.visible', true)
 			setProperty('portal.x', getProperty('boyfriend.x') + 200)
 			setProperty('portal.y', getProperty('boyfriend.y') + 200)
+			local prevScale = getProperty('boyfriend.scale.x')
 			setProperty('boyfriend.scale.x', 0)
 			setProperty('boyfriend.scale.y', 0)
 
 			doTweenX('portalWidth', 'portal.scale', 1, 1)
 			doTweenY('portalHeight', 'portal.scale', 1, 1)
-			doTweenX('portalBFWidth', 'boyfriend.scale', 1, 1)
-			doTweenY('portalBFHeight', 'boyfriend.scale', 1, 1)
+			doTweenX('portalBFWidth', 'boyfriend.scale', prevScale, 1)
+			doTweenY('portalBFHeight', 'boyfriend.scale', prevScale, 1)
 		end
 
 		if value2 == '3d-bambi-leak-finale' then
 			if loopVarThing == false then
+				setProperty("fpsTxt.visible", true)
+				setPropertyFromClass("Main", "fpsVar.visible", false)
+				addLuaScript("scripts/gappleScripts/Gapple Bop", true)
+				callScript("scripts/gappleScripts/Gapple Bop", "onCreatePost")
+				setProperty('creditsWatermark.visible', true)
+				setProperty("healthBarBGnew.visible", true)
+				setProperty('timeBarBG.visible', false)
+				setProperty('timeBar.visible', false)
+				setTextFont('scoreTxt', 'comic.ttf')
+				setTextFont('timeTxt', 'comic.ttf')
 				removeLuaSprite('caveBG', true)
 				removeLuaSprite('brob', true)
 				removeLuaSprite('monkey', true)
@@ -367,7 +376,7 @@ function onEvent(name, value1, value2)
 				removeLuaSprite('wrath', true)
 				removeLuaSprite('caveFloor', true)
 				removeLuaSprite('norman', true)
-				makeAnimatedLuaSprite('fire', 'iykyk/appleLeak/dookie/FLAMESFLAMESBURNINGFLAMES', 75, -100)
+				makeAnimatedLuaSprite('fire', 'iykyk/appleLeak/dookie/FLAMESFLAMESBURNINGFLAMES', 50, -100)
 				addAnimationByPrefix('fire', 'idle', 'FlamesBurn0', 24, true)
 				playAnim('fire', 'idle', true)
 				setProperty('fire.antialiasing', false)
@@ -391,12 +400,11 @@ function onEvent(name, value1, value2)
 				stayOnCam = true;
 
 				setProperty('boyfriend.y', getProperty('boyfriend.y') - 950)
-				doTweenY('boyfrinedYYY', 'boyfriend', getProperty('boyfriend.y') + 950, 1.5)
+				doTweenY('boyfrinedYYY', 'boyfriend', getProperty('boyfriend.y') + 700, 1.5)
 				loopVarThing = true;
 			end
-
-			changeNoteSkin(true, 'NOTE_assets_3D'); --adding what im guessing is gonna be in the newest build since leaked build is 4 months old.
 		else
+			setProperty('boyfriend.y', getProperty('boyfriend.y') - 950 + 700)
 			setProperty('dad.x', 250)
 			setProperty('dad.y', -315)
 		end
@@ -465,11 +473,6 @@ function onTweenCompleted(tag)
 		doTweenX('null1', 'portal.scale', 0, 1)
 		doTweenY('invisPortal', 'portal.scale', 0, 1)
 	end
-
-	if tag == 'camHUDHeight' then
-		doTweenX('null999', 'camHUD.scale', 1, 1.25, 'cubeInOut')
-		doTweenY('null314', 'camHUD.scale', 1, 1.25, 'cubeInOut')
-	end
 end
 
 local POP = false;
@@ -486,11 +489,9 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 	end
 
 	if getProperty('dad.curCharacter') == '3d-bambi-leak-finale' and not POP2 then
-		setProperty('camHUD.scale.x', 1.5)
-		setProperty('camHUD.scale.y', 1.5)
+		setProperty('camHUD.zoom', 5)
+		doTweenZoom("outCameZOom", "camHUD", 0.5, 1.5, "")
 		setProperty('camHUD.visible', true)
-		doTweenX('camHUDWidth', 'camHUD.scale', 0.5, 1.25, 'cubeInOut')
-		doTweenY('camHUDHeight', 'camHUD.scale', 0.5, 1.25, 'cubeInOut')
 		triggerEvent("camFlash", '0.5', '')
 		setProperty('dad.visible', true)
 		stayOnCam = false;
@@ -502,29 +503,4 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if getProperty('dad.curCharacter') == 'among-bambi' and not POP3 then
 		--flash twitter post
 	end
-end
-
-function changeNoteSkin(player, skin)
-	if player == true then
-		for i = 0, 4, 1 do
-			setPropertyFromGroup('playerStrums', i, 'texture', 'noteSkins/'..skin)
-		end
-	end
-    if not player then
-		for i = 0, 4, 1 do
-			setPropertyFromGroup('opponentStrums', i, 'texture', 'noteSkins/'..skin)
-		end
-	end
-
-    for i = 0, getProperty('notes.length') -1 do
-        if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin)
-        end
-    end
-
-    for i = 0, getProperty('unspawnNotes.length') -1 do
-        if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin)
-        end
-    end
 end
