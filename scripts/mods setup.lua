@@ -8,7 +8,8 @@ local badaiSongs = {
 	["applecore"] = 'bambi-piss-3d',
 	["fresh-and-toasted"] = 'barbu',
 	["resumed"] = 'dambu',
-	["the-big-dingle"] = 'donk'
+	["the-big-dingle"] = 'donk',
+	['apple-leak'] = "cheating-4-leak2d"
 }
 
 function onCreate()
@@ -20,8 +21,10 @@ function onCreate()
 	screenCenter("thunderBlack", 'xy')
 	addLuaSprite('thunderBlack', true)
 
-	precacheImage("noteSkins/NOTE_assets")
-	precacheImage("noteSkins/NOTE_assets_3D")
+	if string.lower(songName) ~= 'apple-leak' then 
+		precacheImage("noteSkins/NOTE_assets")
+		precacheImage("noteSkins/NOTE_assets_3D")
+	end
 end
 
 local oldFPS = 60;
@@ -58,6 +61,7 @@ function onCreatePost()
 	if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
 	if string.lower(songName) == 'fresh-and-toasted' then setTextString("creditsWatermark", 'Fresh And Toasted') end
 	if string.lower(songName) == 'the-big-dingle' then setTextString("creditsWatermark", 'The Big Dingle') end
+	if string.lower(songName) == 'apple-leak' then setTextString("creditsWatermark", 'Apple Leak') end
 
 	makeLuaText('creditsText', '', 0, 4, getProperty('healthBar.y') + 52)
 	setObjectCamera('creditsText', 'camHUD')
@@ -527,6 +531,7 @@ function onBeatHit()
 
 		if badaiSongs[string.lower(songName)] ~= nil or luaSpriteExists("badai") then
 			if getProperty("badai.animation.curAnim.name") == 'idle' and not getProperty("badai.skipDance") then badaiPlayAnim('idle') end
+			if getProperty("badai.animation.curAnim.name") == 'danceLeft' and not getProperty("badai.skipDance") then badaiPlayAnim('danceRight') elseif getProperty("badai.animation.curAnim.name") == 'danceRight' and not getProperty("badai.skipDance") then badaiPlayAnim('danceLeft') end
 		end
 	end
 end
@@ -558,6 +563,11 @@ function opponentNoteHit(membersIndex, noteData, noteType, isSustainNote)
 	else
 		setProperty("dad.holdTimer", 0)
 		playAnim("dad", singAnims[noteData + 1], true)
+	end
+
+	if string.lower(songName) == 'apple-leak' then
+		setProperty("badai.holdTimer", 0)
+		badaiPlayAnim(singAnims[noteData + 1])
 	end
 end
 

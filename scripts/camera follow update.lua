@@ -64,6 +64,10 @@ function onUpdate() --camera now follows characters!!!!
 	if getProperty('dad.curCharacter') == 'bandu-sad' then
 		dadCamIdle[1] = 625;
 	end
+	if getProperty('dad.curCharacter') == 'doodoo-wide' then
+		bfCamIdle[1] = dadCamIdle[1];
+		bfCamIdle[2] = dadCamIdle[2];
+	end
 	if getDataFromSave("UnNamedGapplePortSettings", "newCamZoom") then yoffset = 105 / getProperty("defaultCamZoom") end
 	if mustHitSection == true and getProperty('boyfriend.animation.curAnim.name') == 'idle' then
 		callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] -yoffset);

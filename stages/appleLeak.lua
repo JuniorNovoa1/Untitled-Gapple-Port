@@ -54,7 +54,7 @@ function onCreate()
     updateHitbox('wavyApplecore')
     addLuaSprite('wavyApplecore', false)
 
-    makeAnimatedLuaSprite('jamboul', 'characters/appleLeak/jamboul', 150, 250)
+    makeAnimatedLuaSprite('jamboul', 'characters/iykyk/appleLeak/jamboul', 150, 250)
     addAnimationByPrefix('jamboul', 'left', 'jamboul left0', 24, false)
     addAnimationByPrefix('jamboul', 'down', 'jamboul down wip0', 24, false)
     addAnimationByPrefix('jamboul', 'up', 'jamboul up wip0', 24, false)

@@ -1,3 +1,4 @@
+--don't judge how shitty this script is, i made this when i first started lua coding, and im to lazy to remake this entire damn thing.
 local alphaChange = false;
 local bfX = 0;
 local bfY = 0;
@@ -11,6 +12,10 @@ local camY = 0;
 
 local loopVarThing = false;
 
+function onBadaiCreate()
+	setProperty("badai.visible", false)
+end
+
 function onCreatePost()
 	removeLuaSprite("thunderBlack", true)
 	setProperty("fpsTxt.visible", false)
@@ -21,13 +26,15 @@ function onCreatePost()
 	setProperty('timeBar.visible', true)
 	setTextFont('scoreTxt', 'vcr.ttf')
 	setTextFont('timeTxt', 'vcr.ttf')
+	dadX = getProperty('dad.x');
+	dadY = getProperty('dad.y') -125;
 end
 
 local elapsed2 = 0.0;
 function onUpdate(elapsed)
 	elapsed2 = elapsed2 + elapsed;
 	if alphaChange then
-		setProperty("dad.alpha", math.sin(elapsed2))
+		setProperty("dad.alpha", math.sin(elapsed2 * 5))
 	end
 
 	if stayOnCam then
@@ -38,8 +45,6 @@ end
 
 function onStepHit()
 	if curStep == 1088 then
-		dadX = getProperty('dad.x');
-		dadY = getProperty('dad.y') -125;
 		doTweenY('banduFat', 'dad', getProperty('dad.y') -500, 30)
 	end
 
@@ -103,6 +108,8 @@ function onStepHit()
 
 	if curStep == 9520 then --3d and 2d
 		makeAnimatedLuaSprite('staticAnim', 'iykyk/appleLeak/dookie/give_me_all_your_zunk', -175, -100)
+		setObjectCamera("staticAnim", 'hud')
+		setObjectOrder("staticAnim", 0)
 		setScrollFactor('staticAnim', 0, 0)
 		addAnimationByPrefix('staticAnim', 'idle', 'static0', 24, true)
 		playAnim('staticAnim', 'idle', true)
@@ -113,7 +120,11 @@ function onStepHit()
 	end
 
 	if curStep == 9696 then --3d bamber
+		setProperty("badai.visible", false)
+		--removeLuaSprite("badai", true)
+		removeLuaSprite("2dThing", true)
 		removeLuaSprite("blackNwhite", true)
+	
 		setProperty("staticAnim.visible", true)
 		runTimer('static', 1.1)
 	end
@@ -122,15 +133,19 @@ function onStepHit()
 		setProperty("staticAnim.visible", true)
 		setProperty("fire.visible", false)
 		setProperty("vg.visible", false)
-		runTimer('static', 1.2)
+		runTimer('static3', 1.2)
 	end
 
 	if curStep == 10256 then --so screwed
+		removeLuaSprite("deadMeme", true)
 		setProperty("staticAnim.visible", true)
-		runTimer('static', 1.25)
+		runTimer('static4', 1.25)
 	end
 
 	if curStep == 10464 then --3d bamber
+		removeLuaSprite("tiles", true)
+		removeLuaSprite("overlay", true)
+		removeLuaSprite("platform", true)
 		setProperty("staticAnim.visible", true)
 		runTimer('static', 1.25)
 	end
@@ -139,15 +154,22 @@ function onStepHit()
 		setProperty("staticAnim.visible", true)
 		setProperty("fire.visible", false)
 		setProperty("vg.visible", false)
-		runTimer('static', 1.25)
+		runTimer('static5', 1.25)
 	end
 
 	if curStep == 11152 then --bob
+		removeLuaSprite("space", true)
+		removeLuaSprite("backgroundShip", true)
+		removeLuaSprite("shipFloor", true)
+		removeLuaSprite("tables", true)
+		removeLuaSprite("screenshot", true)
 		setProperty("staticAnim.visible", true)
-		runTimer('static', 1.25)
+		runTimer('static6', 1.25)
 	end
 
 	if curStep == 11424 then --3d bamber
+		removeLuaSprite("NewTitleMenuBG", true)
+		removeLuaSprite("trees", true)
 		setProperty("staticAnim.visible", true)
 		runTimer('static', 1.25)
 	end
@@ -155,14 +177,27 @@ function onStepHit()
 	if curStep == 11952 then --dik cord
 		setProperty("fire.visible", false)
 		setProperty("vg.visible", false)
+		makeLuaSprite("discordBackground", "", 0, 0)
+		makeGraphic("discordBackground", 1280 * 1.5, 720 * 1.5, '000000')
+		setScrollFactor("discordBackground", 0, 0)
+		screenCenter("discordBackground", 'xy')
+		addLuaSprite("discordBackground", true)
+	
+		makeAnimatedLuaSprite("discord", "iykyk/appleLeak/dookie/goodbyeDooDoo", 0, 0)
+		addAnimationByPrefix("discord", "discord", "leave", 24, false)
+		setScrollFactor("discord", 0, 0)
+		screenCenter("discord", 'xy')
+		addLuaSprite("discord", true)
+		setProperty("defaultCamZoom", 0.9)
 	end
 end
 
 
 function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'static' then
+		setProperty('defaultCamZoom', 0.8)
+		triggerEvent("Change Character", "bf", "shoulder-bf")
 		triggerEvent("Change Character", "dad", "3d-bambi-leak-finale")
-		triggerEvent("Change Character", "bf", "3d-bf-shoulder")
 		setProperty("staticAnim.visible", false)
 		setProperty("fire.visible", true)
 		setProperty("vg.visible", true)
@@ -172,26 +207,139 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		setProperty("staticAnim.visible", false)
 
 		triggerEvent("Change Character", "bf", "bf")
-		makeLuaSprite('blackNwhite', 'iykyk/appleLeak/dookie/bgs/2d-and-3d/ying and yang makes a comeback', getProperty("boyfriend.x") * 0.9, getProperty("boyfriend.y") / 2)
+		triggerEvent("Change Character", "dad", "cheating-4-leak")
+		setProperty("boyfriend.color", "FFFFFF")
+		makeLuaSprite('blackNwhite', 'iykyk/appleLeak/dookie/bgs/2d-and-3d/ying and yang makes a comeback', 0, 0)
+		screenCenter("blackNwhite", 'xy')
+		setProperty("blackNwhite.flipX", true)
 		addLuaSprite('blackNwhite', false)
+	
+		screenCenter("boyfriend", 'xy')
+		setProperty("boyfriend.x", getProperty("boyfriend.x") - 75)
+		setProperty("dad.x", getProperty("boyfriend.x") - 500)
+		setProperty("dad.y", getProperty("boyfriend.y") - 285)
+		setProperty("badai.x", getProperty("boyfriend.x") + 500)
+		setProperty("badai.y", getProperty("boyfriend.y") - 235)
+		setProperty("badai.visible", true)
+		setProperty("defaultCamZoom", 0.75)
+	
 		makeAnimatedLuaSprite('2dThing', 'iykyk/appleLeak/dookie/fixed i things', 0, 0)
 		setScrollFactor('2dThing', 0, 0)
-    	addAnimationByPrefix('2dThing', 'idle', 'Symbol 1', 24, true)
-    	playAnim('2dThing', 'idle', true)
-        addLuaSprite('2dThing', true)
+		scaleObject("2dThing", 1.3, 1.3, true)
+		updateHitbox("2dThing")
+		screenCenter("2dThing", 'xy')
+		addAnimationByPrefix('2dThing', 'idle', 'Symbol 1', 24, true)
+		playAnim('2dThing', 'idle', true)
+		addLuaSprite('2dThing', true)
 	end
-end
 
-function thisNewPsychUpdateFuckedME(x, y)
-	doTweenX('dad xxx', 'dad', x, 0.05)
-	doTweenY('dad yyy', 'dad', y, 0.05)
+	if tag == 'static3' then
+		setProperty("staticAnim.visible", false)
+		triggerEvent("Change Character", "bf", "bf")
+		triggerEvent("Change Character", "dad", "doodoo-wide")
+		makeLuaSprite('deadMeme', 'iykyk/appleLeak/dookie/dead_meme_but_it_funny', 0, 0)
+		screenCenter("deadMeme", 'xy')
+		addLuaSprite('deadMeme', false)
+		setProperty("dad.x", getProperty("deadMeme.x") + 125)
+		setProperty("dad.y", getProperty("deadMeme.y") + 150)
+		setProperty("boyfriend.visible", false)
+		setProperty("defaultCamZoom", 1.25)
+	end
+
+	if tag == 'static4' then
+		setProperty("staticAnim.visible", false)
+		triggerEvent("Change Character", "bf", "bf-screwed")
+		triggerEvent("Change Character", "dad", "doodoo-screwed")
+		makeLuaSprite("tiles", "iykyk/appleLeak/lmfao/tiles", 0, 0)
+		screenCenter("tiles", 'xy')
+		addLuaSprite("tiles", false)
+		makeLuaSprite("overlay", "iykyk/appleLeak/lmfao/overlay", 0, 0)
+		scaleObject("overlay", 1.1, 1.1, true)
+		screenCenter("overlay", 'xy')
+		if not lowQuality then addLuaSprite("overlay", false) end
+		makeLuaSprite("platform", "iykyk/appleLeak/lmfao/platform", 0, 0)
+		screenCenter("platform", 'xy')
+		setProperty("platform.y", getProperty("platform.y") + 650)
+		addLuaSprite("platform", false)
+		setProperty("boyfriend.x", getProperty("platform.x") + 1185)
+		setProperty("boyfriend.y", getProperty("platform.y") - 250)
+		setProperty("dad.x", getProperty("platform.x") + 200)
+		setProperty("dad.y", getProperty("platform.y") - 425)
+		setProperty("defaultCamZoom", 0.6)
+	end
+
+	if tag == 'static5' then
+		setProperty("staticAnim.visible", false)
+		triggerEvent("Change Character", "bf", "bf")
+		triggerEvent("Change Character", "dad", "doodoo-impostor")
+		setProperty("boyfriend.visible", true)
+	
+		makeLuaSprite("space", "iykyk/appleLeak/clowofe/spaceThing", 0, 0)
+		screenCenter("space", 'xy')
+		if not lowQuality then addLuaSprite("space", false) end
+		makeLuaSprite("backgroundShip", "iykyk/appleLeak/clowofe/backgrounder", 0, 0)
+		screenCenter("backgroundShip", 'xy')
+		addLuaSprite("backgroundShip", false)
+		makeLuaSprite("shipFloor", "iykyk/appleLeak/clowofe/grounde", 0, 0)
+		screenCenter("shipFloor", 'xy')
+		addLuaSprite("shipFloor", false)
+		makeLuaSprite("tables", "iykyk/appleLeak/clowofe/tableThings", 0, 0)
+		screenCenter("tables", 'xy')
+		if not lowQuality then addLuaSprite("tables", false) end
+
+		makeLuaSprite("screenshot", "iykyk/appleLeak/clowofe/importerman", 0, 0)
+		setScrollFactor("screenshot", 0.0, 0.0)
+		scaleObject("screenshot", 1.5, 1.5, true)
+		updateHitbox("screenshot")
+		screenCenter("screenshot", 'xy')
+		addLuaSprite("screenshot", true)
+		doTweenAlpha("screenshot", "screenshot", 0, 1, "")
+	
+		setProperty("tables.y", getProperty("tables.y") - 235)
+		setProperty("backgroundShip.y", getProperty("backgroundShip.y") - 775)
+		setProperty("space.y", getProperty("backgroundShip.y"))
+	
+		setProperty("boyfriend.x", getProperty("tables.x") + 1100)
+		setProperty("boyfriend.y", getProperty("tables.y") - 200)
+		setProperty("dad.x", getProperty("tables.x") + 200)
+		setProperty("dad.y", getProperty("tables.y") - 460)
+	
+		setProperty("defaultCamZoom", 0.7)
+	end
+
+	if tag == 'static6' then
+		setProperty("staticAnim.visible", false)
+		triggerEvent("Change Character", "bf", "bf")
+		triggerEvent("Change Character", "dad", "doodoo-bob")
+	
+		makeAnimatedLuaSprite("NewTitleMenuBG", "iykyk/appleLeak/dookie/doodlebob/NewTitleMenuBG", 0, 0)
+		addAnimationByPrefix("NewTitleMenuBG", "idle", "TitleMenuSSBG instance 1", 24, true)
+		scaleObject("NewTitleMenuBG", 5, 5, true)
+		updateHitbox("NewTitleMenuBG")
+		screenCenter("NewTitleMenuBG", 'xy')
+		if not lowQuality then addLuaSprite("NewTitleMenuBG", false) end
+		setProperty("NewTitleMenuBG.y", getProperty("NewTitleMenuBG.y") - 200)
+	
+		makeLuaSprite("tress", "iykyk/appleLeak/dookie/doodlebob/doodlebob tree", 0, 0)
+		scaleObject("tress", 1.5, 1.5, true)
+		updateHitbox("tress")
+		screenCenter("tress", 'xy')
+		addLuaSprite("tress", false)
+	
+		setProperty("dad.x", getProperty("tress.x") + 450)
+		setProperty("dad.y", getProperty("tress.y") - 100)
+		setProperty("boyfriend.x", getProperty("tress.x") + 950)
+		setProperty("boyfriend.y", getProperty("tress.y") + 50)
+		setProperty("defaultCamZoom", 0.9)
+	end
 end
 
 function onEvent(name, value1, value2)
 	if name == 'Change Character' then
 		if value2 == 'fat-bandu-3d' then
 			cancelTween('banduFat')
-			thisNewPsychUpdateFuckedME(dadX, dadY)
+			setProperty("dad.x", dadX)
+			setProperty("dad.y", dadY)
 			setProperty('wavyApplecore.visible', true)
 		end
 
@@ -220,7 +368,8 @@ function onEvent(name, value1, value2)
 
 		if value2 == '3d-bambi-leak' then
 			setProperty('defaultCamZoom', getProperty('defaultCamZoom') -zoomStuff)
-			thisNewPsychUpdateFuckedME(dadX, dadY -200)
+			setProperty("dad.x", dadX)
+			setProperty("dad.y", dadY - 200)
 			removeLuaSprite('garryLeak', true)
 			setProperty('r2.visible', true)
 			alphaChange = true;
@@ -229,7 +378,8 @@ function onEvent(name, value1, value2)
 		if value2 == 'th1ft' then
 			zoomStuff = zoomStuff + 0.15;
 			setProperty('defaultCamZoom', getProperty('defaultCamZoom') +zoomStuff)
-			thisNewPsychUpdateFuckedME(dadX -400, dadY -35)
+			setProperty("dad.x", dadX -400)
+			setProperty("dad.y", dadY -35)
 			removeLuaSprite('r1', true)
 			removeLuaSprite('r2', true)
 			setProperty('th1ft.visible', true)
@@ -241,7 +391,8 @@ function onEvent(name, value1, value2)
 		end
 
 		if value2 == 'th1ft-monster' then
-			thisNewPsychUpdateFuckedME(dadX -400, dadY -35)
+			setProperty("dad.x", dadX -400)
+			setProperty("dad.y", dadY -35)
 		end
 
 		if value2 == 'bandu-trolled' then
@@ -253,10 +404,11 @@ function onEvent(name, value1, value2)
 			camY = getProperty('camFollow.y');
 			stayOnCam = true;
 
-			thisNewPsychUpdateFuckedME(25, 1290)
+			setProperty("dad.x", 25)
+			setProperty("dad.y", 1290)
 			
-			setProperty('boyfriend.x', 1400)
-			setProperty('boyfriend.y', 1625)
+			setProperty('boyfriend.x', 1250)
+			setProperty('boyfriend.y', 1550)
 			makeLuaSprite('boyfond', 'iykyk/appleLeak/trolled/boyfranon', bfX, bfY)
 			addLuaSprite('boyfond', false)
 
@@ -266,11 +418,12 @@ function onEvent(name, value1, value2)
 
 		if value2 == 'sammy' then
 			setProperty('funkipedia.visible', true)
-			thisNewPsychUpdateFuckedME(1660, 2070)
+			setProperty("dad.x", 1660)
+			setProperty("dad.y", 2070)
 			setProperty('boyfriend.x', 1250)
 			setProperty('boyfriend.y', 2500)
-			setProperty('boyfriend.scale.x', 0.85)
-			setProperty('boyfriend.scale.y', 0.85)
+			setProperty('boyfriend.scale.x', getProperty("boyfriend.scale.x") - 0.15)
+			setProperty('boyfriend.scale.y', getProperty("boyfriend.scale.y") - 0.15)
 		end
 
 		if value2 == 'duelExpunged' then
@@ -340,14 +493,18 @@ function onEvent(name, value1, value2)
 				addLuaSprite('norman', false)
 			end
 
-			thisNewPsychUpdateFuckedME(-300, 350)
-			setProperty('boyfriend.x', 900)
-			setProperty('boyfriend.y', 465) --765
+			setProperty("dad.x", -300)
+			setProperty("dad.y", 350)
+			setProperty('boyfriend.x', 800)
+			setProperty('boyfriend.y', 435) --765
+
+			setProperty("boyfriend.color", getColorFromHex("0xFF878787"))
+			setProperty("norman.color", getColorFromHex("0xFF878787"))
 
 			setProperty('portal.visible', true)
 			setProperty('portal.x', getProperty('boyfriend.x') + 200)
 			setProperty('portal.y', getProperty('boyfriend.y') + 200)
-			local prevScale = getProperty('boyfriend.scale.x')
+			local prevScale = getProperty("boyfriend.scale.x") + 0.15
 			setProperty('boyfriend.scale.x', 0)
 			setProperty('boyfriend.scale.y', 0)
 
@@ -400,13 +557,13 @@ function onEvent(name, value1, value2)
 				stayOnCam = true;
 
 				setProperty('boyfriend.y', getProperty('boyfriend.y') - 950)
-				doTweenY('boyfrinedYYY', 'boyfriend', getProperty('boyfriend.y') + 700, 1.5)
+				doTweenY('boyfrinedYYY', 'boyfriend', getProperty('boyfriend.y') + 680, 1.5)
 				loopVarThing = true;
+			else
+				--setProperty('boyfriend.y', getProperty('boyfriend.y') - 950 + 680)
+				setProperty('dad.x', 250)
+				setProperty('dad.y', -315)
 			end
-		else
-			setProperty('boyfriend.y', getProperty('boyfriend.y') - 950 + 700)
-			setProperty('dad.x', 250)
-			setProperty('dad.y', -315)
 		end
 
 		if value2 == 'duel-cheating-bambi-leak' then
@@ -469,9 +626,13 @@ function onTweenCompleted(tag)
 	end
 
 	if tag == 'portalBFHeight' then
-		doTweenY('null5', 'boyfriend', 765, 1)
+		doTweenY('null5', 'boyfriend', 680, 1)
 		doTweenX('null1', 'portal.scale', 0, 1)
 		doTweenY('invisPortal', 'portal.scale', 0, 1)
+	end
+
+	if tag == 'outCameZOom' then
+		doTweenZoom("incanameZOom", "camHUD", 1, 1, "")
 	end
 end
 
@@ -490,7 +651,7 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 
 	if getProperty('dad.curCharacter') == '3d-bambi-leak-finale' and not POP2 then
 		setProperty('camHUD.zoom', 5)
-		doTweenZoom("outCameZOom", "camHUD", 0.5, 1.5, "")
+		doTweenZoom("outCameZOom", "camHUD", 0.8, 1.5, "")
 		setProperty('camHUD.visible', true)
 		triggerEvent("camFlash", '0.5', '')
 		setProperty('dad.visible', true)

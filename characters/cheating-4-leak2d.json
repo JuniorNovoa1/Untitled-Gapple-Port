@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-22,
+				47
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "danceRight",
+			"loop": false,
+			"name": "idlel0"
+		},
+		{
+			"offsets": [
+				0,
+				114
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "danceLeft",
+			"loop": false,
+			"name": "idler0"
+		},
+		{
+			"offsets": [
+				-70,
+				-22
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "left0"
+		},
+		{
+			"offsets": [
+				-40,
+				-60
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "down0"
+		},
+		{
+			"offsets": [
+				-36,
+				21
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "up0"
+		},
+		{
+			"offsets": [
+				-70,
+				61
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "right0"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/iykyk/appleleak/dookie/2dguy",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "dookie/doodoo-leak-3d-2d",
+	"flip_x": false,
+	"healthbar_colors": [
+		68,
+		68,
+		68
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}
