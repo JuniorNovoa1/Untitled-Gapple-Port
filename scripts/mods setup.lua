@@ -401,6 +401,7 @@ function onUpdate(elapsed)
 	songPos = math.toTime(getSongPosition() / 1000)
 
 	if string.lower(songName) == "apple-leak" then actualSongLength = "13:06" end
+	if string.lower(songName) == "apple-leak" and curStep >= 8608 then actualSongLength = "17:25" end
 
 	setTextString('timeTxt', songPos.." / "..actualSongLength)
 	updateHitbox("timeTxt")
@@ -480,11 +481,11 @@ function onUpdatePost(elapsed)
 end
 
 function onStepHit()
-	--[[if stringStartsWith(version, '0.7') then
+	if stringStartsWith(version, '0.7') then
 		changeDiscordPresence(songName.." - Untitled Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
     else
 		changePresence(songName.." - Untitled Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
-	end--]] --trying to optimize
+	end --trying to optimize --if psych can do it, so can I!
 
 	--setObjectOrder('strumLineNotes', getObjectOrder('notes') +1) --puts notes under strumlinenotes
 

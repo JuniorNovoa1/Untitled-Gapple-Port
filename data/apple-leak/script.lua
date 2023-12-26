@@ -34,7 +34,7 @@ local elapsed2 = 0.0;
 function onUpdate(elapsed)
 	elapsed2 = elapsed2 + elapsed;
 	if alphaChange then
-		setProperty("dad.alpha", math.sin(elapsed2 * 5))
+		setProperty("dad.alpha", math.sin(elapsed2 * 2.5))
 	end
 
 	if stayOnCam then
@@ -208,7 +208,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 
 		triggerEvent("Change Character", "bf", "bf")
 		triggerEvent("Change Character", "dad", "cheating-4-leak")
-		setProperty("boyfriend.color", "FFFFFF")
+		setProperty("boyfriend.color", getColorFromHex("FFFFFF"))
 		makeLuaSprite('blackNwhite', 'iykyk/appleLeak/dookie/bgs/2d-and-3d/ying and yang makes a comeback', 0, 0)
 		screenCenter("blackNwhite", 'xy')
 		setProperty("blackNwhite.flipX", true)
@@ -341,6 +341,8 @@ function onEvent(name, value1, value2)
 			setProperty("dad.x", dadX)
 			setProperty("dad.y", dadY)
 			setProperty('wavyApplecore.visible', true)
+			setProperty('wavyApplecoreBLACK.visible', true)
+			setProperty('defaultCamZoom', 0.9)
 		end
 
 		if value2 == 'gary' then
@@ -358,7 +360,10 @@ function onEvent(name, value1, value2)
 			doTweenX('wavyWidth', 'wavyApplecore.scale', 0, 1)
 			doTweenY('wavyHeigth', 'wavyApplecore.scale', 0, 1)
 			doTweenAlpha('wavyAlpha', 'wavyApplecore', 0, 1)
-	
+			doTweenX('wavyWidt2h', 'wavyApplecoreBLACK.scale', 0, 1)
+			doTweenY('wavyHeigth2', 'wavyApplecoreBLACK.scale', 0, 1)
+			doTweenAlpha('wavyAlph2a', 'wavyApplecoreBLACK', 0, 1)
+
 			doTweenAlpha('fatBandunAlpha', 'fatBandu', 0, 1)
 			doTweenAlpha('jamboulAlpha', 'jamboul', 0, 1)
 	
@@ -604,6 +609,7 @@ function onTweenCompleted(tag)
 		removeLuaSprite('fatBandu', true)
 		removeLuaSprite('gasStation', true)
 		removeLuaSprite('wavyApplecore', true)
+		removeLuaSprite("wavyApplecoreBLACK", true)
 		removeLuaSprite('kineMaster', true)
 	end
 
