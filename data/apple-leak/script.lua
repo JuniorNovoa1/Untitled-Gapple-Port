@@ -30,11 +30,11 @@ function onCreatePost()
 	dadY = getProperty('dad.y') -125;
 end
 
-local elapsed2 = 0.0;
+local botplaySine = 0.0;
 function onUpdate(elapsed)
-	elapsed2 = elapsed2 + elapsed;
+	botplaySine = botplaySine + (180 * elapsed);
 	if alphaChange then
-		setProperty("dad.alpha", math.sin(elapsed2 * 2.5))
+		setProperty("dad.alpha", 1 - (math.sin((3.141592653589793 * botplaySine) / 180)))
 	end
 
 	if stayOnCam then
