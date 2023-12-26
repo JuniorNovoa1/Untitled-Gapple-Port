@@ -91,7 +91,7 @@ function onStepHit()
 
 	if curStep == 7488 then
 		--portal
-		makeLuaSprite('portal', 'iykyk/appleLeak/cave/portal', getProperty('boyfriend.x') + 205, getProperty('boyfriend.y') + 205)
+		makeLuaSprite('portal', 'iykyk/appleLeak/cave/portal', getProperty('boyfriend.x') + 310, getProperty('boyfriend.y') + 310)
 		setProperty('portal.scale.x', 0)
 		setProperty('portal.scale.y', 0)
 		updateHitbox('portal')
@@ -289,7 +289,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 
 		makeLuaSprite("screenshot", "iykyk/appleLeak/clowofe/importerman", 0, 0)
 		setScrollFactor("screenshot", 0.0, 0.0)
-		scaleObject("screenshot", 1.5, 1.5, true)
+		scaleObject("screenshot", 1.75, 1.75, true)
 		updateHitbox("screenshot")
 		screenCenter("screenshot", 'xy')
 		addLuaSprite("screenshot", true)
@@ -425,10 +425,10 @@ function onEvent(name, value1, value2)
 			setProperty('funkipedia.visible', true)
 			setProperty("dad.x", 1660)
 			setProperty("dad.y", 2070)
-			setProperty('boyfriend.x', 1250)
-			setProperty('boyfriend.y', 2500)
-			setProperty('boyfriend.scale.x', getProperty("boyfriend.scale.x") - 0.15)
-			setProperty('boyfriend.scale.y', getProperty("boyfriend.scale.y") - 0.15)
+			setProperty('boyfriend.x', getProperty("funkipedia.x") + 1350)
+			setProperty('boyfriend.y', getProperty("funkipedia.y") + 475)
+			setProperty('boyfriend.scale.x', getProperty("boyfriend.scale.x") - 0.2)
+			setProperty('boyfriend.scale.y', getProperty("boyfriend.scale.y") - 0.2)
 		end
 
 		if value2 == 'duelExpunged' then
@@ -509,7 +509,7 @@ function onEvent(name, value1, value2)
 			setProperty('portal.visible', true)
 			setProperty('portal.x', getProperty('boyfriend.x') + 200)
 			setProperty('portal.y', getProperty('boyfriend.y') + 200)
-			local prevScale = getProperty("boyfriend.scale.x") + 0.15
+			local prevScale = getProperty("boyfriend.scale.x") + 0.2
 			setProperty('boyfriend.scale.x', 0)
 			setProperty('boyfriend.scale.y', 0)
 
@@ -538,6 +538,7 @@ function onEvent(name, value1, value2)
 				removeLuaSprite('wrath', true)
 				removeLuaSprite('caveFloor', true)
 				removeLuaSprite('norman', true)
+				removeLuaSprite("portal", true)
 				makeAnimatedLuaSprite('fire', 'iykyk/appleLeak/dookie/FLAMESFLAMESBURNINGFLAMES', 50, -100)
 				addAnimationByPrefix('fire', 'idle', 'FlamesBurn0', 24, true)
 				playAnim('fire', 'idle', true)
