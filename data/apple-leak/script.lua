@@ -188,7 +188,7 @@ function onStepHit()
 		setScrollFactor("discord", 0, 0)
 		screenCenter("discord", 'xy')
 		addLuaSprite("discord", true)
-		setProperty("defaultCamZoom", 0.9)
+		--setProperty("defaultCamZoom", 0.9)
 	end
 end
 
@@ -636,10 +636,6 @@ function onTweenCompleted(tag)
 		doTweenY('null5', 'boyfriend', 680, 1)
 		doTweenX('null1', 'portal.scale', 0, 1)
 		doTweenY('invisPortal', 'portal.scale', 0, 1)
-	end
-
-	if tag == 'outCameZOom' then
-		doTweenZoom("incanameZOom", "camHUD", 1, 1, "")
 	end
 end
 
