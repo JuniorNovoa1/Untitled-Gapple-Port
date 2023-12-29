@@ -6,7 +6,6 @@ local epilepsy = true; --determines if screen flashes many colors at once. (disa
 local screenshake = true; --determines wether the screen can shake.
 local dialogue = false; --determine wether dialogue pops up on compatible songs.
 local sensitiveContent = true; --determines if sensitive content gets enabled (ie gore)
-local charSelect = false; --determines wether the char select screen pops up before a song begins. (increases memory usage)
 local newCamZoom = false; --very buggy! only used on some sections of "Nice!"
 --
 local unfinishedStuff = false; --determines if anything unfinished gets activated, enabling this might lead to crashes, high memory usage, high cpu usage, or more bad stuff. 
@@ -16,12 +15,6 @@ local debugMode = false; --wether to enable modding tools to help out me (Junior
 local settingStringArray = {"modcharts", "epilepsy", "screenshake", "dialogue", "charSelect", "newCamZoom", "unfinishedStuff", "debugMode"}
 
 --cross script shit
-local gappleSongs = {'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'deformation', 'ferocious', 'nice', 'glamrock', 'sugar-rush', 'gift-card', 'ready-loud', 'bookworm', 'cuberoot', 'sart-producer', 'og', 'mine', 
-'apple-leak', 'awesome', 'badcorn', 'crap!', 'ticking', 'kooky'}
-local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', 'shoulder-bf', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
-'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
-'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'too-shiny', 'dave-wide', 'awesomeBambiCrack',
-'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad', "3d-tristan", 'dambai', 'dambu', 'dale', 'dingle', 'froing'}
 
 --IGNORE EVERYTHING BELOW!!!!!!
 function onCreate()
@@ -36,7 +29,6 @@ function onCreate()
     setDataFromSave("UnNamedGapplePortSettings", 'screenshake', screenshake)
     setDataFromSave("UnNamedGapplePortSettings", 'dialogue', dialogue)
     setDataFromSave("UnNamedGapplePortSettings", 'sensitiveContent', sensitiveContent)
-    setDataFromSave("UnNamedGapplePortSettings", 'charSelect', charSelect)
     setDataFromSave("UnNamedGapplePortSettings", 'newCamZoom', newCamZoom)
     --misc
     setDataFromSave("UnNamedGapplePortSettings", 'camZoom', true)
@@ -47,8 +39,6 @@ function onCreate()
     --cross script shit
     setDataFromSave("UnNamedGapplePortSettings", "canFloat", true)
     setDataFromSave("UnNamedGapplePortSettings", "badaiTime", false)
-    setDataFromSave("UnNamedGapplePortSettings", "gappleSongs", gappleSongs)
-    setDataFromSave("UnNamedGapplePortSettings", "CharactersWith3D", CharactersWith3D)
 
     if debugMode then
         setDataFromSave("UnNamedGapplePortSettings", 'dialogue', false)

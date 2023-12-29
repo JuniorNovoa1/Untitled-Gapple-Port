@@ -1,24 +1,43 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
+local gappleSong = true; --set to false to disable!
 local nonCharSelectSongs = {'glamrock', 'kooky'};
-local gappleSong = true;
 
+local lockedCharacters = {}
 local characters = { --put characters here, ijdiot
-	[1] = {'bf', 'odd-bf'},
-	[2] = {'3d-bf', 'gf'},
-	[3] = {'dad'},
-	[4] = {'split-dave-3d', 'bambi-piss-3d', 'dad', 'ticking'}
+	[1] = {'bf', 'bf-pixel', '3d-bf', 'froing', 'epicBf', 'dinner-bf', 'boyfranon', 'bf-screwed'},
+	[2] = {'split-dave-3d'}
 }
 local characterOffsets = { --put offsets here, idjiot2
-	["bambi-piss-3d"] = {-250, -250}
+	["bf"] = {-100, -100},
+	["bf-pixel"] = {150, 135},
+	["bf-screwed"] = {0, 50}
 }
 local funnyReturnString = { --put text here, idjiot3
-	["bf"] = "Boyfriend"
+	["bf"] = "Boyfriend",
+	["bf-pixel"] = "Pixel Boyfriend",
+	["3d-bf"] = "3D Boyfriend",
+	["froing"] = "Boing Froing",
+	["epicBf"] = "Biggity Dawg",
+	["dinner-bf"] = "Dinnerboyfriend",
+	["nil"] = "/V/-tan Boyfriend",
+	["boyfranon"] = "Boyfranon",
+	["nil"] = "Minecraft Boyfriend",
+	["nil"] = "Loft Boyfriend",
+	["bf-screwed"] = "#Screwed Boyfriend",
+	["nil"] = "INDIE CROSS BEST BF",
+	["nil"] = "Corrupted Boyfriend"
 }
 local nativeCharacters = {
 	["bf"] = true;
-	["odd-bf"] = true;
 	["3d-bf"] = true;
+	["bf"] = true;
+	["bf-pixel"] = true;
+	["3d-bf"] = true;
+	["froing"] = true;
+	["epicBf"] = true;
+	["boyfranon"] = true;
+	["bf-screwed"] = true;
 }
 local curSelected = 1;
 local curSelectedVer = 1;
@@ -36,7 +55,7 @@ function onCreatePost()
 	for i = 1, #nonCharSelectSongs do
 		if string.lower(songName) == nonCharSelectSongs[i] then gappleSong = false; end
 	end
-	if not getDataFromSave("UnNamedGapplePortSettings", "charSelect", true) or not gappleSong then
+	if not gappleSong then
 		callOnLuas('onDialogueReadyChar')
 		runHaxeCode([[game.startCountdown();]])
 		callOnLuas('onCountdownTick', {69})
@@ -63,15 +82,18 @@ function onCreatePost()
 	screenCenter('mineBGcharSelect')
 	addLuaSprite('mineBGcharSelect', false)
 
-	makeLuaText("charTxt", "", 0, 25, 600)
+	makeLuaText("charTxt", "", 0, 22.5, 620)
 	setObjectCamera("charTxt", 'camOTHER')
 	setTextFont("charTxt", "comic.ttf")
-	setTextSize("charTxt", 64)
+	setTextSize("charTxt", 66)
 	setTextBorder("charTxt", 4, "000000")
+	setProperty("charTxt.antialiasing", false)
 	addLuaText("charTxt")
 
 	makeLuaSprite('charSelectGuide', 'charSelectGuide', 25, 10)
+	setProperty("charSelectGuide.antialiasing", false)
 	setObjectCamera("charSelectGuide", 'other')
+	scaleObject("charSelectGuide", 1.1, 1.1, true)
 	addLuaSprite('charSelectGuide', false)
 
 	makeLuaSprite('screenTrans', '', screenWidth, 0)
@@ -128,14 +150,14 @@ function createChar()
 	runHaxeCode([[
 		var char = new Character(835, 325, "]]..characters[curSelected][curSelectedVer]..[[");
 		char.camera = game.camOther;
-		char.flipX = false;
+		char.flipX = !char.flipX;
 		char.scale.set(char.scale.x -0.1, char.scale.y -0.1);
 		game.add(char);
 		game.modchartSprites.set('char', char);
 
 		var charIcon = new HealthIcon(char.healthIcon, false);
 		charIcon.x += 25;
-		charIcon.y = 475;
+		charIcon.y = 500;
 		charIcon.camera = game.camOther;
 		game.add(charIcon);
 		game.modchartSprites.set('charIcon', charIcon);
@@ -144,8 +166,8 @@ function createChar()
 		setProperty("char.x", getProperty("char.x") + characterOffsets[characters[curSelected][curSelectedVer]][1])
 		setProperty("char.y", getProperty("char.y") + characterOffsets[characters[curSelected][curSelectedVer]][2])
 	end
-	setObjectOrder("char", getObjectOrder("screenTrans") - 1)
-	setObjectOrder("charIcon", getObjectOrder("screenTrans") - 1)
+	setObjectOrder("char", getObjectOrder("screenTrans") - 2)
+	setObjectOrder("charIcon", getObjectOrder("screenTrans") - 2)
 	setObjectOrder("screenTrans", 99)
 
 	runTimer("charDance", 1)
@@ -153,7 +175,7 @@ end
 
 local hasExitCharSelect = false;
 function onStartCountdown()
-	if not hasExitCharSelect and getDataFromSave("UnNamedGapplePortSettings", "charSelect", true) and gappleSong then
+	if not hasExitCharSelect and gappleSong then
 		return Function_Stop;
 	else
 		return Function_Continue;
@@ -161,6 +183,10 @@ function onStartCountdown()
 end
 
 function triggerKeyThingy(key)
+	if key == 'escape' then
+		confirmed = true;
+		runHaxeCode([[game.endSong();]])
+	end
 	if key == 'left' then
 		curSelectedVer = 1;
 		curSelected = curSelected - 1;
@@ -195,10 +221,16 @@ function triggerKeyThingy(key)
 	if key == 'accept' then
 		local posBF = {getProperty("boyfriend.x"), getProperty("boyfriend.y")}
 		local bfSCALE = {getProperty("boyfriend.width"), getProperty("boyfriend.height")}
-		playAnim("char", "hey", false)
+		runHaxeCode([[
+			if (game.getLuaObject("char", false).animOffsets.exists("hey"))
+				game.getLuaObject("char", false).playAnim("hey");
+			else
+				game.getLuaObject("char", false).playAnim("singUP");
+			end
+		]])
 		triggerEvent("Change Character", 'bf', characters[curSelected][curSelectedVer])
-		setProperty("boyfriend.x", (posBF[1] + bfSCALE[1]) - (getProperty("boyfriend.width") * 0.9))
-		setProperty("boyfriend.y", (posBF[2] + bfSCALE[2]) - (getProperty("boyfriend.height") * 0.9))
+		--[[setProperty("boyfriend.x", (posBF[1] + bfSCALE[1]) - (getProperty("boyfriend.width") * 0.9))
+		setProperty("boyfriend.y", (posBF[2] + bfSCALE[2]) - (getProperty("boyfriend.height") * 0.9))--]]
 		playSound('confirmMenu', 1)
 		setSoundVolume("charSelectSound", 0)
 		if flashingLights then
@@ -217,17 +249,18 @@ function triggerKeyThingy(key)
 end
 
 function onUpdate(elapsed)
-	if hasExitCharSelect or not getDataFromSave("UnNamedGapplePortSettings", "charSelect", true) or not gappleSong then return; end
+	if hasExitCharSelect or not gappleSong then return; end
 	setProperty("fakeMouse.x", getMouseX("other"))
 	setProperty("fakeMouse.y", getMouseY("other"))
-	if luaSoundExists('charSelectSound') == false then
+	if not luaSoundExists('charSelectSound') then
 		playSound("character_select", 1, "charSelectSound")
 	end
 
 	if not confirmed then
-		if funnyReturnString[characters[curSelected][curSelectedVer]] ~= nil then setTextString("charTxt", funnyReturnString[characters[curSelected][curSelectedVer]]) else setTextString("charTxt", "Char not in array!") end
+		if funnyReturnString[characters[curSelected][curSelectedVer]] ~= nil then setTextString("charTxt", funnyReturnString[characters[curSelected][curSelectedVer]]) else setTextString("charTxt", getProperty("char.curCharacter")) end
 	end
 	
+	if keyJustPressed('back') and not confirmed then triggerKeyThingy('escape') end
 	if (keyJustPressed('left') or (mouseClicked("left") and objectsOverlap("fakeMouse", "changeLeft"))) and not confirmed then triggerKeyThingy('left') end
 	if (keyJustPressed('right') or (mouseClicked("left") and objectsOverlap("fakeMouse", "changeRight"))) and not confirmed then triggerKeyThingy('right') end
 	if (keyJustPressed('up') or (mouseClicked("left") and objectsOverlap("fakeMouse", "changeUp"))) and not confirmed then triggerKeyThingy('up') end
@@ -273,5 +306,6 @@ function onTweenCompleted(tag)
 		hasExitCharSelect = true;
 		callOnLuas('onDialogueReadyChar', {})
 		runHaxeCode([[game.startCountdown();]])
+		--close(true)
 	end
 end

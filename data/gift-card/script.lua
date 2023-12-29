@@ -49,7 +49,6 @@ function onEvent(eventName, value1, value2, strumTime)
             callOnLuas("takeFromVal", {'boyfriend.y', 15})
             callOnLuas("addToVal", {'dad.x', 75})
             callOnLuas("takeFromVal", {'dad.y', 75})
-            callOnLuas("takeFromVal", {'gf.y', 235})
         end
     end
 end

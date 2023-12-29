@@ -2,7 +2,10 @@
 --BY JUNIORNOVOA
 local gappleMemoryCounter = true; --doesnt matter --gapple doesn't have a memory counter... ITS REAL LANCE YPOSTED  IYT OPMGGGG	
 
-local CharactersWith3D = {};
+local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', 'shoulder-bf', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
+'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
+'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'too-shiny', 'dave-wide', 'awesomeBambiCrack',
+'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad', "3d-tristan", 'dambai', 'dambu', 'dale', 'dingle', 'froing'}
 
 local badaiSongs = {
 	["applecore"] = 'bambi-piss-3d',
@@ -33,17 +36,22 @@ local overrideFPS = 126;
 function onCreatePost()
 	addHaxeLibrary("FlxEase", 'flixel.tweens')
 	addHaxeLibrary("FlxTween", 'flixel.tweens')
-	CharactersWith3D = getDataFromSave("UnNamedGapplePortSettings", "CharactersWith3D")
-	if stringStartsWith(version, '0.7') then
-		changeDiscordClientID("1136119974763708478")
+	addHaxeLibrary("Math")
+    addHaxeLibrary('FlxMath', 'flixel.math')
+	if string.lower(songName) ~= 'apple-leak' then
+		makeLuaSprite("iconP12", "icons/missing", 0, 0)
+		makeLuaSprite("iconP22", "icons/missing", 0, 0)
 	end
-	if string.lower(songName) ~= 'apple-leak' then addLuaScript("scripts/gappleScripts/Gapple Bop", true) end
-	addLuaScript("scripts/gappleScripts/Rating", true)
 
-	if stringStartsWith(version, '0.6') then
-        addHaxeLibrary('HealthIcon')
+	addHaxeLibrary("Std")
+
+    --Source Code stuff
+    if stringStartsWith(version, '0.6') then
+        addHaxeLibrary("Rating", 'Conductor')
+        addHaxeLibrary("Note")
     else
-        addHaxeLibrary('HealthIcon', 'objects')
+        addHaxeLibrary("Rating", 'backend.Conductor')
+        addHaxeLibrary("Note", 'objects')
     end
 
 	--White Hex Code: FFFFFF, Black Hex Code: 000000
@@ -177,6 +185,19 @@ function onCreatePost()
 
 	doTweenX("gappleTransitionX", "gappleTransition.scale", 35, (crochet / 400 * getProperty('gfSpeed')) / playbackRate, "")
 	doTweenY("gappleTransitionY", "gappleTransition.scale", 35, (crochet / 400 * getProperty('gfSpeed')) / playbackRate, "")
+
+	makeLuaText("ratingTxt", "Sick!\n1", 0, 0.0, 64)
+    setTextFont("ratingTxt", "comic.ttf")
+    screenCenter("ratingTxt", 'x')
+    setProperty("ratingTxt.x", getProperty("ratingTxt.x") - 10)
+    setTextSize("ratingTxt", 36)
+    setTextBorder("ratingTxt", 2, "000000")
+    addLuaText("ratingTxt")
+    setProperty("ratingTxt.alpha", 0)
+
+    setProperty('showComboNum', false)
+    setProperty("showRating", false)
+    setProperty('showCombo', false)
 
 	if string.lower(songName) ~= 'kooky' then changeNoteSkinsOnChange() end
 	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
@@ -395,7 +416,15 @@ local boyfriendHasMissAnims = false;
 local actualSongLength = 0;
 local songPos = 0;
 
+local alphaTimer = 0.0;
 function onUpdate(elapsed)
+	if alphaTimer > 0 then
+        alphaTimer = alphaTimer - (elapsed * playbackRate);
+        if alphaTimer <= 0 then
+            alphaTimer = 0;
+            doTweenAlpha("ratingTxt", "ratingTxt", 0, .5, "")
+        end
+    end
 	if getProperty('healthBarBGnew.alpha') ~= getProperty('healthBar.alpha') then setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha')) end
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
 	songPos = math.toTime(getSongPosition() / 1000)
@@ -473,10 +502,27 @@ function onUpdatePost(elapsed)
 	end--]]
 
 	if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
-	if getDataFromSave("UnNamedGapplePortSettings", "settingsAlert", buildTarget ~= 'android') then setTextString("fpsTxt", getTextString("fpsTxt").." - CHANGE SETTINGS IN 'mod folder/scripts/settings.lua' TO DISABLE THIS!!") end
 	setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
 	if string.lower(songName) == 'kooky' then
 		setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+	end
+	if luaSpriteExists("iconP12") then
+		runHaxeCode([[
+			var iconOffset = 26;
+			setVar("playerIconPos", game.healthBar.x + (game.healthBar.width * (FlxMath.remapToRange(game.healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * game.iconP1.scale.x - 150) / 2 - iconOffset);
+			setVar("dadIconPos", game.healthBar.x + (game.healthBar.width * (FlxMath.remapToRange(game.healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * game.iconP2.scale.x) / 2 - iconOffset * 2);
+		]])
+		doTweenX("iconMovementP12vhv", "iconP12", getProperty("playerIconPos"), 0.08, "sineInOut")
+		doTweenX("iconMovementP22hvh", "iconP22", getProperty("dadIconPos"), 0.08, "sineInOut")
+		iconPropertys()
+	end
+end
+
+function iconPropertys()
+	local props = {'scale.x', 'scale.y', 'x'}
+	for i = 1, #props do
+		setProperty("iconP1."..props[i], getProperty('iconP12.'..props[i]))
+		setProperty("iconP2."..props[i], getProperty('iconP22.'..props[i]))
 	end
 end
 
@@ -535,20 +581,80 @@ function onBeatHit()
 			if getProperty("badai.animation.curAnim.name") == 'danceLeft' and not getProperty("badai.skipDance") then badaiPlayAnim('danceRight') elseif getProperty("badai.animation.curAnim.name") == 'danceRight' and not getProperty("badai.skipDance") then badaiPlayAnim('danceLeft') end
 		end
 	end
+
+	if string.lower(songName) == 'kooky' or not luaSpriteExists("iconP12") then return; end
+    local iconPos = getProperty('healthBar.y') -80;
+
+    if curBeat % getProperty('gfSpeed') == 0 then
+    	local fuasd = {0.8, 1.3}
+    	local angl = 15;
+    	local yOffset = 20;
+
+    	if curBeat % (getProperty('gfSpeed') * 2) == 0 then
+            scaleObject('iconP12', 1.1, fuasd[1])
+            scaleObject('iconP22', 1.1, fuasd[2])
+            setProperty('iconP1.angle', -angl)
+            setProperty('iconP2.angle', angl)
+            setProperty('iconP1.y', iconPos - yOffset)
+            setProperty('iconP2.y', iconPos + yOffset)
+    	else
+            scaleObject('iconP12', 1.1, fuasd[2])
+            scaleObject('iconP22', 1.1, fuasd[1])
+            setProperty('iconP1.angle', angl)
+            setProperty('iconP2.angle', -angl)
+            setProperty('iconP1.y', iconPos + yOffset)
+            setProperty('iconP2.y', iconPos - yOffset)
+    	end
+    end
+
+    doTweenY('iconP1yREAL', 'iconP1', iconPos, (crochet / 1300 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenY('iconP2yREAL', 'iconP2', iconPos, (crochet / 1300 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenAngle('iconP1Angl', 'iconP1', 0, (crochet / 1300 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenAngle('iconP2Angl', 'iconP2', 0, (crochet / 1300 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenX('iconP1x', 'iconP12.scale', 1, (crochet / 1250 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenX('iconP2x', 'iconP22.scale', 1, (crochet / 1250 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenY('iconP1y', 'iconP12.scale', 1, (crochet / 1250 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+    doTweenY('iconP2y', 'iconP22.scale', 1, (crochet / 1250 * getProperty('gfSpeed')) / playbackRate, 'quadOut')
+
+    updateHitbox('iconP12')
+    updateHitbox('iconP22')
+    iconPropertys()
 end
 
-function goodNoteHit(id, direction, noteType, isSustainNote)
+function goodNoteHit(membersIndex, direction, noteType, isSustainNote)
 	if getProperty('boyfriend.color') == getColorFromHex('9400d3') then
 		setProperty('boyfriend.color', getColorFromHex('FFFFFF'))
 	end
 	if isSustainNote then return; end
+    local ratingOffset = 0;
+    if stringStartsWith(version, '0.7') then
+	    ratingOffset = getPropertyFromClass("backend.ClientPrefs", "data.ratingOffset")
+	else
+        ratingOffset = getPropertyFromClass("ClientPrefs", "ratingOffset")
+    end
+
+    runHaxeCode([[
+        var membersIndex = ]]..membersIndex..[[;
+        var note = game.notes.members[membersIndex];
+        var noteDiff = note.strumTime - Conductor.songPosition + ]]..ratingOffset..[[;
+		var daRating = Conductor.judgeNote(note, noteDiff / game.playbackRate);
+        var text = "Sick!";
+        if (daRating.name == "good") text = "Good";
+        if (daRating.name == "bad") text = "Bad";
+        if (daRating.name == "shit") text = "Shit";
+        game.getLuaObject("ratingTxt", true).text = text + "\n" + (game.combo);
+    ]])
+    cancelTween("ratingTxt")
+    setProperty("ratingTxt.alpha", 1)
+    alphaTimer = 0.5 * playbackRate;
+
 	runHaxeCode([[
 		if(game.scoreTxtTween != null) {
 			game.scoreTxtTween.cancel();
 		}
-		game.scoreTxt.scale.x = 1.275;
+		game.scoreTxt.scale.x = 1.1;
 		game.scoreTxt.scale.y = 1.075;
-		game.scoreTxtTween = FlxTween.tween(game.scoreTxt.scale, {x: 1, y: 1}, 0.2, {
+		game.scoreTxtTween = FlxTween.tween(game.scoreTxt.scale, {x: 1, y: 1}, 0.15, {
 			ease: FlxEase.cubeInOut,
 			onComplete: function(twn) {
 				game.scoreTxtTween = null;
@@ -577,6 +683,10 @@ function noteMissPress(direction)
 end
 
 function noteMiss(id, direction, noteType, isSustainNote)
+	setTextString("ratingTxt", "Shit\n0")
+    cancelTween("ratingTxt")
+    setProperty("ratingTxt.alpha", 1)
+    alphaTimer = 0.5 * playbackRate;
 	noteMissedStuff(direction)
 end
 

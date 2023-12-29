@@ -3,8 +3,6 @@ local lockCam = false;
 local camZoomA = 1.25;
 local camZoomTime = 3;
 
-local camFlashTimes = {128, 640, 1152}
-
 function onUpdate(elapsed)
     if lockCam then
         setDataFromSave("UnNamedGapplePortSettings", 'camZoom', false)
@@ -77,7 +75,6 @@ function onStepHit()
         end
 
         setProperty("dad.alpha", 1)
-        changeNoteSkin(true, 'NOTE_assets_3D')
         setProperty("poop.alpha", 0.4)
 
         doTweenX("gfScaleX", "gf.scale", 0, 3, "sineOut")
@@ -117,30 +114,5 @@ function onStepHit()
 
     if curStep == 3216 then
         doTweenAlpha("camHUD", "camHUD", 0, 24, "")
-    end
-end
-
-function changeNoteSkin(player, skin)
-	if player == true then
-		for i = 0, 4, 1 do
-			setPropertyFromGroup('playerStrums', i, 'texture', 'noteSkins/'..skin)
-		end
-	end
-    if not player then
-		for i = 0, 4, 1 do
-			setPropertyFromGroup('opponentStrums', i, 'texture', 'noteSkins/'..skin)
-		end
-	end
-
-    for i = 0, getProperty('notes.length') -1 do
-        if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin)
-        end
-    end
-
-    for i = 0, getProperty('unspawnNotes.length') -1 do
-        if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin)
-        end
     end
 end
