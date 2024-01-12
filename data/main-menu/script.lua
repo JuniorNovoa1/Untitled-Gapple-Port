@@ -8,10 +8,25 @@ function onCreate()
 	addHaxeLibrary("CoolUtil")
 	addHaxeLibrary("Paths")
 	addHaxeLibrary("Alphabet")
-	addHaxeLibrary("FlxTypedGroup", 'flixel.group.FlxGroup')
+	addHaxeLibrary("Highscore")
 	setProperty("skipCountdown", true)
 	--runHaxeCode([[FlxG.mouse.load(Paths.image("cursor"));]])
 end
+
+local nextMenu = "";
+local nextFreeplayMenu = "";
+local freeplayStateSongs = {
+	["extra"] = '"glamrock", "sugar-rush", "gift-card", "ready-loud", "bookworm", "cuberoot", "apprentice", "too-shiny", "resumed", "mine", "dale", "the-big-dingle", "sart-producer", "ataefull"',
+	["secret"] = '"ticking"',
+	["iykyk"] = '"og", "apple-leak"',
+	["peenut"] = '"kooky"'
+}
+local freeplayStateIcons = {
+	["extra"] = '"glamrock", "cigar-rush", "card", "flumpt", "bookworm", "disability", "tristan", "diamond", "dambu", "dinner", "dale", "dingle_static", "sartys_icon_static", "atae"',
+	["secret"] = '"ouch"',
+	["iykyk"] = '"prealpha", "brob"',
+	["peenut"] = '"rubber"'
+}
 
 function onSongStart()
 	local invisObjs = {'healthBarBGnew', 'healthBar', 'healthBarBG', 'iconP2', 'iconP1', 'timeTxt', 'scoreTxt'}
@@ -25,6 +40,7 @@ function onSongStart()
 	end
 	setProperty("canPause", false)
 	changeState("mainmenu")
+	--createAlphabetSongs('"glamrock", "sugar-rush"', '"glamrock", "cigar-rush"')
 	--changeState("selectionmenu")
 	--changeState("storymenu")
 
@@ -52,10 +68,10 @@ function onSongStart()
 		setObjectCamera("changeDown", 'other')
 		addLuaSprite('changeDown', false)
 	
-		makeLuaSprite('backButton', 'androidBack', buttonPos[1] - 105, buttonPos[2] - (142 * buttonObjScale))
+		makeLuaSprite('backButton', 'androidBack', buttonPos[1] - 105, buttonPos[2] - ((142 * 2) * buttonObjScale))
 		setObjectCamera("backButton", 'other')
 		addLuaSprite('backButton', false)
-		makeLuaSprite('confirmButton', 'androidConfirm', buttonPos[1] + 105, buttonPos[2] - (142 * buttonObjScale))
+		makeLuaSprite('confirmButton', 'androidConfirm', buttonPos[1] + 105, buttonPos[2] - ((142 * 2) * buttonObjScale))
 		setObjectCamera("confirmButton", 'other')
 		addLuaSprite('confirmButton', false)
 	
@@ -74,6 +90,7 @@ end
 
 local prevObjects = {}
 local backgroundSprs = {"biorange", "bubbscadex", "bunnyslize", "choco pop", "cudroid", "doo", "dreambean", "exorcistgold", "limited", "luts", "roflcopter", "seth", "smeek", "tallsanimtaf", "vio", "zevisly"}
+local extrasSprs = {"extra", "secret", "iykyk", "joke", "peenut", "ocs", "covers"}
 local curState = "";
 
 local storyimagePaths = {"story mode", "settings", "credits", "discord"}
@@ -102,12 +119,37 @@ function changeState(newState)
 		addLuaSprite("blackScreenY", false)
 		loadSong(storySongs[curSelectedOptionUpDown]) 
 	end
+	if string.lower(newState) == "startsongfreeplay" then
+		makeLuaSprite("blackScreenY", "", 0, 0)
+		makeGraphic("blackScreenY", 1280, 720, '000000')
+		setObjectCamera("blackScreenY", 'other')
+		addLuaSprite("blackScreenY", false)
+		runHaxeCode([[
+			var songs = []]..freeplayStateSongs[nextFreeplayMenu]..[[];
+			setVar("songToLoad", songs[]]..curSelectedOptionUpDown..[[]);
+		]])
+		loadSong(getProperty("songToLoad")) 
+	end
 	curState = newState;
 	curSelectedOptionUpDown = 1;
 	for i = 1, #prevObjects do
 		if luaSpriteExists(prevObjects[i]) then removeLuaSprite(prevObjects[i], true) end
 		if luaTextExists(prevObjects[i]) then removeLuaText(prevObjects[i], true) end
 	end
+	runHaxeCode([[
+		var grpSongs = getVar("grpSongs");
+		var iconArray = getVar("iconArray");
+
+		for (i in 0...iconArray.length)
+		{
+			iconArray[i].destroy();
+		}
+
+		for (i in 0...grpSongs.length)
+		{
+			grpSongs[i].destroy();
+		}
+	]])
 	setTextString("creditsWatermark", "")
 	runHaxeCode([[FlxG.mouse.visible = false;]])
 
@@ -310,6 +352,19 @@ function changeState(newState)
 		addLuaSprite("menuHeader", false)
 		table.insert(prevObjects, "menuHeader")
 
+		makeLuaText("highscoreTxt", '', 0, 0, 655)
+		setTextFont("highscoreTxt", "comic.ttf")
+		setTextSize("highscoreTxt", 42)
+		updateHitbox("highscoreTxt")
+		setTextColor("highscoreTxt", "FFFFFF")
+		setTextBorder("highscoreTxt", 0, "F)(32ndk)") --set border to color that doesnt exist and get borderless text!
+		setObjectCamera("highscoreTxt", 'hud')
+		addLuaText("highscoreTxt", false)
+		table.insert(prevObjects, "highscoreTxt")
+
+		runHaxeCode([[game.getLuaObject("highscoreTxt", true).text = "Highscore: " + Highscore.getScore("]]..storySongs[curSelectedOptionUpDown]..[[", ]]..difficulty..[[);]])
+		screenCenter("highscoreTxt", 'x')
+
 		makeLuaSprite("arrowLeft", "storymenu/arrows/leftArrow", getProperty("RAPPA_SLAPPA.x") - 175, 0)
 		scaleObject("arrowLeft", 0.725, 0.725, true)
 		screenCenter("arrowLeft", 'y')
@@ -347,6 +402,39 @@ function changeState(newState)
 		addLuaSprite("bamb_sign", false)
 		table.insert(prevObjects, "bamb_sign")
 	end
+	if string.lower(newState) == "extramenu" then
+		makeLuaSprite("blackScreenBG", "", 0, 0)
+		makeGraphic("blackScreenBG", 1280, 720, '000000')
+		setObjectCamera("blackScreenBG", 'hud')
+		addLuaSprite("blackScreenBG", false)
+		table.insert(prevObjects, "blackScreenBG")
+
+		makeLuaSprite("menuBG", "backgrounds/"..backgroundSprs[getRandomInt(1, #backgroundSprs)], 0, 0)
+		setGraphicSize("menuBG", 1280, 720)
+		setProperty("menuBG.color", getColorFromHex("32CD32"))
+		setObjectCamera("menuBG", 'hud')
+		addLuaSprite("menuBG", false)
+		table.insert(prevObjects, "menuBG")
+
+		makeLuaSprite("category", "categories/"..extrasSprs[curSelectedOptionUpDown], 0, 0)
+		scaleObject("category", 2.5, 2.5, true)
+		setObjectCamera("category", 'hud')
+		screenCenter("category", 'xy')
+		addLuaSprite("category", false)
+		table.insert(prevObjects, "category")
+	end
+	if string.lower(newState) == "freeplaymenu" then
+		makeLuaSprite("menuBG", "backgrounds/"..backgroundSprs[getRandomInt(1, #backgroundSprs)], 0, 0)
+		setGraphicSize("menuBG", 1280, 720)
+		setProperty("menuBG.color", getColorFromHex("808080"))
+		setObjectCamera("menuBG", 'hud')
+		addLuaSprite("menuBG", false)
+		table.insert(prevObjects, "menuBG")
+
+		curSelectedOptionUpDown = 0;
+		createAlphabetSongs(freeplayStateSongs[nextFreeplayMenu], freeplayStateIcons[nextFreeplayMenu])
+		changeSelection()
+	end
 end
 
 function change()
@@ -383,7 +471,6 @@ function change()
 	addLuaSprite("char", false)
 end
 
-local nextMenu = "";
 function transitionMenu(luaSpr)
 	canChangeMenu = false;
 	playSound("confirmMenu", 1)
@@ -451,6 +538,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
 end
 
 function storySelect()
+	runHaxeCode([[game.getLuaObject("highscoreTxt", true).text = "Highscore: " + Highscore.getScore("]]..storySongs[curSelectedOptionUpDown]..[[", ]]..difficulty..[[);]])
+	screenCenter("highscoreTxt", 'x')
 	cancelTween("new song")
 	setProperty("new song.y", -250)
 	cancelTween("long_song")
@@ -491,6 +580,38 @@ function storySelect()
 	addLuaSprite("songDif", false)
 end
 
+function changeSelection()
+	playSound("scrollMenu")
+	runHaxeCode([[
+		var curSelected = ]]..curSelectedOptionUpDown..[[;
+		var grpSongs = getVar("grpSongs");
+		var iconArray = getVar("iconArray");
+		var bullShit = 0;
+
+		for (i in 0...iconArray.length)
+		{
+			iconArray[i].alpha = 0.6;
+		}
+
+		iconArray[curSelected].alpha = 1;
+
+		for (i in 0...grpSongs.length)
+		{
+			grpSongs[i].targetY = bullShit - curSelected;
+			bullShit++;
+
+			grpSongs[i].alpha = 0.6;
+			// item.setGraphicSize(Std.int(item.width * 0.8));
+
+			if (grpSongs[i].targetY == 0)
+			{
+				grpSongs[i].alpha = 1;
+				// item.setGraphicSize(Std.int(item.width));
+			}
+		}
+	]])
+end
+
 local elapsedTime = 0.0;
 function onUpdate(elapsed)
 	setProperty("fakeMouseMobile.x", getMouseX("hud"))
@@ -523,7 +644,12 @@ function onUpdate(elapsed)
 			if objectsOverlap("fakeMouse", "story") then
 				playSound("confirmMenu") 
 				nextMenu = "storymenu";
-				onTransition(0.9)
+				onTransition(0.45)
+			end
+			if objectsOverlap("fakeMouse", "extra") then
+				playSound("confirmMenu") 
+				nextMenu = "extramenu";
+				onTransition(0.45)
 			end
 			if objectsOverlap("fakeMouse", "back") then
 				nextMenu = "mainmenu";
@@ -578,6 +704,38 @@ function onUpdate(elapsed)
 			addLuaSprite("arrowRight", false)
 		end
 	end
+	if curState == "extramenu" then
+		if (keyJustPressed('left') and canChangeMenu) or (mouseClicked("left") and objectsOverlap("fakeMouseMobile", "changeLeft")) then
+			curSelectedOptionUpDown = curSelectedOptionUpDown -1;
+			if curSelectedOptionUpDown == 0 then curSelectedOptionUpDown = #extrasSprs end
+			makeLuaSprite("category", "categories/"..extrasSprs[curSelectedOptionUpDown], 0, 0)
+			scaleObject("category", 2.5, 2.5, true)
+			setObjectCamera("category", 'hud')
+			screenCenter("category", 'xy')
+			addLuaSprite("category", false)
+		end
+		if (keyJustPressed('right') and canChangeMenu) or (mouseClicked("left") and objectsOverlap("fakeMouseMobile", "changeRight")) then
+			curSelectedOptionUpDown = curSelectedOptionUpDown +1;
+			if curSelectedOptionUpDown > #extrasSprs then curSelectedOptionUpDown = 1; end
+			makeLuaSprite("category", "categories/"..extrasSprs[curSelectedOptionUpDown], 0, 0)
+			scaleObject("category", 2.5, 2.5, true)
+			setObjectCamera("category", 'hud')
+			screenCenter("category", 'xy')
+			addLuaSprite("category", false)
+		end
+	end
+	if curState == "freeplaymenu" then
+		if (keyJustPressed('up') and canChangeMenu) or (mouseClicked("left") and objectsOverlap("fakeMouseMobile", "changeUp")) then
+			curSelectedOptionUpDown = curSelectedOptionUpDown -1;
+			if curSelectedOptionUpDown == -1 then curSelectedOptionUpDown = getProperty("grpSongs.length")-1 end
+			changeSelection()
+		end
+		if (keyJustPressed('down') and canChangeMenu) or (mouseClicked("left") and objectsOverlap("fakeMouseMobile", "changeDown")) then
+			curSelectedOptionUpDown = curSelectedOptionUpDown +1;
+			if curSelectedOptionUpDown > getProperty("grpSongs.length")-1 then curSelectedOptionUpDown = 0; end
+			changeSelection()
+		end
+	end
 end
 
 function onUpdatePost()
@@ -602,6 +760,22 @@ function onUpdatePost()
 			transitionMenu("menuImage")
 			canChangeMenu = false;
 		end
+		if curState == "extramenu" then
+			playSound("confirmMenu") 
+			nextMenu = "freeplaymenu";
+			nextFreeplayMenu = extrasSprs[curSelectedOptionUpDown];
+			onTransition(0.6)
+			doTweenX("backgroundX", "menuBG.scale", 0, 6, "")
+			doTweenY("backgroundY", "menuBG.scale", 0, 6, "")
+			doTweenX("categoryX", "category.scale", 4.5, 2, "")
+			doTweenY("categoryY", "category.scale", 4.5, 2, "")
+			canChangeMenu = false;
+		end
+		if curState == "freeplaymenu" then
+			nextMenu = "startsongfreeplay"
+			onTransition(0)
+			canChangeMenu = false;
+		end
 	end
 	if (keyJustPressed('back') and canChangeMenu) or (mouseClicked("left") and objectsOverlap("fakeMouseMobile", "backButton")) then
 		if curState == "mainmenu" then runHaxeCode("game.endSong();") end
@@ -613,6 +787,16 @@ function onUpdatePost()
 		if curState == "storymenu" then
 			playSound("cancelMenu")
 			nextMenu = "selectionmenu";
+			onTransition()
+		end
+		if curState == "extramenu" then
+			playSound("cancelMenu")
+			nextMenu = "selectionmenu";
+			onTransition()
+		end
+		if curState == "freeplaymenu" then
+			playSound("cancelMenu")
+			nextMenu = "extramenu";
 			onTransition()
 		end
 	end
@@ -628,5 +812,38 @@ function onUpdatePost()
 		vocals.pause();
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
+	]])
+end
+
+function createAlphabetSongs(songArray, songArrayIcons) --songArray should look like this '["glamrock", "sugar-rush"];'
+	runHaxeCode([[
+		var songs = []]..songArray..[[];
+		var songicons = []]..songArrayIcons..[[];
+		var grpSongs = [];
+		var iconArray = [];
+
+		for (i in 0...songs.length)
+		{
+			var songText = new Alphabet(90, 320, songs[i], true);
+			songText.isMenuItem = true;
+			songText.targetY = i - 0;
+			songText.ID = i;
+			songText.camera = game.camHUD;
+			game.add(songText);
+			grpSongs.push(songText);
+
+			var icon = new HealthIcon(songicons[i]);
+			icon.camera = game.camHUD;
+			icon.sprTracker = songText;
+
+			// using a FlxGroup is too much fuss!
+			iconArray.push(icon);
+			game.add(icon);
+		}
+
+		setVar("grpSongs", grpSongs);
+		setVar("iconArray", iconArray);
+
+		//if you became retarded junior, and forgot what to do, use the getvar method to get array and change item properties
 	]])
 end
