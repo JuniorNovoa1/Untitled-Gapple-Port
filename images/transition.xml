@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="transition.png">
+	<!-- Created with Adobe Animate version 22.0.1.105 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Symbol 100000" x="0" y="0" width="1280" height="721"/>
+	<SubTexture name="Symbol 100001" x="1280" y="0" width="1280" height="721"/>
+	<SubTexture name="Symbol 100002" x="2560" y="0" width="1280" height="721"/>
+	<SubTexture name="Symbol 100003" x="3840" y="0" width="1280" height="721"/>
+	<SubTexture name="Symbol 100004" x="5120" y="0" width="1280" height="721"/>
+	<SubTexture name="Symbol 100005" x="6400" y="0" width="1280" height="721"/>
+	<SubTexture name="Symbol 100006" x="0" y="721" width="1280" height="721"/>
+	<SubTexture name="Symbol 100007" x="1280" y="721" width="1280" height="721"/>
+	<SubTexture name="Symbol 100008" x="2560" y="721" width="1280" height="721"/>
+	<SubTexture name="Symbol 100009" x="3840" y="721" width="1280" height="721"/>
+	<SubTexture name="Symbol 100010" x="5120" y="721" width="1280" height="721"/>
+	<SubTexture name="Symbol 100011" x="6400" y="721" width="1280" height="721"/>
+	<SubTexture name="Symbol 100012" x="0" y="1442" width="1280" height="721"/>
+	<SubTexture name="Symbol 100013" x="1280" y="1442" width="1280" height="721"/>
+	<SubTexture name="Symbol 100014" x="2560" y="1442" width="1280" height="721"/>
+	<SubTexture name="Symbol 100015" x="3840" y="1442" width="1280" height="721"/>
+	<SubTexture name="Symbol 100016" x="5120" y="1442" width="1280" height="721"/>
+	<SubTexture name="Symbol 100017" x="6400" y="1442" width="1280" height="721"/>
+	<SubTexture name="Symbol 100018" x="0" y="2163" width="1280" height="721"/>
+</TextureAtlas>

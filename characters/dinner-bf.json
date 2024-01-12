@@ -104,7 +104,7 @@
 	"image": "characters/extras/dinner/dinnerboyfriend",
 	"position": [
 		0,
-		100
+		320
 	],
 	"healthicon": "bf",
 	"flip_x": true,

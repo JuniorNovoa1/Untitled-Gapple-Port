@@ -2,7 +2,7 @@ function onCreatePost()
     --Iterate over all notes
     for i = 0, getProperty('unspawnNotes.length')-1 do
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'card' then
-            setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/giftcard_notes');
+            setPropertyFromGroup('unspawnNotes', i, 'texture', 'ui/notes/giftcard_notes');
             if getPropertyFromGroup('unspawnNotes', i, 'mustPress') then --Doesn't let Dad/Opponent notes get ignored
                 setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); --Miss has no penalties
             end

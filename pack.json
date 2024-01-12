@@ -1,7 +1,7 @@
 {
-	"name": "Unnamed Gapple Port",
+	"name": "Untitled Gapple Port",
 	"description": "Gapple songs!!!",
 	"restart": true,
 	"runsGlobally": false,
-	"color": [170, 0, 255]
+	"color": [255, 255, 255]
 }

@@ -370,24 +370,24 @@ end
 function changeNoteSkin(player, skin)
 	if player == true then
 		for i = 0, 4, 1 do
-			setPropertyFromGroup('playerStrums', i, 'texture', 'noteSkins/'..skin)
+			setPropertyFromGroup('playerStrums', i, 'texture', 'ui/notes/'..skin)
 		end
 	end
     if not player then
 		for i = 0, 4, 1 do
-			setPropertyFromGroup('opponentStrums', i, 'texture', 'noteSkins/'..skin)
+			setPropertyFromGroup('opponentStrums', i, 'texture', 'ui/notes/'..skin)
 		end
 	end
 
     for i = 0, getProperty('notes.length') -1 do
         if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin)
+            setPropertyFromGroup('notes', i, 'texture', 'ui/notes/'..skin)
         end
     end
 
     for i = 0, getProperty('unspawnNotes.length') -1 do
         if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-            setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin)
+            setPropertyFromGroup('unspawnNotes', i, 'texture', 'ui/notes/'..skin)
         end
     end
 end

@@ -29,7 +29,7 @@ function onSongStart()
             setPropertyFromGroup('unspawnNotes', i, 'scrollFactor.y', 0.9)
         end
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') ~= '' then
-            setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D')
+            setPropertyFromGroup('unspawnNotes', i, 'texture', 'ui/notes/NOTE_assets_3D')
         end
     end
     runHaxeCode([[game.generateStaticArrows(0);]])
@@ -48,7 +48,7 @@ function onSongStart()
     end
 
     for i = 4, 7, 1 do
-        setPropertyFromGroup('opponentStrums', i, 'texture', 'noteSkins/NOTE_assets_3D')
+        setPropertyFromGroup('opponentStrums', i, 'texture', 'ui/notes/NOTE_assets_3D')
     end
 end
 

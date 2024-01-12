@@ -60,7 +60,7 @@
 	"image": "characters/shared/epic",
 	"position": [
 		0,
-		0
+		375
 	],
 	"healthicon": "epic",
 	"flip_x": true,

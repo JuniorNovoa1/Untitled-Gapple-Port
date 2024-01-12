@@ -25,8 +25,8 @@ function onCreate()
 	addLuaSprite('thunderBlack', true)
 
 	if string.lower(songName) ~= 'apple-leak' then 
-		precacheImage("noteSkins/NOTE_assets")
-		precacheImage("noteSkins/NOTE_assets_3D")
+		precacheImage("ui/notes/NOTE_assets")
+		precacheImage("ui/notes/NOTE_assets_3D")
 	end
 end
 
@@ -120,8 +120,8 @@ function onCreatePost()
 		]])
 		callOnLuas("onBadaiCreate")
 	end
-	makeLuaSprite('gappleTransition', 'gapple_transition', 0, 0)
-	setProperty("gappleTransition.antialiasing", false)
+	makeAnimatedLuaSprite('gappleTransition', 'transition', 0, 0)
+	addAnimationByPrefix("gappleTransition", "start", "Symbol 1", 30, false)
 	setObjectCamera("gappleTransition", "other")
 	updateHitbox("gappleTransition")
 	screenCenter("gappleTransition", 'xy')
@@ -173,18 +173,18 @@ function onCreatePost()
 
 	setPropertyFromClass("Main", "fpsVar.visible", false)
 
-	makeAnimatedLuaSprite("gappleSoundTray", "gapple_soundtray", screenWidth - 150, 0)
-	for i = 0, 9 do
-		addAnimationByPrefix("gappleSoundTray", ""..(i + 1), ""..i, 24, true)
-	end
+	setPropertyFromClass('flixel.FlxG', 'sound.soundTrayEnabled', false)
+
+	makeLuaSprite("gappleSoundTray", "soundtray", screenWidth, 0)
 	setObjectCamera("gappleSoundTray", "other")
-	setProperty("gappleSoundTray.visible", false)
-	updateHitbox("gappleSoundTray")
 	screenCenter("gappleSoundTray", 'y')
 	addLuaSprite("gappleSoundTray", false)
+	makeLuaSprite("gappleSoundTrayArrow", "arrow", screenWidth, 0)
+	setObjectCamera("gappleSoundTrayArrow", "other")
+	addLuaSprite("gappleSoundTrayArrow", false)
 
-	doTweenX("gappleTransitionX", "gappleTransition.scale", 35, (crochet / 400 * getProperty('gfSpeed')) / playbackRate, "")
-	doTweenY("gappleTransitionY", "gappleTransition.scale", 35, (crochet / 400 * getProperty('gfSpeed')) / playbackRate, "")
+	playAnim("gappleTransition", "start")
+	runTimer("gappleTransitionStart", 3)
 
 	makeLuaText("ratingTxt", "Sick!\n1", 0, 0.0, 64)
     setTextFont("ratingTxt", "comic.ttf")
@@ -270,7 +270,7 @@ function changeNoteSkinsOnChange(idForPerson)
 	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then 
 			if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
-				setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/NOTE_assets_3D')
+				setPropertyFromGroup('unspawnNotes', i, 'texture', 'ui/notes/NOTE_assets_3D')
 			end
 		end
 	end
@@ -314,15 +314,14 @@ local hasFinishedExitTween = false;
 local alreadyCreatedEnding = false;
 function onEndSong()
 	if not alreadyCreatedEnding then
-		makeLuaSprite('gappleTransition', 'gapple_transition', 0, 0)
-		setProperty("gappleTransition.antialiasing", false)
+		makeAnimatedLuaSprite('gappleTransition', 'transition', 0, 0)
+		addAnimationByPrefix("gappleTransition", "start", "Symbol 1", 30, false)
 		setObjectCamera("gappleTransition", "other")
-		scaleObject("gappleTransition", 35, 35, true)
 		updateHitbox("gappleTransition")
 		screenCenter("gappleTransition", 'xy')
 		addLuaSprite('gappleTransition', true)
-		doTweenX("gappleTransitionXEnd", "gappleTransition.scale", 1, 1, "")
-		doTweenY("gappleTransitionYEnd", "gappleTransition.scale", 1, 1, "")
+		runTimer("gappleTransitionEnd", 1)
+		playAnim("gappleTransition", "start", true, true)
 		alreadyCreatedEnding = true;
 	end
 	if not hasFinishedExitTween then
@@ -333,41 +332,39 @@ function onEndSong()
 end
 
 function onTweenCompleted(tag)
-	if tag == 'gappleTransitionY' then
-		removeLuaSprite("gappleTransition", true) --assuming sprite uses shit ton of memory
-	end
-	if tag == 'gappleTransitionYEnd' then
-		hasFinishedExitTween = true;
-		runHaxeCode([[game.endSong();]])
-		--removeLuaSprite("gappleTransition", true) --no need since song is about to end anyway
-	end
 	if tag == 'lastCountScaleY' then
 		doTweenX("lastCountScaleX2", objectsCountown[3]..".scale", 1, crochet / 2000 / getProperty("playbackRate"), "")
 		doTweenY("lastCountScaleY2", objectsCountown[3]..".scale", 1, crochet / 2000 / getProperty("playbackRate"), "")
 	end
 end
 
+function onTimerCompleted(tag, loops, loopsLeft)
+	if tag == "gappleTransitionStart" then removeLuaSprite("gappleTransition", true) end
+	if tag == "gappleTransitionEnd" then hasFinishedExitTween = true; runHaxeCode([[game.endSong();]]) end
+	if tag == "gappleSoundTrayExit" then doTweenX("gappleSoundTrayExit", "gappleSoundTray", screenWidth + 150, 1, "") end
+end
+
 function changeNoteSkin(player, skin)
 	if player == true then
 		for i = 0, 4, 1 do
-			setPropertyFromGroup('playerStrums', i, 'texture', 'noteSkins/'..skin)
+			setPropertyFromGroup('playerStrums', i, 'texture', 'ui/notes/'..skin)
 		end
 	end
     if not player then
 		for i = 0, 4, 1 do
-			setPropertyFromGroup('opponentStrums', i, 'texture', 'noteSkins/'..skin)
+			setPropertyFromGroup('opponentStrums', i, 'texture', 'ui/notes/'..skin)
 		end
 	end
 
     for i = 0, getProperty('notes.length') -1 do
         if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('notes', i, 'noteType') == nil then setPropertyFromGroup('notes', i, 'texture', 'noteSkins/'..skin) end
+            if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('notes', i, 'noteType') == nil then setPropertyFromGroup('notes', i, 'texture', 'ui/notes/'..skin) end
         end
     end
 
     for i = 0, getProperty('unspawnNotes.length') -1 do
         if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'noteSkins/'..skin) end
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'ui/notes/'..skin) end
         end
     end
 
@@ -417,7 +414,20 @@ local actualSongLength = 0;
 local songPos = 0;
 
 local alphaTimer = 0.0;
+local vol = 0.0;
 function onUpdate(elapsed)
+	vol = math.floor(getPropertyFromClass('flixel.FlxG', 'sound.volume') * 10)
+	local arrowOffset = 30;
+	setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))))
+	if getPropertyFromClass('flixel.FlxG', 'sound.muted') then setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1))) end
+	setProperty("gappleSoundTrayArrow.x", getProperty("gappleSoundTray.x") + 60)
+	if keyboardJustPressed("ZERO") or keyboardJustPressed("MINUS") or keyboardJustPressed("PLUS") then
+		cancelTween("gappleSoundTrayExit")
+		setProperty("gappleSoundTray.x", screenWidth - 150)
+		runTimer("gappleSoundTrayExit", 1, 1)
+		playSound("clicky", 1)
+    end
+	
 	if alphaTimer > 0 then
         alphaTimer = alphaTimer - (elapsed * playbackRate);
         if alphaTimer <= 0 then
@@ -443,32 +453,10 @@ function onUpdate(elapsed)
 		end
 	end
 
-	if stringStartsWith(version, '0.6') then
-		playAnim("gappleSoundTray", ""..math.max(getPropertyFromClass("flixel.FlxG", "sound.volume") * 10) + 1, false)
-
-		runHaxeCode([[
-			var volumeUP = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_up'));
-			var volumeDOWN = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_down'));
-			var volumeMUTE = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('volume_mute'));
-	
-			if (FlxG.keys.anyJustPressed(volumeUP) || FlxG.keys.anyJustPressed(volumeDOWN) || FlxG.keys.anyJustPressed(volumeMUTE)) {
-				game.getLuaObject('gappleSoundTray').visible = true;
-			}
-				
-			if (FlxG.sound.muted)
-				game.getLuaObject('gappleSoundTray', false).animation.play('1');
-	
-			game.getLuaObject('gappleSoundTray', false).centerOffsets();
-			game.getLuaObject('gappleSoundTray', false).centerOrigin();
-		]])
-    end
-
-	--setProperty('camHUD.x', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 50)
-	--setProperty('camHUD.y', math.sin((getSongPosition() / 1000) * (getPropertyFromClass("Conductor", "bpm") / 60) * 1.0) * 15)
-	--setProperty('camHUD.angle', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 1.2)
+	--[[setProperty('camHUD.x', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 50)
+	setProperty('camHUD.y', math.sin((getSongPosition() / 1000) * (getPropertyFromClass("Conductor", "bpm") / 60) * 1.0) * 15)
+	setProperty('camHUD.angle', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 1.2)--]]
 end
-
-local offsets = {-13, -13}--{55, 43}
 
 function onUpdatePost(elapsed)
 	if string.lower(songName) ~= 'kooky' then
@@ -481,7 +469,7 @@ function onUpdatePost(elapsed)
 			setProperty('healthBarBGnew.y', screenHeight * 0.9 +2)
 			setProperty('healthBarBGnew.x', getProperty('healthBar.x') -5)
 		end
-		setProperty('scoreTxt.y', getProperty('healthBar.y') + 40)
+		setProperty('scoreTxt.y', getProperty('healthBar.y') + 38)
 	end
 	if downscroll then
 		setProperty('healthBar.y', 54)
@@ -570,10 +558,9 @@ function onBeatHit()
 		end
 
 		if getProperty('dad.animation.curAnim.name') == 'idle' then
-			if dadName == 'bambi-piss-3d' or dadName == 'garrett-animal' then
-				return;
+			if dadName ~= 'bambi-piss-3d' and dadName ~= 'garrett-animal' then
+				playAnim('dad', 'idle', true)
 			end
-			playAnim('dad', 'idle', true)
 		end
 
 		if badaiSongs[string.lower(songName)] ~= nil or luaSpriteExists("badai") then
@@ -644,8 +631,11 @@ function goodNoteHit(membersIndex, direction, noteType, isSustainNote)
         if (daRating.name == "shit") text = "Shit";
         game.getLuaObject("ratingTxt", true).text = text + "\n" + (game.combo);
     ]])
+    --[[scaleObject("ratingTxt", 1.2, 1.2)
+	doTweenX("ratingTxtScaleX", "ratingTxt.scale", 1, .2, 'sineInOut')
+	doTweenY("ratingTxtScaleY", "ratingTxt.scale", 1, .2, 'sineInOut') --it is better this way - the grinch--]]
     cancelTween("ratingTxt")
-    setProperty("ratingTxt.alpha", 1)
+	setProperty("ratingTxt.alpha", 1)
     alphaTimer = 0.5 * playbackRate;
 
 	runHaxeCode([[
@@ -664,17 +654,19 @@ function goodNoteHit(membersIndex, direction, noteType, isSustainNote)
 end
 
 function opponentNoteHit(membersIndex, noteData, noteType, isSustainNote)
+	local suffix = "";
+	if string.lower(noteType) == "altanim" then suffix = "-alt" end
 	if getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
 		setProperty("badai.holdTimer", 0)
-		badaiPlayAnim(singAnims[noteData + 1])
-	else
+		badaiPlayAnim(singAnims[noteData + 1]..suffix)
+	elseif string.lower(songName) ~= "ataefull" then
 		setProperty("dad.holdTimer", 0)
-		playAnim("dad", singAnims[noteData + 1], true)
+		playAnim("dad", singAnims[noteData + 1]..suffix, true)
 	end
 
 	if string.lower(songName) == 'apple-leak' then
 		setProperty("badai.holdTimer", 0)
-		badaiPlayAnim(singAnims[noteData + 1])
+		badaiPlayAnim(singAnims[noteData + 1]..suffix)
 	end
 end
 
@@ -730,6 +722,7 @@ function onGameOver()
 end
 
 function onDestroy()
+	setPropertyFromClass('flixel.FlxG', 'sound.soundTrayEnabled', true)
     if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', oldFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', oldFPS) end
 	runHaxeCode([[
 		var framerate = ]]..oldFPS..[[;

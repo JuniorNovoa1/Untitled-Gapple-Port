@@ -1,11 +1,8 @@
 local brobPart = true;
 
-function onBadaiCreate()
-    setProperty("badai.x", getProperty("dad.x") - 525)
-    setProperty("badai.y", -500)
-end
-
 function onCreatePost()
+    setProperty("badai.x", getProperty("dad.x") - 525)
+    setProperty("badai.y", - 1000)
     precacheMusic("freshAndToasted/win-brobgonal")
     addHaxeLibrary("FlxColor", 'flixel.util')
 
@@ -84,7 +81,7 @@ function onTweenCompleted(tag)
     if tag == 'badai' then 
         brobPart = false;
         runHaxeCode([[
-            game.iconP2.changeIcon('badai');
+            game.iconP2.changeIcon('barbu');
 
             game.healthBar.createFilledBar(FlxColor.fromRGB(getLuaObject('badai', false).healthColorArray[0], getLuaObject('badai', false).healthColorArray[1], getLuaObject('badai', false).healthColorArray[2]), FlxColor.fromRGB(game.boyfriend.healthColorArray[0], game.boyfriend.healthColorArray[1], game.boyfriend.healthColorArray[2]));
 		    game.healthBar.updateBar();
@@ -101,18 +98,6 @@ function onTweenCompleted(tag)
         setObjectCamera("thunderBlack", "other")
         doTweenX("thunderBlackLast", "thunderBlack", screenWidth, 0.5, "")
         playMusic("freshAndToasted/win-brobgonal", 1, true)
-    end
-end
-
-local singAnim = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
-
-function opponentNoteHit(membersIndex, noteData, noteType, isSustainNote)
-    if brobPart then
-        playAnim("dad", singAnim[noteData + 1], true)
-        setProperty("dad.holdTimer", 0)
-    else
-        playAnim("badai", singAnim[noteData + 1], true)
-        setProperty("badai.holdTimer", 0)
     end
 end
 

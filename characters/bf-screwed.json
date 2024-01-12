@@ -59,8 +59,8 @@
 	"no_antialiasing": false,
 	"image": "characters/joke/screwed/go_shit_yourself_Dumb_fuck_i_hateyouStupid",
 	"position": [
-		-100,
-		250
+		50,
+		400
 	],
 	"healthicon": "screwydooy",
 	"flip_x": false,

@@ -1,0 +1,28 @@
+{
+	"song": {
+		"player1": "bf",
+		"events": [],
+		"gfVersion": "gf",
+		"notes": [
+			{
+				"sectionNotes": [
+					[
+						0,
+						0,
+						0
+					]
+				],
+				"lengthInSteps": 16,
+				"mustHitSection": false
+			}
+		],
+		"player2": "dad",
+		"player3": null,
+		"song": "main-menu",
+		"stage": "stage",
+		"needsVoices": false,
+		"validScore": true,
+		"bpm": 230,
+		"speed": 3
+	}
+}

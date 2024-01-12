@@ -1,7 +1,7 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
 local gappleSong = true; --set to false to disable!
-local nonCharSelectSongs = {'glamrock', 'kooky'};
+local nonCharSelectSongs = {'main-menu', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'deformation', 'ferocious', 'nice', 'glamrock', 'kooky'};
 
 local lockedCharacters = {}
 local characters = { --put characters here, ijdiot
@@ -28,17 +28,7 @@ local funnyReturnString = { --put text here, idjiot3
 	["nil"] = "INDIE CROSS BEST BF",
 	["nil"] = "Corrupted Boyfriend"
 }
-local nativeCharacters = {
-	["bf"] = true;
-	["3d-bf"] = true;
-	["bf"] = true;
-	["bf-pixel"] = true;
-	["3d-bf"] = true;
-	["froing"] = true;
-	["epicBf"] = true;
-	["boyfranon"] = true;
-	["bf-screwed"] = true;
-}
+local nonNativeCharacters = {} --put non bf characters here idjiot4
 local curSelected = 1;
 local curSelectedVer = 1;
 local confirmed = false;
@@ -83,7 +73,7 @@ function onCreatePost()
 	addLuaSprite('mineBGcharSelect', false)
 
 	makeLuaText("charTxt", "", 0, 22.5, 620)
-	setObjectCamera("charTxt", 'camOTHER')
+	setObjectCamera("charTxt", 'other')
 	setTextFont("charTxt", "comic.ttf")
 	setTextSize("charTxt", 66)
 	setTextBorder("charTxt", 4, "000000")
@@ -106,7 +96,7 @@ function onCreatePost()
 	setObjectOrder("screenTrans", 99)
 
 	local buttonPos = {125, 275}--{890, 500}
-	local buttonObjs = {'changeLeft', 'changeDown', 'changeUp', 'changeRight', 'confirmButton'}
+	local buttonObjs = {'changeLeft', 'changeDown', 'changeUp', 'changeRight', 'backButton', 'confirmButton'}
 	local buttonObjScale = 0.75;
 
 	if buildTarget == 'android' then
@@ -129,6 +119,9 @@ function onCreatePost()
 		setObjectCamera("changeDown", 'other')
 		addLuaSprite('changeDown', false)
 	
+		makeLuaSprite('backButton', 'androidBack', 1035, 25 * buttonObjScale)
+		setObjectCamera("backButton", 'other')
+		addLuaSprite('backButton', false)
 		makeLuaSprite('confirmButton', 'androidConfirm', 1150, 25 * buttonObjScale)
 		setObjectCamera("confirmButton", 'other')
 		addLuaSprite('confirmButton', false)
@@ -140,6 +133,7 @@ function onCreatePost()
 		for i = 1, #buttonObjs do
 			scaleObject(buttonObjs[i], buttonObjScale, buttonObjScale)
 			updateHitbox(buttonObjs[i])
+			--setObjectOrder(buttonObjs[i], getObjectOrder("gappleSoundTray") - i)
 		end
 	end
 end
@@ -166,7 +160,7 @@ function createChar()
 		setProperty("char.x", getProperty("char.x") + characterOffsets[characters[curSelected][curSelectedVer]][1])
 		setProperty("char.y", getProperty("char.y") + characterOffsets[characters[curSelected][curSelectedVer]][2])
 	end
-	setObjectOrder("char", getObjectOrder("screenTrans") - 2)
+	if luaSpriteExists("gappleSoundTray") then setObjectOrder("char", getObjectOrder("gappleSoundTray") - 1) end
 	setObjectOrder("charIcon", getObjectOrder("screenTrans") - 2)
 	setObjectOrder("screenTrans", 99)
 
@@ -234,7 +228,7 @@ function triggerKeyThingy(key)
 		playSound('confirmMenu', 1)
 		setSoundVolume("charSelectSound", 0)
 		if flashingLights then
-			cameraFlash("other", "FFFFFF", 1)
+			cameraFlash("hud", "FFFFFF", 1)
 		end
 		runTimer("soundchar", 1.6)
 		
@@ -250,8 +244,8 @@ end
 
 function onUpdate(elapsed)
 	if hasExitCharSelect or not gappleSong then return; end
-	setProperty("fakeMouse.x", getMouseX("other"))
-	setProperty("fakeMouse.y", getMouseY("other"))
+	setProperty("fakeMouse.x", getMouseX("hud"))
+	setProperty("fakeMouse.y", getMouseY("hud"))
 	if not luaSoundExists('charSelectSound') then
 		playSound("character_select", 1, "charSelectSound")
 	end
@@ -260,7 +254,7 @@ function onUpdate(elapsed)
 		if funnyReturnString[characters[curSelected][curSelectedVer]] ~= nil then setTextString("charTxt", funnyReturnString[characters[curSelected][curSelectedVer]]) else setTextString("charTxt", getProperty("char.curCharacter")) end
 	end
 	
-	if keyJustPressed('back') and not confirmed then triggerKeyThingy('escape') end
+	if (keyJustPressed('back') or (mouseClicked("left") and objectsOverlap("fakeMouse", "backButton"))) and not confirmed then triggerKeyThingy('escape') end
 	if (keyJustPressed('left') or (mouseClicked("left") and objectsOverlap("fakeMouse", "changeLeft"))) and not confirmed then triggerKeyThingy('left') end
 	if (keyJustPressed('right') or (mouseClicked("left") and objectsOverlap("fakeMouse", "changeRight"))) and not confirmed then triggerKeyThingy('right') end
 	if (keyJustPressed('up') or (mouseClicked("left") and objectsOverlap("fakeMouse", "changeUp"))) and not confirmed then triggerKeyThingy('up') end
@@ -270,7 +264,7 @@ end
 
 local singAnims = {"singRIGHT", "singDOWN", "singUP", "singLEFT"}
 function goodNoteHit(membersIndex, noteData, noteType, isSustainNote)
-	if nativeCharacters[boyfriendName] ~= true and confirmed then
+	if nonNativeCharacters[boyfriendName] == false and confirmed then
 		playAnim("boyfriend", singAnims[noteData + 1])
 	end
 end

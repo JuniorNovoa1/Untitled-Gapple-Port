@@ -1,0 +1,4 @@
+Create Dialogue
+
+Value 1: Text
+Value 2: Color

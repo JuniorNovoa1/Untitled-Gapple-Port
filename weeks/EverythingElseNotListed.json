@@ -1,0 +1,58 @@
+{
+	"songs": [
+		[
+			"--Scrapped/Fanmade--",
+			"missing",
+			[
+				255,
+				255,
+				255
+			]	
+		],
+		[
+			"Awesome",
+			"wheels",
+			[
+				63,
+				72,
+				204
+			]
+		],
+		[
+			"Badcorn",
+			"awesomefrend",
+			[
+				34,
+				255,
+				0
+			]
+		],
+		[
+			"Crap!",
+			"awesomefrend",
+			[
+				34,
+				255,
+				0
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"storyName": "Unnamed Gapple Port",
+	"weekName": "Unnamed Gapple Port",
+	"difficulties": "hard",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": true,
+	"weekBefore": "Peanut",
+	"startUnlocked": true
+}
