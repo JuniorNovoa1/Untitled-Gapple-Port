@@ -112,6 +112,7 @@ local storySongsLong = {["algebra"] = true, ["jambino"] = true, ["deformation"] 
 local storySongsNew = {["fresh-and-toasted"] = true, ["jambino"] = true, ["nice"] = true}
 
 function changeState(newState)
+	canChangeMenu = true;
 	if string.lower(newState) == "startsong" then
 		makeLuaSprite("blackScreenY", "", 0, 0)
 		makeGraphic("blackScreenY", 1280, 720, '000000')
@@ -352,7 +353,7 @@ function changeState(newState)
 		addLuaSprite("menuHeader", false)
 		table.insert(prevObjects, "menuHeader")
 
-		makeLuaText("highscoreTxt", '', 0, 0, 655)
+		makeLuaText("highscoreTxt", '', 0, 0, 656)
 		setTextFont("highscoreTxt", "comic.ttf")
 		setTextSize("highscoreTxt", 42)
 		updateHitbox("highscoreTxt")
@@ -426,7 +427,7 @@ function changeState(newState)
 	if string.lower(newState) == "freeplaymenu" then
 		makeLuaSprite("menuBG", "backgrounds/"..backgroundSprs[getRandomInt(1, #backgroundSprs)], 0, 0)
 		setGraphicSize("menuBG", 1280, 720)
-		setProperty("menuBG.color", getColorFromHex("808080"))
+		setProperty("menuBG.color", getColorFromHex("FFFFFF"))
 		setObjectCamera("menuBG", 'hud')
 		addLuaSprite("menuBG", false)
 		table.insert(prevObjects, "menuBG")
