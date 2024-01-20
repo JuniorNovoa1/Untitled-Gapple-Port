@@ -16,9 +16,10 @@ function onCreate()
     else
         setPropertyFromClass('backend.ClientPrefs', 'data.middleScroll', true)
     end
+    setProperty("health", 2)
 end
 
-function onCreatePost()
+function onSongStart()
     setProperty("dad.visible", false)
     for i = 0, 3 do
         setPropertyFromGroup("opponentStrums", i, 'visible', false)
@@ -28,7 +29,6 @@ function onCreatePost()
             setPropertyFromGroup("unspawnNotes", i, 'visible', false)
         end
     end
-    setProperty("health", 2)
 end
 
 function onStepHit()

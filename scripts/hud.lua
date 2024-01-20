@@ -36,6 +36,7 @@ local overrideFPS = 126;
 function onCreatePost()
 	addHaxeLibrary("FlxEase", 'flixel.tweens')
 	addHaxeLibrary("FlxTween", 'flixel.tweens')
+	addHaxeLibrary("Highscore")
 	addHaxeLibrary("Math")
     addHaxeLibrary('FlxMath', 'flixel.math')
 	if string.lower(songName) ~= 'apple-leak' then
@@ -455,7 +456,8 @@ function onUpdate(elapsed)
 
 	--[[setProperty('camHUD.x', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 50)
 	setProperty('camHUD.y', math.sin((getSongPosition() / 1000) * (getPropertyFromClass("Conductor", "bpm") / 60) * 1.0) * 15)
-	setProperty('camHUD.angle', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 1.2)--]]
+	setProperty('camHUD.angle', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 1.2)
+	setProperty('camGame.zoom', getProperty("camGame.zoom") + (math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 0.01))--]]
 end
 
 function onUpdatePost(elapsed)
@@ -469,7 +471,7 @@ function onUpdatePost(elapsed)
 			setProperty('healthBarBGnew.y', screenHeight * 0.9 +2)
 			setProperty('healthBarBGnew.x', getProperty('healthBar.x') -5)
 		end
-		setProperty('scoreTxt.y', getProperty('healthBar.y') + 38)
+		setProperty('scoreTxt.y', getProperty('healthBar.y') + 36)
 	end
 	if downscroll then
 		setProperty('healthBar.y', 54)
@@ -484,24 +486,21 @@ function onUpdatePost(elapsed)
 	end
 
 	setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))
-	--[[setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
-	if math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)) >= 1000 then
-		setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000000, 1)).."."..(math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 10000000, 1)) - (math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000000, 1)) * 100)).." GB")
-	end--]]
+	--setTextString("memoryTxt", "RAM Used: "..math.abs(math.floor(getPropertyFromClass("openfl.system.System", "totalMemory") / 1000000, 1)).." MB")
 
-	if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then setTextString("fpsTxt", getTextString("fpsTxt").." - DEBUG MODE") end
-	setTextString('scoreTxt', "Score:"..tostring(score).." | Misses:"..tostring(getProperty('songMisses')).." | Accuracy:"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+	setTextString('scoreTxt', "Score: "..tostring(score).." | Misses: "..tostring(getProperty('songMisses')).." | Accuracy: ")
 	if string.lower(songName) == 'kooky' then
-		setTextString('scoreTxt', "Score:\n"..tostring(score).."\n\n\n\nMisses:\n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy:\n"..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%")
+		setTextString('scoreTxt', "Score: \n"..tostring(score).."\n\n\n\nMisses: \n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy: \n")
 	end
+	runHaxeCode([[game.scoreTxt.text += '' + Highscore.floorDecimal(game.ratingPercent * 100, 2) + '%';]])
 	if luaSpriteExists("iconP12") then
 		runHaxeCode([[
 			var iconOffset = 26;
 			setVar("playerIconPos", game.healthBar.x + (game.healthBar.width * (FlxMath.remapToRange(game.healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * game.iconP1.scale.x - 150) / 2 - iconOffset);
 			setVar("dadIconPos", game.healthBar.x + (game.healthBar.width * (FlxMath.remapToRange(game.healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * game.iconP2.scale.x) / 2 - iconOffset * 2);
 		]])
-		doTweenX("iconMovementP12vhv", "iconP12", getProperty("playerIconPos"), 0.08, "sineInOut")
-		doTweenX("iconMovementP22hvh", "iconP22", getProperty("dadIconPos"), 0.08, "sineInOut")
+		doTweenX("iconMovementP12vhv", "iconP12", getProperty("playerIconPos"), 0.04, "sineInOut")
+		doTweenX("iconMovementP22hvh", "iconP22", getProperty("dadIconPos"), 0.04, "sineInOut")
 		iconPropertys()
 	end
 end
@@ -642,10 +641,10 @@ function goodNoteHit(membersIndex, direction, noteType, isSustainNote)
 		if(game.scoreTxtTween != null) {
 			game.scoreTxtTween.cancel();
 		}
-		game.scoreTxt.scale.x = 1.1;
+		game.scoreTxt.scale.x = 1.075;
 		game.scoreTxt.scale.y = 1.075;
-		game.scoreTxtTween = FlxTween.tween(game.scoreTxt.scale, {x: 1, y: 1}, 0.15, {
-			ease: FlxEase.cubeInOut,
+		game.scoreTxtTween = FlxTween.tween(game.scoreTxt.scale, {x: 1, y: 1}, 0.35, {
+			ease: FlxEase.backOut,
 			onComplete: function(twn) {
 				game.scoreTxtTween = null;
 			}

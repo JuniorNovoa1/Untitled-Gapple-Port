@@ -16,13 +16,13 @@ end
 local nextMenu = "";
 local nextFreeplayMenu = "";
 local freeplayStateSongs = {
-	["extra"] = '"glamrock", "sugar-rush", "gift-card", "ready-loud", "bookworm", "cuberoot", "apprentice", "too-shiny", "resumed", "mine", "dale", "the-big-dingle", "sart-producer", "ataefull"',
+	["extra"] = '"glamrock", "sugar-rush", "gift-card", "ready-loud", "bookworm", "cuberoot", "apprentice", "too-shiny", "resumed", "mine", "dale", "the-big-dingle", "ataefull", "the-scratches", "sart-producer"',
 	["secret"] = '"ticking"',
 	["iykyk"] = '"og", "apple-leak"',
 	["peenut"] = '"kooky"'
 }
 local freeplayStateIcons = {
-	["extra"] = '"glamrock", "cigar-rush", "card", "flumpt", "bookworm", "disability", "tristan", "diamond", "dambu", "dinner", "dale", "dingle_static", "sartys_icon_static", "atae"',
+	["extra"] = '"glamrock", "cigar-rush", "card", "flumpt", "bookworm", "disability", "tristan", "diamond", "dambu", "dinner", "dale", "dingle_static", "atae", "man", "sartys_icon_static"',
 	["secret"] = '"ouch"',
 	["iykyk"] = '"prealpha", "brob"',
 	["peenut"] = '"rubber"'
@@ -39,7 +39,7 @@ function onSongStart()
 		setPropertyFromGroup("strumLineNotes", i, "alpha", 0)
 	end
 	setProperty("canPause", false)
-	changeState("mainmenu")
+	if checkFileExists(".git") then changeState("freeplaymenu") else changeState("mainmenu") end
 	--createAlphabetSongs('"glamrock", "sugar-rush"', '"glamrock", "cigar-rush"')
 	--changeState("selectionmenu")
 	--changeState("storymenu")
@@ -433,6 +433,8 @@ function changeState(newState)
 		table.insert(prevObjects, "menuBG")
 
 		curSelectedOptionUpDown = 0;
+		if freeplayStateSongs[nextFreeplayMenu] == nil then freeplayStateSongs[nextFreeplayMenu] = '"NO SONGS HERE!1!!11!"'; end
+		if freeplayStateIcons[nextFreeplayMenu] == nil then freeplayStateIcons[nextFreeplayMenu] = '"face"'; end
 		createAlphabetSongs(freeplayStateSongs[nextFreeplayMenu], freeplayStateIcons[nextFreeplayMenu])
 		changeSelection()
 	end
@@ -766,10 +768,10 @@ function onUpdatePost()
 			nextMenu = "freeplaymenu";
 			nextFreeplayMenu = extrasSprs[curSelectedOptionUpDown];
 			onTransition(0.6)
-			doTweenX("backgroundX", "menuBG.scale", 0, 6, "")
-			doTweenY("backgroundY", "menuBG.scale", 0, 6, "")
-			doTweenX("categoryX", "category.scale", 4.5, 2, "")
-			doTweenY("categoryY", "category.scale", 4.5, 2, "")
+			doTweenX("backgroundX", "menuBG.scale", 0, 4, "")
+			doTweenY("backgroundY", "menuBG.scale", 0, 4, "")
+			doTweenX("categoryX", "category.scale", 6, 2, "")
+			doTweenY("categoryY", "category.scale", 6, 2, "")
 			canChangeMenu = false;
 		end
 		if curState == "freeplaymenu" then

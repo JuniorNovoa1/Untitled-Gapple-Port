@@ -28,6 +28,14 @@ function onCreatePost()
 	setTextFont('timeTxt', 'vcr.ttf')
 	dadX = getProperty('dad.x');
 	dadY = getProperty('dad.y') -125;
+	setProperty("badai.visible", false)
+end
+
+function onSongStart(elapsed)
+	setProperty('timeBarBG.alpha', 1)
+	setProperty('timeBar.alpha', 1)
+	setProperty('timeBarBG.visible', true)
+	setProperty('timeBar.visible', true)
 end
 
 local botplaySine = 0.0;
