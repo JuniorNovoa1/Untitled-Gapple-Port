@@ -1,0 +1,86 @@
+{
+	"song": {
+		"events": [
+			[
+				61855.6701030928,
+				[
+					[
+						"Change Character",
+						"dad",
+						"scratchman-3d"
+					],
+					[
+						"Change Character",
+						"bf",
+						"sky"
+					]
+				]
+			],
+			[
+				96494.8453608249,
+				[
+					[
+						"Change Character",
+						"dad",
+						"scratchman"
+					],
+					[
+						"Change Character",
+						"bf",
+						"bf"
+					]
+				]
+			],
+			[
+				128659.793814433,
+				[
+					[
+						"Change Character",
+						"dad",
+						"scratchgirl"
+					]
+				]
+			],
+			[
+				212783.50515464,
+				[
+					[
+						"Change Character",
+						"dad",
+						"scratchman-3d"
+					],
+					[
+						"Change Character",
+						"bf",
+						"wug"
+					]
+				]
+			],
+			[
+				254845.360824743,
+				[
+					[
+						"Change Character",
+						"bf",
+						"cynda-scratches"
+					]
+				]
+			],
+			[
+				296907.216494847,
+				[
+					[
+						"Change Character",
+						"dad",
+						"scratchman"
+					],
+					[
+						"Change Character",
+						"bf",
+						"bf"
+					]
+				]
+			]
+		]
+	}
+}

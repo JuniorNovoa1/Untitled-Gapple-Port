@@ -5,7 +5,7 @@ local gappleMemoryCounter = true; --doesnt matter --gapple doesn't have a memory
 local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', 'shoulder-bf', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
 'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
 'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'too-shiny', 'dave-wide', 'awesomeBambiCrack',
-'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad', "3d-tristan", 'dambai', 'dambu', 'dale', 'dingle', 'froing'}
+'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad', "3d-tristan", 'dambai', 'dambu', 'dale', 'dingle', 'froing', 'scratchman-3d', 'wug'}
 
 local badaiSongs = {
 	["applecore"] = 'bambi-piss-3d',
@@ -173,7 +173,6 @@ function onCreatePost()
 	if gappleMemoryCounter then addLuaText('memoryTxt') end--]]
 
 	setPropertyFromClass("Main", "fpsVar.visible", false)
-
 	setPropertyFromClass('flixel.FlxG', 'sound.soundTrayEnabled', false)
 
 	makeLuaSprite("gappleSoundTray", "soundtray", screenWidth, 0)
@@ -200,7 +199,6 @@ function onCreatePost()
     setProperty("showRating", false)
     setProperty('showCombo', false)
 
-	if string.lower(songName) ~= 'kooky' then changeNoteSkinsOnChange() end
 	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
 		if stringStartsWith(version, '0.7') then setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false) end
 		setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', true)
@@ -228,7 +226,7 @@ function onStrumsCreate()
 end
 
 function changeNoteSkinsOnChange(idForPerson)
-	if string.lower(songName) == "apple-leak" then return; end
+	if string.lower(songName) == "apple-leak" or string.lower(songName) == 'kooky' then return; end
 	local chars3D = {false, false}
 
 	if idForPerson == 1 or idForPerson == nil then
@@ -279,8 +277,10 @@ end
 
 function onEvent(eventName, value1, value2, strumTime)
 	if eventName == 'Change Character' and string.lower(songName) ~= 'badcorn' then
-		if string.lower(value1) == "bf" then changeNoteSkinsOnChange(1) end --changing both because of one character change = lag
-		if string.lower(value1) == "dad" then changeNoteSkinsOnChange(2) end
+		changeNoteSkinsOnChange(1)
+		changeNoteSkinsOnChange(2)
+		--[[if string.lower(value1) == "bf" then changeNoteSkinsOnChange(1) end --changing both because of one character change = lag --nvm this was incase other character was 3d
+		if string.lower(value1) == "dad" then changeNoteSkinsOnChange(2) end--]]
 		if string.lower(value1) == 'badai' then
 			runHaxeCode([[
 				game.getLuaObject('badai', false).destroy();
@@ -557,7 +557,7 @@ function onBeatHit()
 		end
 
 		if getProperty('dad.animation.curAnim.name') == 'idle' then
-			if dadName ~= 'bambi-piss-3d' and dadName ~= 'garrett-animal' then
+			if dadName ~= 'bambi-piss-3d' and dadName ~= 'garrett-animal' and dadName ~= 'scratchgirl' then
 				playAnim('dad', 'idle', true)
 			end
 		end
