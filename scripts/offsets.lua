@@ -4,11 +4,11 @@ local oldBFPosY = 0;
 local oldDADPosX = 0;
 local oldDADPosY = 0;
 
-local bfKeys = {'Z', 'X', 'COMMA', 'PERIOD'};
-local dadKeys = {'A', 'S', 'W', 'D'};
+local bfKeys = {'Z','X','COMMA','PERIOD'};
+local dadKeys = {'A','S','W','D'};
 local offsetMultiplier = 'SHIFT';
-local canMoveBfOffsets = true;
-local canMoveDadOffsets = true;
+local canMoveBfOffsets = false;
+local canMoveDadOffsets = false;
 
 function onCreatePost()
 	oldBFPosX = getProperty("boyfriend.x");
