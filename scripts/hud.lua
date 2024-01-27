@@ -125,7 +125,6 @@ function onCreatePost()
 			game.startCharacterLua(']]..badaiSongs[string.lower(songName)]..[[');
 			game.modchartSprites.set('badai', badai);
 		]])
-		callOnLuas("onBadaiCreate")
 	end
 	makeAnimatedLuaSprite('gappleTransition', 'transition', 0, 0)
 	addAnimationByPrefix("gappleTransition", "start", "Symbol 1", 30, false)
@@ -299,6 +298,7 @@ end
 local objectsCountown = {'countdownReady', 'countdownSet', 'countdownGo'}
 
 function onCountdownTick(swagCounter)
+	if swagCounter == 0 and badaiSongs[string.lower(songName)] ~= nil then callOnLuas("onBadaiCreate") end
 	if swagCounter == 3 then
 		runHaxeCode([[
 			if (game.boyfriend.animOffsets.exists("hey"))
@@ -433,8 +433,8 @@ function onUpdate(elapsed)
 			if vol < 0 then vol = 0; end
 		end
 		cancelTween("gappleSoundTrayArrow")
-		doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.3, "sineInOut")
-		if getPropertyFromClass('flixel.FlxG', 'sound.muted') then cancelTween("gappleSoundTrayArrow") doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1)), 0.3, "sineInOut") end
+		doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.25, "sineInOut")
+		if getPropertyFromClass('flixel.FlxG', 'sound.muted') then cancelTween("gappleSoundTrayArrow") doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1)), 0.25, "sineInOut") end
 		cancelTween("gappleSoundTrayExit")
 		setProperty("gappleSoundTray.x", screenWidth - 150)
 		cancelTimer("gappleSoundTrayExit")
