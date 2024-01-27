@@ -5,10 +5,17 @@ function onCreate()
 	addHaxeLibrary("FlxTween", 'flixel.tweens')
 	addHaxeLibrary("FlxEase", 'flixel.tweens')
 	addHaxeLibrary("FlxFlicker", 'flixel.effects')
-	addHaxeLibrary("CoolUtil")
-	addHaxeLibrary("Paths")
-	addHaxeLibrary("Alphabet")
-	addHaxeLibrary("Highscore")
+	if stringStartsWith(version, '0.7') then
+		addHaxeLibrary("CoolUtil", "backend")
+		addHaxeLibrary("Paths", "backend")
+		addHaxeLibrary("Alphabet", "objects")
+		addHaxeLibrary("Highscore", "backend")
+	else
+		addHaxeLibrary("CoolUtil")
+		addHaxeLibrary("Paths")
+		addHaxeLibrary("Alphabet")
+		addHaxeLibrary("Highscore")
+	end
 	setProperty("skipCountdown", true)
 	--runHaxeCode([[FlxG.mouse.load(Paths.image("cursor"));]])
 end
@@ -39,7 +46,7 @@ function onSongStart()
 		setPropertyFromGroup("strumLineNotes", i, "alpha", 0)
 	end
 	setProperty("canPause", false)
-	if checkFileExists(".git") then changeState("freeplaymenu") else changeState("mainmenu") end
+	if checkFileExists(".git") then changeState("selectionmenu") else changeState("mainmenu") end
 	--createAlphabetSongs('"glamrock", "sugar-rush"', '"glamrock", "cigar-rush"')
 	--changeState("selectionmenu")
 	--changeState("storymenu")
@@ -139,16 +146,16 @@ function changeState(newState)
 	end
 	runHaxeCode([[
 		var grpSongs = getVar("grpSongs");
-		var iconArray = getVar("iconArray");
-
-		for (i in 0...iconArray.length)
-		{
-			iconArray[i].destroy();
-		}
-
 		for (i in 0...grpSongs.length)
 		{
 			grpSongs[i].destroy();
+		}
+	]])
+	runHaxeCode([[
+		var iconArray = getVar("iconArray");
+		for (i in 0...iconArray.length)
+		{
+			iconArray[i].destroy();
 		}
 	]])
 	setTextString("creditsWatermark", "")
@@ -524,8 +531,6 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		doTweenAlpha("blackScreenAlpha", "blackScreenAlpha", 1, 0.5, "")
 	end
 	if tag == "loading" then
-		changeState(nextMenu)
-		canChangeMenu = true;
 		makeLuaSprite("blackScreenAlpha", "", 0, 0)
 		makeGraphic("blackScreenAlpha", 1280, 720, '000000')
 		setObjectCamera("blackScreenAlpha", 'other')
@@ -537,6 +542,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		addLuaSprite("blackScreen", false)
 		doTweenX("blackScreenOut", "blackScreen", screenWidth, 0.5, "")
 		doTweenAlpha("blackScreenAlphaOut", "blackScreenAlpha", 0, 0.5, "")
+		changeState(nextMenu)
+		canChangeMenu = true;
 	end
 end
 

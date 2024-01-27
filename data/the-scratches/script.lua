@@ -11,7 +11,7 @@ function onStepHit()
         setProperty("defaultCamZoom", 1.5)
     
         makeAnimatedLuaSprite("discordAnimated", "extras/scratches/scrt", 0, 0)
-        addAnimationByPrefix("discordAnimated", "idle", "transition thing", 24, true)
+        addAnimationByPrefix("discordAnimated", "idle", "transition thing", 24, false)
         setObjectCamera("discordAnimated", 'other')
         addLuaSprite("discordAnimated", false)
     end

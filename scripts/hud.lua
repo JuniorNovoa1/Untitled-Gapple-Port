@@ -1,6 +1,7 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
-local gappleMemoryCounter = true; --doesnt matter --gapple doesn't have a memory counter... ITS REAL LANCE YPOSTED  IYT OPMGGGG	
+local gappleMemoryCounter = true; --gapple doesn't have a memory counter... ITS REAL LANCE YPOSTED  IYT OPMGGGG	--doesnt matter
+local volumeKeybind = {"PLUS","MINUS","ZERO"}
 
 local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', 'shoulder-bf', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
 'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
@@ -16,6 +17,7 @@ local badaiSongs = {
 }
 
 function onCreate()
+	if stringStartsWith(version, '0.7') then setProperty("SONG.disableNoteRGB", true) end
 	makeLuaSprite('thunderBlack', '', 0, 0)
 	makeGraphic('thunderBlack', '1280', '720', '000000')
 	setProperty('thunderBlack.alpha', 0)
@@ -32,30 +34,34 @@ end
 
 local oldFPS = 60;
 local overrideFPS = 126;
+local vol = 0.0;
 
 function onCreatePost()
 	addHaxeLibrary("FlxEase", 'flixel.tweens')
 	addHaxeLibrary("FlxTween", 'flixel.tweens')
-	addHaxeLibrary("Highscore")
 	addHaxeLibrary("Math")
     addHaxeLibrary('FlxMath', 'flixel.math')
+	addHaxeLibrary("Std")
+	setProperty('showComboNum', false)
+    setProperty("showRating", false)
+    setProperty('showCombo', false)
 	if string.lower(songName) ~= 'apple-leak' then
 		makeLuaSprite("iconP12", "icons/missing", 0, 0)
 		makeLuaSprite("iconP22", "icons/missing", 0, 0)
 	end
 
-	addHaxeLibrary("Std")
-
     --Source Code stuff
     if stringStartsWith(version, '0.6') then
         addHaxeLibrary("Rating", 'Conductor')
+		addHaxeLibrary("Highscore")
+		addHaxeLibrary("CoolUtil")
         addHaxeLibrary("Note")
     else
         addHaxeLibrary("Rating", 'backend.Conductor')
+		addHaxeLibrary("Highscore", 'backend')
+		addHaxeLibrary("CoolUtil", 'backend')
         addHaxeLibrary("Note", 'objects')
     end
-
-	--White Hex Code: FFFFFF, Black Hex Code: 000000
 
 	makeLuaText('creditsWatermark', songName, 0, 4, getProperty('healthBar.y') + 30)
 	setObjectCamera('creditsWatermark', 'camHUD')
@@ -67,9 +73,10 @@ function onCreatePost()
 	updateHitbox('creditsWatermark')
 	addLuaText('creditsWatermark')
 
-	if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
 	if string.lower(songName) == 'fresh-and-toasted' then setTextString("creditsWatermark", 'Fresh And Toasted') end
+	if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
 	if string.lower(songName) == 'the-big-dingle' then setTextString("creditsWatermark", 'The Big Dingle') end
+	if string.lower(songName) == 'the-scratches' then setTextString("creditsWatermark", 'The Scratches') end
 	if string.lower(songName) == 'apple-leak' then setTextString("creditsWatermark", 'Apple Leak') end
 
 	makeLuaText('creditsText', '', 0, 4, getProperty('healthBar.y') + 52)
@@ -93,10 +100,9 @@ function onCreatePost()
 
 	makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBar.x'), getProperty('healthBar.y') +5)
 	scaleObject('healthBarBGnew', getProperty('healthBar.scale.x') - 0.075, getProperty('healthBar.scale.y') - 0.15)
-	setObjectCamera('healthBarBGnew', 'camHUD')
+	setObjectCamera('healthBarBGnew', 'hud')
 	addLuaSprite('healthBarBGnew', false)
-	setObjectOrder('healthBarBGnew', getObjectOrder('healthBar'))
-
+	setObjectOrder('healthBarBGnew', getObjectOrder("healthBar"))
 	if string.lower(songName) == 'kooky' then setProperty('healthBarBGnew.visible', false) end
 
 	if downscroll then
@@ -172,7 +178,7 @@ function onCreatePost()
 	updateHitbox('memoryTxt')
 	if gappleMemoryCounter then addLuaText('memoryTxt') end--]]
 
-	setPropertyFromClass("Main", "fpsVar.visible", false)
+	if stringStartsWith(version, '0.6') then setPropertyFromClass("Main", "fpsVar.visible", false) else setPropertyFromClass("Main", "fpsVar.visible", false) end
 	setPropertyFromClass('flixel.FlxG', 'sound.soundTrayEnabled', false)
 
 	makeLuaSprite("gappleSoundTray", "soundtray", screenWidth, 0)
@@ -182,6 +188,7 @@ function onCreatePost()
 	makeLuaSprite("gappleSoundTrayArrow", "arrow", screenWidth, 0)
 	setObjectCamera("gappleSoundTrayArrow", "other")
 	addLuaSprite("gappleSoundTrayArrow", false)
+	vol = math.floor(getPropertyFromClass('flixel.FlxG', 'sound.volume') * 10)
 
 	playAnim("gappleTransition", "start")
 	runTimer("gappleTransitionStart", 3)
@@ -195,13 +202,9 @@ function onCreatePost()
     addLuaText("ratingTxt")
     setProperty("ratingTxt.alpha", 0)
 
-    setProperty('showComboNum', false)
-    setProperty("showRating", false)
-    setProperty('showCombo', false)
-
 	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
 		if stringStartsWith(version, '0.7') then setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false) end
-		setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', true)
+		if stringStartsWith(version, '0.7') then setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.disabled', true) else setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', true) end
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then 
 			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == false then 
 				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true) 
@@ -265,7 +268,6 @@ function changeNoteSkinsOnChange(idForPerson)
 			end
 		end
 	end
-
 	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then 
 			if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
@@ -349,11 +351,15 @@ function changeNoteSkin(player, skin)
 	if player == true then
 		for i = 0, 4, 1 do
 			setPropertyFromGroup('playerStrums', i, 'texture', 'ui/notes/'..skin)
+			setPropertyFromGroup('playerStrums', i, 'rgbShader.enabled', false)
+			setPropertyFromGroup('playerStrums', i, 'useRGBShader', false)
 		end
 	end
     if not player then
 		for i = 0, 4, 1 do
 			setPropertyFromGroup('opponentStrums', i, 'texture', 'ui/notes/'..skin)
+			setPropertyFromGroup('opponentStrums', i, 'rgbShader.enabled', false)
+			setPropertyFromGroup('opponentStrums', i, 'useRGBShader', false)
 		end
 	end
 
@@ -367,12 +373,6 @@ function changeNoteSkin(player, skin)
         if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
 			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'ui/notes/'..skin) end
         end
-    end
-
-	if stringStartsWith(version, '0.7') then
-		for i = 0, getProperty("strumLineNotes.length") do
-			setPropertyFromGroup('strumLineNotes', i, 'rgbShader.enabled', false)
-		end
     end
 end
 
@@ -415,19 +415,29 @@ local actualSongLength = 0;
 local songPos = 0;
 
 local alphaTimer = 0.0;
-local vol = 0.0;
 function onUpdate(elapsed)
-	vol = math.floor(getPropertyFromClass('flixel.FlxG', 'sound.volume') * 10)
 	local arrowOffset = 30;
-	setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))))
-	if getPropertyFromClass('flixel.FlxG', 'sound.muted') then setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1))) end
 	setProperty("gappleSoundTrayArrow.x", getProperty("gappleSoundTray.x") + 60)
-	if keyboardJustPressed("ZERO") or keyboardJustPressed("MINUS") or keyboardJustPressed("PLUS") then
+	if keyboardJustPressed(volumeKeybind[3]) or keyboardJustPressed(volumeKeybind[2]) or keyboardJustPressed(volumeKeybind[1]) then
+		if keyboardJustPressed(volumeKeybind[1]) then
+			vol = vol +1;
+			if vol > 10 then vol = 10; end
+		end
+		if keyboardJustPressed(volumeKeybind[2]) then
+			vol = vol -1;
+			if vol < 0 then vol = 0; end
+		end
+		cancelTween("gappleSoundTrayArrow")
+		doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.3, "sineInOut")
+		if getPropertyFromClass('flixel.FlxG', 'sound.muted') then cancelTween("gappleSoundTrayArrow") doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1)), 0.3, "sineInOut") end
 		cancelTween("gappleSoundTrayExit")
 		setProperty("gappleSoundTray.x", screenWidth - 150)
+		cancelTimer("gappleSoundTrayExit")
 		runTimer("gappleSoundTrayExit", 1, 1)
 		playSound("clicky", 1)
     end
+		--setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))))
+	--if getPropertyFromClass('flixel.FlxG', 'sound.muted') then setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1))) end
 	
 	if alphaTimer > 0 then
         alphaTimer = alphaTimer - (elapsed * playbackRate);
@@ -436,7 +446,7 @@ function onUpdate(elapsed)
             doTweenAlpha("ratingTxt", "ratingTxt", 0, .5, "")
         end
     end
-	if getProperty('healthBarBGnew.alpha') ~= getProperty('healthBar.alpha') then setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha')) end
+	setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha'))
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
 	songPos = math.toTime(getSongPosition() / 1000)
 
@@ -463,7 +473,6 @@ end
 function onUpdatePost(elapsed)
 	if string.lower(songName) ~= 'kooky' then
 		setProperty('healthBar.y', screenHeight * 0.9 + 4)
-		--setProperty('healthBar.x', screenHeight * 0.4)
 		if stringStartsWith(version, '0.7') then
 			setProperty('healthBarBGnew.y', screenHeight * 0.9 +5)
 			setProperty('healthBarBGnew.x', getProperty('healthBar.x'))
@@ -475,7 +484,6 @@ function onUpdatePost(elapsed)
 	end
 	if downscroll then
 		setProperty('healthBar.y', 54)
-		--setProperty('healthBar.x', getProperty('healthBar.x') + 4)
 		setProperty('healthBarBGnew.y', getProperty('healthBar.y') + 5.25)
 		setProperty('healthBarBGnew.x', getProperty('healthBar.x') + 4)
 	end
@@ -492,7 +500,7 @@ function onUpdatePost(elapsed)
 	if string.lower(songName) == 'kooky' then
 		setTextString('scoreTxt', "Score: \n"..tostring(score).."\n\n\n\nMisses: \n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy: \n")
 	end
-	runHaxeCode([[game.scoreTxt.text += '' + Highscore.floorDecimal(game.ratingPercent * 100, 2) + '%';]])
+	if stringStartsWith(version, '0.7') then runHaxeCode([[game.scoreTxt.text += '' + CoolUtil.floorDecimal(game.ratingPercent * 100, 2) + "%";]]) else runHaxeCode([[game.scoreTxt.text += '' + Highscore.floorDecimal(game.ratingPercent * 100, 2) + "%";]]) end
 	if luaSpriteExists("iconP12") then
 		runHaxeCode([[
 			var iconOffset = 26;
@@ -612,18 +620,14 @@ function goodNoteHit(membersIndex, direction, noteType, isSustainNote)
 		setProperty('boyfriend.color', getColorFromHex('FFFFFF'))
 	end
 	if isSustainNote then return; end
-    local ratingOffset = 0;
-    if stringStartsWith(version, '0.7') then
-	    ratingOffset = getPropertyFromClass("backend.ClientPrefs", "data.ratingOffset")
-	else
-        ratingOffset = getPropertyFromClass("ClientPrefs", "ratingOffset")
-    end
 
+    local ratingOffset = 0;
+    if stringStartsWith(version, '0.7') then stupid = "game.ratingsData"; ratingOffset = getPropertyFromClass("backend.ClientPrefs", "data.ratingOffset") else stupid = "note"; ratingOffset = getPropertyFromClass("ClientPrefs", "ratingOffset") end
     runHaxeCode([[
         var membersIndex = ]]..membersIndex..[[;
         var note = game.notes.members[membersIndex];
         var noteDiff = note.strumTime - Conductor.songPosition + ]]..ratingOffset..[[;
-		var daRating = Conductor.judgeNote(note, noteDiff / game.playbackRate);
+		var daRating = Conductor.judgeNote(]]..stupid..[[, noteDiff / game.playbackRate);
         var text = "Sick!";
         if (daRating.name == "good") text = "Good";
         if (daRating.name == "bad") text = "Bad";
@@ -654,11 +658,11 @@ end
 
 function opponentNoteHit(membersIndex, noteData, noteType, isSustainNote)
 	local suffix = "";
-	if string.lower(noteType) == "altanim" then suffix = "-alt" end
+	if string.lower(noteType) == "altanim" or altAnim then suffix = "-alt" end
 	if getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
 		setProperty("badai.holdTimer", 0)
 		badaiPlayAnim(singAnims[noteData + 1]..suffix)
-	elseif string.lower(songName) ~= "ataefull" then
+	elseif string.lower(songName) ~= "ataefull" and string.lower(noteType) ~= "no animation" then
 		setProperty("dad.holdTimer", 0)
 		playAnim("dad", singAnims[noteData + 1]..suffix, true)
 	end
@@ -691,7 +695,8 @@ function noteMissedStuff(direction)
 	prevAnim = getProperty('boyfriend.animation.curAnim.name')
 end
 
-function onResume()
+function onDestroy()
+	setPropertyFromClass('flixel.FlxG', 'sound.soundTrayEnabled', true)
 	if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', overrideFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', overrideFPS) end
 	runHaxeCode([[
 		var framerate = ]]..overrideFPS..[[;
@@ -703,34 +708,5 @@ function onResume()
 			FlxG.updateFramerate = framerate;
 		}
 	]])
-	setPropertyFromClass("Main", "fpsVar.visible", false)
-end
-
-function onGameOver()
-    if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', oldFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', oldFPS) end
-	runHaxeCode([[
-		var framerate = ]]..oldFPS..[[;
-		if(framerate > FlxG.drawFramerate) {
-			FlxG.updateFramerate = framerate;
-			FlxG.drawFramerate = framerate;
-		} else {
-			FlxG.drawFramerate = framerate;
-			FlxG.updateFramerate = framerate;
-		}
-	]])
-end
-
-function onDestroy()
-	setPropertyFromClass('flixel.FlxG', 'sound.soundTrayEnabled', true)
-    if stringStartsWith(version, '0.6') then setPropertyFromClass('ClientPrefs', 'framerate', oldFPS) else setPropertyFromClass('backend.ClientPrefs', 'data.framerate', oldFPS) end
-	runHaxeCode([[
-		var framerate = ]]..oldFPS..[[;
-		if(framerate > FlxG.drawFramerate) {
-			FlxG.updateFramerate = framerate;
-			FlxG.drawFramerate = framerate;
-		} else {
-			FlxG.drawFramerate = framerate;
-			FlxG.updateFramerate = framerate;
-		}
-	]])
+	if stringStartsWith(version, '0.6') then setPropertyFromClass("Main", "fpsVar.visible", getPropertyFromClass('ClientPrefs', 'showFPS')) else setPropertyFromClass("Main", "fpsVar.visible", getPropertyFromClass('backend.ClientPrefs', 'data.showFPS')) end
 end

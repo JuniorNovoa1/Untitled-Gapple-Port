@@ -18,8 +18,8 @@ local settingStringArray = {"modcharts", "epilepsy", "screenshake", "dialogue", 
 
 --IGNORE EVERYTHING BELOW!!!!!!
 function onCreate()
-    luaDebugMode = true;
-    luaDeprecatedWarnings = true;
+    --luaDebugMode = true;
+    --luaDeprecatedWarnings = true;
     initSaveData("UnNamedGapplePortSettings", "UnNamedGapplePort")
     --main
     setDataFromSave("UnNamedGapplePortSettings", 'hasBeenCreated', true) 
@@ -46,6 +46,7 @@ function onCreate()
         luaDebugMode = true;
         luaDeprecatedWarnings = true;
     end
+    --if stringStartsWith(version, '0.7') then flushSaveData("UnNamedGapplePortSettings") end
     --flushSaveData("UnNamedGapplePortSettings")
     --initSaveData("UnNamedGapplePortSettings")
 end
@@ -85,7 +86,7 @@ function onUpdate()
     end
 
     setProperty('camZooming', false)
-    if getDataFromSave("UnNamedGapplePortSettings", 'camZoom', true) == false then
+    if not getDataFromSave("UnNamedGapplePortSettings", 'camZoom', true) then
         return;
     end
     if stringStartsWith(version, '0.6') then
