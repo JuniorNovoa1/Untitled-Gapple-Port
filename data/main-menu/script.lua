@@ -497,6 +497,13 @@ function transitionMenu(luaSpr)
 end
 
 function onTransition(delay)
+	cancelTween("blackScreenIn")
+	cancelTween("blackScreenAlpha")
+	cancelTween("blackScreenOut")
+	cancelTween("blackScreenAlpha")
+	cancelTween("blackScreenAlphaOut")
+	cancelTimer("delayBlackScreen")
+	cancelTimer("loading")
 	makeLuaSprite("blackScreenAlpha", "", 0, 0)
 	makeGraphic("blackScreenAlpha", 1280, 720, '000000')
 	setObjectCamera("blackScreenAlpha", 'other')
@@ -650,7 +657,7 @@ function onUpdate(elapsed)
 		setProperty("fakeMouse.x", getMouseX("hud"))
 		setProperty("fakeMouse.y", getMouseY("hud"))
 		if mouseClicked("left") and canChangeMenu then
-			canChangeMenu = false;
+			if objectsOverlap("fakeMouse", "story") or objectsOverlap("fakeMouse", "extra") or objectsOverlap("fakeMouse", "back") then canChangeMenu = false; end
 			if objectsOverlap("fakeMouse", "story") then
 				playSound("confirmMenu") 
 				nextMenu = "storymenu";
@@ -783,6 +790,7 @@ function onUpdatePost()
 		end
 		if curState == "freeplaymenu" then
 			nextMenu = "startsongfreeplay"
+			soundFadeOut("freakyMenu",1,0)
 			onTransition(0)
 			canChangeMenu = false;
 		end

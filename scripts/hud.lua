@@ -203,11 +203,12 @@ function onCreatePost()
     setProperty("ratingTxt.alpha", 0)
 
 	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
+		if not getPropertyFromGroup("unspawnNotes", i, 'isSustainNote') then setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup("unspawnNotes", i, 'hitHealth') * 0.8) else setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup("unspawnNotes", i, 'hitHealth') * 0.3) end
 		if stringStartsWith(version, '0.7') then setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false) end
 		if stringStartsWith(version, '0.7') then setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.disabled', true) else setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', true) end
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then 
 			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == false then 
-				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true) 
+				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
 			end
 		end
 	end
@@ -351,15 +352,19 @@ function changeNoteSkin(player, skin)
 	if player == true then
 		for i = 0, 4, 1 do
 			setPropertyFromGroup('playerStrums', i, 'texture', 'ui/notes/'..skin)
-			setPropertyFromGroup('playerStrums', i, 'rgbShader.enabled', false)
-			setPropertyFromGroup('playerStrums', i, 'useRGBShader', false)
+			if stringStartsWith(version, '0.7') then
+				setPropertyFromGroup('playerStrums', i, 'rgbShader.enabled', false)
+				setPropertyFromGroup('playerStrums', i, 'useRGBShader', false)
+			end
 		end
 	end
     if not player then
 		for i = 0, 4, 1 do
 			setPropertyFromGroup('opponentStrums', i, 'texture', 'ui/notes/'..skin)
-			setPropertyFromGroup('opponentStrums', i, 'rgbShader.enabled', false)
-			setPropertyFromGroup('opponentStrums', i, 'useRGBShader', false)
+			if stringStartsWith(version, '0.7') then
+				setPropertyFromGroup('opponentStrums', i, 'rgbShader.enabled', false)
+				setPropertyFromGroup('opponentStrums', i, 'useRGBShader', false)
+			end
 		end
 	end
 
