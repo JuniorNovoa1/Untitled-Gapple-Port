@@ -144,7 +144,7 @@ function onStepHit()
 end
 
 function onSectionHit()
-    if getDataFromSave('camZoom') and stringStartsWith(version, '0.6') then
+    if getDataFromSave("UnNamedGapplePortSettings", 'camZoom', true) and stringStartsWith(version, '0.6') then
         setProperty('camGame.zoom', getProperty('camGame.zoom') + 0.015 * getProperty('camZoomingMult'))
         setProperty('camHUD.zoom', getProperty('camHUD.zoom') + 0.03 * getProperty('camZoomingMult'))
     end

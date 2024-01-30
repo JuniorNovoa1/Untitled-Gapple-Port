@@ -160,9 +160,9 @@ function createChar()
 		setProperty("char.x", getProperty("char.x") + characterOffsets[characters[curSelected][curSelectedVer]][1])
 		setProperty("char.y", getProperty("char.y") + characterOffsets[characters[curSelected][curSelectedVer]][2])
 	end
-	setObjectOrder("char", getObjectOrder("screenTrans") - 1)
-	setObjectOrder("charIcon", getObjectOrder("screenTrans") - 2)
 	setObjectOrder("screenTrans", 99)
+	setObjectOrder("char", getObjectOrder("screenTrans") - 2)
+	setObjectOrder("charIcon", getObjectOrder("screenTrans") - 2)
 
 	runTimer("charDance", 1)
 end

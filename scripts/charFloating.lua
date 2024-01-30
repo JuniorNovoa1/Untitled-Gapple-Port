@@ -17,11 +17,11 @@ local elapsedtimeBF = 0.0;
 local elapsedtimeDAD = 0.0;
 local elapsedtimeBADAI = 0.0;
 function onUpdate(elapsed)
-    if not getDataFromSave("UnNamedGapplePortSettings", "canFloat") then return; end
+    if not getDataFromSave("UnNamedGapplePortSettings", "canFloat", true) then return; end
     elapsedtime = elapsedtime + elapsed;
     elapsedtimeBF = elapsedtimeBF + elapsed;
     elapsedtimeDAD = elapsedtimeDAD + elapsed;
-    if getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then elapsedtimeBADAI = elapsedtimeBADAI + elapsed; end
+    if getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then elapsedtimeBADAI = elapsedtimeBADAI + elapsed; end
     bfNameLowerCase = string.lower(boyfriendName)
     dadNameLowerCase = string.lower(dadName)
     badaiNameLowerCase = string.lower(getProperty("badai.curCharacter"))
@@ -66,10 +66,10 @@ function onUpdate(elapsed)
     if dadNameLowerCase == 'tunnel-bf' then
         setProperty("dad.y", getProperty("dad.y") + (math.sin(elapsedtimeDAD) * 0.6))
     end
-    if dadNameLowerCase == 'dambai' and not getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then
+    if dadNameLowerCase == 'dambai' and not getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
         callOnLuas("takeFromVal", {"dad.x", math.sin(elapsedtimeDAD) * 5})
         callOnLuas("addToVal", {"dad.y", math.cos(elapsedtimeDAD) * 1})
-    elseif dadNameLowerCase == 'dambai' and getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then
+    elseif dadNameLowerCase == 'dambai' and getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
         setProperty("dad.y", getProperty("dad.y") - math.sin(elapsedtimeDAD) * 0.6)
     end
 
@@ -105,7 +105,7 @@ function onUpdate(elapsed)
         setProperty("dad.y", getProperty("dad.y") + math.sin(elapsedtimeDAD) * 0.75)
     end
 
-    if badaiNameLowerCase == 'dambu' and getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then
+    if badaiNameLowerCase == 'dambu' and getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
         setProperty("badai.y", getProperty("badai.y") + math.sin(elapsedtimeBADAI) * 0.6)
     end
 end

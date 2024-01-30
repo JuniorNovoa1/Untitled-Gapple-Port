@@ -35,6 +35,7 @@ end
 local oldFPS = 60;
 local overrideFPS = 126;
 local vol = 0.0;
+local arrowOffset = 30;
 
 function onCreatePost()
 	addHaxeLibrary("FlxEase", 'flixel.tweens')
@@ -125,6 +126,7 @@ function onCreatePost()
 			game.startCharacterLua(']]..badaiSongs[string.lower(songName)]..[[');
 			game.modchartSprites.set('badai', badai);
 		]])
+		runHaxeCode([[game.callOnLuas("onBadaiCreate", []);]]) --callOnLuas inside of lua is broken?
 	end
 	makeAnimatedLuaSprite('gappleTransition', 'transition', 0, 0)
 	addAnimationByPrefix("gappleTransition", "start", "Symbol 1", 30, false)
@@ -211,6 +213,9 @@ function onCreatePost()
 			end
 		end
 	end
+
+	setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.25, "sineInOut")
+	if getPropertyFromClass('flixel.FlxG', 'sound.muted') then setProperty("gappleSoundTrayArrow.y", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.25, "sineInOut") end
 end
 
 function badaiPlayAnim(anim)
@@ -298,7 +303,6 @@ end
 local objectsCountown = {'countdownReady', 'countdownSet', 'countdownGo'}
 
 function onCountdownTick(swagCounter)
-	if swagCounter == 0 and badaiSongs[string.lower(songName)] ~= nil then callOnLuas("onBadaiCreate") end
 	if swagCounter == 3 then
 		runHaxeCode([[
 			if (game.boyfriend.animOffsets.exists("hey"))
@@ -421,7 +425,6 @@ local songPos = 0;
 
 local alphaTimer = 0.0;
 function onUpdate(elapsed)
-	local arrowOffset = 30;
 	setProperty("gappleSoundTrayArrow.x", getProperty("gappleSoundTray.x") + 60)
 	if keyboardJustPressed(volumeKeybind[3]) or keyboardJustPressed(volumeKeybind[2]) or keyboardJustPressed(volumeKeybind[1]) then
 		if keyboardJustPressed(volumeKeybind[1]) then
@@ -434,7 +437,8 @@ function onUpdate(elapsed)
 		end
 		cancelTween("gappleSoundTrayArrow")
 		doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.25, "sineInOut")
-		if getPropertyFromClass('flixel.FlxG', 'sound.muted') then cancelTween("gappleSoundTrayArrow") doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1)), 0.25, "sineInOut") end
+		if keyboardJustPressed(volumeKeybind[3]) then cancelTween("gappleSoundTrayArrow") doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1)), 0.25, "sineInOut") end
+		if keyboardJustPressed(volumeKeybind[3]) and getPropertyFromClass('flixel.FlxG', 'sound.muted') then cancelTween("gappleSoundTrayArrow") doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.25, "sineInOut") end
 		cancelTween("gappleSoundTrayExit")
 		setProperty("gappleSoundTray.x", screenWidth - 150)
 		cancelTimer("gappleSoundTrayExit")
@@ -485,12 +489,12 @@ function onUpdatePost(elapsed)
 			setProperty('healthBarBGnew.y', screenHeight * 0.9 +2)
 			setProperty('healthBarBGnew.x', getProperty('healthBar.x') -5)
 		end
+		if downscroll then
+			setProperty('healthBar.y', 54)
+			setProperty('healthBarBGnew.y', getProperty('healthBar.y') + 5.25)
+			setProperty('healthBarBGnew.x', getProperty('healthBar.x') + 4)
+		end
 		setProperty('scoreTxt.y', getProperty('healthBar.y') + 36)
-	end
-	if downscroll then
-		setProperty('healthBar.y', 54)
-		setProperty('healthBarBGnew.y', getProperty('healthBar.y') + 5.25)
-		setProperty('healthBarBGnew.x', getProperty('healthBar.x') + 4)
 	end
 	if (getProperty('creditsText.text') == '' or not luaTextExists("creditsText")) and string.lower(songName) ~= 'kooky' then
 		setProperty('creditsWatermark.y', getProperty('healthBar.y') + 46)

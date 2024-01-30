@@ -170,34 +170,36 @@ function changeState(newState)
 		addLuaSprite("menuBG", false)
 		table.insert(prevObjects, "menuBG")
 
-		makeLuaSprite("menuBGOverlay", "", 0, 0)
-		makeGraphic("menuBGOverlay", 1280, 720, '00ff00')
-		setObjectCamera("menuBGOverlay", 'hud')
-		addLuaSprite("menuBGOverlay", false)
-		setProperty("menuBGOverlay.alpha", 0.35)
-		table.insert(prevObjects, "menuBGOverlay")
-
-		local yAxis = 0;
-		local yChange = 14;
-		--12.5 for a collum! 
-		for i = 1, (yChange * 10) do
-			local previtem = 1;
-			if i > 1 then previtem = i - 1; else makeLuaSprite("checkeredBG"..i, "checkeredBG", 0, 0) end
-			if (i - 1) % (yChange) == 0 then yAxis = yAxis + 1; end
-			local offsetY = 140;
-			makeLuaSprite("checkeredBG"..i, "checkeredBG", getProperty("checkeredBG"..previtem..".x") + getProperty("checkeredBG"..previtem..".width"), offsetY * yAxis)
-			if i == 1 then makeLuaSprite("checkeredBG"..i, "checkeredBG", 0, offsetY * yAxis) end
-			if (i - 1) % (yChange) == 0 then makeLuaSprite("checkeredBG"..i, "checkeredBG", 0, offsetY * yAxis) end
-			setObjectCamera("checkeredBG"..i, 'hud')
-			scaleObject("checkeredBG"..i, 0.8, 0.8, true)
-			updateHitbox("checkeredBG"..i)
-			setProperty("checkeredBG"..i..".alpha", 0.5)
-			addLuaSprite("checkeredBG"..i, false)
-			setProperty("checkeredBG"..i..".offset.x", 325)
-			setProperty("checkeredBG"..i..".offset.y", 160)
-			table.insert(prevObjects, "checkeredBG"..i)
+		if not lowQuality then
+			makeLuaSprite("menuBGOverlay", "", 0, 0)
+			makeGraphic("menuBGOverlay", 1280, 720, '00ff00')
+			setObjectCamera("menuBGOverlay", 'hud')
+			addLuaSprite("menuBGOverlay", false)
+			setProperty("menuBGOverlay.alpha", 0.35)
+			table.insert(prevObjects, "menuBGOverlay")
+	
+			local yAxis = 0;
+			local yChange = 14;
+			--12.5 for a collum! 
+			for i = 1, (yChange * 10) do
+				local previtem = 1;
+				if i > 1 then previtem = i - 1; else makeLuaSprite("checkeredBG"..i, "checkeredBG", 0, 0) end
+				if (i - 1) % (yChange) == 0 then yAxis = yAxis + 1; end
+				local offsetY = 140;
+				makeLuaSprite("checkeredBG"..i, "checkeredBG", getProperty("checkeredBG"..previtem..".x") + getProperty("checkeredBG"..previtem..".width"), offsetY * yAxis)
+				if i == 1 then makeLuaSprite("checkeredBG"..i, "checkeredBG", 0, offsetY * yAxis) end
+				if (i - 1) % (yChange) == 0 then makeLuaSprite("checkeredBG"..i, "checkeredBG", 0, offsetY * yAxis) end
+				setObjectCamera("checkeredBG"..i, 'hud')
+				scaleObject("checkeredBG"..i, 0.8, 0.8, true)
+				updateHitbox("checkeredBG"..i)
+				setProperty("checkeredBG"..i..".alpha", 0.5)
+				addLuaSprite("checkeredBG"..i, false)
+				setProperty("checkeredBG"..i..".offset.x", 325)
+				setProperty("checkeredBG"..i..".offset.y", 160)
+				table.insert(prevObjects, "checkeredBG"..i)
+			end
+	
 		end
-
 		makeLuaSprite("blackBG", "storymenu/black_border_overlay", 50, 35)
 		scaleObject("blackBG", 2, 2, true)
 		setObjectCamera("blackBG", 'hud')
@@ -229,11 +231,14 @@ function changeState(newState)
 		setObjectCamera("blackBGOverlay", 'hud')
 		addLuaSprite("blackBGOverlay", false)
 		table.insert(prevObjects, "blackBGOverlay")
-		makeLuaSprite("char", "storymenu/icon_story mode", 625, 75)
-		scaleObject("char", 0.8, 0.8, true)
-		setObjectCamera("char", 'hud')
-		addLuaSprite("char", false)
-		table.insert(prevObjects, "char")
+
+		if not lowQuality then
+			makeLuaSprite("char", "storymenu/icon_story mode", 625, 75)
+			scaleObject("char", 0.8, 0.8, true)
+			setObjectCamera("char", 'hud')
+			addLuaSprite("char", false)
+			table.insert(prevObjects, "char")
+		end
 
 		if firstStart then
 			firstStart = false;
@@ -256,30 +261,35 @@ function changeState(newState)
 	end
 	if string.lower(newState) == "selectionmenu" then
 		makeLuaSprite("blackScreenBG", "", 0, 0)
-		makeGraphic("blackScreenBG", 1280, 720, 'FFFFFF')
+		makeGraphic("blackScreenBG", 1280, 720, '808080')
 		setObjectCamera("blackScreenBG", 'hud')
 		addLuaSprite("blackScreenBG", false)
 		table.insert(prevObjects, "blackScreenBG")
-
-		local yAxis = 0;
-		local yChange = 14;
-		--12.5 for a collum! 
-		for i = 1, (yChange * 10) do
-			local previtem = 1;
-			if i > 1 then previtem = i - 1; else makeLuaSprite("checkeredBG"..i, "modeselect/tiles", 0, 0) end
-			if (i - 1) % (yChange) == 0 then yAxis = yAxis + 1; end
-			local offsetY = 171;
-			makeLuaSprite("checkeredBG"..i, "modeselect/tiles", getProperty("checkeredBG"..previtem..".x") + getProperty("checkeredBG"..previtem..".width"), offsetY * yAxis)
-			if i == 1 then makeLuaSprite("checkeredBG"..i, "checkeredBG", 0, offsetY * yAxis) end
-			if (i - 1) % (yChange) == 0 then makeLuaSprite("checkeredBG"..i, "modeselect/tiles", 0, offsetY * yAxis) end
-			setObjectCamera("checkeredBG"..i, 'hud')
-			scaleObject("checkeredBG"..i, 0.8, 0.8, true)
-			updateHitbox("checkeredBG"..i)
-			setProperty("checkeredBG"..i..".alpha", 0.5)
-			addLuaSprite("checkeredBG"..i, false)
-			setProperty("checkeredBG"..i..".offset.x", 325)
-			setProperty("checkeredBG"..i..".offset.y", 190)
-			table.insert(prevObjects, "checkeredBG"..i)
+		if not lowQuality then
+			makeLuaSprite("blackScreenBG", "", 0, 0)
+			makeGraphic("blackScreenBG", 1280, 720, 'FFFFFF')
+			setObjectCamera("blackScreenBG", 'hud')
+			addLuaSprite("blackScreenBG", false)
+			local yAxis = 0;
+			local yChange = 14;
+			--12.5 for a collum! 
+			for i = 1, (yChange * 10) do
+				local previtem = 1;
+				if i > 1 then previtem = i - 1; else makeLuaSprite("checkeredBG"..i, "modeselect/tiles", 0, 0) end
+				if (i - 1) % (yChange) == 0 then yAxis = yAxis + 1; end
+				local offsetY = 171;
+				makeLuaSprite("checkeredBG"..i, "modeselect/tiles", getProperty("checkeredBG"..previtem..".x") + getProperty("checkeredBG"..previtem..".width"), offsetY * yAxis)
+				if i == 1 then makeLuaSprite("checkeredBG"..i, "checkeredBG", 0, offsetY * yAxis) end
+				if (i - 1) % (yChange) == 0 then makeLuaSprite("checkeredBG"..i, "modeselect/tiles", 0, offsetY * yAxis) end
+				setObjectCamera("checkeredBG"..i, 'hud')
+				scaleObject("checkeredBG"..i, 0.8, 0.8, true)
+				updateHitbox("checkeredBG"..i)
+				setProperty("checkeredBG"..i..".alpha", 0.5)
+				addLuaSprite("checkeredBG"..i, false)
+				setProperty("checkeredBG"..i..".offset.x", 325)
+				setProperty("checkeredBG"..i..".offset.y", 190)
+				table.insert(prevObjects, "checkeredBG"..i)
+			end
 		end
 
 		makeLuaSprite("white", "modeselect/white", 0, 0)
@@ -344,15 +354,17 @@ function changeState(newState)
 		scaleObject("RAPPA_SLAPPA", 1, 1, true)
 		screenCenter("RAPPA_SLAPPA", 'x')
 		setObjectCamera("RAPPA_SLAPPA", 'hud')
-		addLuaSprite("RAPPA_SLAPPA", false)
-		table.insert(prevObjects, "RAPPA_SLAPPA")
+		if not lowQuality then
+			addLuaSprite("RAPPA_SLAPPA", false)
+			table.insert(prevObjects, "RAPPA_SLAPPA")
 
-		makeLuaSprite("menuImage", "menu/"..storySongs[curSelectedOptionUpDown], getProperty("RAPPA_SLAPPA.x"), getProperty("RAPPA_SLAPPA.y") + 150)
-		scaleObject("menuImage", 0.435, 0.435, true)
-		screenCenter("menuImage", 'x')
-		setObjectCamera("menuImage", 'hud')
-		addLuaSprite("menuImage", false)
-		table.insert(prevObjects, "menuImage")
+			makeLuaSprite("menuImage", "menu/"..storySongs[curSelectedOptionUpDown], getProperty("RAPPA_SLAPPA.x"), getProperty("RAPPA_SLAPPA.y") + 150)
+			scaleObject("menuImage", 0.435, 0.435, true)
+			screenCenter("menuImage", 'x')
+			setObjectCamera("menuImage", 'hud')
+			addLuaSprite("menuImage", false)
+			table.insert(prevObjects, "menuImage")
+		end
 
 		makeLuaSprite("menuHeader", "headers/"..storySongs[curSelectedOptionUpDown], 0, -10)
 		screenCenter("menuHeader", 'x')
@@ -388,27 +400,28 @@ function changeState(newState)
 		addLuaSprite("arrowRight", false)
 		table.insert(prevObjects, "arrowRight")
 
-		makeLuaSprite("songDif", "diff/"..storySongDifs[storySongs[curSelectedOptionUpDown]], screenWidth - 283, 15)
-		scaleObject("songDif", 0.5, 0.5, true)
-		setObjectCamera("songDif", 'hud')
-		addLuaSprite("songDif", false)
-		table.insert(prevObjects, "songDif")
-
-		makeLuaSprite("new song", "new song", 25, -250)
-		scaleObject("new song", 0.46, 0.46, true)
-		setObjectCamera("new song", 'hud')
-		addLuaSprite("new song", false)
-		table.insert(prevObjects, "new song")
-		makeLuaSprite("long_song", "long_song", -275, 565)
-		scaleObject("long_song", 0.37, 0.37, true)
-		setObjectCamera("long_song", 'hud')
-		addLuaSprite("long_song", false)
-		table.insert(prevObjects, "long_song")
-		makeLuaSprite("bamb_sign", "bamb_sign", 1300, 530)
-		scaleObject("bamb_sign", 0.65, 0.65, true)
-		setObjectCamera("bamb_sign", 'hud')
-		addLuaSprite("bamb_sign", false)
-		table.insert(prevObjects, "bamb_sign")
+		if not lowQuality then
+			makeLuaSprite("songDif", "diff/"..storySongDifs[storySongs[curSelectedOptionUpDown]], screenWidth - 283, 15)
+			scaleObject("songDif", 0.5, 0.5, true)
+			setObjectCamera("songDif", 'hud')
+			addLuaSprite("songDif", false)
+			table.insert(prevObjects, "songDif")
+			makeLuaSprite("new song", "new song", 25, -250)
+			scaleObject("new song", 0.46, 0.46, true)
+			setObjectCamera("new song", 'hud')
+			addLuaSprite("new song", false)
+			table.insert(prevObjects, "new song")
+			makeLuaSprite("long_song", "long_song", -275, 565)
+			scaleObject("long_song", 0.37, 0.37, true)
+			setObjectCamera("long_song", 'hud')
+			addLuaSprite("long_song", false)
+			table.insert(prevObjects, "long_song")
+			makeLuaSprite("bamb_sign", "bamb_sign", 1300, 530)
+			scaleObject("bamb_sign", 0.65, 0.65, true)
+			setObjectCamera("bamb_sign", 'hud')
+			addLuaSprite("bamb_sign", false)
+			table.insert(prevObjects, "bamb_sign")
+		end
 	end
 	if string.lower(newState) == "extramenu" then
 		makeLuaSprite("blackScreenBG", "", 0, 0)
@@ -478,12 +491,16 @@ function change()
 	if curSelectedOptionUpDown == 3 then scaleObject("char", 1, 1, true) setProperty("char.x", 650) setProperty("char.y", 50) end
 	if curSelectedOptionUpDown == 4 then scaleObject("char", 0.6, 0.6, true) setProperty("char.x", 750) setProperty("char.y", 0) end
 	setObjectCamera("char", 'hud')
-	addLuaSprite("char", false)
+	if not lowQuality then addLuaSprite("char", false) end
 end
 
 function transitionMenu(luaSpr)
 	canChangeMenu = false;
 	playSound("confirmMenu", 1)
+	if lowQuality and luaSpr == "menuImage" then
+		onTransition(1)
+		return;
+	end
 	runHaxeCode([[
 		FlxFlicker.flicker(game.getLuaObject("]]..luaSpr..[[", false), 1, 0.06, false, false, function(flick)
 		{
@@ -578,23 +595,27 @@ function storySelect()
 	screenCenter("grad", 'xy')
 	setObjectCamera("grad", 'hud')
 	addLuaSprite("grad", false)
-	setObjectOrder("grad", getObjectOrder("RAPPA_SLAPPA") - 1)
+	if not lowQuality then setObjectOrder("grad", getObjectOrder("RAPPA_SLAPPA") - 1) else setObjectOrder("grad", getObjectOrder("menuHeader") - 1) end
 
-	makeLuaSprite("menuImage", "menu/"..storySongs[curSelectedOptionUpDown], getProperty("RAPPA_SLAPPA.x"), getProperty("RAPPA_SLAPPA.y") + 150)
-	scaleObject("menuImage", 0.435, 0.435, true)
-	screenCenter("menuImage", 'x')
-	setObjectCamera("menuImage", 'hud')
-	addLuaSprite("menuImage", false)
+	if not lowQuality then
+		makeLuaSprite("menuImage", "menu/"..storySongs[curSelectedOptionUpDown], getProperty("RAPPA_SLAPPA.x"), getProperty("RAPPA_SLAPPA.y") + 150)
+		scaleObject("menuImage", 0.435, 0.435, true)
+		screenCenter("menuImage", 'x')
+		setObjectCamera("menuImage", 'hud')
+		addLuaSprite("menuImage", false)
+	end
 
 	makeLuaSprite("menuHeader", "headers/"..storySongs[curSelectedOptionUpDown], 0, -10)
 	screenCenter("menuHeader", 'x')
 	setObjectCamera("menuHeader", 'hud')
 	addLuaSprite("menuHeader", false)
 
-	makeLuaSprite("songDif", "diff/"..storySongDifs[storySongs[curSelectedOptionUpDown]], screenWidth - 283, 15)
-	scaleObject("songDif", 0.5, 0.5, true)
-	setObjectCamera("songDif", 'hud')
-	addLuaSprite("songDif", false)
+	if not lowQuality then
+		makeLuaSprite("songDif", "diff/"..storySongDifs[storySongs[curSelectedOptionUpDown]], screenWidth - 283, 15)
+		scaleObject("songDif", 0.5, 0.5, true)
+		setObjectCamera("songDif", 'hud')
+		addLuaSprite("songDif", false)
+	end
 end
 
 function changeSelection()
