@@ -3,19 +3,19 @@ local curThing = false;
 local camAngle = 5;
 function onStepHit()
     if curStep == 895 then
-        callOnLuas("addToCamZoom", {0.2})
+        setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.2)
     end
 
     if curStep == 128 or curStep == 512 or curStep == 912 then
         isCrazy = true;
         if curStep ~= 912 then
-            callOnLuas("addToCamZoom", {0.2})
+            setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.2)
         end
     end
 
     if curStep == 384 or curStep == 768 or curStep == 1424 then
         isCrazy = false;
-        callOnLuas("addToCamZoom", {-0.2})
+        setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.2)
         if flashingLights then
             cameraFlash("other", "FFFFFF", 1)
         end

@@ -6,6 +6,6 @@ end
 
 function onCreatePost()
     setProperty("gf.visible", true)
-    callOnLuas("addToVal", {'gf.x', 415})
-    callOnLuas("addToVal", {'gf.y', 200})
+    setProperty("gf.x", getProperty("gf.x") + 415)
+    setProperty("gf.y", getProperty("gf.y") - 200)
 end

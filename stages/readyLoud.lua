@@ -31,7 +31,7 @@ function onCreate()
 end
 
 function onUpdate(elapsed)
-    callOnLuas("moveCam", {getProperty("flumpBG.x") + (getProperty("flumpBG.width") / 2), getProperty("flumpBG.y") + (getProperty("flumpBG.height") / 2)})
+    triggerEvent('Camera Follow Pos', ''..(getProperty("flumpBG.x") + (getProperty("flumpBG.width") / 2)), ''..(getProperty("flumpBG.y") + (getProperty("flumpBG.height") / 2)))
 end
 
 function onBeatHit()

@@ -150,5 +150,5 @@ end
 
 function callCamMovemt(x, y)
 	if not camMovement then return; end
-	callOnLuas("moveCam", {x, y})
+	triggerEvent('Camera Follow Pos', ''..x, ''..y)
 end

@@ -20,12 +20,12 @@ end
 
 function tweenCamShits()
     doTweenAlpha("thunderBlack", "thunderBlack", 0.35, crochet / 750, "")
-    callOnLuas("addToCamZoom", {0.2})
+    setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.2)
 end
 
 function tweenCamShitsUndoer()
     doTweenAlpha("thunderBlack", "thunderBlack", 0, crochet / 750, "")
-    callOnLuas("addToCamZoom", {-0.2})
+    setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.2)
     if flashingLights then
         cameraFlash("other", "FFFFFF", 1.2)
     end
@@ -38,17 +38,18 @@ function onEvent(eventName, value1, value2, strumTime)
         pixel = not pixel;
         if pixel then
             setProperty("gasStationBGpixel.visible", true)
-            callOnLuas("addToVal", {'boyfriend.x', 35})
-            callOnLuas("addToVal", {'boyfriend.y', 15})
-            callOnLuas("takeFromVal", {'dad.x', 75})
-            callOnLuas("addToVal", {'dad.y', 75})
-            callOnLuas("addToVal", {'gf.y', 235})
+            setProperty("boyfriend.x", getProperty("boyfriend.x") + 35)
+            setProperty("boyfriend.y", getProperty("boyfriend.y") + 15)
+            setProperty("dad.x", getProperty("dad.x") - 75)
+            setProperty("dad.y", getProperty("dad.x") + 75)
+            setProperty("gf.y", getProperty("gf.y") + 235)
         else
             setProperty("gasStationBGpixel.visible", false)
-            callOnLuas("takeFromVal", {'boyfriend.x', 35})
-            callOnLuas("takeFromVal", {'boyfriend.y', 15})
-            callOnLuas("addToVal", {'dad.x', 75})
-            callOnLuas("takeFromVal", {'dad.y', 75})
+            setProperty("boyfriend.x", getProperty("boyfriend.x") - 35)
+            setProperty("boyfriend.y", getProperty("boyfriend.y") - 15)
+            setProperty("dad.x", getProperty("dad.x") + 75)
+            setProperty("dad.y", getProperty("dad.x") - 75)
+            setProperty("gf.y", getProperty("gf.y") + 235)
         end
     end
 end

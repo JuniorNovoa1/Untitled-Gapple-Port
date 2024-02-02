@@ -99,12 +99,14 @@ function onCreatePost()
 		setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
 	end
 
-	makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBar.x'), getProperty('healthBar.y') +5)
-	scaleObject('healthBarBGnew', getProperty('healthBar.scale.x') - 0.075, getProperty('healthBar.scale.y') - 0.15)
-	setObjectCamera('healthBarBGnew', 'hud')
-	addLuaSprite('healthBarBGnew', false)
-	setObjectOrder('healthBarBGnew', getObjectOrder("healthBar"))
-	if string.lower(songName) == 'kooky' then setProperty('healthBarBGnew.visible', false) end
+
+	if not lowQuality and string.lower(songName) ~= 'kooky' then
+		makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBar.x'), getProperty('healthBar.y') +5)
+		scaleObject('healthBarBGnew', getProperty('healthBar.scale.x') - 0.075, getProperty('healthBar.scale.y') - 0.15)
+		setObjectCamera('healthBarBGnew', 'hud')
+		addLuaSprite('healthBarBGnew', false)
+		setObjectOrder('healthBarBGnew', getObjectOrder("healthBar"))
+	end
 
 	if downscroll then
 		setProperty("iconP1.y", getProperty('healthBar.y') -75)
@@ -436,17 +438,17 @@ function onUpdate(elapsed)
 			if vol < 0 then vol = 0; end
 		end
 		cancelTween("gappleSoundTrayArrow")
-		doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.25, "sineInOut")
-		if keyboardJustPressed(volumeKeybind[3]) then cancelTween("gappleSoundTrayArrow") doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1)), 0.25, "sineInOut") end
-		if keyboardJustPressed(volumeKeybind[3]) and getPropertyFromClass('flixel.FlxG', 'sound.muted') then cancelTween("gappleSoundTrayArrow") doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.25, "sineInOut") end
+		--doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.25, "sineInOut")
+		--if keyboardJustPressed(volumeKeybind[3]) then cancelTween("gappleSoundTrayArrow") doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1)), 0.25, "sineInOut") end
+		--if keyboardJustPressed(volumeKeybind[3]) and getPropertyFromClass('flixel.FlxG', 'sound.muted') then cancelTween("gappleSoundTrayArrow") doTweenY("gappleSoundTrayArrow", "gappleSoundTrayArrow", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))), 0.25, "sineInOut") end
 		cancelTween("gappleSoundTrayExit")
 		setProperty("gappleSoundTray.x", screenWidth - 150)
 		cancelTimer("gappleSoundTrayExit")
 		runTimer("gappleSoundTrayExit", 1, 1)
 		playSound("clicky", 1)
     end
-		--setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))))
-	--if getPropertyFromClass('flixel.FlxG', 'sound.muted') then setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1))) end
+	setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))))
+	if getPropertyFromClass('flixel.FlxG', 'sound.muted') then setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (25 * 1))) end
 	
 	if alphaTimer > 0 then
         alphaTimer = alphaTimer - (elapsed * playbackRate);
@@ -459,18 +461,20 @@ function onUpdate(elapsed)
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
 	songPos = math.toTime(getSongPosition() / 1000)
 
+	if string.lower(songName) == "apple-leak" then setProperty("songLength", 786000) end
 	if string.lower(songName) == "apple-leak" then actualSongLength = "13:06" end
 	if string.lower(songName) == "apple-leak" and curStep >= 8608 then actualSongLength = "17:25" end
+
+	local curTime = math.max(0, getSongPosition() - noteOffset)
+	setProperty("songPercent", curTime / getProperty("songLength"))
 
 	setTextString('timeTxt', songPos.." / "..actualSongLength)
 	updateHitbox("timeTxt")
 	screenCenter("timeTxt", 'x')
 
-	for i = 1, #singAnims do
-		boyfriendHasMissAnims = getProperty('boyfriend.hasMissAnimations')
-		if getProperty('boyfriend.animation.curAnim.name') == 'idle' and getProperty('boyfriend.color') == getColorFromHex('9400d3') then
-			setProperty('boyfriend.color', getColorFromHex('FFFFFF'))
-		end
+	boyfriendHasMissAnims = getProperty('boyfriend.hasMissAnimations')
+	if getProperty('boyfriend.animation.curAnim.name') == 'idle' and getProperty('boyfriend.color') == getColorFromHex('9400d3') then
+		setProperty('boyfriend.color', getColorFromHex('FFFFFF'))
 	end
 
 	--[[setProperty('camHUD.x', math.sin((getSongPosition() / 1200) * (getPropertyFromClass("Conductor", "bpm") / 60) * -1.0) * 50)
@@ -482,17 +486,19 @@ end
 function onUpdatePost(elapsed)
 	if string.lower(songName) ~= 'kooky' then
 		setProperty('healthBar.y', screenHeight * 0.9 + 4)
-		if stringStartsWith(version, '0.7') then
+		if stringStartsWith(version, '0.7') and not lowQuality and string.lower(songName) ~= 'kooky' then
 			setProperty('healthBarBGnew.y', screenHeight * 0.9 +5)
 			setProperty('healthBarBGnew.x', getProperty('healthBar.x'))
-		else
+		elseif not lowQuality and string.lower(songName) ~= 'kooky' then
 			setProperty('healthBarBGnew.y', screenHeight * 0.9 +2)
 			setProperty('healthBarBGnew.x', getProperty('healthBar.x') -5)
 		end
 		if downscroll then
 			setProperty('healthBar.y', 54)
-			setProperty('healthBarBGnew.y', getProperty('healthBar.y') + 5.25)
-			setProperty('healthBarBGnew.x', getProperty('healthBar.x') + 4)
+			if not lowQuality and string.lower(songName) ~= 'kooky' then
+				setProperty('healthBarBGnew.y', getProperty('healthBar.y') + 5.25)
+				setProperty('healthBarBGnew.x', getProperty('healthBar.x') + 4)
+			end
 		end
 		setProperty('scoreTxt.y', getProperty('healthBar.y') + 36)
 	end

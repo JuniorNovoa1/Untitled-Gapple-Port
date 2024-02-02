@@ -79,10 +79,22 @@ function math.lerp(from, to, t)
 	return from + (to - from) * math.clamp(t, 0, 1)
 end
 
+local hasActivatedEvents = false;
 function onUpdate()
+    if inChartEditor and not hasActivatedEvents then
+        hasActivatedEvents = true;
+        for i = 1, curStep do
+            runHaxeCode([[game.setOnLuas('curStep', ]]..i..[[);]])
+            runHaxeCode([[game.callOnLuas("onStepHit", []);]])
+        end
+    end
     if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then
         if getProperty("health") <= 0 then setProperty("health", 0.01) end
         if keyboardJustPressed("P") then setProperty("cpuControlled", not getProperty("cpuControlled")) end
+        if keyboardJustPressed("O") then 
+            setProperty("debugTxt.visible", not getProperty("debugTxt.visible"))
+            setProperty("debugTxt2.visible", not getProperty("debugTxt2.visible"))
+        end
     end
 
     setProperty('camZooming', false)
@@ -99,14 +111,13 @@ function onUpdate()
 end
 
 local floorIt = false;
-
 function onStepHit()
-    if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) then --using math.floor to round up character values, 80% accurate
+    if getDataFromSave("UnNamedGapplePortSettings", "debugMode", false) and getProperty("debugTxt.visible") then --using math.floor to round up character values, 80% accurate
         setProperty("debugTxt2.x", getProperty("debugTxt.x") + getProperty("debugTxt.width") + 16)
         if floorIt then
-            setTextString("debugTxt", "Debug\nCharacter\nDad Pos = ["..math.floor(getProperty("dad.x"), 2)..", "..math.floor(getProperty("dad.y"), 2).."]\nBf Pos = ["..math.floor(getProperty("boyfriend.x"), 2)..", "..math.floor(getProperty("boyfriend.y"), 2).."]".."\nGf Pos = ["..math.floor(getProperty("gf.x"), 2)..", "..math.floor(getProperty("gf.y"), 2).."]")
+            setTextString("debugTxt", "Debug\nBotplay: "..tostring(getProperty("cpuControlled")).."\nCharacter\nDad Pos = ["..math.floor(getProperty("dad.x"), 2)..", "..math.floor(getProperty("dad.y"), 2).."]\nBf Pos = ["..math.floor(getProperty("boyfriend.x"), 2)..", "..math.floor(getProperty("boyfriend.y"), 2).."]".."\nGf Pos = ["..math.floor(getProperty("gf.x"), 2)..", "..math.floor(getProperty("gf.y"), 2).."]")
         else
-            setTextString("debugTxt", "Debug\nCharacter\nDad Pos = ["..getProperty("dad.x")..", "..getProperty("dad.y").."]\nBf Pos = ["..getProperty("boyfriend.x")..", "..getProperty("boyfriend.y").."]".."\nGf Pos = ["..getProperty("gf.x")..", "..getProperty("gf.y").."]")
+            setTextString("debugTxt", "Debug\nBotplay: "..tostring(getProperty("cpuControlled")).."\nCharacter\nDad Pos = ["..getProperty("dad.x")..", "..getProperty("dad.y").."]\nBf Pos = ["..getProperty("boyfriend.x")..", "..getProperty("boyfriend.y").."]".."\nGf Pos = ["..getProperty("gf.x")..", "..getProperty("gf.y").."]")
         end
         setTextString("debugTxt2", 'Stage\nCam Zoom: '..getProperty("defaultCamZoom")..'\nStage: "'..curStage..'"\nDad: "'..dadName..'"\nBf: "'..boyfriendName..'"\nGf: "'..gfName..'"')
         setTextString("debugTxt", getTextString("debugTxt").."\nSettings\n")

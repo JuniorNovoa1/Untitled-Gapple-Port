@@ -1,7 +1,7 @@
 function onCreatePost()
 	scaleObject("dad", 0.25, 0.25, true)
-	callOnLuas("addToVal", {'dad.x', 205})
-	callOnLuas("takeFromVal", {'dad.y', 100})
+	setProperty("dad.x", getProperty("dad.x") + 205)
+	setProperty("dad.y", getProperty("dad.y") - 100)
 	setProperty("dad.canDance", false)
 end
 

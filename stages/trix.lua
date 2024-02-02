@@ -13,8 +13,8 @@ function createDeformartionSprites(charName, offset)
 	for i = 1, #bgs do
 		scaleObject(bgs[i], 0.9, 0.9, true)
 		screenCenter(bgs[i], 'xy')
-		callOnLuas("addToVal", {bgs[i]..".x", 435 + offset}) --600
-		callOnLuas("takeFromVal", {bgs[i]..".y", 235})
+		setProperty(bgs[i]..".x", getProperty(bgs[i]..".x") + (435 + offset))
+		setProperty(bgs[i]..".y", getProperty(bgs[i]..".y") - 235)
 	end
 end
 

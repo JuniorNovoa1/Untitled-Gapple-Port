@@ -31,7 +31,7 @@ function onUpdate(elapsed)
         setProperty("boyfriend.y", getProperty("boyfriend.y") + (math.sin(elapsedtimeBF) * 0.6))
     end
     if bfNameLowerCase == 'bad' then
-        callOnLuas("takeFromVal", {"boyfriend.y", math.sin(elapsedtimeBF) * 0.325})
+        setProperty("boyfriend.y", getProperty("boyfriend.y") - (math.sin(elapsedtimeDAD) * 0.325))
     end
     if bfNameLowerCase == '3d-tristan' then
         setProperty("boyfriend.y", getProperty("boyfriend.y") - math.sin(elapsedtimeBF) * 0.9)
@@ -67,14 +67,14 @@ function onUpdate(elapsed)
         setProperty("dad.y", getProperty("dad.y") + (math.sin(elapsedtimeDAD) * 0.6))
     end
     if dadNameLowerCase == 'dambai' and not getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
-        callOnLuas("takeFromVal", {"dad.x", math.sin(elapsedtimeDAD) * 5})
-        callOnLuas("addToVal", {"dad.y", math.cos(elapsedtimeDAD) * 1})
+        setProperty("dad.x", getProperty("dad.x") - (math.sin(elapsedtimeDAD) * 5))
+        setProperty("dad.y", getProperty("dad.y") + (math.sin(elapsedtimeDAD) * 1))
     elseif dadNameLowerCase == 'dambai' and getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
-        setProperty("dad.y", getProperty("dad.y") - math.sin(elapsedtimeDAD) * 0.6)
+        setProperty("dad.y", getProperty("dad.y") + (math.sin(elapsedtimeDAD) * 0.6))
     end
 
     if dadNameLowerCase == 'bad' then
-        callOnLuas("takeFromVal", {"dad.y", math.sin(elapsedtimeDAD) * 0.325})
+        setProperty("dad.y", getProperty("dad.y") - (math.sin(elapsedtimeDAD) * 0.325))
     end
     if dadNameLowerCase == '3d-tristan' then
         setProperty("dad.y", getProperty("dad.y") - math.sin(elapsedtimeDAD) * 0.9)

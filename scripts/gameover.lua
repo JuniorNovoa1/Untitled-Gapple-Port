@@ -7,7 +7,7 @@ function onUpdate()
 
 	if string.lower(dadName) == 'brob' then
 		setPropertyFromClass('GameOverSubstate', 'loopSoundName', 'FreshAndToasted/win-brobgonal')
-	elseif string.lower(dadName) == 'barbu' or (luaSpriteExists("barbu") and getProperty("barbu.y") ~= -500) then
+	elseif string.lower(dadName) == 'barbu' or (luaSpriteExists("barbu") and curStep >= 1663) then
 		setPropertyFromClass('GameOverSubstate', 'loopSoundName', 'FreshAndToasted/win-barbu')
 	else
 		setPropertyFromClass('GameOverSubstate', 'loopSoundName', 'gameOver')

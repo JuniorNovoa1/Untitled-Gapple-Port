@@ -64,7 +64,6 @@ function onCreatePost()
 		addHaxeLibrary('HealthIcon', 'objects')
     end
 
-
 	makeLuaSprite('mineBGcharSelect', 'extras/mine_bg', 0, 0)
 	scaleObject("mineBGcharSelect", 0.75, 0.75, true)
 	setObjectCamera("mineBGcharSelect", 'other')

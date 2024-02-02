@@ -42,10 +42,10 @@ end
 local elapsedtime = 0.0;
 function onUpdate(elapsed)
     elapsedtime = elapsedtime + elapsed;
-	callOnLuas("addToVal", {"exckspee.y", math.sin(elapsedtime) * 0.6})
-	callOnLuas("takeFromVal", {"headphone_man.y", math.sin(elapsedtime) * 0.6})
-	callOnLuas("addToVal", {"joocey.y", math.sin(elapsedtime) * 0.6})
-	callOnLuas("takeFromVal", {"winteer.y", math.sin(elapsedtime) * 0.6})
+	setProperty("exckspee.y", getProperty("exckspee.y") + (math.sin(elapsedtime) * 0.6))
+	setProperty("headphone_man.y", getProperty("headphone_man.y") - (math.sin(elapsedtime) * 0.6))
+	setProperty("joocey.y", getProperty("joocey.y") + (math.sin(elapsedtime) * 0.6))
+	setProperty("winteer.y", getProperty("winteer.y") - (math.sin(elapsedtime) * 0.6))
 
 	setProperty("exckspee.angle", math.sin(elapsedtime) * 15)
 	setProperty("headphone_man.angle", -math.sin(elapsedtime) * 15)

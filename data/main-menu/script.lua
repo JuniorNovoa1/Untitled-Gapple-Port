@@ -36,7 +36,7 @@ local freeplayStateIcons = {
 }
 
 function onSongStart()
-	local invisObjs = {'healthBarBGnew', 'healthBar', 'healthBarBG', 'iconP2', 'iconP1', 'timeTxt', 'scoreTxt'}
+	local invisObjs = {'healthBar', 'healthBarBG', 'iconP2', 'iconP1', 'timeTxt', 'scoreTxt'}
 	for i = 1, #invisObjs do
 		setProperty(invisObjs[i]..".visible", false)
 		setProperty(invisObjs[i]..".alpha", 0)
@@ -751,6 +751,7 @@ function onUpdate(elapsed)
 			setObjectCamera("category", 'hud')
 			screenCenter("category", 'xy')
 			addLuaSprite("category", false)
+			playSound("scrollMenu", 1)
 		end
 		if (keyJustPressed('right') and canChangeMenu) or (mouseClicked("left") and objectsOverlap("fakeMouseMobile", "changeRight")) then
 			curSelectedOptionUpDown = curSelectedOptionUpDown +1;
@@ -760,6 +761,7 @@ function onUpdate(elapsed)
 			setObjectCamera("category", 'hud')
 			screenCenter("category", 'xy')
 			addLuaSprite("category", false)
+			playSound("scrollMenu", 1)
 		end
 	end
 	if curState == "freeplaymenu" then
