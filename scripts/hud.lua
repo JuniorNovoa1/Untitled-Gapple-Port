@@ -221,7 +221,11 @@ function onCreatePost()
 end
 
 function badaiPlayAnim(anim)
-	runHaxeCode([[game.getLuaObject("badai", false).playAnim("]]..anim..[[", true);]])
+	runHaxeCode([[
+		game.getLuaObject("badai", false).playAnim("]]..anim..[[", true);
+		if ("]]..anim..[[" == "dance")
+			game.getLuaObject("badai", false).dance();
+	]])
 end
 
 local donezo = false;
@@ -576,18 +580,18 @@ end
 function onBeatHit()
 	if curBeat % 2 == 0 then
 		if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
-			playAnim('boyfriend', 'idle', true)
+			characterDance("bf")
 		end
 
 		if getProperty('dad.animation.curAnim.name') == 'idle' then
 			if dadName ~= 'bambi-piss-3d' and dadName ~= 'garrett-animal' and dadName ~= 'scratchgirl' then
-				playAnim('dad', 'idle', true)
+				characterDance("dad")
 			end
 		end
 
 		if badaiSongs[string.lower(songName)] ~= nil or luaSpriteExists("badai") then
-			if getProperty("badai.animation.curAnim.name") == 'idle' and not getProperty("badai.skipDance") then badaiPlayAnim('idle') end
-			if getProperty("badai.animation.curAnim.name") == 'danceLeft' and not getProperty("badai.skipDance") then badaiPlayAnim('danceRight') elseif getProperty("badai.animation.curAnim.name") == 'danceRight' and not getProperty("badai.skipDance") then badaiPlayAnim('danceLeft') end
+			if getProperty("badai.animation.curAnim.name") == 'idle' and not getProperty("badai.skipDance") then badaiPlayAnim('dance') end
+			if getProperty("badai.animation.curAnim.name") == 'danceLeft' and not getProperty("badai.skipDance") then badaiPlayAnim('dance') elseif getProperty("badai.animation.curAnim.name") == 'danceRight' and not getProperty("badai.skipDance") then badaiPlayAnim('dance') end
 		end
 	end
 
