@@ -4,7 +4,7 @@ local settingsAlert = false; --disable to remove message in the top left!!!
 local modcharts = true; --determines wether modcharts are enabled.
 local epilepsy = true; --determines if screen flashes many colors at once. (disable if you have Epilepsy)
 local screenshake = true; --determines wether the screen can shake.
-local dialogue = false; --determine wether dialogue pops up on compatible songs.
+local dialogue = true; --determine wether dialogue pops up on compatible songs.
 local sensitiveContent = true; --determines if sensitive content gets enabled (ie gore)
 local newCamZoom = false; --very buggy! only used on some sections of "Nice!"
 --

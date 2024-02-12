@@ -56,7 +56,7 @@ function onSongStart()
 	local buttonObjScale = 0.75;
 
 	if buildTarget == 'android' then
-		makeLuaSprite('changeLeft', 'touchDirectionArrow', buttonPos[1] - (142 * buttonObjScale), buttonPos[2])
+		--[[makeLuaSprite('changeLeft', 'touchDirectionArrow', buttonPos[1] - (142 * buttonObjScale), buttonPos[2])
 		setProperty("changeLeft.angle", -90)
 		setObjectCamera("changeLeft", 'other')
 		addLuaSprite('changeLeft', false)
@@ -73,7 +73,7 @@ function onSongStart()
 		makeLuaSprite('changeDown', 'touchDirectionArrow', buttonPos[1], buttonPos[2] + (142 * buttonObjScale))
 		setProperty("changeDown.flipY", true)
 		setObjectCamera("changeDown", 'other')
-		addLuaSprite('changeDown', false)
+		addLuaSprite('changeDown', false)--]]
 	
 		makeLuaSprite('backButton', 'androidBack', buttonPos[1] - 105, buttonPos[2] - ((142 * 2) * buttonObjScale))
 		setObjectCamera("backButton", 'other')

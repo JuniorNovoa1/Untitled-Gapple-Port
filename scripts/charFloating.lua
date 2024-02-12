@@ -5,7 +5,7 @@ local badaiNameLowerCase = ""
 function onCreatePost()
     bfNameLowerCase = string.lower(boyfriendName)
     dadNameLowerCase = string.lower(dadName)
-    badaiNameLowerCase = string.lower(getProperty("badai.curCharacter"))
+    if luaSpriteExists("badai") then badaiNameLowerCase = string.lower(getProperty("badai.curCharacter")) end
 
     if dadNameLowerCase == 'bambi-piss-3d' or dadNameLowerCase == 'tunnel-dave' then
         setObjectOrder("dadGroup", getObjectOrder("boyfriendGroup") + 1)
@@ -24,7 +24,7 @@ function onUpdate(elapsed)
     if getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then elapsedtimeBADAI = elapsedtimeBADAI + elapsed; end
     bfNameLowerCase = string.lower(boyfriendName)
     dadNameLowerCase = string.lower(dadName)
-    badaiNameLowerCase = string.lower(getProperty("badai.curCharacter"))
+    if luaSpriteExists("badai") then badaiNameLowerCase = string.lower(getProperty("badai.curCharacter")) end
 
     --char floating
     if bfNameLowerCase == 'tunnel-bf' then

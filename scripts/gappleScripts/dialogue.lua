@@ -4,23 +4,9 @@
 local dialogueSongs = {'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'nice', 'ferocious', 'apple-leak'};
 local images = {'disruption_port', 'bf_compuzzled_port'}
 local song = 'disruptionCutscene';
-local dialogueTXT = {
-	'THERE YOU ARE!!!',
-	'Beep?',
-	'DAVE SENT ME TO GET YOU!!!',
-	'SAYS YOU NOT ALLOWED HERE!!!',
-	'Bap!',
-	'YOU GONNA DISRUPT THIS 3D WORLD!!!!!'
-}
-local dialogueChar = {
-	true,
-	false,
-	true,
-	true,
-	false,
-	true
-}
-local offsets = {0, 0,  0, 0}
+local dialogueTXT = {'THERE YOU ARE!!!','Beep?','DAVE SENT ME TO GET YOU!!!','SAYS YOU NOT ALLOWED HERE!!!','Bap!','YOU GONNA DISRUPT THIS 3D WORLD!!!!!'}
+local dialogueChar = {true,false,true,true,false,true}
+local offsets = {0, 0, 0, 0}
 local curDialogue = 1;
 local maxDialogue = 1;
 local dialogueBool = false;
@@ -362,7 +348,7 @@ function onTweenCompleted(tag)
 		removeLuaSprite('speech_bubble', true)
 		removeLuaSprite("fakeMouse", true)
 		removeLuaSprite("confirmButton", true)
-		removeLuaSprite('dialogueTxtTEXT', true) --don't wanna waste memory right???
+		removeLuaText('dialogueTxtTEXT', true) --don't wanna waste memory right???
 		closeCustomSubstate()
 		inDialogue = false;
 		dialogueBool = false;
