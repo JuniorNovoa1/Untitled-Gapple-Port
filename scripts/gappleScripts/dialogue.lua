@@ -283,8 +283,6 @@ local spam = false;
 
 local canContinue = false;
 
-local prevDialogueText = "";
-
 function onUpdate(elapsed)
 	if not hasExitDialogue and inDialogue then
 		prevDialogueText = getTextString("dialogueTxtTEXT")
