@@ -194,7 +194,7 @@ function onCreatePost()
 	vol = math.floor(getPropertyFromClass('flixel.FlxG', 'sound.volume') * 10)
 
 	playAnim("gappleTransition", "start")
-	runTimer("gappleTransitionStart", 3)
+	runTimer("gappleTransitionStart", 3 / playbackRate)
 
 	makeLuaText("ratingTxt", "Sick!\n1", 0, 0.0, 64)
     setTextFont("ratingTxt", "comic.ttf")
@@ -334,7 +334,7 @@ function onEndSong()
 		updateHitbox("gappleTransition")
 		screenCenter("gappleTransition", 'xy')
 		addLuaSprite('gappleTransition', true)
-		runTimer("gappleTransitionEnd", 1)
+		runTimer("gappleTransitionEnd", 1 / playbackRate)
 		playAnim("gappleTransition", "start", true, true)
 		alreadyCreatedEnding = true;
 	end
@@ -448,7 +448,7 @@ function onUpdate(elapsed)
 		cancelTween("gappleSoundTrayExit")
 		setProperty("gappleSoundTray.x", screenWidth - 150)
 		cancelTimer("gappleSoundTrayExit")
-		runTimer("gappleSoundTrayExit", 1, 1)
+		runTimer("gappleSoundTrayExit", 1 / playbackRate)
 		playSound("clicky", 1)
     end
 	setProperty("gappleSoundTrayArrow.y", getProperty("gappleSoundTray.y") + (300 + arrowOffset - (arrowOffset * (vol + 1))))
@@ -458,7 +458,7 @@ function onUpdate(elapsed)
         alphaTimer = alphaTimer - (elapsed * playbackRate);
         if alphaTimer <= 0 then
             alphaTimer = 0;
-            doTweenAlpha("ratingTxt", "ratingTxt", 0, .5, "")
+            doTweenAlpha("ratingTxt", "ratingTxt", 0, .5 / playbackRate, "")
         end
     end
 	setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha'))
@@ -658,7 +658,7 @@ function goodNoteHit(membersIndex, direction, noteType, isSustainNote)
 	doTweenY("ratingTxtScaleY", "ratingTxt.scale", 1, .2, 'sineInOut') --it is better this way - the grinch--]]
     cancelTween("ratingTxt")
 	setProperty("ratingTxt.alpha", 1)
-    alphaTimer = 0.5 * playbackRate;
+    alphaTimer = 0.5 / playbackRate;
 
 	runHaxeCode([[
 		if(game.scoreTxtTween != null) {
@@ -666,7 +666,7 @@ function goodNoteHit(membersIndex, direction, noteType, isSustainNote)
 		}
 		game.scoreTxt.scale.x = 1.075;
 		game.scoreTxt.scale.y = 1.075;
-		game.scoreTxtTween = FlxTween.tween(game.scoreTxt.scale, {x: 1, y: 1}, 0.35, {
+		game.scoreTxtTween = FlxTween.tween(game.scoreTxt.scale, {x: 1, y: 1}, 0.35 / game.playbackRate, {
 			ease: FlxEase.backOut,
 			onComplete: function(twn) {
 				game.scoreTxtTween = null;
@@ -700,7 +700,7 @@ function noteMiss(id, direction, noteType, isSustainNote)
 	setTextString("ratingTxt", "Shit\n0")
     cancelTween("ratingTxt")
     setProperty("ratingTxt.alpha", 1)
-    alphaTimer = 0.5 * playbackRate;
+    alphaTimer = 0.5 / playbackRate;
 	noteMissedStuff(direction)
 end
 

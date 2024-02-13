@@ -14,8 +14,8 @@ function onBeatHit()
     cancelTween('iconP12SY')
     setProperty('iconP12.scale.x', 1.2)
     setProperty('iconP12.scale.y', 1.2)
-    doTweenX('iconP12SX', 'iconP12.scale', 1, 0.2)
-    doTweenY('iconP12SY', 'iconP12.scale', 1, 0.2)
+    doTweenX('iconP12SX', 'iconP12.scale', 1, 0.2 / playbackRate)
+    doTweenY('iconP12SY', 'iconP12.scale', 1, 0.2 / playbackRate)
 end
 function onUpdate()
     for i = 1, #stuff do

@@ -508,7 +508,7 @@ function transitionMenu(luaSpr)
 		});
 	]])
 	for i = 1, #storyimagePaths do
-		doTweenAlpha("fade"..i, storyimagePaths[i], 0, 1, "")
+		doTweenAlpha("fade"..i, storyimagePaths[i], 0, 1 / playbackRate, "")
 	end
 	cancelTween("fade"..curSelectedOptionUpDown)
 end
@@ -531,17 +531,17 @@ function onTransition(delay)
 	setObjectCamera("blackScreen", 'other')
 	addLuaSprite("blackScreen", false)
 	if delay ~= nil then
-		runTimer("delayBlackScreen", delay)
+		runTimer("delayBlackScreen", delay / playbackRate)
 	else
-		doTweenX("blackScreenIn", "blackScreen", 0, 0.5, "")
-		doTweenAlpha("blackScreenAlpha", "blackScreenAlpha", 1, 0.5, "")
+		doTweenX("blackScreenIn", "blackScreen", 0, 0.5 / playbackRate, "")
+		doTweenAlpha("blackScreenAlpha", "blackScreenAlpha", 1, 0.5 / playbackRate, "")
 	end
 	canChangeMenu = false;
 end
 
 function onTweenCompleted(tag)
 	if tag == "blackScreenAlpha" then
-		runTimer("loading", 1, 1)
+		runTimer("loading", 1 / playbackRate)
 	end
 	if tag == "blackScreenAlphaOut" then
 		removeLuaSprite("blackScreen", true)
@@ -551,8 +551,8 @@ end
 
 function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == "delayBlackScreen" then
-		doTweenX("blackScreenIn", "blackScreen", 0, 0.5, "")
-		doTweenAlpha("blackScreenAlpha", "blackScreenAlpha", 1, 0.5, "")
+		doTweenX("blackScreenIn", "blackScreen", 0, 0.5 / playbackRate, "")
+		doTweenAlpha("blackScreenAlpha", "blackScreenAlpha", 1, 0.5 / playbackRate, "")
 	end
 	if tag == "loading" then
 		makeLuaSprite("blackScreenAlpha", "", 0, 0)
@@ -564,8 +564,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		makeGraphic("blackScreen", 1280, 720, '000000')
 		setObjectCamera("blackScreen", 'other')
 		addLuaSprite("blackScreen", false)
-		doTweenX("blackScreenOut", "blackScreen", screenWidth, 0.5, "")
-		doTweenAlpha("blackScreenAlphaOut", "blackScreenAlpha", 0, 0.5, "")
+		doTweenX("blackScreenOut", "blackScreen", screenWidth, 0.5 / playbackRate, "")
+		doTweenAlpha("blackScreenAlphaOut", "blackScreenAlpha", 0, 0.5 / playbackRate, "")
 		changeState(nextMenu)
 		canChangeMenu = true;
 	end
@@ -581,13 +581,13 @@ function storySelect()
 	cancelTween("bamb_sign")
 	setProperty("bamb_sign.x", 1300)
 	if storySongsNew[storySongs[curSelectedOptionUpDown]] == true then
-		doTweenY("new song", "new song", 15, 1, "backOut")
+		doTweenY("new song", "new song", 15, 1 / playbackRate, "backOut")
 	end
 	if storySongsLong[storySongs[curSelectedOptionUpDown]] == true then
-		doTweenX("long_song", "long_song", 15, 1, "backOut")
+		doTweenX("long_song", "long_song", 15, 1 / playbackRate, "backOut")
 	end
 	if storySongsUpdated[storySongs[curSelectedOptionUpDown]] == true then
-		doTweenX("bamb_sign", "bamb_sign", 1065, 1, "backOut")
+		doTweenX("bamb_sign", "bamb_sign", 1065, 1 / playbackRate, "backOut")
 	end
 	playSound("scrollMenu", 1)
 	makeLuaSprite("grad", "grads/"..storySongs[curSelectedOptionUpDown], 0, 0)
@@ -805,10 +805,10 @@ function onUpdatePost()
 			nextMenu = "freeplaymenu";
 			nextFreeplayMenu = extrasSprs[curSelectedOptionUpDown];
 			onTransition(0.6)
-			doTweenX("backgroundX", "menuBG.scale", 0, 4, "")
-			doTweenY("backgroundY", "menuBG.scale", 0, 4, "")
-			doTweenX("categoryX", "category.scale", 6, 2, "")
-			doTweenY("categoryY", "category.scale", 6, 2, "")
+			doTweenX("backgroundX", "menuBG.scale", 0, 4 / playbackRate, "")
+			doTweenY("backgroundY", "menuBG.scale", 0, 4 / playbackRate, "")
+			doTweenX("categoryX", "category.scale", 6, 2 / playbackRate, "")
+			doTweenY("categoryY", "category.scale", 6, 2 / playbackRate, "")
 			canChangeMenu = false;
 		end
 		if curState == "freeplaymenu" then

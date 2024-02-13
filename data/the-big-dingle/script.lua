@@ -23,7 +23,7 @@ function onStepHit()
     end
 
     if curStep == 1120 then --party!!!!!
-        if flashingLights then cameraFlash("hud", "FFFFFF", 1.5) end
+        if flashingLights then cameraFlash("hud", "FFFFFF", 1.5 / playbackRate) end
         removeLuaSprite("sky", true)
         removeLuaSprite("city", true)
         removeLuaSprite("behindTrain", true)

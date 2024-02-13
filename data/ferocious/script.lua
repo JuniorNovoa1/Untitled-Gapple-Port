@@ -84,7 +84,7 @@ function onStepHit()
 		setProperty('BFLEGS2.visible', false)
 		setProperty('Jail.visible', true)
 
-		runTimer('dadMovingTimer', 1.45)
+		runTimer('dadMovingTimer', 1.45 / playbackRate)
 		--print('POLICE CAUGHT UR ASS!')
 	end
 
@@ -92,16 +92,16 @@ function onStepHit()
 		setProperty('IPADBG.visible', true)
 		setProperty('IPADBG.scale.x', 0)
 		setProperty('IPADBG.scale.y', 0)
-		doTweenY('IPADBG APPEAR ON SCREEN SCALE Y', 'IPADBG.scale', 2, padZoomTime, 'quadInOut')
-		doTweenX('IPADBG APPEAR ON SCREEN SCALE X', 'IPADBG.scale', 2, padZoomTime, 'quadInOut')
-		doTweenAlpha('IPADBG APPEAR ON SCREEN', 'IPADBG', 1, padZoomTime / 2, 'quadInOut')
+		doTweenY('IPADBG APPEAR ON SCREEN SCALE Y', 'IPADBG.scale', 2, padZoomTime / playbackRate, 'quadInOut')
+		doTweenX('IPADBG APPEAR ON SCREEN SCALE X', 'IPADBG.scale', 2, padZoomTime / playbackRate, 'quadInOut')
+		doTweenAlpha('IPADBG APPEAR ON SCREEN', 'IPADBG', 1, (padZoomTime / 2) / playbackRate, 'quadInOut')
 
 		setProperty('IPAD.visible', true)
 		setProperty('IPAD.scale.x', 0)
 		setProperty('IPAD.scale.y', 0)
-		doTweenY('IPAD APPEAR ON SCREEN SCALE Y', 'IPAD.scale', 2, padZoomTime, 'quadInOut')
-		doTweenX('IPAD APPEAR ON SCREEN SCALE X', 'IPAD.scale', 2, padZoomTime, 'quadInOut')
-		doTweenAlpha('IPAD APPEAR ON SCREEN', 'IPAD', 1, padZoomTime / 2, 'quadInOut')
+		doTweenY('IPAD APPEAR ON SCREEN SCALE Y', 'IPAD.scale', 2, padZoomTime / playbackRate, 'quadInOut')
+		doTweenX('IPAD APPEAR ON SCREEN SCALE X', 'IPAD.scale', 2, padZoomTime / playbackRate, 'quadInOut')
+		doTweenAlpha('IPAD APPEAR ON SCREEN', 'IPAD', 1, (padZoomTime / 2) / playbackRate, 'quadInOut')
 	end
 
 	if curStep == 3310 then
@@ -189,7 +189,7 @@ function onStepHit()
 	if curStep == 7719 then
 		setProperty('RUNBITCHSTATIC.visible', true)
 		setProperty('RUNBITCH.visible', false)
-		doTweenX('movePiano', 'dad', -3610, 1.3)
+		doTweenX('movePiano', 'dad', -3610, 1.3 / playbackRate)
 		--print('piano leaves now')
 	end
 
@@ -319,7 +319,7 @@ function onEvent(n, v1, v2)
 				--print('pedophile sprite made')
 			end
 		elseif flashingLights then
-			cameraFlash('other', 'FFFFFF', 0.35)
+			cameraFlash('other', 'FFFFFF', 0.35 / playbackRate)
 		end
 	end
 end
@@ -348,7 +348,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	end
 
 	if tag == 'dadMovingTimer' then
-		doTweenX('moveDad', 'dad', 4640, 6.5)
+		doTweenX('moveDad', 'dad', 4640, 6.5 / playbackRate)
 	end
 end
 

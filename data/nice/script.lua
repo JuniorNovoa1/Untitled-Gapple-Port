@@ -10,7 +10,7 @@ function onUpdate(elapsed)
 
     if zoomCam then
         setDataFromSave("UnNamedGapplePortSettings", 'camZoom', false)
-        doTweenZoom('camZoomGame', 'camGame', zoomCamVal, zoomCamTime, "")
+        doTweenZoom('camZoomGame', 'camGame', zoomCamVal, zoomCamTime / playbackRate, "")
     end
 end
 
@@ -18,7 +18,7 @@ local camItems = {'scoreTxt', 'creditsWatermark', 'timeTxt', 'iconP1', 'iconP2',
 
 function onStepHit()
     if curStep == 544 or curStep == 1583 or curStep == 1840 or curStep == 2096 or curStep == 2672 or curStep == 4063 or curStep == 4191 or curStep == 7824 and flashingLights then 
-        cameraFlash('other', 'FFFFFF', 1) --cam flash simulator dlc
+        cameraFlash('other', 'FFFFFF', 1 / playbackRate) --cam flash simulator dlc
     end
     if curStep == 512 then
         zoomCamVal = getProperty("defaultCamZoom") + 0.2;
@@ -85,10 +85,10 @@ function onStepHit()
             setProperty("cornBG"..i..'.visible', true)
         end
         for i = 1, #camItems do
-            doTweenAlpha("object"..i, camItems[i], 0, 1, "")
+            doTweenAlpha("object"..i, camItems[i], 0, 1 / playbackRate, "")
         end
         for i = 1, getProperty("strumLineNotes.length") do
-            noteTweenAlpha("note"..i, i, 0, 1)
+            noteTweenAlpha("note"..i, i, 0, 1 / playbackRate)
         end
         setProperty("funGames.visible", true)
     end
@@ -101,13 +101,13 @@ function onStepHit()
             setProperty(camItems[i]..'.alpha', 1)
         end
         for i = 1, getProperty("strumLineNotes.length") do
-            noteTweenAlpha("note"..i, i, 1, 0.01)
+            noteTweenAlpha("note"..i, i, 1, 0.01 / playbackRate)
         end
         removeLuaSprite("funGames", true)
     end
 
     if curStep == 5023 then
-        doTweenAlpha("bambi", "bambiCutscene", 1, 0.2, "")
+        doTweenAlpha("bambi", "bambiCutscene", 1, 0.2 / playbackRate, "")
         playAnim("bambiCutscene", "grr")
     end
 
@@ -117,7 +117,7 @@ function onStepHit()
     end
 
     if curStep == 5071 then
-        doTweenAlpha("bf", "bfCutscene", 0, 0.2, "")
+        doTweenAlpha("bf", "bfCutscene", 0, 0.2 / playbackRate, "")
         zoomCamVal = getProperty("defaultCamZoom") + 0.3;
         zoomCam = true;
     end
@@ -143,9 +143,9 @@ function onStepHit()
 
     if curStep == 5791 then
         zoomCam = false;
-        doTweenY("phone", "phone", -150, 0.8, "")
+        doTweenY("phone", "phone", -150, 0.8 / playbackRate, "")
         for i = 0, getProperty("strumLineNotes.length") do
-            noteTweenAlpha("notes"..i, i, 0, 0.8, "")
+            noteTweenAlpha("notes"..i, i, 0, 0.8 / playbackRate, "")
         end
     end
 
@@ -156,7 +156,7 @@ function onStepHit()
             setPropertyFromGroup("playerStrums", i, 'x', getPropertyFromGroup("playerStrums", i, 'x') - 275)
             setPropertyFromGroup("playerStrums", i, 'y', getPropertyFromGroup("playerStrums", i, 'y') + 135)
             if downscroll then setPropertyFromGroup("playerStrums", i, 'y', getPropertyFromGroup("playerStrums", i, 'y') - (215 + 135)) end
-            noteTweenAlpha("note"..i, 4 + i, 1, 0.5 * (i + 1), "")
+            noteTweenAlpha("note"..i, 4 + i, 1, (0.5 * (i + 1)) / playbackRate, "")
         end
 
         --[[for i = 0, getProperty("unspawnNotes.length") do
@@ -167,7 +167,7 @@ function onStepHit()
     end
 
     if curStep == 6447 then
-        doTweenY("phoneExit", "phone", 600, 0.4, "")
+        doTweenY("phoneExit", "phone", 600, 0.4 / playbackRate, "")
         changeNoteSkin(false, 'NOTE_assets')
         for i = 0, getProperty("strumLineNotes.length") do
             setPropertyFromGroup("strumLineNotes", i, 'alpha', 1)
@@ -185,7 +185,7 @@ function onStepHit()
         setProperty("errung.x", getProperty("dad.x") -1000)
         setProperty("errung.y", getProperty("dad.y") + 50)
         setProperty("errung.visible", true)
-        doTweenX('errung', 'errung', getProperty("dad.x") - 100, 0.5)
+        doTweenX('errung', 'errung', getProperty("dad.x") - 100, 0.5 / playbackRate)
     end
 
     if curStep == 7824 then
@@ -196,7 +196,7 @@ end
 function onEvent(eventName, value1, value2)
 	if eventName == 'Change Character' then
 		if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
 	end
 end
@@ -205,16 +205,16 @@ function onTweenCompleted(tag)
     if tag == 'bf' then removeLuaSprite("bfCutscene", true) end
     if tag == 'phoneExit' then removeLuaSprite("phone", true) end
     if tag == 'errung' then
-        cameraFlash('other', 'FFFFFF', 1) --cam flash simulator dlc
+        cameraFlash('other', 'FFFFFF', 1 / playbackRate) --cam flash simulator dlc
         playAnim("errung", 'scare', true, false, 0)
         playAnim("dad", "scare", true, false, 0)
-        runTimer("badRum", 1, 1)
+        runTimer("badRum", 1 / playbackRate)
     end
 end
 
 function onTimerCompleted(tag, loops, loopsLeft) 
     if tag == 'badRum' then 
-        doTweenX('dad', 'dad', getProperty("dad.x") + 3000, 1)
+        doTweenX('dad', 'dad', getProperty("dad.x") + 3000, 1 / playbackRate)
         playAnim("dad", "run", false, false, 0)
         setProperty("errung.holdTimer", 0)
         runHaxeCode([[

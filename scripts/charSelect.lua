@@ -163,7 +163,7 @@ function createChar()
 	setObjectOrder("char", getObjectOrder("screenTrans") - 2)
 	setObjectOrder("charIcon", getObjectOrder("screenTrans") - 2)
 
-	runTimer("charDance", 1)
+	runTimer("charDance", 1 / playbackRate)
 end
 
 local hasExitCharSelect = false;
@@ -227,9 +227,9 @@ function triggerKeyThingy(key)
 		playSound('confirmMenu', 1)
 		setSoundVolume("charSelectSound", 0)
 		if flashingLights then
-			cameraFlash("hud", "FFFFFF", 1)
+			cameraFlash("hud", "FFFFFF", 1 / playbackRate)
 		end
-		runTimer("soundchar", 1.6)
+		runTimer("soundchar", 1.6 / playbackRate)
 		
 		confirmed = true;
 		removeLuaSprite("changeLeft", true)
@@ -271,16 +271,16 @@ end
 function onTimerCompleted(tag)
 	if tag == 'charDance' and not confirmed then
 		runHaxeCode([[game.getLuaObject('char', false).dance();]])
-		runTimer("charDance", 1)
+		runTimer("charDance", 1 / playbackRate)
 	end
 
 	if tag == 'soundchar' then
 		setProperty("screenTrans.x", -screenWidth)
-		doTweenX("screenTransOut", "screenTrans", 0, tweenArg1, tweenArg2)
+		doTweenX("screenTransOut", "screenTrans", 0, tweenArg1 / playbackRate, tweenArg2)
 	end
 
 	if tag == 'soundchar2' then
-		doTweenX("screenTransFinale", "screenTrans", screenWidth, tweenArg1, tweenArg2)
+		doTweenX("screenTransFinale", "screenTrans", screenWidth, tweenArg1 / playbackRate, tweenArg2)
 		removeLuaSprite("mineBGcharSelect", true)
 		removeLuaSprite("charSelectGuide", true)
 		removeLuaText("charTxt", true)
@@ -291,7 +291,7 @@ end
 
 function onTweenCompleted(tag)
 	if tag == 'screenTransOut' then
-		runTimer("soundchar2", 1)
+		runTimer("soundchar2", 1 / playbackRate)
 	end
 
 	if tag == 'screenTransFinale' then

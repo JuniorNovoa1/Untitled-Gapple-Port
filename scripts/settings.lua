@@ -103,8 +103,8 @@ function onUpdate()
     end
     if stringStartsWith(version, '0.6') then
         local duration = crochet / 1050 * getProperty('gfSpeed');
-        doTweenZoom('camZoomGame', 'camGame', getProperty('defaultCamZoom'), duration, 'sineOut')
-        doTweenZoom('camZoomHUD', 'camHUD', 1, duration, 'sineOut')
+        doTweenZoom('camZoomGame', 'camGame', getProperty('defaultCamZoom'), duration / playbackRate, 'sineOut')
+        doTweenZoom('camZoomHUD', 'camHUD', 1, duration / playbackRate, 'sineOut')
     else
         setProperty('camZooming', true)
     end

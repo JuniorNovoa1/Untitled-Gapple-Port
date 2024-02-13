@@ -16,7 +16,7 @@ function onStepHit()
         setProperty('mineBG.visible', true)
         setProperty('defaultCamZoom', getProperty('defaultCamZoom') - (zoomInAmount / 2))
         if flashingLights then
-			cameraFlash('hud', 'FFFFFF', 1.5)
+			cameraFlash('hud', 'FFFFFF', 1.5 / playbackRate)
 		end
     end
 

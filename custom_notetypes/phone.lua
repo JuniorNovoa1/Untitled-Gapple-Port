@@ -34,7 +34,7 @@ function noteMiss(id, direction, noteType, isSustainNote)
 		playAnim('boyfriend', 'hit', true)
 		cancelTween('TWEEN NOTE '..direction) --don't crash please
 		setPropertyFromGroup('playerStrums', direction, 'alpha', 0) --instant
-		noteTweenAlpha('TWEEN NOTE '..direction, 4 + direction, 1, 7, 'expoIn')
+		noteTweenAlpha('TWEEN NOTE '..direction, 4 + direction, 1, 7 / playbackRate, 'expoIn')
 	end
 end
 

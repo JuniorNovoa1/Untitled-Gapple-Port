@@ -36,37 +36,37 @@ function onStepHit()
     if curStep == 64 then
         setProperty('defaultCamZoom', 0.65)
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
     end
 
     if curStep == 326 then
         setProperty('defaultCamZoom', 0.95)
-        doTweenY('blackBarUP', 'blackBarUP', 0, 1, 'sineInOut')
-        doTweenY('blackBarDOWN', 'blackBarDOWN', 600, 1, 'sineInOut')
+        doTweenY('blackBarUP', 'blackBarUP', 0, 1 / playbackRate, 'sineInOut')
+        doTweenY('blackBarDOWN', 'blackBarDOWN', 600, 1 / playbackRate, 'sineInOut')
         for i = 1, #camObjs do
-            doTweenAlpha('invisObj2'..i, camObjs[i], 0, 1, 'sineOut')
+            doTweenAlpha('invisObj2'..i, camObjs[i], 0, 1 / playbackRate, 'sineOut')
         end
         for i = 1, #invisObjs do
-            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1, 'sineOut')
+            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1 / playbackRate, 'sineOut')
         end
     end
 
     if curStep == 442 then
-        doTweenY('blackBarUP', 'blackBarUP', -220, 0.5, 'sineInOut')
-        doTweenY('blackBarDOWN', 'blackBarDOWN', 720, 0.5, 'sineInOut')
+        doTweenY('blackBarUP', 'blackBarUP', -220, 0.5 / playbackRate, 'sineInOut')
+        doTweenY('blackBarDOWN', 'blackBarDOWN', 720, 0.5 / playbackRate, 'sineInOut')
     end
 
     if curStep == 448 then
         for i = 1, #camObjs do
-            doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.0001, 'sineOut')
+            doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.0001 / playbackRate, 'sineOut')
         end
         for i = 1, #invisObjs do
-            doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.0001, 'sineOut')
+            doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.0001 / playbackRate, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.65)
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
     end
 
@@ -75,106 +75,106 @@ function onStepHit()
     end
 
     if curStep == 576 then
-        doTweenY('blackBarUP', 'blackBarUP', 0, 0.5, 'sineInOut')
-        doTweenY('blackBarDOWN', 'blackBarDOWN', 600, 0.5, 'sineInOut')
+        doTweenY('blackBarUP', 'blackBarUP', 0, 0.5 / playbackRate, 'sineInOut')
+        doTweenY('blackBarDOWN', 'blackBarDOWN', 600, 0.5 / playbackRate, 'sineInOut')
         for i = 1, #camObjs do
-            doTweenAlpha('invisObj2'..i, camObjs[i], 0, 1, 'sineOut')
+            doTweenAlpha('invisObj2'..i, camObjs[i], 0, 1 / playbackRate, 'sineOut')
         end
         for i = 1, #invisObjs do
-            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1, 'sineOut')
+            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1 / playbackRate, 'sineOut')
         end
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
     end
 
     if curStep == 832 then
-        doTweenY('blackBarUP', 'blackBarUP', -220, 0.0001, 'sineInOut')
-        doTweenY('blackBarDOWN', 'blackBarDOWN', 720, 0.0001, 'sineInOut')
+        doTweenY('blackBarUP', 'blackBarUP', -220, 0.0001 / playbackRate, 'sineInOut')
+        doTweenY('blackBarDOWN', 'blackBarDOWN', 720, 0.0001 / playbackRate, 'sineInOut')
         for i = 1, #camObjs do
-            doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.0001, 'sineOut')
+            doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.0001 / playbackRate, 'sineOut')
         end
         for i = 1, #invisObjs do
-            doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.0001, 'sineOut')
+            doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.0001 / playbackRate, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.65)
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
     end
 
     if curStep == 1093 then
-        doTweenY('blackBarUP', 'blackBarUP', 0, 0.5, 'sineInOut')
-        doTweenY('blackBarDOWN', 'blackBarDOWN', 600, 0.5, 'sineInOut')
+        doTweenY('blackBarUP', 'blackBarUP', 0, 0.5 / playbackRate, 'sineInOut')
+        doTweenY('blackBarDOWN', 'blackBarDOWN', 600, 0.5 / playbackRate, 'sineInOut')
         for i = 1, #camObjs do
-            doTweenAlpha('invisObj2'..i, camObjs[i], 0, 1, 'sineOut')
+            doTweenAlpha('invisObj2'..i, camObjs[i], 0, 1 / playbackRate, 'sineOut')
         end
         for i = 1, #invisObjs do
-            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1, 'sineOut')
+            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1 / playbackRate, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.95)
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
     end
 
     if curStep == 1184 then
-        doTweenY('blackBarUP', 'blackBarUP', -220, 0.7, 'sineInOut')
-        doTweenY('blackBarDOWN', 'blackBarDOWN', 720, 0.7, 'sineInOut')
+        doTweenY('blackBarUP', 'blackBarUP', -220, 0.7 / playbackRate, 'sineInOut')
+        doTweenY('blackBarDOWN', 'blackBarDOWN', 720, 0.7 / playbackRate, 'sineInOut')
         for i = 1, #camObjs do
-            doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.8, 'sineOut')
+            doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.8 / playbackRate, 'sineOut')
         end
         for i = 1, #invisObjs do
-            doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.8, 'sineOut')
+            doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.8 / playbackRate, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.65)
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
     end
 
     if curStep == 1179 then
-        doTweenAngle('badaiInFrameAngle', 'badaiComes', 0, 0.8, 'sineOut')
-        doTweenX('badaiInFrameX', 'badaiComes', getProperty('dad.x') -500, 0.8, 'sineOut')
-        doTweenY('badaiInFrameY', 'badaiComes', getProperty('dad.y') -200, 0.8, 'sineOut')
+        doTweenAngle('badaiInFrameAngle', 'badaiComes', 0, 0.8 / playbackRate, 'sineOut')
+        doTweenX('badaiInFrameX', 'badaiComes', getProperty('dad.x') -500, 0.8 / playbackRate, 'sineOut')
+        doTweenY('badaiInFrameY', 'badaiComes', getProperty('dad.y') -200, 0.8 / playbackRate, 'sineOut')
         setProperty('badaiComes.visible', true)
     end
 
     if curStep == 1600 then
-        doTweenY('blackBarUP', 'blackBarUP', 0, 1, 'sineInOut')
-        doTweenY('blackBarDOWN', 'blackBarDOWN', 600, 1, 'sineInOut')
+        doTweenY('blackBarUP', 'blackBarUP', 0, 1 / playbackRate, 'sineInOut')
+        doTweenY('blackBarDOWN', 'blackBarDOWN', 600, 1 / playbackRate, 'sineInOut')
         for i = 1, #camObjs do
-            doTweenAlpha('invisObj2'..i, camObjs[i], 0, 1, 'sineOut')
+            doTweenAlpha('invisObj2'..i, camObjs[i], 0, 1 / playbackRate, 'sineOut')
         end
         for i = 1, #invisObjs do
-            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1, 'sineOut')
+            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1 / playbackRate, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.95)
     end
 
     if curStep == 1631 then
-        doTweenY('blackBarUP', 'blackBarUP', -220, 0.7, 'sineInOut')
-        doTweenY('blackBarDOWN', 'blackBarDOWN', 720, 0.7, 'sineInOut')
+        doTweenY('blackBarUP', 'blackBarUP', -220, 0.7 / playbackRate, 'sineInOut')
+        doTweenY('blackBarDOWN', 'blackBarDOWN', 720, 0.7 / playbackRate, 'sineInOut')
         for i = 1, #camObjs do
-            doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.8, 'sineOut')
+            doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.8 / playbackRate, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.65)
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
     end
 
     if curStep == 2143 then
-        doTweenY('blackBarUP', 'blackBarUP', 0, 0.7, 'sineInOut')
-        doTweenY('blackBarDOWN', 'blackBarDOWN', 600, 0.7, 'sineInOut')
+        doTweenY('blackBarUP', 'blackBarUP', 0, 0.7 / playbackRate, 'sineInOut')
+        doTweenY('blackBarDOWN', 'blackBarDOWN', 600, 0.7 / playbackRate, 'sineInOut')
         for i = 1, #camObjs do
-            doTweenAlpha('invisObj2'..i, camObjs[i], 0, 0.8, 'sineOut')
+            doTweenAlpha('invisObj2'..i, camObjs[i], 0, 0.8 / playbackRate, 'sineOut')
         end
         setProperty('defaultCamZoom', 0.95)
     end
 
     if curStep == 2153 then
-        cameraFlash('other', 'FFFFFF', 1)
+        cameraFlash('other', 'FFFFFF', 1 / playbackRate)
     end
 
     if curStep == 2285 and flashingLights then
@@ -182,16 +182,16 @@ function onStepHit()
     end
 
     if curStep == 2288 then
-        doTweenY('blackBarUP', 'blackBarUP', -220, 0.7, 'sineInOut')
-        doTweenY('blackBarDOWN', 'blackBarDOWN', 720, 0.7, 'sineInOut')
+        doTweenY('blackBarUP', 'blackBarUP', -220, 0.7 / playbackRate, 'sineInOut')
+        doTweenY('blackBarDOWN', 'blackBarDOWN', 720, 0.7 / playbackRate, 'sineInOut')
         for i = 1, #camObjs do
-            doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.8, 'sineOut')
+            doTweenAlpha('invisObj2'..i, camObjs[i], 1, 0.8 / playbackRate, 'sineOut')
         end
         for i = 1, #invisObjs do
-            doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.8, 'sineOut')
+            doTweenAlpha('invisObj'..i, invisObjs[i], 1, 0.8 / playbackRate, 'sineOut')
         end
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
     end
 
@@ -208,9 +208,9 @@ function onStepHit()
         setProperty('badaiComes.x', getProperty('dad.x'))
         setProperty('badaiComes.y', getProperty('dad.y'))
         setProperty('badaiComes.angle', getProperty('dad.angle'))
-        doTweenAngle('badaiInFrameAngle', 'badaiComes', 24, 1, 'sineOut')
-        doTweenX('badaiInFrameX2', 'badaiComes', 1000, 1, 'sineOut')
-        doTweenY('badaiInFrameY2', 'badaiComes', 1000, 1, 'sineOut')
+        doTweenAngle('badaiInFrameAngle', 'badaiComes', 24, 1 / playbackRate, 'sineOut')
+        doTweenX('badaiInFrameX2', 'badaiComes', 1000, 1 / playbackRate, 'sineOut')
+        doTweenY('badaiInFrameY2', 'badaiComes', 1000, 1 / playbackRate, 'sineOut')
         setProperty('badaiComes.visible', true)
         cancelTween('DAVESAN')
         cancelTween('DAVESA')
@@ -219,12 +219,12 @@ function onStepHit()
         triggerEvent('Change Character', 'dad', 'tunnel-dave')
         setProperty('creditsText.text', '')
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
     end
 
     if curStep == 2671 then --BF IS EXAPNOGI
-        doTweenAlpha('guh', 'lightColor', 1, 12.5, 'cubeInOut')
+        doTweenAlpha('guh', 'lightColor', 1, 12.5 / playbackRate, 'cubeInOut')
     end
     if curStep >= 2680 and getGlobalFromScript("UnNamedGapplePortSettings", 'screenshake', true) then
         triggerEvent('Screen Shake', '0.1,'..getProperty('lightColor.alpha') * 0.0085, '0.1,'..getProperty('lightColor.alpha') * 0.0085)
@@ -234,7 +234,7 @@ end
 function onBeatHit()
     if curStep >= 1605 and curStep <= 1630 then
         for i = 1, #invisObjs do
-            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1, 'sineOut')
+            doTweenAlpha('invisObj'..i, invisObjs[i], 0, 1 / playbackRate, 'sineOut')
         end
     end
     if curStep >= 1630 and curStep <= 2143 then
@@ -267,7 +267,7 @@ end
 function onTweenCompleted(tag)
     if tag == 'badaiInFrameY' then
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
         triggerEvent('Change Character', 'dad', 'badai')
         setProperty('dad.x', getProperty('badaiComes.x'))
@@ -276,13 +276,13 @@ function onTweenCompleted(tag)
         setProperty('badaiComes.visible', false)
         setProperty('creditsText.text', 'Screw you!')
         --removeLuaSprite('badaiComes', true)
-        doTweenY('davefuckinggoesup', 'daveFuckingDies', -125, 2.5, 'cubeInOut')
+        doTweenY('davefuckinggoesup', 'daveFuckingDies', -125, 2.5 / playbackRate, 'cubeInOut')
     end
 
     if tag == 'davefuckinggoesup' then
-        doTweenAngle('DAVESAN', 'daveFuckingDies', 30, 6 * 0.85, 'sineInOut')
-        doTweenX('DAVESA', 'daveFuckingDies', getProperty('redTunnel.x') + 100, 6, 'sineInOut')
-        doTweenY('DAVESF', 'daveFuckingDies', getProperty('redTunnel.y') + 100, 6, 'sineInOut')
+        doTweenAngle('DAVESAN', 'daveFuckingDies', 30, (6 * 0.85) / playbackRate, 'sineInOut')
+        doTweenX('DAVESA', 'daveFuckingDies', getProperty('redTunnel.x') + 100, 6 / playbackRate, 'sineInOut')
+        doTweenY('DAVESF', 'daveFuckingDies', getProperty('redTunnel.y') + 100, 6 / playbackRate, 'sineInOut')
     end
 
     if tag == 'dave COMIN' then
@@ -292,7 +292,8 @@ function onTweenCompleted(tag)
         removeLuaSprite('daveFuckingDies', true)
         triggerEvent('Change Character', 'dad', 'tunnel-dave')
         if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
+            cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
     end
 

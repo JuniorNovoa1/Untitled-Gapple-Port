@@ -16,24 +16,24 @@ end
 
 function onStepHit()
     if curStep == 64 then
-        doTweenAlpha('darknessFade', 'poop', 0, 2, 'sineInOut')
+        doTweenAlpha('darknessFade', 'poop', 0, 2 / playbackRate, 'sineInOut')
         setProperty('defaultCamZoom', 1)
         if flashingLights then
-			cameraFlash('hud', 'FFFFFF', 1.5)
+			cameraFlash('hud', 'FFFFFF', 1.5 / playbackRate)
 		end
     end
 
     if curStep == 192 then
         setProperty('defaultCamZoom', 0.6)
         if flashingLights then
-			cameraFlash('hud', 'FFFFFF', 1.5)
+			cameraFlash('hud', 'FFFFFF', 1.5 / playbackRate)
 		end
     end
 
     if curStep == 384 then
         setProperty('spoarFolk.visible', true)
         if flashingLights then
-			cameraFlash('hud', 'FFFFFF', 1.5)
+			cameraFlash('hud', 'FFFFFF', 1.5 / playbackRate)
 		end
     end
 
@@ -44,18 +44,18 @@ function onStepHit()
     if curStep == 640 then
         setProperty('gf.visible', false)
         setProperty('spoarFolk.visible', false)
-        doTweenAlpha('darknessFade', 'poop', 0.6, 2, 'sineInOut')
+        doTweenAlpha('darknessFade', 'poop', 0.6, 2 / playbackRate, 'sineInOut')
         setProperty('defaultCamZoom', 1.4)
         if flashingLights then
-			cameraFlash('hud', 'FFFFFF', 1.5)
+			cameraFlash('hud', 'FFFFFF', 1.5 / playbackRate)
 		end
     end
 
     if curStep == 704 then
-        doTweenAlpha('darknessFade', 'poop', 0, 2, 'sineInOut')
+        doTweenAlpha('darknessFade', 'poop', 0, 2 / playbackRate, 'sineInOut')
         setProperty('defaultCamZoom', 1)
         if flashingLights then
-			cameraFlash('hud', 'FFFFFF', 1.5)
+			cameraFlash('hud', 'FFFFFF', 1.5 / playbackRate)
 		end
     end
 
@@ -69,7 +69,7 @@ function onStepHit()
         setProperty('boyfriend.visible', true)
         setProperty('defaultCamZoom', 0.6)
         if flashingLights then
-			cameraFlash('hud', 'FFFFFF', 1.5)
+			cameraFlash('hud', 'FFFFFF', 1.5 / playbackRate)
 		end
     end
 end
@@ -86,7 +86,7 @@ function onEvent(tag, val1, val2)
         setProperty('defaultCamZoom', 1)
         setProperty('boyfriend.visible', false)
         if flashingLights then
-			cameraFlash('hud', 'FFFFFF', 1.5)
+			cameraFlash('hud', 'FFFFFF', 1.5 / playbackRate)
 		end
     end
 end

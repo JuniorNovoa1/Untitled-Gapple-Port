@@ -37,8 +37,8 @@ function onCreatePost()
 		for i = 1, #keys do
 			xOldBF = getPropertyFromGroup('playerStrums', i-1, 'x');
 			xOldDAD = getPropertyFromGroup('opponentStrums', i-1, 'x')
-			noteTweenAlpha('DASTRUM'..i, 3+i, 0.35, 3, 'cubeInOut')
-			noteTweenAlpha('DASTRUMBF'..i, i-1, 1, 3, 'cubeInOut')
+			noteTweenAlpha('DASTRUM'..i, 3+i, 0.35, 3 / playbackRate, 'cubeInOut')
+			noteTweenAlpha('DASTRUMBF'..i, i-1, 1, 3 / playbackRate, 'cubeInOut')
 			setPropertyFromGroup('playerStrums', i-1, 'x', xOldDAD)
 			setPropertyFromGroup('opponentStrums', i-1, 'x', xOldBF)
 		end

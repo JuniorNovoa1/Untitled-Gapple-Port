@@ -116,10 +116,10 @@ function onCreate()
         scaleObject(items2[i]..'1', 0.675, 0.675)
         addLuaSprite(items2[i]..'1', false)
 
-        doTweenX(items2[i]..'first', items2[i], getRandomInt(0, 500), time, tweenType)
-        doTweenY(items2[i]..'first1', items2[i], getRandomInt(-150, 1750), time, tweenType)
-        doTweenX(items2[i]..'first11', items2[i]..'1', getRandomInt(0, 500), time, tweenType)
-        doTweenY(items2[i]..'first111', items2[i]..'1', getRandomInt(-150, 1750), time, tweenType)
+        doTweenX(items2[i]..'first', items2[i], getRandomInt(0, 500), time / playbackRate, tweenType)
+        doTweenY(items2[i]..'first1', items2[i], getRandomInt(-150, 1750), time / playbackRate, tweenType)
+        doTweenX(items2[i]..'first11', items2[i]..'1', getRandomInt(0, 500), time / playbackRate, tweenType)
+        doTweenY(items2[i]..'first111', items2[i]..'1', getRandomInt(-150, 1750), time / playbackRate, tweenType)
     end
 
     for i = 1, #items3 do
@@ -141,10 +141,10 @@ function onCreate()
         scaleObject(items3[i]..'1', 0.725, 0.725)
         addLuaSprite(items3[i]..'1', false)
 
-        doTweenX(items3[i]..'first', items3[i], getRandomInt(0, 500), time, tweenType)
-        doTweenY(items3[i]..'first1', items3[i], getRandomInt(heightStuff[1], heightStuff[2]), time, tweenType)
-        doTweenX(items3[i]..'first11', items3[i]..'1', getRandomInt(0, 500), time, tweenType)
-        doTweenY(items3[i]..'first111', items3[i]..'1', getRandomInt(heightStuff[1], heightStuff[2]), time, tweenType)
+        doTweenX(items3[i]..'first', items3[i], getRandomInt(0, 500), time / playbackRate, tweenType)
+        doTweenY(items3[i]..'first1', items3[i], getRandomInt(heightStuff[1], heightStuff[2]), time / playbackRate, tweenType)
+        doTweenX(items3[i]..'first11', items3[i]..'1', getRandomInt(0, 500), time / playbackRate, tweenType)
+        doTweenY(items3[i]..'first111', items3[i]..'1', getRandomInt(heightStuff[1], heightStuff[2]), time / playbackRate, tweenType)
     end
 
     setProperty('hi.visible', true)
@@ -161,11 +161,11 @@ end
 function onTweenCompleted(tag)
     for i = 1, #items2 do
         if tag == items2[i]..'first111' then
-            doTweenX(items2[i]..'second', items2[i], 3000, time, tweenType)
-            doTweenY(items2[i]..'second1', items2[i], getRandomInt(-150, 1750), time, tweenType)
-            doTweenX(items2[i]..'second11', items2[i]..'1', 3000, time, tweenType)
-            doTweenY(items2[i]..'second111', items2[i]..'1', getRandomInt(-150, 1750), time, tweenType)
-            runTimer('time', getRandomFloat(timeTimer[1], timeTimer[2]))
+            doTweenX(items2[i]..'second', items2[i], 3000, time / playbackRate, tweenType)
+            doTweenY(items2[i]..'second1', items2[i], getRandomInt(-150, 1750), time / playbackRate, tweenType)
+            doTweenX(items2[i]..'second11', items2[i]..'1', 3000, time / playbackRate, tweenType)
+            doTweenY(items2[i]..'second111', items2[i]..'1', getRandomInt(-150, 1750), time / playbackRate, tweenType)
+            runTimer('time', getRandomFloat(timeTimer[1], timeTimer[2]) / playbackRate)
         end
 
         if tag == items2[i]..'second111' then
@@ -178,11 +178,11 @@ function onTweenCompleted(tag)
 
     for i = 1, #items3 do
         if tag == items3[i]..'first111' then
-            doTweenX(items3[i]..'second', items3[i], 3000, time, tweenType)
-            doTweenY(items3[i]..'second1', items3[i], getRandomInt(heightStuff[1], heightStuff[2]), time, tweenType)
-            doTweenX(items3[i]..'second11', items3[i]..'1', 3000, time, tweenType)
-            doTweenY(items3[i]..'second111', items3[i]..'1', getRandomInt(heightStuff[1], heightStuff[2]), time, tweenType)
-            runTimer('time2', getRandomFloat(timeTimer[1], timeTimer[2]))
+            doTweenX(items3[i]..'second', items3[i], 3000, time / playbackRate, tweenType)
+            doTweenY(items3[i]..'second1', items3[i], getRandomInt(heightStuff[1], heightStuff[2]), time / playbackRate, tweenType)
+            doTweenX(items3[i]..'second11', items3[i]..'1', 3000, time / playbackRate, tweenType)
+            doTweenY(items3[i]..'second111', items3[i]..'1', getRandomInt(heightStuff[1], heightStuff[2]), time / playbackRate, tweenType)
+            runTimer('time2', getRandomFloat(timeTimer[1], timeTimer[2]) / playbackRate)
         end
 
         if tag == items3[i]..'second111' then
@@ -200,19 +200,19 @@ end
 function onTimerCompleted(tag)
     if tag == 'time' then
         for i = 1, #items2 do
-            doTweenX(items2[i]..'first', items2[i], getRandomInt(0, 750), time, tweenType)
-            doTweenY(items2[i]..'first1', items2[i], getRandomInt(-250, 750), time, tweenType)
-            doTweenX(items2[i]..'first11', items2[i]..'1', getRandomInt(0, 750), time, tweenType)
-            doTweenY(items2[i]..'first111', items2[i]..'1', getRandomInt(-250, 500), time, tweenType)
+            doTweenX(items2[i]..'first', items2[i], getRandomInt(0, 750), time / playbackRate, tweenType)
+            doTweenY(items2[i]..'first1', items2[i], getRandomInt(-250, 750), time / playbackRate, tweenType)
+            doTweenX(items2[i]..'first11', items2[i]..'1', getRandomInt(0, 750), time / playbackRate, tweenType)
+            doTweenY(items2[i]..'first111', items2[i]..'1', getRandomInt(-250, 500), time / playbackRate, tweenType)
         end
     end
 
     if tag == 'time2' then
         for i = 1, #items3 do
-            doTweenX(items3[i]..'first', items3[i], getRandomInt(0, 750), time, tweenType)
-            doTweenY(items3[i]..'first1', items3[i], getRandomInt(-250, 750), time, tweenType)
-            doTweenX(items3[i]..'first11', items3[i]..'1', getRandomInt(0, 750), time, tweenType)
-            doTweenY(items3[i]..'first111', items3[i]..'1', getRandomInt(-250, 500), time, tweenType)
+            doTweenX(items3[i]..'first', items3[i], getRandomInt(0, 750), time / playbackRate, tweenType)
+            doTweenY(items3[i]..'first1', items3[i], getRandomInt(-250, 750), time / playbackRate, tweenType)
+            doTweenX(items3[i]..'first11', items3[i]..'1', getRandomInt(0, 750), time / playbackRate, tweenType)
+            doTweenY(items3[i]..'first111', items3[i]..'1', getRandomInt(-250, 500), time / playbackRate, tweenType)
         end
     end
 end

@@ -20,7 +20,7 @@ local camZoomA = 1;
 function onUpdate(elapsed)
     if lockCam then
         setDataFromSave("UnNamedGapplePortSettings", 'camZoom', false)
-        doTweenZoom('camZoomGame', 'camGame', camZoomA, 0.1, "sineInOut")
+        doTweenZoom('camZoomGame', 'camGame', camZoomA, 0.1 / playbackRate, "sineInOut")
     else
         setDataFromSave("UnNamedGapplePortSettings", 'camZoom', true)
     end
@@ -30,7 +30,7 @@ function onUpdate(elapsed)
 end
 
 function onStepHit()
-    if curStep == 382 or curStep == 1808 or curStep == 2064 and flashingLights then cameraFlash("other", "FFFFFF", 1.5) end --390
+    if curStep == 382 or curStep == 1808 or curStep == 2064 and flashingLights then cameraFlash('other', 'FFFFFF', 1.5 / playbackRate) end --390
     if curStep == 1680 then
         playAnim("dad", "look")
         setProperty("dad.skipDance", true)
@@ -57,11 +57,11 @@ function onStepHit()
 
     if curStep == 1808 then --1808
         lockCam = false;
-        if flashingLights then cameraFlash("hud", "FFFFFF", 1) end
+        if flashingLights then cameraFlash("hud", "FFFFFF", 1 / playbackRate) end
         setDataFromSave("UnNamedGapplePortSettings", "canFloat", false)
-        doTweenY("dambu", "badai", 150, 1.5, "sineOut")
-        doTweenX("dadFloaty", "dad", -675, 1.5, "sineOut")
-        doTweenY("dadFloatyY", "dad", 75, 1.5, "sineOut")
+        doTweenY("dambu", "badai", 150, 1.5 / playbackRate, "sineOut")
+        doTweenX("dadFloaty", "dad", -675, 1.5 / playbackRate, "sineOut")
+        doTweenY("dadFloatyY", "dad", 75, 1.5 / playbackRate, "sineOut")
         setProperty("dad.healthColorArray[0]", getProperty("badai.healthColorArray[0]"))
         setProperty("dad.healthColorArray[1]", getProperty("badai.healthColorArray[1]"))
         setProperty("dad.healthColorArray[2]", getProperty("badai.healthColorArray[2]"))

@@ -18,17 +18,17 @@ function onStepHit()
 
     if curStep == 815 then
         removeLuaSprite("discordAnimated", true)
-        if flashingLights then cameraFlash("hud", "FFFFFF", 1) end
+        if flashingLights then cameraFlash("hud", "FFFFFF", 1 / playbackRate) end
     end
 
     if curStep == 1248 then
         setProperty("defaultCamZoom", 0.9)
         removeLuaSprite("discordBG", true)
         removeLuaSprite("discord", true)
-        if flashingLights then cameraFlash("hud", "FFFFFF", 1) end
+        if flashingLights then cameraFlash("hud", "FFFFFF", 1 / playbackRate) end
     end
 
-    if curStep == 1664 and flashingLights then cameraFlash("hud", "FFFFFF", 1) end
+    if curStep == 1664 and flashingLights then cameraFlash("hud", "FFFFFF", 1 / playbackRate) end
 
     if curStep == 2751 then
         makeLuaSprite("discordBG", "extras/scratches/disc-2", -20.5, -320.5)
@@ -38,7 +38,7 @@ function onStepHit()
         setProperty("defaultCamZoom", 1.5)
         setProperty("dad.y", -305)
     
-        cameraFlash("hud", "FFFFFF", 1)
+        cameraFlash("hud", "FFFFFF", 1 / playbackRate)
     end
 
     if curStep == 3295 then
@@ -48,14 +48,14 @@ function onStepHit()
         addLuaSprite("discord", true)
         setProperty("dad.y", 0)
     
-        cameraFlash("hud", "FFFFFF", 1)
+        cameraFlash("hud", "FFFFFF", 1 / playbackRate)
     end
 
     if curStep == 3840 then
         setProperty("defaultCamZoom", 0.9)
         removeLuaSprite("discordBG", true)
         removeLuaSprite("discord", true)
-        if flashingLights then cameraFlash("hud", "FFFFFF", 1) end
+        if flashingLights then cameraFlash("hud", "FFFFFF", 1 / playbackRate) end
     end
 end
 

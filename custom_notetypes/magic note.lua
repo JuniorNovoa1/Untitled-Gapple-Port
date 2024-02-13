@@ -17,7 +17,7 @@ function goodNoteHit(id, noteData, noteType, isSustainNote)
 
         cancelTween('angle game');
         cancelTween('angle hud');
-        doTweenAngle('angle game', 'camGame', 0, 9, 'quadInOut')
-        doTweenAngle('angle hud', 'camHUD', 0, 9, 'quadInOut')
+        doTweenAngle('angle game', 'camGame', 0, 9 / playbackRate, 'quadInOut')
+        doTweenAngle('angle hud', 'camHUD', 0, 9 / playbackRate, 'quadInOut')
 	end
 end

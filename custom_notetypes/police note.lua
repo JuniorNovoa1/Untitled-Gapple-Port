@@ -48,13 +48,13 @@ function goodNoteHit(id, noteData, noteType, isSustainNote)
         end
 
         setProperty('strumLine.y', camOFFSET);
-        noteTweenY('MOVE OPPONENT LEFT NOTE', 0, camOFFSET, 0.25, 'quadInOut')	
-        noteTweenY('MOVE OPPONENT DOWN NOTE', 1, camOFFSET, 0.25, 'quadInOut')
-        noteTweenY('MOVE OPPONENT UP NOTE', 2, camOFFSET, 0.25, 'quadInOut')
-        noteTweenY('MOVE OPPONENT RIGHT NOTE', 3, camOFFSET, 0.25, 'quadInOut')
-        noteTweenY('MOVE PLAYER LEFT NOTE', 4, camOFFSET, 0.25, 'quadInOut')
-        noteTweenY('MOVE PLAYER DOWN NOTE', 5, camOFFSET, 0.25, 'quadInOut')
-        noteTweenY('MOVE PLAYER UP NOTE', 6, camOFFSET, 0.25, 'quadInOut')
-        noteTweenY('MOVE PLAYER RIGHT NOTE', 7, camOFFSET, 0.25, 'quadInOut')
+        noteTweenY('MOVE OPPONENT LEFT NOTE', 0, camOFFSET, 0.25 / playbackRate, 'quadInOut')	
+        noteTweenY('MOVE OPPONENT DOWN NOTE', 1, camOFFSET, 0.25 / playbackRate, 'quadInOut')
+        noteTweenY('MOVE OPPONENT UP NOTE', 2, camOFFSET, 0.25 / playbackRate, 'quadInOut')
+        noteTweenY('MOVE OPPONENT RIGHT NOTE', 3, camOFFSET, 0.25 / playbackRate, 'quadInOut')
+        noteTweenY('MOVE PLAYER LEFT NOTE', 4, camOFFSET, 0.25 / playbackRate, 'quadInOut')
+        noteTweenY('MOVE PLAYER DOWN NOTE', 5, camOFFSET, 0.25 / playbackRate, 'quadInOut')
+        noteTweenY('MOVE PLAYER UP NOTE', 6, camOFFSET, 0.25 / playbackRate, 'quadInOut')
+        noteTweenY('MOVE PLAYER RIGHT NOTE', 7, camOFFSET, 0.25 / playbackRate, 'quadInOut')
 	end
 end

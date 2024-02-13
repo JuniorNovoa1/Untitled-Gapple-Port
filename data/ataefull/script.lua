@@ -25,7 +25,7 @@ function onCreatePost()
 end
 
 function onStepHit()
-	if curStep == 3520 or curStep == 4304 then if flashingLights then cameraFlash("hud", "FFFFFF", 1) end end
+	if curStep == 3520 or curStep == 4304 then if flashingLights then cameraFlash("hud", "FFFFFF", 1 / playbackRate) end end
 	if curStep == 431 or curStep == 4304 then
 		personSinging = 1;
 	end
@@ -39,8 +39,8 @@ function onStepHit()
 		personSinging = 0;
 	end
 	if curStep == 2134 then
-		doTweenAlpha("dad", "dad", 1, 3, "")
-		doTweenY("dadY", "dad", getProperty("dad.y") - 500, 3, "")
+		doTweenAlpha("dad", "dad", 1, 3 / playbackRate, "")
+		doTweenY("dadY", "dad", getProperty("dad.y") - 500, 3 / playbackRate, "")
 	end
 end
 

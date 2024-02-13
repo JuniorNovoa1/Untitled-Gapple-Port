@@ -160,13 +160,13 @@ function onStepHit()
         setProperty('poop.visible', true)
         setProperty('defaultCamZoom', 0.55)
         if flashingLights then
-			cameraFlash('camother', 'FFFFFF', 1)
+			cameraFlash('camother', 'FFFFFF', 1 / playbackRate)
 		end
     end
 
     if curStep == 800 then
         setProperty('badai.visible', true)
-        doTweenY('badaiTweenEYSYSYWORKALREADY', 'badai', 100, 1.35, 'sineIn')
+        doTweenY('badaiTweenEYSYSYWORKALREADY', 'badai', 100, 1.35 / playbackRate, 'sineIn')
     end
 
     if curStep == 1984 then
@@ -193,7 +193,7 @@ function onStepHit()
         setProperty('yeah.visible', true)
         setProperty('defaultCamZoom', 0.425)
         if flashingLights then
-			cameraFlash('camother', '000000', 1.5)
+			cameraFlash('camother', '000000', 1.5 / playbackRate)
 		end
         setProperty('vg.visible', true)
     end
@@ -218,12 +218,12 @@ function onStepHit()
     end
 
     if curStep == 2096 then
-        doTweenAlpha('expunged', 'expunged', 1, 1, 'sineInOut')
+        doTweenAlpha('expunged', 'expunged', 1, 1 / playbackRate, 'sineInOut')
     end
 
     if curStep == 2110 then
-        doTweenX('expungedX', 'expunged.scale', 2, 1, 'sineInOut')
-        doTweenY('expungedY', 'expunged.scale', 2, 1, 'sineInOut')
+        doTweenX('expungedX', 'expunged.scale', 2, 1 / playbackRate, 'sineInOut')
+        doTweenY('expungedY', 'expunged.scale', 2, 1 / playbackRate, 'sineInOut')
         camLock = true;
     end
 
@@ -263,19 +263,19 @@ function onTweenCompleted(tag)
         setProperty('monkey_guy.visible', true)
         setProperty('monkey_person.visible', true)
 
-        doTweenX('monkey_guyXX', 'monkey_guy', getProperty('dad.x'), 1.7, 'sineInOut')
-        doTweenY('monkey_guyYY', 'monkey_guy', getProperty('dad.y'), 1.7, 'sineInOut')
-        doTweenX('monkey_guyX', 'monkey_guy.scale', 0, 1.7, 'sineInOut')
-        doTweenY('monkey_guyY', 'monkey_guy.scale', 0, 1.7, 'sineInOut')
-        doTweenX('monkey_personXX', 'monkey_person', getProperty('dad.x'), 1.7, 'sineInOut')
-        doTweenY('monkey_personYY', 'monkey_person', getProperty('dad.y'), 1.7, 'sineInOut')
-        doTweenX('monkey_personX', 'monkey_person.scale', 0, 1.7, 'sineInOut')
-        doTweenY('monkey_personY', 'monkey_person.scale', 0, 1.7, 'sineInOut')
-        doTweenAngle('monkey_guy', 'monkey_guy', 120, 1.7, 'sineInOut')
-        doTweenAngle('monkey_person', 'monkey_person', 120, 1.7, 'sineInOut')
+        doTweenX('monkey_guyXX', 'monkey_guy', getProperty('dad.x'), 1.7 / playbackRate, 'sineInOut')
+        doTweenY('monkey_guyYY', 'monkey_guy', getProperty('dad.y'), 1.7 / playbackRate, 'sineInOut')
+        doTweenX('monkey_guyX', 'monkey_guy.scale', 0, 1.7 / playbackRate, 'sineInOut')
+        doTweenY('monkey_guyY', 'monkey_guy.scale', 0, 1.7 / playbackRate, 'sineInOut')
+        doTweenX('monkey_personXX', 'monkey_person', getProperty('dad.x'), 1.7 / playbackRate, 'sineInOut')
+        doTweenY('monkey_personYY', 'monkey_person', getProperty('dad.y'), 1.7 / playbackRate, 'sineInOut')
+        doTweenX('monkey_personX', 'monkey_person.scale', 0, 1.7 / playbackRate, 'sineInOut')
+        doTweenY('monkey_personY', 'monkey_person.scale', 0, 1.7 / playbackRate, 'sineInOut')
+        doTweenAngle('monkey_guy', 'monkey_guy', 120, 1.7 / playbackRate, 'sineInOut')
+        doTweenAngle('monkey_person', 'monkey_person', 120, 1.7 / playbackRate, 'sineInOut')
         playSound('suck', 1, 'suck')
-        doTweenX('expungedLeft', 'dad', getProperty('dad.x') -165, 2.8 * 1.125, 'sineInOut')
-        doTweenY('expungedUP', 'dad', getProperty('dad.y') -165 * 2, 2.8 / 2, 'sineInOut')
+        doTweenX('expungedLeft', 'dad', getProperty('dad.x') -165, (2.8 * 1.125) / playbackRate, 'sineInOut')
+        doTweenY('expungedUP', 'dad', getProperty('dad.y') -165 * 2, (2.8 / 2) / playbackRate, 'sineInOut')
         setProperty('expunged.visible', false)
         camLock = false;
     end

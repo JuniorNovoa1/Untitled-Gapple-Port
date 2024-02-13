@@ -26,15 +26,15 @@ function deformationPreJumpscare(charName)
 	screenCenter("jumpscareSpr", 'xy')
 	addLuaSprite("jumpscareSpr", false)
 
-	doTweenAlpha("deformationIconP2", "iconP2", 0, 1, "")
-	doTweenAlpha("deformationDad", "dad", 0, 1, "")
+	doTweenAlpha("deformationIconP2", "iconP2", 0, 1 / playbackRate, "")
+	doTweenAlpha("deformationDad", "dad", 0, 1 / playbackRate, "")
 end
 
 function deformationJumpscare()
 	setProperty("jumpscareSpr.alpha", 1)
-	doTweenAlpha("jumpscareSpr", "jumpscareSpr", 0, 1, "")
-	doTweenAlpha("deformationIconP2", "iconP2", 1, 1, "")
-	doTweenAlpha("deformationDad", "dad", 1, 1, "")
+	doTweenAlpha("jumpscareSpr", "jumpscareSpr", 0, 1 / playbackRate, "")
+	doTweenAlpha("deformationIconP2", "iconP2", 1, 1 / playbackRate, "")
+	doTweenAlpha("deformationDad", "dad", 1, 1 / playbackRate, "")
 end
 --stage exclusive lua calls!!!
 

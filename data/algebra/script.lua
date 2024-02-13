@@ -19,7 +19,7 @@ function onBeatHit()
 	if curBeat == 8 or curBeat == 72 or curBeat == 104 or curBeat == 152 or curBeat == 224 or curBeat == 256 or curBeat == 288 or curBeat == 320 or curBeat == 416 or curBeat == 472 or curBeat == 504 or curBeat == 544 
 	or curBeat == 576 or curBeat == 608 or curBeat == 640 or curBeat == 672 or curBeat == 704 or curBeat == 736 or curBeat == 740 or curBeat == 772 or curBeat == 804 or curBeat == 860 or curBeat == 907 or curBeat == 923 
 	or curBeat == 931 or curBeat == 935 or curBeat == 939 or curBeat == 942 or curBeat == 1008 or curBeat == 1072 or curBeat == 1168 or curBeat == 1232 or curBeat == 1295 and flashingLights then
-		cameraFlash('other', 'FFFFFF', 1.5) --cam flash simulator
+		cameraFlash('other', 'FFFFFF', 1.5 / playbackRate) --cam flash simulator
 	end
 
 	if curBeat == 160 then
@@ -38,12 +38,12 @@ function onBeatHit()
 
 	if curBeat == 288 then
 		lockCam = true;
-		doTweenAlpha("thunderBlack", "thunderBlack", 0.35, crochet / 500, "")
+		doTweenAlpha("thunderBlack", "thunderBlack", 0.35, (crochet / 500) / playbackRate, "")
 	end
 
 	if curBeat == 320 then
 		lockCam = false;
-		doTweenAlpha("thunderBlack", "thunderBlack", 0, crochet / 500, "")
+		doTweenAlpha("thunderBlack", "thunderBlack", 0, (crochet / 500) / playbackRate, "")
 	end
 
 	if curBeat == 352 then
@@ -140,7 +140,7 @@ function onBeatHit()
 	end
 
 	if curBeat == 1293 then
-		doTweenX("davePiss", "davePiss", getProperty("davePiss.x") -250, 0.5, "quadOut")
+		doTweenX("davePiss", "davePiss", getProperty("davePiss.x") -250, 0.5 / playbackRate, "quadOut")
 		playAnim("davePiss", "d")
 	end
 
@@ -171,7 +171,7 @@ end
 function onEvent(eventName, value1, value2)
 	if eventName == 'Change Character' then
 		if flashingLights then
-			cameraFlash('other', 'FFFFFF', 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
 	end
 end

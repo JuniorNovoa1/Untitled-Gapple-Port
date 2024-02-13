@@ -56,7 +56,7 @@ end
 
 function onEvent(tag, val1, val2)
     if tag == 'Change Character' then
-        if flashingLights then cameraFlash("hud", "FFFFFF", 1) end
+        if flashingLights then cameraFlash("hud", "FFFFFF", 1 / playbackRate) end
         if val2 == 'dave-wide' or val2 == 'awesomeBambiCrack' then
             setProperty("3d.visible", true)
         else

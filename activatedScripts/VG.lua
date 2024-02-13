@@ -22,7 +22,7 @@ end
 
 function onUpdate(elapsed)
     if getProperty('vg.alpha') == maximumAlpha and doTween then
-        doTweenAlpha('doVG2', 'vg', 0, time)
+        doTweenAlpha('doVG2', 'vg', 0, time / playbackRate)
         doTween = false;
         doWait = true;
     end
@@ -30,11 +30,11 @@ function onUpdate(elapsed)
     if getProperty('vg.alpha') == 0 then
         if not doTween and doWait then
             doWait = false;
-            runTimer('waitVG', 1)
+            runTimer('waitVG', 1 / playbackRate)
         end
 
         if doTween and not doWait then
-            doTweenAlpha('doVG', 'vg', maximumAlpha, time)
+            doTweenAlpha('doVG', 'vg', maximumAlpha, time / playbackRate)
         end
     end
 end

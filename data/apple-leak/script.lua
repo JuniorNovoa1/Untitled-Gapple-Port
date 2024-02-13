@@ -53,7 +53,7 @@ end
 
 function onStepHit()
 	if curStep == 1088 then
-		doTweenY('banduFat', 'dad', getProperty('dad.y') -500, 30)
+		doTweenY('banduFat', 'dad', getProperty('dad.y') -500, 30 / playbackRate)
 	end
 
 	if curStep == 1855 then
@@ -108,10 +108,10 @@ function onStepHit()
 		end
 		setProperty('portal.scale.x', 1)
 		setProperty('portal.scale.y', 1)
-		doTweenX('null1', 'portal.scale', 0, 1)
-		doTweenY('invisPortal', 'portal.scale', 0, 1)
-		doTweenX('null3', 'boyfriend.scale', 0, 1)
-		doTweenY('null4', 'boyfriend.scale', 0, 1)
+		doTweenX('null1', 'portal.scale', 0, 1 / playbackRate)
+		doTweenY('invisPortal', 'portal.scale', 0, 1 / playbackRate)
+		doTweenX('null3', 'boyfriend.scale', 0, 1 / playbackRate)
+		doTweenY('null4', 'boyfriend.scale', 0, 1 / playbackRate)
 	end
 
 	if curStep == 9520 then --3d and 2d
@@ -124,7 +124,7 @@ function onStepHit()
 		addLuaSprite('staticAnim', true)
 		setProperty("fire.visible", false)
 		setProperty("vg.visible", false)
-		runTimer('static2', 1.1)
+		runTimer('static2', 1.1 / playbackRate)
 	end
 
 	if curStep == 9696 then --3d bamber
@@ -134,20 +134,20 @@ function onStepHit()
 		removeLuaSprite("blackNwhite", true)
 	
 		setProperty("staticAnim.visible", true)
-		runTimer('static', 1.1)
+		runTimer('static', 1.1 / playbackRate)
 	end
 
 	if curStep == 10096 then --wide bambi
 		setProperty("staticAnim.visible", true)
 		setProperty("fire.visible", false)
 		setProperty("vg.visible", false)
-		runTimer('static3', 1.2)
+		runTimer('static3', 1.2 / playbackRate)
 	end
 
 	if curStep == 10256 then --so screwed
 		removeLuaSprite("deadMeme", true)
 		setProperty("staticAnim.visible", true)
-		runTimer('static4', 1.25)
+		runTimer('static4', 1.25 / playbackRate)
 	end
 
 	if curStep == 10464 then --3d bamber
@@ -155,14 +155,14 @@ function onStepHit()
 		removeLuaSprite("overlay", true)
 		removeLuaSprite("platform", true)
 		setProperty("staticAnim.visible", true)
-		runTimer('static', 1.25)
+		runTimer('static', 1.25 / playbackRate)
 	end
 
 	if curStep == 10864 then --amog us
 		setProperty("staticAnim.visible", true)
 		setProperty("fire.visible", false)
 		setProperty("vg.visible", false)
-		runTimer('static5', 1.25)
+		runTimer('static5', 1.25 / playbackRate)
 	end
 
 	if curStep == 11152 then --bob
@@ -172,14 +172,14 @@ function onStepHit()
 		removeLuaSprite("tables", true)
 		removeLuaSprite("screenshot", true)
 		setProperty("staticAnim.visible", true)
-		runTimer('static6', 1.25)
+		runTimer('static6', 1.25 / playbackRate)
 	end
 
 	if curStep == 11424 then --3d bamber
 		removeLuaSprite("NewTitleMenuBG", true)
 		removeLuaSprite("trees", true)
 		setProperty("staticAnim.visible", true)
-		runTimer('static', 1.25)
+		runTimer('static', 1.25 / playbackRate)
 	end
 
 	if curStep == 11952 then --dik cord
@@ -301,7 +301,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		updateHitbox("screenshot")
 		screenCenter("screenshot", 'xy')
 		addLuaSprite("screenshot", true)
-		doTweenAlpha("screenshot", "screenshot", 0, 1, "")
+		doTweenAlpha("screenshot", "screenshot", 0, 1 / playbackRate, "")
 	
 		setProperty("tables.y", getProperty("tables.y") - 235)
 		setProperty("backgroundShip.y", getProperty("backgroundShip.y") - 775)
@@ -361,22 +361,22 @@ function onEvent(name, value1, value2)
 				addLuaSprite('fatBandu', false)
 			end
 	
-			doTweenX('gasStationWidth', 'gasStation.scale', 0, 1)
-			doTweenY('gasStationHeigth', 'gasStation.scale', 0, 1)
-			doTweenAlpha('gasStationAlpha', 'gasStation', 0, 1)
+			doTweenX('gasStationWidth', 'gasStation.scale', 0, 1 / playbackRate)
+			doTweenY('gasStationHeigth', 'gasStation.scale', 0, 1 / playbackRate)
+			doTweenAlpha('gasStationAlpha', 'gasStation', 0, 1 / playbackRate)
 	
-			doTweenX('wavyWidth', 'wavyApplecore.scale', 0, 1)
-			doTweenY('wavyHeigth', 'wavyApplecore.scale', 0, 1)
-			doTweenAlpha('wavyAlpha', 'wavyApplecore', 0, 1)
-			doTweenX('wavyWidt2h', 'wavyApplecoreBLACK.scale', 0, 1)
-			doTweenY('wavyHeigth2', 'wavyApplecoreBLACK.scale', 0, 1)
-			doTweenAlpha('wavyAlph2a', 'wavyApplecoreBLACK', 0, 1)
+			doTweenX('wavyWidth', 'wavyApplecore.scale', 0, 1 / playbackRate)
+			doTweenY('wavyHeigth', 'wavyApplecore.scale', 0, 1 / playbackRate)
+			doTweenAlpha('wavyAlpha', 'wavyApplecore', 0, 1 / playbackRate)
+			doTweenX('wavyWidt2h', 'wavyApplecoreBLACK.scale', 0, 1 / playbackRate)
+			doTweenY('wavyHeigth2', 'wavyApplecoreBLACK.scale', 0, 1 / playbackRate)
+			doTweenAlpha('wavyAlph2a', 'wavyApplecoreBLACK', 0, 1 / playbackRate)
 
-			doTweenAlpha('fatBandunAlpha', 'fatBandu', 0, 1)
-			doTweenAlpha('jamboulAlpha', 'jamboul', 0, 1)
+			doTweenAlpha('fatBandunAlpha', 'fatBandu', 0, 1 / playbackRate)
+			doTweenAlpha('jamboulAlpha', 'jamboul', 0, 1 / playbackRate)
 	
-			doTweenY('kineMasterUp', 'kineMaster', getProperty('kineMaster.y') -125, 1.25)
-			doTweenAngle('kineMasterAngle', 'kineMaster', 90, 1.5)
+			doTweenY('kineMasterUp', 'kineMaster', getProperty('kineMaster.y') -125, 1.25 / playbackRate)
+			doTweenAngle('kineMasterAngle', 'kineMaster', 90, 1.5 / playbackRate)
 		end
 
 		if value2 == '3d-bambi-leak' then
@@ -411,8 +411,8 @@ function onEvent(name, value1, value2)
 		if value2 == 'bandu-trolled' then
 			setProperty('ytVids.scale.x', 2)
 			setProperty('ytVids.scale.y', 2)
-			doTweenX('ytVidsWidth', 'ytVids.scale', 1, 1)
-			doTweenY('ytVidsHeigth', 'ytVids.scale', 1, 1)
+			doTweenX('ytVidsWidth', 'ytVids.scale', 1, 1 / playbackRate)
+			doTweenY('ytVidsHeigth', 'ytVids.scale', 1, 1 / playbackRate)
 			camX = getProperty('camFollow.x');
 			camY = getProperty('camFollow.y');
 			stayOnCam = true;
@@ -521,10 +521,10 @@ function onEvent(name, value1, value2)
 			setProperty('boyfriend.scale.x', 0)
 			setProperty('boyfriend.scale.y', 0)
 
-			doTweenX('portalWidth', 'portal.scale', 1, 1)
-			doTweenY('portalHeight', 'portal.scale', 1, 1)
-			doTweenX('portalBFWidth', 'boyfriend.scale', prevScale, 1)
-			doTweenY('portalBFHeight', 'boyfriend.scale', prevScale, 1)
+			doTweenX('portalWidth', 'portal.scale', 1, 1 / playbackRate)
+			doTweenY('portalHeight', 'portal.scale', 1, 1 / playbackRate)
+			doTweenX('portalBFWidth', 'boyfriend.scale', prevScale, 1 / playbackRate)
+			doTweenY('portalBFHeight', 'boyfriend.scale', prevScale, 1 / playbackRate)
 		end
 
 		if value2 == '3d-bambi-leak-finale' then
@@ -571,7 +571,7 @@ function onEvent(name, value1, value2)
 				stayOnCam = true;
 
 				setProperty('boyfriend.y', getProperty('boyfriend.y') - 950)
-				doTweenY('boyfrinedYYY', 'boyfriend', getProperty('boyfriend.y') + 680, 1.5)
+				doTweenY('boyfrinedYYY', 'boyfriend', getProperty('boyfriend.y') + 680, 1.5 / playbackRate)
 				loopVarThing = true;
 			else
 				--setProperty('boyfriend.y', getProperty('boyfriend.y') - 950 + 680)
@@ -604,13 +604,13 @@ end
 
 function onTweenCompleted(tag)
 	if tag == 'jamboulAlpha' then
-		doTweenX('garyMoveX', 'dad', dadX, 1.5)
-		doTweenY('garyMoveY', 'dad', dadY, 1.5)
+		doTweenX('garyMoveX', 'dad', dadX, 1.5 / playbackRate)
+		doTweenY('garyMoveY', 'dad', dadY, 1.5 / playbackRate)
 	end
 
 	if tag == 'kineMasterAngle' then
-		doTweenY('kineMasterDown', 'kineMaster', 1000, 2.6)
-		doTweenAngle('kineMasterAngle2', 'kineMaster', 125, 2.6)
+		doTweenY('kineMasterDown', 'kineMaster', 1000, 2.6 / playbackRate)
+		doTweenAngle('kineMasterAngle2', 'kineMaster', 125, 2.6 / playbackRate)
 	end
 
 	if tag == 'kineMasterAngle2' then
@@ -623,12 +623,12 @@ function onTweenCompleted(tag)
 	end
 
 	if tag == 'ytVidsHeigth' then
-		doTweenAngle('boyfondAngle', 'boyfond', 10, 0.2)
+		doTweenAngle('boyfondAngle', 'boyfond', 10, 0.2 / playbackRate)
 	end
 
 	if tag == 'boyfondAngle' then
-		doTweenAngle('boyfondAngle2', 'boyfond', 120, 1)
-		doTweenAlpha('boyfondAlpha', 'boyfond', 0, 1)
+		doTweenAngle('boyfondAngle2', 'boyfond', 120, 1 / playbackRate)
+		doTweenAlpha('boyfondAlpha', 'boyfond', 0, 1 / playbackRate)
 	end
 
 	if tag == 'boyfondAlpha' then
@@ -641,9 +641,9 @@ function onTweenCompleted(tag)
 	end
 
 	if tag == 'portalBFHeight' then
-		doTweenY('null5', 'boyfriend', 680, 1)
-		doTweenX('null1', 'portal.scale', 0, 1)
-		doTweenY('invisPortal', 'portal.scale', 0, 1)
+		doTweenY('null5', 'boyfriend', 680, 1 / playbackRate)
+		doTweenX('null1', 'portal.scale', 0, 1 / playbackRate)
+		doTweenY('invisPortal', 'portal.scale', 0, 1 / playbackRate)
 	end
 end
 
@@ -653,8 +653,8 @@ local POP3 = false;
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if getProperty('dad.curCharacter') == 'bandu-trolled' and not POP then
-		doTweenX('dadWidth', 'dad.scale', 0.3, 0.35)
-		doTweenY('dadHeigth', 'dad.scale', 0.3, 0.35)
+		doTweenX('dadWidth', 'dad.scale', 0.3, 0.35 / playbackRate)
+		doTweenY('dadHeigth', 'dad.scale', 0.3, 0.35 / playbackRate)
 		removeLuaSprite('ytVids', true)
 		removeLuaSprite('th1ft', true)
 		POP = true;
@@ -662,7 +662,7 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 
 	if getProperty('dad.curCharacter') == '3d-bambi-leak-finale' and not POP2 then
 		setProperty('camHUD.zoom', 5)
-		doTweenZoom("outCameZOom", "camHUD", 0.8, 1.5, "")
+		doTweenZoom("outCameZOom", "camHUD", 0.8, 1.5 / playbackRate, "")
 		setProperty('camHUD.visible', true)
 		triggerEvent("camFlash", '0.5', '')
 		setProperty('dad.visible', true)

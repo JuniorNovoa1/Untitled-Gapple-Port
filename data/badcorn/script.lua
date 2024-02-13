@@ -13,15 +13,15 @@ function onCreatePost()
     originDad = getProperty('dad.curCharacter')
     addCharacterToList('awesomeBambiCrack', 'dad')
     if getDataFromSave("UnNamedGapplePortSettings", 'screenshake', true) then
-        doTweenAngle('camHUD1', 'camHUD', camAngle, camTimer, tween)
-        doTweenAngle('camGame1', 'camGame', camAngle, camTimer, tween)
+        doTweenAngle('camHUD1', 'camHUD', camAngle, camTimer / playbackRate, tween)
+        doTweenAngle('camGame1', 'camGame', camAngle, camTimer / playbackRate, tween)
     end
     if getDataFromSave("UnNamedGapplePortSettings", 'modcharts', true) then
         for i = 1, getProperty('strumLineNotes.length') do
             notesX[i] = getPropertyFromGroup('strumLineNotes', i-1, 'x')
             notesY[i] = getPropertyFromGroup('strumLineNotes', i-1, 'y')
-            noteTweenX('noteX'..i, i-1, notesX[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim, tween)
-            noteTweenY('noteY'..i, i-1, notesY[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim, tween)
+            noteTweenX('noteX'..i, i-1, notesX[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim / playbackRate, tween)
+            noteTweenY('noteY'..i, i-1, notesY[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim / playbackRate, tween)
         end
     end
 end
@@ -54,24 +54,24 @@ end--]]
 
 function onTweenCompleted(tag)
     if tag == 'camHUD1' then
-        doTweenAngle('camHUD2', 'camHUD', -camAngle, camTimer, tween)
+        doTweenAngle('camHUD2', 'camHUD', -camAngle, camTimer / playbackRate, tween)
     end
     if tag == 'camHUD2' then
-        doTweenAngle('camHUD1', 'camHUD', camAngle, camTimer, tween)
+        doTweenAngle('camHUD1', 'camHUD', camAngle, camTimer / playbackRate, tween)
     end
     if tag == 'camGame1' then
-        doTweenAngle('camGame2', 'camGame', -camAngle, camTimer, tween)
+        doTweenAngle('camGame2', 'camGame', -camAngle, camTimer / playbackRate, tween)
     end
     if tag == 'camGame2' then
-        doTweenAngle('camGame1', 'camGame', camAngle, camTimer, tween)
+        doTweenAngle('camGame1', 'camGame', camAngle, camTimer / playbackRate, tween)
     end
 
     for i = 1, getProperty('strumLineNotes.length') do
         if tag == 'noteX'..i then
-            noteTweenX('noteX'..i, i-1, notesX[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim, tween)
+            noteTweenX('noteX'..i, i-1, notesX[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim / playbackRate, tween)
         end
         if tag == 'noteY'..i then
-            noteTweenY('noteY'..i, i-1, notesY[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim, tween)
+            noteTweenY('noteY'..i, i-1, notesY[i] + getRandomInt(noteOrgasm[1], noteOrgasm[2]), timerOrgasim / playbackRate, tween)
         end
     end
 end

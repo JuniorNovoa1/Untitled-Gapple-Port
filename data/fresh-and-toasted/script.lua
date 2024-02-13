@@ -29,18 +29,18 @@ end
 
 function onStepHit()
     if curStep == 1647 then
-        doTweenX('freshX', 'fresh1.scale', 0, 3)
-        doTweenY('freshY', 'fresh1.scale', 0, 3)
-        doTweenAngle("freshAngle", "fresh1", 90, 3)
+        doTweenX('freshX', 'fresh1.scale', 0, 3 / playbackRate)
+        doTweenY('freshY', 'fresh1.scale', 0, 3 / playbackRate)
+        doTweenAngle("freshAngle", "fresh1", 90, 3 / playbackRate)
         setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.1)
     end
 
     if curStep == 1663 then
-        doTweenY('badai', 'badai', getProperty("boyfriend.y") - 200, 2)
+        doTweenY('badai', 'badai', getProperty("boyfriend.y") - 200, 2 / playbackRate)
     end
 
     if curStep == 1711 then
-        cameraFlash("hud", "FFFFFF", 1)
+        cameraFlash("hud", "FFFFFF", 1 / playbackRate)
     end
 
     if curStep == 2767 then -- car
@@ -57,8 +57,8 @@ function onStepHit()
         setProperty("vocals.volume", 0)
     end
     if curStep == 2782 then
-        doTweenX('yay', 'yay.scale', 1.15, 0.6, 'sineInOut')
-        doTweenY('yayq', 'yay.scale', 1.15, 0.6, 'sineInOut')
+        doTweenX('yay', 'yay.scale', 1.15, 0.6 / playbackRate, 'sineInOut')
+        doTweenY('yayq', 'yay.scale', 1.15, 0.6 / playbackRate, 'sineInOut')
         playSound("yay", 1)
     end
 
@@ -89,14 +89,14 @@ function onTweenCompleted(tag)
     end
 
     if tag == 'yayq' then
-        doTweenX('yay', 'yay.scale', 1, 0.1, 'sineInOut')
-        doTweenY('yay!', 'yay.scale', 1, 0.1, 'sineInOut')
+        doTweenX('yay', 'yay.scale', 1, 0.1 / playbackRate, 'sineInOut')
+        doTweenY('yay!', 'yay.scale', 1, 0.1 / playbackRate, 'sineInOut')
     end
 
     if tag == 'thunderBlack' then 
         setProperty("hospital.visible", true)
         setObjectCamera("thunderBlack", "other")
-        doTweenX("thunderBlackLast", "thunderBlack", screenWidth, 0.5, "")
+        doTweenX("thunderBlackLast", "thunderBlack", screenWidth, 0.5 / playbackRate, "")
         playMusic("freshAndToasted/win-brobgonal", 1, true)
     end
 end
@@ -107,7 +107,7 @@ function onCustomSubstateCreatePost(name)
     scaleObject("thunderBlack", 2, 2)
     setProperty("thunderBlack.alpha", 1)
     setProperty("thunderBlack.x", -3600)
-    doTweenX("thunderBlack", "thunderBlack", screenWidth - 1280, 0.5, "")
+    doTweenX("thunderBlack", "thunderBlack", screenWidth - 1280, 0.5 / playbackRate, "")
 
     makeLuaSprite("hospital", "main/fresh-and-toasted/yayyyyyyyyyyyyyyyyyyy-min", 0, 0)
     setObjectCamera("hospital", "other")

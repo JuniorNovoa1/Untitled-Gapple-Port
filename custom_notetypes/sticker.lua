@@ -43,16 +43,16 @@ function goodNoteHit(id, noteData, noteType, isSustainNote)
 		setProperty("Sticker"..i..".alpha", 0)
 		addLuaSprite("Sticker"..i)
 		doTweenAlpha("StickerAA"..i, "Sticker"..i, 1, timer, "")
-		doTweenX("StickerX"..i, "Sticker"..i..".scale", scale + 0.2, timer, "")
-		doTweenY("StickerY"..i, "Sticker"..i..".scale", scale + 0.2, timer, "")
-		runTimer("stickers", 6, 1)
+		doTweenX("StickerX"..i, "Sticker"..i..".scale", scale + 0.2, timer / playbackRate, "")
+		doTweenY("StickerY"..i, "Sticker"..i..".scale", scale + 0.2, timer / playbackRate, "")
+		runTimer("stickers", 6 / playbackRate, 1)
 	end
 end
 
 function onTweenCompleted(tag)
 	for i = 1, maxAmount do
 		if tag == 'StickerY'..i then
-			doTweenY("StickerY"..i, "Sticker"..i..".scale", scale, timer, "")
+			doTweenY("StickerY"..i, "Sticker"..i..".scale", scale, timer / playbackRate, "")
 		end
 		if tag == 'StickerA'..i then
 			removeLuaSprite("Sticker"..i, true)
@@ -63,7 +63,7 @@ end
 function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == "stickers" then
 		for i = 1, maxAmount do
-			doTweenAlpha("StickerA"..i, "Sticker"..i, 0, timer, "")
+			doTweenAlpha("StickerA"..i, "Sticker"..i, 0, timer / playbackRate, "")
 		end
 	end
 end

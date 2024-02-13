@@ -17,7 +17,7 @@ function onStepHit()
         isCrazy = false;
         setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.2)
         if flashingLights then
-            cameraFlash("other", "FFFFFF", 1)
+            cameraFlash('other', 'FFFFFF', 1 / playbackRate)
         end
     end
 end
@@ -52,7 +52,7 @@ function onBeatHit()
         playAnim("freddyIcon", "right", true)
         playAnim("cameoIcon", "right", true)
     end
-    doTweenAngle("gameAngle", "camGame", 0, crochet / 1450 * getProperty('gfSpeed'), "quadOut")
+    doTweenAngle("gameAngle", "camGame", 0, (crochet / 1450 * getProperty('gfSpeed')) / playbackRate, "quadOut")
 
     setProperty('camGame.zoom', getProperty('camGame.zoom') + 0.06)
     setProperty('camHUD.zoom', getProperty('camHUD.zoom') + 0.06)

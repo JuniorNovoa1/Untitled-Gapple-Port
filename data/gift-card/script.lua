@@ -19,15 +19,15 @@ function onStepHit()
 end
 
 function tweenCamShits()
-    doTweenAlpha("thunderBlack", "thunderBlack", 0.35, crochet / 750, "")
+    doTweenAlpha("thunderBlack", "thunderBlack", 0.35, (crochet / 750) / playbackRate, "")
     setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.2)
 end
 
 function tweenCamShitsUndoer()
-    doTweenAlpha("thunderBlack", "thunderBlack", 0, crochet / 750, "")
+    doTweenAlpha("thunderBlack", "thunderBlack", 0, (crochet / 750) / playbackRate, "")
     setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.2)
     if flashingLights then
-        cameraFlash("other", "FFFFFF", 1.2)
+        cameraFlash("other", "FFFFFF", 1.2 / playbackRate)
     end
 end
 

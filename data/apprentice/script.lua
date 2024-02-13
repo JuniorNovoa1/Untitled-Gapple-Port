@@ -61,12 +61,12 @@ function onStepHit()
 		for i = 1, #allBGItems do
 			setProperty(allBGItems[i]..".alpha", 1)
 			if i >= 3 then
-				doTweenX(allBGItems[i].."x", allBGItems[i]..".scale", 0.5, 1, "cubeInOut")
-				doTweenY(allBGItems[i].."y", allBGItems[i]..".scale", 0.5, 1, "cubeInOut")
+				doTweenX(allBGItems[i].."x", allBGItems[i]..".scale", 0.5, 1 / playbackRate, "cubeInOut")
+				doTweenY(allBGItems[i].."y", allBGItems[i]..".scale", 0.5, 1 / playbackRate, "cubeInOut")
 			end
 		end
 		if flashingLights then
-			cameraFlash("other", "FFFFFF", 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
 	end
 	if curStep == 1472 then
@@ -74,7 +74,7 @@ function onStepHit()
 			setProperty(allBGItems[i]..".alpha", 0)
 		end
 		if flashingLights then
-			cameraFlash("other", "FFFFFF", 1)
+			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
 	end
 end

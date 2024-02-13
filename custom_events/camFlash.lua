@@ -3,6 +3,6 @@ function onEvent(name, value1, value2)
 		if value2 == '' then
 			value2 = 'FFFFFF';
 		end
-		cameraFlash('other', 'FFFFFF', value1)
+		cameraFlash('other', 'FFFFFF', value1 / playbackRate)
 	end
 end

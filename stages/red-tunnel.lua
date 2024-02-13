@@ -49,27 +49,27 @@ function onUpdate(elapsed)
         bounceMultiplier = getRandomFloat(-0.75, -1.15);
         yBullshit = getRandomFloat(0.95, 1.05);
         danceDave();
-        doTweenAngle('DAVESAN', 'daveFuckingDies', -30 * getRandomFloat(0.3, 3), timer * 0.85, tweenEase)
-        doTweenX('DAVESA', 'daveFuckingDies', getProperty('redTunnel.x') + 100, timer, tweenEase)
-        doTweenY('DAVESF', 'daveFuckingDies', getProperty('redTunnel.y') + 100, timer, tweenEase)
+        doTweenAngle('DAVESAN', 'daveFuckingDies', -30 * getRandomFloat(0.3, 3), (timer * 0.85) / playbackRate, tweenEase)
+        doTweenX('DAVESA', 'daveFuckingDies', getProperty('redTunnel.x') + 100, timer / playbackRate, tweenEase)
+        doTweenY('DAVESF', 'daveFuckingDies', getProperty('redTunnel.y') + 100, timer / playbackRate, tweenEase)
     end
     if getProperty('daveFuckingDies.x') <= (getProperty('redTunnel.x') + 100) or getProperty('daveFuckingDies.y') <= (getProperty('redTunnel.y') + 100) then
         bounceAnimState = 2;
         bounceMultiplier = getRandomFloat(0.75, 1.15);
         yBullshit = getRandomFloat(0.95, 1.05);
         danceDave();
-        doTweenAngle('DAVESAN', 'daveFuckingDies', 30 * getRandomFloat(0.5, 1.5), timer * 0.85, tweenEase)
-        doTweenX('DAVESA', 'daveFuckingDies', getProperty('redTunnel.width') - 1000, timer, tweenEase)
-        doTweenY('DAVESF', 'daveFuckingDies', getProperty('redTunnel.height') - 1000, timer, tweenEase)
+        doTweenAngle('DAVESAN', 'daveFuckingDies', 30 * getRandomFloat(0.5, 1.5), (timer * 0.85) / playbackRate, tweenEase)
+        doTweenX('DAVESA', 'daveFuckingDies', getProperty('redTunnel.width') - 1000, timer / playbackRate, tweenEase)
+        doTweenY('DAVESF', 'daveFuckingDies', getProperty('redTunnel.height') - 1000, timer / playbackRate, tweenEase)
     end
 
     if getProperty('daveFuckingDies.x') >= (getProperty('redTunnel.width') - 1150) or getProperty('daveFuckingDies.y') >= (getProperty('redTunnel.height') - 1150) then
         bounceAnimState = 1;
-        runTimer('daveIdle', 1.25)
+        runTimer('daveIdle', 1.25 / playbackRate)
     end
     if getProperty('daveFuckingDies.x') <= (getProperty('redTunnel.x') + 250) or getProperty('daveFuckingDies.y') <= (getProperty('redTunnel.y') + 250) then
         bounceAnimState = 2;
-        runTimer('daveIdle', 1.25)
+        runTimer('daveIdle', 1.25 / playbackRate)
     end
 end
 

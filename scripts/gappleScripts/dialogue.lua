@@ -300,12 +300,12 @@ function onUpdate(elapsed)
 		end
 		if keyboardJustPressed('P') == true or curDialogue > maxDialogue and not spam then
 			spam = true;
-			doTweenAlpha('background', 'background', 0, 1)
-			doTweenAlpha('dadDialogue', 'dadDialogue', 0, 1)
-			doTweenAlpha('bfDialogue', 'bfDialogue', 0, 1)
-			doTweenAlpha('speech_bubble', 'speech_bubble', 0, 1)
-			doTweenAlpha('confirmButton', 'confirmButton', 0, 1)
-			doTweenAlpha('dialogueTxtTEXT', 'dialogueTxtTEXT', 0, 1)
+			doTweenAlpha('background', 'background', 0, 1 / playbackRate)
+			doTweenAlpha('dadDialogue', 'dadDialogue', 0, 1 / playbackRate)
+			doTweenAlpha('bfDialogue', 'bfDialogue', 0, 1 / playbackRate)
+			doTweenAlpha('speech_bubble', 'speech_bubble', 0, 1 / playbackRate)
+			doTweenAlpha('confirmButton', 'confirmButton', 0, 1 / playbackRate)
+			doTweenAlpha('dialogueTxtTEXT', 'dialogueTxtTEXT', 0, 1 / playbackRate)
 		end
 
 		setSoundVolume('song', getProperty('dialogueTxtTEXT.alpha'))
@@ -329,7 +329,7 @@ function onUpdate(elapsed)
 end
 
 function changeTxt(text)
-	local timeForEach = 0.035;
+	local timeForEach = 0.035 / playbackRate;
 	setTextString('dialogueTxtTEXT', '')
 	for i = 1, #text do
 		runHaxeCode([[
