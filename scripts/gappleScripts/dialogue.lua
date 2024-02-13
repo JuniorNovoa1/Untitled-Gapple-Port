@@ -283,8 +283,11 @@ local spam = false;
 
 local canContinue = false;
 
+local prevDialogueText = "";
+
 function onUpdate(elapsed)
 	if not hasExitDialogue and inDialogue then
+		prevDialogueText = getTextString("dialogueTxtTEXT")
 		setProperty("fakeMouse.x", getMouseX("other"))
 		setProperty("fakeMouse.y", getMouseY("other"))
 		if (keyboardJustPressed('ENTER') == true or (mouseClicked("left") and objectsOverlap("fakeMouse", "confirmButton"))) and canContinue and not spam then
@@ -332,9 +335,13 @@ function changeTxt(text)
 	setTextString('dialogueTxtTEXT', '')
 	for i = 1, #text do
 		runHaxeCode([[
+			var textNumber = "]]..i..[[";
+			var maxNumbers = "]]..#text..[[";
 			new FlxTimer().start(]]..timeForEach * i..[[, function(tmr) {
 				var txt = game.modchartTexts.get('dialogueTxtTEXT');
 				txt.text += "]]..text:sub(i, i)..[[";
+				if (textNumber == maxNumbers)
+					txt.text = "]]..text..[[";
 			});
 		]])
 	end
