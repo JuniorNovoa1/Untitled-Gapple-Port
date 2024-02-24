@@ -23,16 +23,16 @@ end
 local nextMenu = "";
 local nextFreeplayMenu = "";
 local freeplayStateSongs = {
-	["extra"] = '"glamrock", "sugar-rush", "gift-card", "ready-loud", "bookworm", "cuberoot", "apprentice", "too-shiny", "resumed", "mine", "dale", "the-big-dingle", "ataefull", "the-scratches", "sart-producer"',
-	["secret"] = '"ticking"',
-	["iykyk"] = '"og", "apple-leak"',
-	["peenut"] = '"kooky"'
+	["extra"] = {"glamrock", "sugar-rush", "gift-card", "ready-loud", "bookworm", "cuberoot", "apprentice", "too-shiny", "resumed", "mine", "dale", "the-big-dingle", "ataefull", "the-scratches", "sart-producer"},
+	["secret"] = {"ticking"},
+	["iykyk"] = {"og", "apple-leak"},
+	["peenut"] = {"kooky"}
 }
 local freeplayStateIcons = {
-	["extra"] = '"glamrock", "cigar-rush", "card", "flumpt", "bookworm", "disability", "tristan", "diamond", "dambu", "dinner", "dale", "dingle_static", "atae", "man", "sartys_icon_static"',
-	["secret"] = '"ouch"',
-	["iykyk"] = '"prealpha", "brob"',
-	["peenut"] = '"rubber"'
+	["extra"] = {"glamrock", "cigar-rush", "card", "flumpt", "bookworm", "disability", "tristan", "diamond", "dambu", "dinner", "dale", "dingle_static", "atae", "man", "sartys_icon_static"},
+	["secret"] = {"ouch"},
+	["iykyk"] = {"prealpha", "brob"},
+	["peenut"] = {"rubber"}
 }
 
 function onSongStart()
@@ -132,11 +132,23 @@ function changeState(newState)
 		makeGraphic("blackScreenY", 1280, 720, '000000')
 		setObjectCamera("blackScreenY", 'other')
 		addLuaSprite("blackScreenY", false)
+		loadSong(freeplayStateSongs[nextFreeplayMenu][curSelectedOptionUpDown + 1]) 
+	end
+	if string.lower(curState) == "freeplaymenu" then
 		runHaxeCode([[
-			var songs = []]..freeplayStateSongs[nextFreeplayMenu]..[[];
-			setVar("songToLoad", songs[]]..curSelectedOptionUpDown..[[]);
+			var grpSongs = getVar("grpSongs");
+			for (i in 0...grpSongs.length)
+			{
+				grpSongs[i].destroy();
+			}
 		]])
-		loadSong(getProperty("songToLoad")) 
+		runHaxeCode([[
+			var iconArray = getVar("iconArray");
+			for (i in 0...iconArray.length)
+			{
+				iconArray[i].destroy();
+			}
+		]])
 	end
 	curState = newState;
 	curSelectedOptionUpDown = 1;
@@ -144,20 +156,6 @@ function changeState(newState)
 		if luaSpriteExists(prevObjects[i]) then removeLuaSprite(prevObjects[i], true) end
 		if luaTextExists(prevObjects[i]) then removeLuaText(prevObjects[i], true) end
 	end
-	runHaxeCode([[
-		var grpSongs = getVar("grpSongs");
-		for (i in 0...grpSongs.length)
-		{
-			grpSongs[i].destroy();
-		}
-	]])
-	runHaxeCode([[
-		var iconArray = getVar("iconArray");
-		for (i in 0...iconArray.length)
-		{
-			iconArray[i].destroy();
-		}
-	]])
 	setTextString("creditsWatermark", "")
 	runHaxeCode([[FlxG.mouse.visible = false;]])
 
@@ -453,8 +451,8 @@ function changeState(newState)
 		table.insert(prevObjects, "menuBG")
 
 		curSelectedOptionUpDown = 0;
-		if freeplayStateSongs[nextFreeplayMenu] == nil then freeplayStateSongs[nextFreeplayMenu] = '"NO SONGS HERE!1!!11!"'; end
-		if freeplayStateIcons[nextFreeplayMenu] == nil then freeplayStateIcons[nextFreeplayMenu] = '"face"'; end
+		if freeplayStateSongs[nextFreeplayMenu] == nil then freeplayStateSongs[nextFreeplayMenu] = {"NO SONGS HERE!1!!11!"} end
+		if freeplayStateIcons[nextFreeplayMenu] == nil then freeplayStateIcons[nextFreeplayMenu] = {"face"}; end
 		createAlphabetSongs(freeplayStateSongs[nextFreeplayMenu], freeplayStateIcons[nextFreeplayMenu])
 		changeSelection()
 	end
@@ -813,7 +811,8 @@ function onUpdatePost()
 		end
 		if curState == "freeplaymenu" then
 			nextMenu = "startsongfreeplay"
-			soundFadeOut("freakyMenu",1,0)
+			setSoundVolume("freakyMenu", 0.0)
+			--soundFadeOut("freakyMenu",1,0)
 			onTransition(0)
 			canChangeMenu = false;
 		end
@@ -856,10 +855,22 @@ function onUpdatePost()
 	]])
 end
 
-function createAlphabetSongs(songArray, songArrayIcons) --songArray should look like this '["glamrock", "sugar-rush"];'
+function createAlphabetSongs(songArray, songArrayIcons)
+	local fixedSongArray = "";
+	for i = 1, #songArray do
+		fixedSongArray = fixedSongArray.."'"..songArray[i];
+		if i ~= #songArray then fixedSongArray = fixedSongArray.."',"; end
+	end
+	fixedSongArray = fixedSongArray.."'";
+	local fixedIconArray = "";
+	for i = 1, #songArrayIcons do
+		fixedIconArray = fixedIconArray.."'"..songArrayIcons[i];
+		if i ~= #songArrayIcons then fixedIconArray = fixedIconArray.."',"; end
+	end
+	fixedIconArray = fixedIconArray.."'";
 	runHaxeCode([[
-		var songs = []]..songArray..[[];
-		var songicons = []]..songArrayIcons..[[];
+		var songs = []]..fixedSongArray..[[];
+		var songicons = []]..fixedIconArray..[[];
 		var grpSongs = [];
 		var iconArray = [];
 

@@ -102,7 +102,7 @@ function onCreatePost()
 
 	if not lowQuality and string.lower(songName) ~= 'kooky' then
 		makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBar.x'), getProperty('healthBar.y') +5)
-		scaleObject('healthBarBGnew', getProperty('healthBar.scale.x') - 0.075, getProperty('healthBar.scale.y') - 0.15)
+		scaleObject('healthBarBGnew', getProperty('healthBar.scale.x'), getProperty('healthBar.scale.y'))
 		setObjectCamera('healthBarBGnew', 'hud')
 		addLuaSprite('healthBarBGnew', false)
 		setObjectOrder('healthBarBGnew', getObjectOrder("healthBar"))
@@ -204,6 +204,7 @@ function onCreatePost()
     setTextBorder("ratingTxt", 2, "000000")
     addLuaText("ratingTxt")
     setProperty("ratingTxt.alpha", 0)
+	if downscroll then setProperty("ratingTxt.y", 580) end
 
 	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
 		if not getPropertyFromGroup("unspawnNotes", i, 'isSustainNote') then setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup("unspawnNotes", i, 'hitHealth') * 0.8) else setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup("unspawnNotes", i, 'hitHealth') * 0.3) end
@@ -489,20 +490,10 @@ end
 
 function onUpdatePost(elapsed)
 	if string.lower(songName) ~= 'kooky' then
-		setProperty('healthBar.y', screenHeight * 0.9 + 4)
-		if stringStartsWith(version, '0.7') and not lowQuality and string.lower(songName) ~= 'kooky' then
-			setProperty('healthBarBGnew.y', screenHeight * 0.9 +5)
-			setProperty('healthBarBGnew.x', getProperty('healthBar.x'))
-		elseif not lowQuality and string.lower(songName) ~= 'kooky' then
-			setProperty('healthBarBGnew.y', screenHeight * 0.9 +2)
-			setProperty('healthBarBGnew.x', getProperty('healthBar.x') -5)
-		end
-		if downscroll then
-			setProperty('healthBar.y', 54)
-			if not lowQuality and string.lower(songName) ~= 'kooky' then
-				setProperty('healthBarBGnew.y', getProperty('healthBar.y') + 5.25)
-				setProperty('healthBarBGnew.x', getProperty('healthBar.x') + 4)
-			end
+		if downscroll then setProperty('healthBar.y', 54) else setProperty('healthBar.y', screenHeight * 0.9 + 4) end
+		if not lowQuality then
+			setProperty('healthBarBGnew.y', getProperty('healthBar.y') - 4)
+			setProperty('healthBarBGnew.x', getProperty('healthBar.x') - 5)
 		end
 		setProperty('scoreTxt.y', getProperty('healthBar.y') + 36)
 	end

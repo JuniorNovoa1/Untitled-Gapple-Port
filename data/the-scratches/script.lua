@@ -16,9 +16,11 @@ function onStepHit()
         addLuaSprite("discordAnimated", false)
     end
 
-    if curStep == 815 then
+    if curStep == 815 and flashingLights then
+        cameraFlash("hud", "FFFFFF", 1 / playbackRate)
+    end
+    if curStep >= 815 and luaSpriteExists("discordAnimated") then
         removeLuaSprite("discordAnimated", true)
-        if flashingLights then cameraFlash("hud", "FFFFFF", 1 / playbackRate) end
     end
 
     if curStep == 1248 then
