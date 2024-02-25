@@ -28,7 +28,9 @@ local funnyReturnString = { --put text here, idjiot3
 	["nil"] = "INDIE CROSS BEST BF",
 	["nil"] = "Corrupted Boyfriend"
 }
-local nonNativeCharacters = {} --put non bf characters here idjiot4
+local nonNativeCharacters = {
+	["split-dave-3d"] = false;
+} --put non bf characters here idjiot4
 local curSelected = 1;
 local curSelectedVer = 1;
 local confirmed = false;
@@ -222,13 +224,12 @@ function triggerKeyThingy(key)
 			end
 		]])
 		triggerEvent("Change Character", 'bf', characters[curSelected][curSelectedVer])
+		if nonNativeCharacters[boyfriendName] == false then setProperty("boyfriend.cameraPosition[0]", getProperty("boyfriend.cameraPosition[0]") * -2) end
 		--[[setProperty("boyfriend.x", (posBF[1] + bfSCALE[1]) - (getProperty("boyfriend.width") * 0.9))
 		setProperty("boyfriend.y", (posBF[2] + bfSCALE[2]) - (getProperty("boyfriend.height") * 0.9))--]]
 		playSound('confirmMenu', 1)
 		setSoundVolume("charSelectSound", 0)
-		if flashingLights then
-			cameraFlash("hud", "FFFFFF", 1 / playbackRate)
-		end
+		if flashingLights then cameraFlash("other", "FFFFFF", 1 / playbackRate) end
 		runTimer("soundchar", 1.6 / playbackRate)
 		
 		confirmed = true;

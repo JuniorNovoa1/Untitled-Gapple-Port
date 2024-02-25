@@ -7,5 +7,5 @@ end
 function onCreatePost()
     setProperty("gf.visible", true)
     setProperty("gf.x", getProperty("gf.x") + 415)
-    setProperty("gf.y", getProperty("gf.y") - 200)
+    setProperty("gf.y", getProperty("gf.y") + 200)
 end

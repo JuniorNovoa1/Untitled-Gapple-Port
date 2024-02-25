@@ -64,7 +64,7 @@ function onCreatePost()
         addHaxeLibrary("Note", 'objects')
     end
 
-	makeLuaText('creditsWatermark', songName, 0, 4, getProperty('healthBar.y') + 30)
+	makeLuaText('creditsWatermark', songName, 0, 4, 698)
 	setObjectCamera('creditsWatermark', 'camHUD')
 	setTextAlignment('creditsWatermark', 'center')
 	setTextFont('creditsWatermark', 'comic.ttf')
@@ -91,26 +91,20 @@ function onCreatePost()
 	addLuaText('creditsText')
 
 	if string.lower(songName) == 'disruption' then setProperty('creditsText.text', 'Screw you!') end
-	if getTextString("creditsText") == "" and string.lower(songName) ~= "applecore" and string.lower(songName) ~= "wireframe" then removeLuaText("creditsText", true) end
-
-	if (getProperty('creditsText.text') == '' or not luaTextExists("creditsText")) and string.lower(songName) ~= 'kooky' then
-		setProperty('creditsWatermark.y', getProperty('healthBar.y') + 50)
-	elseif string.lower(songName) ~= 'kooky' then
-		setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
-	end
-
 
 	if not lowQuality and string.lower(songName) ~= 'kooky' then
 		makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBar.x'), getProperty('healthBar.y') +5)
-		scaleObject('healthBarBGnew', getProperty('healthBar.scale.x'), getProperty('healthBar.scale.y'))
+		--scaleObject('healthBarBGnew', getProperty('healthBar.scale.x'), getProperty('healthBar.scale.y'))
 		setObjectCamera('healthBarBGnew', 'hud')
 		addLuaSprite('healthBarBGnew', false)
 		setObjectOrder('healthBarBGnew', getObjectOrder("healthBar"))
+		setGraphicSize("healthBarBGnew", getProperty("healthBar.width"), getProperty("healthBarBGnew.height") -1)
+		updateHitbox("healthBarBGnew")
 	end
 
 	if downscroll then
-		setProperty("iconP1.y", getProperty('healthBar.y') -75)
-		setProperty("iconP2.y", getProperty('healthBar.y') -75)
+		setProperty("iconP1.y", getProperty('healthBar.y') -108)
+		setProperty("iconP2.y", getProperty('healthBar.y') -108)
 	end
 
 	setProperty("updateTime", false)
@@ -165,7 +159,6 @@ function onCreatePost()
     end
 	updateHitbox('fpsTxt')
 	addLuaText('fpsTxt')
-
 	--[[makeLuaText('memoryTxt', '', 0, 18, 32)
 	setObjectCamera('memoryTxt', 'other')
 	setTextAlignment('memoryTxt', 'center')
@@ -204,7 +197,7 @@ function onCreatePost()
     setTextBorder("ratingTxt", 2, "000000")
     addLuaText("ratingTxt")
     setProperty("ratingTxt.alpha", 0)
-	if downscroll then setProperty("ratingTxt.y", 580) end
+	if downscroll then setProperty("ratingTxt.y", 570) end
 
 	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
 		if not getPropertyFromGroup("unspawnNotes", i, 'isSustainNote') then setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup("unspawnNotes", i, 'hitHealth') * 0.8) else setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup("unspawnNotes", i, 'hitHealth') * 0.3) end
@@ -493,14 +486,17 @@ function onUpdatePost(elapsed)
 		if downscroll then setProperty('healthBar.y', 54) else setProperty('healthBar.y', screenHeight * 0.9 + 4) end
 		if not lowQuality then
 			setProperty('healthBarBGnew.y', getProperty('healthBar.y') - 4)
-			setProperty('healthBarBGnew.x', getProperty('healthBar.x') - 5)
+			setProperty('healthBarBGnew.x', getProperty('healthBar.x'))
 		end
 		setProperty('scoreTxt.y', getProperty('healthBar.y') + 36)
-	end
-	if (getProperty('creditsText.text') == '' or not luaTextExists("creditsText")) and string.lower(songName) ~= 'kooky' then
-		setProperty('creditsWatermark.y', getProperty('healthBar.y') + 46)
-	elseif string.lower(songName) ~= 'kooky' then
-		setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
+		if songName ~= 'main-menu' then
+			if getProperty('creditsText.text') == '' then
+				setProperty('creditsWatermark.y', getProperty('healthBar.y') + 46)
+			elseif string.lower(songName) ~= 'kooky' then
+				setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
+			end
+			setProperty('creditsText.y', getProperty('creditsWatermark.y') + 16)
+		end
 	end
 
 	setTextString("fpsTxt", "FPS: "..getPropertyFromClass("Main", "fpsVar.currentFPS"))

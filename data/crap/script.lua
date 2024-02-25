@@ -26,3 +26,9 @@ function onStepHit()
 		end
     end
 end
+
+function onEvent(eventName, value1, value2, strumTime)
+    if eventName == "Change Character" and value1 == "bf" and value2 == "dinner-bf" then
+        setProperty("boyfriend.y", getProperty("boyfriend.y") + 220)
+    end
+end
