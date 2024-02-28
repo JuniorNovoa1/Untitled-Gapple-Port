@@ -1,5 +1,3 @@
---DON'T STEAL KIDS!
---BY JUNIORNOVOA
 local gappleMemoryCounter = true; --gapple doesn't have a memory counter... ITS REAL LANCE YPOSTED  IYT OPMGGGG	--doesnt matter
 local volumeKeybind = {"PLUS","MINUS","ZERO"}
 
@@ -38,11 +36,6 @@ local vol = 0.0;
 local arrowOffset = 30;
 
 function onCreatePost()
-	addHaxeLibrary("FlxEase", 'flixel.tweens')
-	addHaxeLibrary("FlxTween", 'flixel.tweens')
-	addHaxeLibrary("Math")
-    addHaxeLibrary('FlxMath', 'flixel.math')
-	addHaxeLibrary("Std")
 	setProperty('showComboNum', false)
     setProperty("showRating", false)
     setProperty('showCombo', false)
@@ -50,19 +43,6 @@ function onCreatePost()
 		makeLuaSprite("iconP12", "icons/missing", 0, 0)
 		makeLuaSprite("iconP22", "icons/missing", 0, 0)
 	end
-
-    --Source Code stuff
-    if stringStartsWith(version, '0.6') then
-        addHaxeLibrary("Rating", 'Conductor')
-		addHaxeLibrary("Highscore")
-		addHaxeLibrary("CoolUtil")
-        addHaxeLibrary("Note")
-    else
-        addHaxeLibrary("Rating", 'backend.Conductor')
-		addHaxeLibrary("Highscore", 'backend')
-		addHaxeLibrary("CoolUtil", 'backend')
-        addHaxeLibrary("Note", 'objects')
-    end
 
 	makeLuaText('creditsWatermark', songName, 0, 4, 698)
 	setObjectCamera('creditsWatermark', 'camHUD')
@@ -144,7 +124,6 @@ function onCreatePost()
 		}
 	]])
 
-	addHaxeLibrary("Type")
 	makeLuaText('fpsTxt', '', 0, 18, 6)
 	setObjectCamera('fpsTxt', 'other')
 	setTextAlignment('fpsTxt', 'center')
@@ -233,22 +212,22 @@ function onStrumsCreate()
 	donezo = true;
 end
 
-function changeNoteSkinsOnChange(idForPerson)
-	if string.lower(songName) == "apple-leak" or string.lower(songName) == 'kooky' then return; end
+function changeNoteSkinsOnChange(idForPerson, onlyNotes)
+	if string.lower(songName) == "apple-leak" or string.lower(songName) == 'kooky' or lowQuality then return; end
 	local chars3D = {false, false}
 
 	if idForPerson == 1 or idForPerson == nil then
 		for i = 1, #CharactersWith3D do
 			if string.lower(CharactersWith3D[i]) == string.lower(getProperty("boyfriend.curCharacter")) then
 				setProperty("boyfriend.antialiasing", false)
-				changeNoteSkin(true, 'NOTE_assets_3D')
+				changeNoteSkin(true, 'NOTE_assets_3D', onlyNotes)
 				for i = 0, 3 do
 					setPropertyFromGroup("playerStrums", i, "antialiasing", false)
 				end
 				chars3D[1] = true;
 				break;
 			else
-				changeNoteSkin(true, 'NOTE_assets')
+				changeNoteSkin(true, 'NOTE_assets', onlyNotes)
 				for i = 0, 3 do
 					setPropertyFromGroup("playerStrums", i, "antialiasing", true)
 				end
@@ -259,14 +238,14 @@ function changeNoteSkinsOnChange(idForPerson)
 		for i = 1, #CharactersWith3D do
 			if string.lower(CharactersWith3D[i]) == string.lower(getProperty("dad.curCharacter")) then
 				setProperty("dad.antialiasing", false)
-				changeNoteSkin(false, 'NOTE_assets_3D')
+				changeNoteSkin(false, 'NOTE_assets_3D', onlyNotes)
 				for i = 0, 3 do
 					setPropertyFromGroup("opponentStrums", i, "antialiasing", false)
 				end
 				chars3D[2] = true;
 				break;
 			else
-				changeNoteSkin(false, 'NOTE_assets')
+				changeNoteSkin(false, 'NOTE_assets', onlyNotes)
 				for i = 0, 3 do
 					setPropertyFromGroup("opponentStrums", i, "antialiasing", true)
 				end
@@ -284,8 +263,16 @@ end
 
 function onEvent(eventName, value1, value2, strumTime)
 	if eventName == 'Change Character' and string.lower(songName) ~= 'badcorn' then
-		changeNoteSkinsOnChange(1)
-		changeNoteSkinsOnChange(2)
+		if string.lower(value1) == "bf" then 
+			changeNoteSkinsOnChange(1, false)
+			changeNoteSkinsOnChange(2, true)
+		end
+		if string.lower(value1) == "dad" then 
+			changeNoteSkinsOnChange(1, true)
+			changeNoteSkinsOnChange(2, false)
+		end
+		--[[changeNoteSkinsOnChange(1)
+		changeNoteSkinsOnChange(2)--]]
 		--[[if string.lower(value1) == "bf" then changeNoteSkinsOnChange(1) end --changing both because of one character change = lag --nvm this was incase other character was 3d
 		if string.lower(value1) == "dad" then changeNoteSkinsOnChange(2) end--]]
 		if string.lower(value1) == 'badai' then
@@ -352,8 +339,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == "gappleSoundTrayExit" then doTweenX("gappleSoundTrayExit", "gappleSoundTray", screenWidth + 150, 1, "") end
 end
 
-function changeNoteSkin(player, skin)
-	if player == true then
+function changeNoteSkin(player, skin, onlyNotes)
+	if player == true and not onlyNotes then
 		for i = 0, 4, 1 do
 			setPropertyFromGroup('playerStrums', i, 'texture', 'ui/notes/'..skin)
 			if stringStartsWith(version, '0.7') then
@@ -362,7 +349,7 @@ function changeNoteSkin(player, skin)
 			end
 		end
 	end
-    if not player then
+    if not player and not onlyNotes then
 		for i = 0, 4, 1 do
 			setPropertyFromGroup('opponentStrums', i, 'texture', 'ui/notes/'..skin)
 			if stringStartsWith(version, '0.7') then

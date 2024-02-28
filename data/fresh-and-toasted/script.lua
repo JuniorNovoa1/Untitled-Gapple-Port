@@ -4,7 +4,6 @@ function onCreatePost()
     setProperty("badai.x", getProperty("dad.x") - 525)
     setProperty("badai.y", - 1000)
     precacheMusic("freshAndToasted/win-brobgonal")
-    addHaxeLibrary("FlxColor", 'flixel.util')
 
     for i = 0, getProperty("unspawnNotes.length") do
         if not getPropertyFromGroup("unspawnNotes", i, 'mustPress') then

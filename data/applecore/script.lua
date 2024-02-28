@@ -299,26 +299,6 @@ function strumAnim(direction, fool, timer)
 	]])
 end
 
-function onGameOver()
-    if stringStartsWith(version, '0.6') then
-        setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
-        setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
-    else
-        setPropertyFromClass('backend.ClientPrefs', 'data.middleScroll', oldVal[1])
-        setPropertyFromClass('backend.ClientPrefs', 'data.ghostTapping', oldVal[2])
-    end
-end
-
-function onEndSong()
-    if stringStartsWith(version, '0.6') then
-        setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])
-        setPropertyFromClass('ClientPrefs', 'ghostTapping', oldVal[2])
-    else
-        setPropertyFromClass('backend.ClientPrefs', 'data.middleScroll', oldVal[1])
-        setPropertyFromClass('backend.ClientPrefs', 'data.ghostTapping', oldVal[2])
-    end
-end
-
 function onDestroy()
     if stringStartsWith(version, '0.6') then
         setPropertyFromClass('ClientPrefs', 'middleScroll', oldVal[1])

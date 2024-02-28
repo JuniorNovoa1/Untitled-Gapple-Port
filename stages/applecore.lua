@@ -17,14 +17,6 @@ function onCreate()
 
     if string.lower(songName) == 'applecore' then
         --credit Drawoon_ later
-        addHaxeLibrary('Song')
-        addHaxeLibrary('SwagSong','Song')
-        addHaxeLibrary('Section')
-        addHaxeLibrary('SwagSection', 'Section')
-        addHaxeLibrary('Note')
-        addHaxeLibrary('Std')
-        addHaxeLibrary('Math')
-        addHaxeLibrary('FlxMath','flixel.math')
         runHaxeCode([[
             var SecondSong:SwagSong;
             //SecondSong = Song.loadFromJson("bopeebo-hard", "bopeebo");
@@ -102,6 +94,8 @@ function onCreate()
             setShaderFloat(items[i], 'uSpeed', 2)
         end
     end
+    setProperty('hi.visible', true)
+    if lowQuality then return; end
 
     for i = 1, #items2 do
         makeAnimatedLuaSprite(items2[i], 'main/applecore/'..items2[i], getRandomInt(-2000, -3000), getRandomInt(heightStuff[1], heightStuff[2]))
@@ -146,8 +140,6 @@ function onCreate()
         doTweenX(items3[i]..'first11', items3[i]..'1', getRandomInt(0, 500), time / playbackRate, tweenType)
         doTweenY(items3[i]..'first111', items3[i]..'1', getRandomInt(heightStuff[1], heightStuff[2]), time / playbackRate, tweenType)
     end
-
-    setProperty('hi.visible', true)
 end
 
 local elapsedtime = 0

@@ -1,14 +1,6 @@
 function onCreate()
     if string.lower(songName) == 'ataefull' then
         --credit Drawoon_ later
-        addHaxeLibrary('Song')
-        addHaxeLibrary('SwagSong', 'Song')
-        addHaxeLibrary('Section')
-        addHaxeLibrary('SwagSection', 'Section')
-        addHaxeLibrary('Note')
-        addHaxeLibrary('Std')
-        addHaxeLibrary('Math')
-        addHaxeLibrary('FlxMath', 'flixel.math')
         local songString = {"atae-dave", "atae-bambi", "atae-tristan"}
         for i = 1, #songString do
             runHaxeCode([[

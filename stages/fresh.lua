@@ -1,6 +1,5 @@
 local shadname = "glitchEffect";
 function onCreate()
-    addHaxeLibrary('Character')
     initLuaShader(shadname)
 
     makeLuaSprite('fresh2', 'main/fresh-and-toasted/this_is_a_shuhbam-min', 0, 0)

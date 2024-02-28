@@ -7,8 +7,6 @@ function onCreatePost()
 
    setSpriteShader("BlockedGlitchShaderSpr", "BlockedGlitchShader")
    setShaderFloat("BlockedGlitchShaderSpr", "time", 1)
-
-   addHaxeLibrary("ShaderFilter", "openfl.filters")
 end
 eT = 0
 

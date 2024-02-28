@@ -56,16 +56,6 @@ function onCreatePost()
 		return;
 	end
 
-	addHaxeLibrary("FlxG", 'flixel')
-	
-	if stringStartsWith(version, '0.6') then
-        addHaxeLibrary('Character')
-		addHaxeLibrary('HealthIcon')
-    else
-        addHaxeLibrary('Character', 'objects')
-		addHaxeLibrary('HealthIcon', 'objects')
-    end
-
 	makeLuaSprite('mineBGcharSelect', 'extras/mine_bg', 0, 0)
 	scaleObject("mineBGcharSelect", 0.75, 0.75, true)
 	setObjectCamera("mineBGcharSelect", 'other')
@@ -223,8 +213,6 @@ function triggerKeyThingy(key)
 				game.getLuaObject("char", false).playAnim("singUP");
 			end
 		]])
-		triggerEvent("Change Character", 'bf', characters[curSelected][curSelectedVer])
-		if nonNativeCharacters[boyfriendName] == false then setProperty("boyfriend.cameraPosition[0]", getProperty("boyfriend.cameraPosition[0]") * -2) end
 		--[[setProperty("boyfriend.x", (posBF[1] + bfSCALE[1]) - (getProperty("boyfriend.width") * 0.9))
 		setProperty("boyfriend.y", (posBF[2] + bfSCALE[2]) - (getProperty("boyfriend.height") * 0.9))--]]
 		playSound('confirmMenu', 1)
@@ -292,6 +280,8 @@ end
 
 function onTweenCompleted(tag)
 	if tag == 'screenTransOut' then
+		triggerEvent("Change Character", 'bf', characters[curSelected][curSelectedVer])
+		if nonNativeCharacters[boyfriendName] == false then setProperty("boyfriend.cameraPosition[0]", getProperty("boyfriend.cameraPosition[0]") * -2) end
 		runTimer("soundchar2", 1 / playbackRate)
 	end
 

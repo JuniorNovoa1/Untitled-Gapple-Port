@@ -2,20 +2,6 @@ local curSelectedOptionUpDown = 1;
 local firstStart = true;
 local canChangeMenu = true;
 function onCreate()
-	addHaxeLibrary("FlxTween", 'flixel.tweens')
-	addHaxeLibrary("FlxEase", 'flixel.tweens')
-	addHaxeLibrary("FlxFlicker", 'flixel.effects')
-	if stringStartsWith(version, '0.7') then
-		addHaxeLibrary("CoolUtil", "backend")
-		addHaxeLibrary("Paths", "backend")
-		addHaxeLibrary("Alphabet", "objects")
-		addHaxeLibrary("Highscore", "backend")
-	else
-		addHaxeLibrary("CoolUtil")
-		addHaxeLibrary("Paths")
-		addHaxeLibrary("Alphabet")
-		addHaxeLibrary("Highscore")
-	end
 	setProperty("skipCountdown", true)
 	--runHaxeCode([[FlxG.mouse.load(Paths.image("cursor"));]])
 end
@@ -842,7 +828,6 @@ function onUpdatePost()
 	end
 
 	if keyboardJustPressed("F") then
-		addHaxeLibrary("PauseSubState")
 		runHaxeCode([[PauseSubState.restartSong();]])
 	end
 

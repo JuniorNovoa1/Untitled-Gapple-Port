@@ -1,11 +1,5 @@
 local dialogue = {};
 
-function onCreate()
-	addHaxeLibrary('FlxTimer', 'flixel.util')
-	addHaxeLibrary('FlxTween', 'flixel.tweens')
-	addHaxeLibrary("StringTools")
-	addHaxeLibrary("FunkinLua")
-end
 function onEvent(eventName, value1, value2, strumTime)
 	if eventName == "dialogue" then
 		createDialogue(value1, tonumber(typeSpeed), nil, nil)

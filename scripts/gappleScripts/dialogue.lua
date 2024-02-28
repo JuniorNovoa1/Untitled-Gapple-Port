@@ -176,8 +176,6 @@ function onCreate()
 	for i = 1, #dialogueTXT do
 		maxDialogue = i;
 	end
-
-	addHaxeLibrary('FlxTimer', 'flixel.util')
 end
 
 local hasExitDialogue = false;
@@ -224,8 +222,7 @@ function onDialogueReadyChar()
 	scaleObject('speech_bubble', 0.9, 0.9)
 	setObjectCamera('speech_bubble', 'other')
 	addLuaSprite('speech_bubble', false)
-	
-	addHaxeLibrary("Type")
+
 	makeLuaText('dialogueTxtTEXT', dialogueTXT[1], 720, 275, 465)
 	setObjectCamera('dialogueTxtTEXT', 'camother')
 	setTextAlignment('dialogueTxtTEXT', 'left')

@@ -9,8 +9,7 @@ function onCreatePost()
     setShaderFloat("PulseShaderSpr", "uSpeed", 1)
     setShaderFloat("PulseShaderSpr", "uFrequency", 2)
     setShaderFloat("PulseShaderSpr", "uWaveAmplitude", 1)
-
-	 addHaxeLibrary("ShaderFilter", "openfl.filters")
+    
 	 runHaxeCode([[
 	 	 game.camGame.setFilters([new ShaderFilter(game.getLuaObject("PulseShaderSpr").shader)]);
 	 ]])
