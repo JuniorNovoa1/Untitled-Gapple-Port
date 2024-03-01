@@ -44,6 +44,7 @@ function onCreate()
 end
 
 function onCreatePost()
+	if inChartEditor then gappleSong = false; end
 	for i = 1, #nonCharSelectSongs do
 		if string.lower(songName) == nonCharSelectSongs[i] then gappleSong = false; end
 	end

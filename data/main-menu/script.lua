@@ -422,7 +422,7 @@ function changeState(newState)
 		table.insert(prevObjects, "menuBG")
 
 		makeLuaSprite("category", "categories/"..extrasSprs[curSelectedOptionUpDown], 0, 0)
-		scaleObject("category", 2.5, 2.5, true)
+		scaleObject("category", 2.6, 2.6, true)
 		setObjectCamera("category", 'hud')
 		screenCenter("category", 'xy')
 		addLuaSprite("category", false)
@@ -731,7 +731,7 @@ function onUpdate(elapsed)
 			curSelectedOptionUpDown = curSelectedOptionUpDown -1;
 			if curSelectedOptionUpDown == 0 then curSelectedOptionUpDown = #extrasSprs end
 			makeLuaSprite("category", "categories/"..extrasSprs[curSelectedOptionUpDown], 0, 0)
-			scaleObject("category", 2.5, 2.5, true)
+			scaleObject("category", 2.6, 2.6, true)
 			setObjectCamera("category", 'hud')
 			screenCenter("category", 'xy')
 			addLuaSprite("category", false)
@@ -741,7 +741,7 @@ function onUpdate(elapsed)
 			curSelectedOptionUpDown = curSelectedOptionUpDown +1;
 			if curSelectedOptionUpDown > #extrasSprs then curSelectedOptionUpDown = 1; end
 			makeLuaSprite("category", "categories/"..extrasSprs[curSelectedOptionUpDown], 0, 0)
-			scaleObject("category", 2.5, 2.5, true)
+			scaleObject("category", 2.6, 2.6, true)
 			setObjectCamera("category", 'hud')
 			screenCenter("category", 'xy')
 			addLuaSprite("category", false)
@@ -789,10 +789,11 @@ function onUpdatePost()
 			nextMenu = "freeplaymenu";
 			nextFreeplayMenu = extrasSprs[curSelectedOptionUpDown];
 			onTransition(0.6)
-			doTweenX("backgroundX", "menuBG.scale", 0, 4 / playbackRate, "")
-			doTweenY("backgroundY", "menuBG.scale", 0, 4 / playbackRate, "")
-			doTweenX("categoryX", "category.scale", 6, 2 / playbackRate, "")
-			doTweenY("categoryY", "category.scale", 6, 2 / playbackRate, "")
+			local timer = 2;
+			doTweenX("backgroundX", "menuBG.scale", 0, timer / playbackRate, "")
+			doTweenY("backgroundY", "menuBG.scale", 0, timer / playbackRate, "")
+			doTweenX("categoryX", "category.scale", 9, timer / 2 / playbackRate, "")
+			doTweenY("categoryY", "category.scale", 9, timer / 2 / playbackRate, "")
 			canChangeMenu = false;
 		end
 		if curState == "freeplaymenu" then

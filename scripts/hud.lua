@@ -58,6 +58,7 @@ function onCreatePost()
 	if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
 	if string.lower(songName) == 'the-big-dingle' then setTextString("creditsWatermark", 'The Big Dingle') end
 	if string.lower(songName) == 'the-scratches' then setTextString("creditsWatermark", 'The Scratches') end
+	if string.lower(songName) == 'og' then setTextString("creditsWatermark", 'OG Legacy - KE 1.2') end
 	if string.lower(songName) == 'apple-leak' then setTextString("creditsWatermark", 'Apple Leak') end
 
 	makeLuaText('creditsText', '', 0, 4, getProperty('healthBar.y') + 52)
@@ -315,6 +316,7 @@ function onEndSong()
 		updateHitbox("gappleTransition")
 		screenCenter("gappleTransition", 'xy')
 		addLuaSprite('gappleTransition', true)
+		scaleObject("gappleTransition", 1.05, 1.05)
 		runTimer("gappleTransitionEnd", 1 / playbackRate)
 		playAnim("gappleTransition", "start", true, true)
 		alreadyCreatedEnding = true;
@@ -494,6 +496,14 @@ function onUpdatePost(elapsed)
 		setTextString('scoreTxt', "Score: \n"..tostring(score).."\n\n\n\nMisses: \n"..tostring(getProperty('songMisses')).."\n\n\nAccuracy: \n")
 	end
 	if stringStartsWith(version, '0.7') then runHaxeCode([[game.scoreTxt.text += '' + CoolUtil.floorDecimal(game.ratingPercent * 100, 2) + "%";]]) else runHaxeCode([[game.scoreTxt.text += '' + Highscore.floorDecimal(game.ratingPercent * 100, 2) + "%";]]) end
+	if string.lower(songName) == "og" then
+		if stringStartsWith(version, '0.7') then runHaxeCode([[setVar("AccuracyOG", CoolUtil.floorDecimal(game.ratingPercent * 100, 2));]]) else runHaxeCode([[setVar("AccuracyOG", Highscore.floorDecimal(game.ratingPercent * 100, 2));]]) end
+		if (getProperty("AccuracyOG") >= 96 or getScore() == 0) and getMisses() == 0 then
+			setTextString("scoreTxt", getProperty("scoreTxt.text").." | FC")
+		elseif getMisses() == 0 then
+			setTextString("scoreTxt", getProperty("scoreTxt.text").." | A")
+		end
+	end
 	if luaSpriteExists("iconP12") then
 		runHaxeCode([[
 			var iconOffset = 26;
@@ -569,7 +579,7 @@ function onBeatHit()
 		end
 	end
 
-	if string.lower(songName) == 'kooky' or not luaSpriteExists("iconP12") then return; end
+	if string.lower(songName) == 'og' or string.lower(songName) == 'kooky' or not luaSpriteExists("iconP12") then return; end
     local iconPos = getProperty('healthBar.y') -80;
 
     if curBeat % getProperty('gfSpeed') == 0 then
@@ -638,6 +648,9 @@ function goodNoteHit(membersIndex, direction, noteType, isSustainNote)
 		if(game.scoreTxtTween != null) {
 			game.scoreTxtTween.cancel();
 		}
+	]])
+	if string.lower(songName) == "og" then return; end
+	runHaxeCode([[
 		game.scoreTxt.scale.x = 1.075;
 		game.scoreTxt.scale.y = 1.075;
 		game.scoreTxtTween = FlxTween.tween(game.scoreTxt.scale, {x: 1, y: 1}, 0.35 / game.playbackRate, {
