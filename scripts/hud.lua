@@ -183,7 +183,7 @@ function onCreatePost()
 		if not getPropertyFromGroup("unspawnNotes", i, 'isSustainNote') then setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup("unspawnNotes", i, 'hitHealth') * 0.8) else setPropertyFromGroup('unspawnNotes', i, 'hitHealth', getPropertyFromGroup("unspawnNotes", i, 'hitHealth') * 0.3) end
 		if stringStartsWith(version, '0.7') then setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false) end
 		if stringStartsWith(version, '0.7') then setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.disabled', true) else setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', true) end
-		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then 
+		if checkIfNoteTypeCanChange("unspawnNotes", i) then 
 			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == false then 
 				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
 			end
@@ -254,7 +254,7 @@ function changeNoteSkinsOnChange(idForPerson, onlyNotes)
 		end
 	end
 	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
-		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then 
+		if checkIfNoteTypeCanChange("unspawnNotes", i) then 
 			if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
 				setPropertyFromGroup('unspawnNotes', i, 'texture', 'ui/notes/NOTE_assets_3D')
 			end
@@ -362,16 +362,21 @@ function changeNoteSkin(player, skin, onlyNotes)
 	end
 
     for i = 0, getProperty('notes.length') -1 do
-        if getPropertyFromGroup('notes', i, 'mustPress') == player then --only "player" side
-            if getPropertyFromGroup('notes', i, 'noteType') == '' or getPropertyFromGroup('notes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('notes', i, 'noteType') == nil then setPropertyFromGroup('notes', i, 'texture', 'ui/notes/'..skin) end
+        if getPropertyFromGroup('notes', i, 'mustPress') == player and checkIfNoteTypeCanChange("notes", i) then --only "player" side
+            setPropertyFromGroup('notes', i, 'texture', 'ui/notes/'..skin)
         end
     end
 
     for i = 0, getProperty('unspawnNotes.length') -1 do
-        if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player then --only "player" side
-			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == '' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'normal' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'No Animation' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == nil then setPropertyFromGroup('unspawnNotes', i, 'texture', 'ui/notes/'..skin) end
+        if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == player and checkIfNoteTypeCanChange("unspawnNotes", i) then --only "player" side
+			setPropertyFromGroup('unspawnNotes', i, 'texture', 'ui/notes/'..skin)
         end
     end
+end
+
+function checkIfNoteTypeCanChange(noteGroup, noteID)
+	if getPropertyFromGroup(noteGroup, noteID, 'noteType') == '' or getPropertyFromGroup(noteGroup, noteID, 'noteType') == 'normal' or getPropertyFromGroup(noteGroup, noteID, 'noteType') == 'No Animation' or getPropertyFromGroup(noteGroup, noteID, 'noteType') == nil then return true; end
+	return false;
 end
 
 function math.lerp(from, to, t)
@@ -651,8 +656,8 @@ function goodNoteHit(membersIndex, direction, noteType, isSustainNote)
 	]])
 	if string.lower(songName) == "og" then return; end
 	runHaxeCode([[
-		game.scoreTxt.scale.x = 1.075;
-		game.scoreTxt.scale.y = 1.075;
+		game.scoreTxt.scale.x = 1.1;
+		game.scoreTxt.scale.y = 1.1;
 		game.scoreTxtTween = FlxTween.tween(game.scoreTxt.scale, {x: 1, y: 1}, 0.35 / game.playbackRate, {
 			ease: FlxEase.backOut,
 			onComplete: function(twn) {

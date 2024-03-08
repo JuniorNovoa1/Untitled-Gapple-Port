@@ -28,7 +28,7 @@ function onCountdownTick(swagCounter)
 end
 
 function onUpdate() --camera now follows characters!!!!
-	bfCamIdle[1] = getMidpointX('boyfriend') - 100 - getProperty('boyfriend.cameraPosition[0]') - getProperty('boyfriendCameraOffset[0]')
+	bfCamIdle[1] = getMidpointX('boyfriend') - 100 - getProperty('boyfriend.cameraPosition[0]') + getProperty('boyfriendCameraOffset[0]')
 	bfCamIdle[2] = getMidpointY('boyfriend') - 100 + getProperty('boyfriend.cameraPosition[1]') + getProperty('boyfriendCameraOffset[1]')
 	dadCamIdle[1] = getMidpointX('dad') + 150 + getProperty('dad.cameraPosition[0]') + getProperty('opponentCameraOffset[0]')
 	dadCamIdle[2] = getMidpointY('dad') - 100 + getProperty('dad.cameraPosition[1]') + getProperty('opponentCameraOffset[1]')
@@ -69,7 +69,7 @@ function onUpdate() --camera now follows characters!!!!
 		bfCamIdle[2] = dadCamIdle[2];
 	end
 	if getDataFromSave("UnNamedGapplePortSettings", "newCamZoom") then yoffset = 105 / getProperty("defaultCamZoom") end
-	if mustHitSection == true and getProperty('boyfriend.animation.curAnim.name') == 'idle' then
+	if mustHitSection == true and not string.match(getProperty('boyfriend.animation.curAnim.name'), "sing") then
 		callCamMovemt(bfCamIdle[1] -(yoffset * 2.5), bfCamIdle[2] -yoffset);
 	elseif mustHitSection == true then
 		if camMovementType == 'charSize' then
@@ -91,7 +91,7 @@ function onUpdate() --camera now follows characters!!!!
 		end
 	end
 	if not getDataFromSave("UnNamedGapplePortSettings", "badaiTime") then
-		if mustHitSection == false and (getProperty('dad.animation.curAnim.name') == 'idle' or dadName == 'bandu' or dadName == 'bandu-sad') then
+		if mustHitSection == false and (not string.match(getProperty('dad.animation.curAnim.name'), "sing") or dadName == 'bandu' or dadName == 'bandu-sad') then
 			callCamMovemt(dadCamIdle[1] -yoffset, dadCamIdle[2] -yoffset);
 		elseif mustHitSection == false and dadName ~= 'bandu' and dadName ~= 'bandu-sad' then
 			if camMovementType == 'charSize' then
@@ -113,7 +113,7 @@ function onUpdate() --camera now follows characters!!!!
 			end
 		end
 	else
-		if mustHitSection == false and getProperty('badai.animation.curAnim.name') == 'idle' then
+		if mustHitSection == false and not string.match(getProperty('badai.animation.curAnim.name'), "sing") then
 			callCamMovemt(badaiCamIdle[1] -yoffset, badaiCamIdle[2] -yoffset);
 		elseif mustHitSection == false then
 			if camMovementType == 'charSize' then

@@ -8,12 +8,13 @@ local songTxt = {
 	["deformation"] = 'Song by Aadsta\n\nVisuals by Lancey\n\nCharting by Log Man',
 	["nice"] = "Song by Sky!\n\nVisuals by Lancey, Wildey\nand TecheVent\n\nCharting by Project Tea\n\nBased off Marcello's The Nice\nAND COLLECT\nOFGAMER AcT:ONE THE\nSTORE GAME MUN by\nMarcello_TimeNice30",
 	["ferocious"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Lexicord\n\nBased off Garrett\'s Funny \nAnimal Game\nby Jumpman25',
+	
 	["glamrock"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Lexicord',
 	["sugar-rush"] = 'Song by Sky!\n\nVisuals by TecheVent and\nLancey\n\nCharting by Project Tea\n\nBased on TecheVent\nplaying as Glamrock\nFreddy in CRIDAB',
 	["gift-card"] = 'Song by CVAL\n\nVisuals by Lancey and Osp\n\nCharting by Log Man',
 	["ready-loud"] = 'Song by MoldyGH\n\nVisuals by Lancey\nand Aadsta\n\nCharting by Log Man',
-	["bookworm"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Log Man',
-	["cuberoot"] = 'Song by Aadsta\n\nVisuals by SquishyZumorizu and\nJukebox\n\nCharting by Lexicord',
+	["bookworm"] = 'Song by Sky!\n\nVisuals by\nSquishyZumorizu and\nJukebox\n\nCharting by Log Man',
+	["cuberoot"] = 'Song by Aadsta\n\nVisuals by Lancey\n\nCharting by 1up',
 	["apprentice"] = 'Song by Aadsta\n\nVisuals by Lancey\n\nCharting by Aadsta',
 	["too-shiny"] = 'Song by Gorbini\n\nVisuals by Willow\n\nCharting by Log Man\n\nBased off Dave\'s Fun\nAlgebra Class! by\nMoldyGH',
 	["resumed"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Cynda\n\nBased off Dambu on\nYoutube',
@@ -23,10 +24,14 @@ local songTxt = {
 	["ataefull"] = "Song by TH3R34LD34L\n\nVisuals by SAMMYPIGZY\n\nCharting by Log Man",
 	["the-scratches"] = "Song by Cynda\n\nVisuals by TecheVent and\nWugalex\n\nCharting by Project Tea\n\nBased on Scratchman100\nand his OCs",
 	["sart-producer"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Cynda',
+
 	["og"] = 'Song by Aadsta\n\nVisuals by Devianator\nand Aadsta\n\nCharting by Aadsta\n\nBased off Pre-Alpha Dave',
 	["apple-leak"] = 'Part by Silly Squirmer\n\nVisuals by SAMMYPIGZY\nand Arty Squirmer\n\nCharting by Charty Squirmer\n\nBased off\nHigh Effort Poopers',
+	
 	["ticking"] = 'Song by Aadsta\n\nVisuals by Lancey\n\nCharting by Project Tea',
+
 	["kooky"] = 'Song by Aadsta\n\nVisuals by Lancey\n\nCharting by Project Tea',
+
 	["badcorn"] = 'Fake song!\n\nSong by Crapler\n\nVisuals by Lancey\n\nCharting by Unknown',
 	["crap"] = 'Fake song?\n\nSong by Sky!\n\nVisuals by Lancey\nBluHairMan\n\nCharting by Colin09\n\nBased off Golden Apple?\nMore like Golden Crapple!'
 };

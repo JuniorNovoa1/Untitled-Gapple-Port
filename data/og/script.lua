@@ -33,6 +33,19 @@ function onEvent(eventName, value1, value2, strumTime)
     end
 end
 
+function doTweenDefaultCamZoom(tag, value, duration)
+    runHaxeCode([[
+        PlayState.instance.modchartTweens.set("]]..tag..[[", FlxTween.num(game.defaultCamZoom, ]]..value..[[, ]]..duration..[[, {
+            onUpdate: function(twn) {
+                game.defaultCamZoom = twn.value;
+            }, onComplete: function(twn) {
+                PlayState.instance.modchartTweens.remove("]]..tag..[[");
+                PlayState.instance.callOnLuas('onTweenCompleted', ["]]..tag..[["]);
+            }
+        }));
+    ]])
+end
+
 function onStepHit()
     if curStep == 256 or curStep == 384 or curStep == 512 or curStep == 640 or curStep == 768 or curStep == 1152 or curStep == 1216 or curStep == 1280 
     or curStep == 1344 or curStep == 1408 or curStep == 1472 or curStep == 1536 or curStep == 1664 then
@@ -41,11 +54,11 @@ function onStepHit()
     end
 
     if curStep == 898 then
-        runHaxeCode([[FlxTween.num(game.defaultCamZoom, 1.1, 1.5, {}, function(newValue) {game.defaultCamZoom = newValue;});]])
+        doTweenDefaultCamZoom("cameraTween", 1.1, 1.5)
         doTweenAlpha("thunderBlack", "thunderBlack", 0.6, 1.5, "")
     end
     if curStep == 1144 then
-        runHaxeCode([[FlxTween.num(game.defaultCamZoom, 1, 1, {}, function(newValue) {game.defaultCamZoom = newValue;});]])
+        doTweenDefaultCamZoom("cameraTween", 1, 1)
         doTweenAlpha("thunderBlack", "thunderBlack", 0, 1, "")
     end
 
@@ -75,7 +88,7 @@ function onStepHit()
     end
 
     if curStep == 1744 then
-        runHaxeCode([[FlxTween.num(game.defaultCamZoom, 0.9, 1, {}, function(newValue) {game.defaultCamZoom = newValue;});]])
+        doTweenDefaultCamZoom("cameraTween", 0.9, 1)
         doTweenAlpha("redVG", "redVG", 0, .5, "")
     end
 end
