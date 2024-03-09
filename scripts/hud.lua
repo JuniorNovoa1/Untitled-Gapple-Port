@@ -486,7 +486,7 @@ function onUpdatePost(elapsed)
 		end
 		setProperty('scoreTxt.y', getProperty('healthBar.y') + 36)
 		if songName ~= 'main-menu' then
-			if getProperty('creditsWatermark.text') == '' then setProperty('kadeEngineWatermark.y', getProperty('healthBar.y') + 48) elseif string.lower(songName) ~= 'kooky' then setProperty("kadeEngineWatermark.y", getProperty("healthBar.y") + 28) end
+			if getProperty('creditsWatermark.text') == '' then setProperty('kadeEngineWatermark.y', getProperty('healthBar.y') + 47) elseif string.lower(songName) ~= 'kooky' then setProperty("kadeEngineWatermark.y", getProperty("healthBar.y") + 28) end
 		end
 	end
 
