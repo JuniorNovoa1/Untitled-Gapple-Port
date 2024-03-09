@@ -1,6 +1,6 @@
 --DON'T STEAL KIDS!
 --BY JUNIORNOVOA
-local gappleSong = true; --set to false to disable!
+local gappleSong = false; --set to false to disable!
 local nonCharSelectSongs = {'main-menu', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'fresh-and-toasted', 'deformation', 'ferocious', 'nice', 'glamrock', 'ready-loud', 'cuberoot', 'the-scratches', 'apple-leak', 'kooky'};
 
 local lockedCharacters = {}

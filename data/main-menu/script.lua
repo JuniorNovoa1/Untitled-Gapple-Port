@@ -142,12 +142,12 @@ function changeState(newState)
 		if luaSpriteExists(prevObjects[i]) then removeLuaSprite(prevObjects[i], true) end
 		if luaTextExists(prevObjects[i]) then removeLuaText(prevObjects[i], true) end
 	end
-	setTextString("creditsWatermark", "")
+	setTextString("kadeEngineWatermark", "")
 	runHaxeCode([[FlxG.mouse.visible = false;]])
 
 	if string.lower(newState) == "mainmenu" then
 		canChangeMenu = false;
-		setTextString("creditsWatermark", "1.5 Golden Apple Engine")
+		setTextString("kadeEngineWatermark", "1.5 Golden Apple Engine")
 		makeLuaSprite("menuBG", "backgrounds/"..backgroundSprs[getRandomInt(1, #backgroundSprs)], 0, 0)
 		setGraphicSize("menuBG", 1280, 720)
 		setObjectCamera("menuBG", 'hud')
@@ -326,7 +326,7 @@ function changeState(newState)
 		table.insert(prevObjects, "fakeMouse")
 	end
 	if string.lower(newState) == "storymenu" then
-		setTextString("creditsWatermark", "1.5 Golden Apple Engine")
+		setTextString("kadeEngineWatermark", "1.5 Golden Apple Engine")
 		makeLuaSprite("grad", "grads/"..storySongs[curSelectedOptionUpDown], 0, 0)
 		scaleObject("grad", 1.05, 1.05, true)
 		screenCenter("grad", 'xy')

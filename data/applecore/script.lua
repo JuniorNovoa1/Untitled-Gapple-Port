@@ -154,7 +154,7 @@ function onStepHit()
         setProperty('pizza1.visible', false)
         setProperty('minion.visible', true)
         setProperty('minion1.visible', true)
-        setProperty('creditsText.text', 'Screw you!')
+        setProperty('creditsWatermark.text', 'Screw you!')
 
         removeLuaSprite('hi', true)
         setProperty('poop.visible', true)
@@ -182,7 +182,7 @@ function onStepHit()
             setPropertyFromGroup('strumLineNotes', i, 'scale.x', 0.7)
             setPropertyFromGroup('strumLineNotes', i, 'scale.y', 0.7)
         end
-        setProperty('creditsText.text', 'Ghost tapping is forced off! Screw you!')
+        setProperty('creditsWatermark.text', 'Ghost tapping is forced off! Screw you!')
         if stringStartsWith(version, '0.6') then
             setPropertyFromClass('ClientPrefs', 'ghostTapping', false)
         else

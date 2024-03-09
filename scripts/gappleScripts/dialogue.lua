@@ -223,27 +223,15 @@ function onDialogueReadyChar()
 	setObjectCamera('speech_bubble', 'other')
 	addLuaSprite('speech_bubble', false)
 
-	makeLuaText('dialogueTxtTEXT', dialogueTXT[1], 720, 275, 465)
-	setObjectCamera('dialogueTxtTEXT', 'camother')
-	setTextAlignment('dialogueTxtTEXT', 'left')
-	setTextColor('dialogueTxtTEXT', '000000')
-	runHaxeCode([[game.getLuaObject('dialogueTxtTEXT').setBorderStyle(Type.resolveEnum('flixel.text.FlxTextBorderStyle').NONE);]]) --Collin09 POG
-	setTextFont('dialogueTxtTEXT', 'comic.ttf')
-	setTextSize('dialogueTxtTEXT', 32)
-	updateHitbox('dialogueTxtTEXT')
-	addLuaText('dialogueTxtTEXT')
-
 	if crazyBubble then
 		playAnim('speech_bubble', 'idle2', true);
 
 		setProperty('dadDialogue.x', getProperty('dadDialogue.x') -25)
 		setProperty('bfDialogue.x', getProperty('bfDialogue.x') -25)
 		setProperty('speech_bubble.x', getProperty('speech_bubble.x') -25)
-		setProperty('dialogueTxtTEXT.x', getProperty('dialogueTxtTEXT.x') -25)
 		setProperty('dadDialogue.y', getProperty('dadDialogue.y') +50)
 		setProperty('bfDialogue.y', getProperty('bfDialogue.y') +50)
 		setProperty('speech_bubble.y', getProperty('speech_bubble.y') -15)
-		setProperty('dialogueTxtTEXT.y', getProperty('dialogueTxtTEXT.y') +50)
 	end
 
 	if buildTarget == 'android' then
@@ -259,7 +247,7 @@ function onDialogueReadyChar()
 
 	dialogueProps()
 
-	changeTxt(dialogueTXT[1])
+	changeTxt(dialogueTXT[curDialogue])
 
 	playSound(song, 1, 'song')
 
@@ -278,14 +266,12 @@ end
 
 local spam = false;
 
-local canContinue = false;
-
 function onUpdate(elapsed)
 	if not hasExitDialogue and inDialogue then
-		prevDialogueText = getTextString("dialogueTxtTEXT")
+		prevDialogueText = getTextString("textDialouge.text")
 		setProperty("fakeMouse.x", getMouseX("other"))
 		setProperty("fakeMouse.y", getMouseY("other"))
-		if (keyboardJustPressed('ENTER') == true or (mouseClicked("left") and objectsOverlap("fakeMouse", "confirmButton"))) and canContinue and not spam then
+		if (keyboardJustPressed('ENTER') == true or (mouseClicked("left") and objectsOverlap("fakeMouse", "confirmButton"))) and not spam then
 			curDialogue = curDialogue +1;
 
 			playSound('scrollMenu', 1)
@@ -295,17 +281,17 @@ function onUpdate(elapsed)
 				dialogueProps()
 			end
 		end
-		if keyboardJustPressed('P') == true or curDialogue > maxDialogue and not spam then
+		if curDialogue > maxDialogue and not spam then
 			spam = true;
 			doTweenAlpha('background', 'background', 0, 1 / playbackRate)
 			doTweenAlpha('dadDialogue', 'dadDialogue', 0, 1 / playbackRate)
 			doTweenAlpha('bfDialogue', 'bfDialogue', 0, 1 / playbackRate)
+			runHaxeCode([[FlxTween.tween(getVar("textDialouge"), {alpha:0}, 1 / game.playbackRate);]])
 			doTweenAlpha('speech_bubble', 'speech_bubble', 0, 1 / playbackRate)
 			doTweenAlpha('confirmButton', 'confirmButton', 0, 1 / playbackRate)
-			doTweenAlpha('dialogueTxtTEXT', 'dialogueTxtTEXT', 0, 1 / playbackRate)
 		end
 
-		setSoundVolume('song', getProperty('dialogueTxtTEXT.alpha'))
+		setSoundVolume('song', getProperty('speech_bubble.alpha'))
 
 		if luaSoundExists('song') == false then
 			playSound(song, 1, 'song')
@@ -315,30 +301,42 @@ function onUpdate(elapsed)
 				//game.setSongTime(Conductor.crochet * 5);
 			]])
 		end
-
-		if getProperty('dialogueTxtTEXT.text') ~= dialogueTXT[curDialogue] and not spam then
-			playSound('pixelText', 0.6)
-			canContinue = false;
-		else
-			canContinue = true;
-		end
 	end
 end
 
+local canUpdate = true;
+function onUpdatePost(elapsed) --delayed uhghhh
+	if not canUpdate then return; end
+	if getProperty("isTyping") then
+		playSound("pixelText")
+	end
+	canUpdate = false;
+	runTimer("canUpdateTimerDialogue", 0.04 / playbackRate)
+end
+function onTimerCompleted(tag, loops, loopsLeft) 
+	if tag == "canUpdateTimerDialogue" then canUpdate = true; end 
+end
+
 function changeTxt(text)
-	local timeForEach = 0.035 / playbackRate;
-	setTextString('dialogueTxtTEXT', '')
-	for i = 1, #text do
-		runHaxeCode([[
-			var textNumber = "]]..i..[[";
-			var maxNumbers = "]]..#text..[[";
-			new FlxTimer().start(]]..timeForEach * i..[[, function(tmr) {
-				var txt = game.modchartTexts.get('dialogueTxtTEXT');
-				txt.text += "]]..text:sub(i, i)..[[";
-				if (textNumber == maxNumbers)
-					txt.text = "]]..text..[[";
-			});
-		]])
+	runHaxeCode([[
+		getVar("textDialouge").skip();
+		game.remove(getVar("textDialouge"));
+		getVar("textDialouge").destroy();
+	]])
+	runHaxeCode([[
+		var textDialouge = new FlxTypeText(275, 465, 720, "]]..text..[[", 36);
+		textDialouge.setFormat(Paths.font("comic.ttf"), 32, 0xFF000000, 'left', Type.resolveEnum('flixel.text.FlxTextBorderStyle').OUTLINE, 0xFFFFFF);
+		textDialouge.setBorderStyle(Type.resolveEnum('flixel.text.FlxTextBorderStyle').NONE);
+		textDialouge.start(0.04 / game.playbackRate, true, null, null, () -> {
+			setVar("isTyping", false);
+		});
+		textDialouge.camera = game.camOther;
+		game.add(textDialouge);
+		setVar("textDialouge", textDialouge);
+		setVar("isTyping", true);
+	]])
+	if crazyBubble then
+		runHaxeCode([[getVar("textDialouge").y += 30;]])
 	end
 end
 
@@ -350,7 +348,13 @@ function onTweenCompleted(tag)
 		removeLuaSprite('speech_bubble', true)
 		removeLuaSprite("fakeMouse", true)
 		removeLuaSprite("confirmButton", true)
-		removeLuaText('dialogueTxtTEXT', true) --don't wanna waste memory right???
+		runHaxeCode([[
+			setVar("isTyping", null);
+			getVar("textDialouge").skip();
+			game.remove(getVar("textDialouge"));
+			getVar("textDialouge").destroy();
+			setVar("textDialouge", null);
+		]])
 		closeCustomSubstate()
 		inDialogue = false;
 		dialogueBool = false;

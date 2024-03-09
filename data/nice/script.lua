@@ -14,7 +14,7 @@ function onUpdate(elapsed)
     end
 end
 
-local camItems = {'scoreTxt', 'creditsWatermark', 'timeTxt', 'iconP1', 'iconP2', 'healthBarBG', 'healthBar'}
+local camItems = {'scoreTxt', 'kadeEngineWatermark', 'timeTxt', 'iconP1', 'iconP2', 'healthBarBG', 'healthBar'}
 
 function onStepHit()
     if curStep == 544 or curStep == 1583 or curStep == 1840 or curStep == 2096 or curStep == 2672 or curStep == 4063 or curStep == 4191 or curStep == 7824 and flashingLights then 

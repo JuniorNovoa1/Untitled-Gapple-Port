@@ -2,7 +2,7 @@ local songTxt = {
 	["disruption"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Lexicord',
 	["applecore"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Lexicord',
 	["disability"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by T5mpler',
-	["wireframe"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Sky!\nand JuniorNovoa(finished it)',
+	["wireframe"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Sky! and\nJuniorNovoa(finished it)',
 	["algebra"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Lexicord',
 	["fresh-and-toasted"] = 'Song by Villezen\n\nVisuals by Lancey\n\nCharting by Project Tea',
 	["deformation"] = 'Song by Aadsta\n\nVisuals by Lancey\n\nCharting by Log Man',
@@ -63,7 +63,7 @@ function onUpdate(elapsed)
 	if luaSpriteExists("blackBG") and luaTextExists("creditsTxt") then setProperty("creditsTxt.x", getProperty("blackBG.x") - 112) end
 end
 function onTweenCompleted(tag)
-	if tag == "backInOutCreditsExit" then doTweenX('backInOutCreditsExit', 'blackBG', -380, 0.6, 'sineInOut') end
+	if tag == "backInOutCreditsExit" then doTweenX('backInOutCreditsExit', 'blackBG', -380, 0.5, 'sineInOut') end
 end
 function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == "dissapeartimer" then

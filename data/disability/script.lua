@@ -22,7 +22,7 @@ function onUpdate(elapsed)
     end
 end
 
-local invisObjs = {'healthBar', 'healthBarBG', 'iconP2', 'iconP1', 'timeTxt', 'scoreTxt', 'creditsWatermark'}
+local invisObjs = {'healthBar', 'healthBarBG', 'iconP2', 'iconP1', 'timeTxt', 'scoreTxt', 'kadeEngineWatermark'}
 
 function onStepHit()
     if curStep == 128 or curStep == 640 or curStep == 1152 or curStep == 1664 or curStep == 2192 or curStep == 2704 or curStep == 2960 and flashingLights then 

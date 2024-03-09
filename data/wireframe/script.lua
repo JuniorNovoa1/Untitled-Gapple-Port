@@ -1,5 +1,5 @@
 local objects = {'daveFuckingDies', 'redTunnel', 'dad', 'boyfriend'}
-local camObjs = {'timeTxt', 'scoreTxt', 'creditsWatermark', 'creditsText'}
+local camObjs = {'timeTxt', 'scoreTxt', 'kadeEngineWatermark', 'creditsWatermark'}
 local invisObjs = {'healthBar', 'healthBarBG', 'iconP2', 'iconP1'}
 local colors = {'00ff00', '00FFFF', '800080', 'FFFFFF'}
 local curColor = 1;
@@ -217,7 +217,7 @@ function onStepHit()
         cancelTween('DAVESF')
         removeLuaSprite('daveFuckingDies', true)
         triggerEvent('Change Character', 'dad', 'tunnel-dave')
-        setProperty('creditsText.text', '')
+        setProperty('creditsWatermark.text', '')
         if flashingLights then
 			cameraFlash('other', 'FFFFFF', 1 / playbackRate)
 		end
@@ -274,7 +274,7 @@ function onTweenCompleted(tag)
         setProperty('dad.y', getProperty('badaiComes.y'))
         setProperty('daveFuckingDies.visible', true)
         setProperty('badaiComes.visible', false)
-        setProperty('creditsText.text', 'Screw you!')
+        setProperty('creditsWatermark.text', 'Screw you!')
         --removeLuaSprite('badaiComes', true)
         doTweenY('davefuckinggoesup', 'daveFuckingDies', -125, 2.5 / playbackRate, 'cubeInOut')
     end

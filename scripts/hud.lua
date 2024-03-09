@@ -44,38 +44,39 @@ function onCreatePost()
 		makeLuaSprite("iconP22", "icons/missing", 0, 0)
 	end
 
-	makeLuaText('creditsWatermark', songName, 0, 4, 698)
+	makeLuaText('kadeEngineWatermark', songName, 0, 4, 698)
+	setObjectCamera('kadeEngineWatermark', 'camHUD')
+	setTextAlignment('kadeEngineWatermark', 'center')
+	setTextFont('kadeEngineWatermark', 'comic.ttf')
+	setTextSize('kadeEngineWatermark', 16)
+	setTextBorder('kadeEngineWatermark', 1.25, '000000')
+	setProperty('kadeEngineWatermark.antialiasing', false)
+	updateHitbox('kadeEngineWatermark')
+	addLuaText('kadeEngineWatermark')
+
+	local replacementSongName = string.gsub(songName,"-"," ")
+	local replacementSongNameCapitalized = ""
+	for i = 1, #replacementSongName do
+		if i == 1 or replacementSongName:sub(i-1, i-1) == " " then replacementSongNameCapitalized = replacementSongNameCapitalized..string.upper(replacementSongName:sub(i, i)) else replacementSongNameCapitalized = replacementSongNameCapitalized..replacementSongName:sub(i, i) end
+	end
+
+	if string.lower(songName) == 'nice' then setTextString("kadeEngineWatermark", getTextString("kadeEngineWatermark")..'!') end
+	if string.lower(songName) == 'og' then setTextString("kadeEngineWatermark", 'OG Legacy - KE 1.2') end
+
+	makeLuaText('creditsWatermark', '', 0, 4, getProperty('healthBar.y') + 50)
 	setObjectCamera('creditsWatermark', 'camHUD')
 	setTextAlignment('creditsWatermark', 'center')
 	setTextFont('creditsWatermark', 'comic.ttf')
 	setTextSize('creditsWatermark', 16)
-	setTextBorder('creditsWatermark', 1.5, '000000')
+	setTextBorder('creditsWatermark', 1.25, '000000')
 	setProperty('creditsWatermark.antialiasing', false)
 	updateHitbox('creditsWatermark')
 	addLuaText('creditsWatermark')
 
-	if string.lower(songName) == 'fresh-and-toasted' then setTextString("creditsWatermark", 'Fresh And Toasted') end
-	if string.lower(songName) == 'nice' then setTextString("creditsWatermark", getTextString("creditsWatermark")..'!') end
-	if string.lower(songName) == 'the-big-dingle' then setTextString("creditsWatermark", 'The Big Dingle') end
-	if string.lower(songName) == 'the-scratches' then setTextString("creditsWatermark", 'The Scratches') end
-	if string.lower(songName) == 'og' then setTextString("creditsWatermark", 'OG Legacy - KE 1.2') end
-	if string.lower(songName) == 'apple-leak' then setTextString("creditsWatermark", 'Apple Leak') end
-
-	makeLuaText('creditsText', '', 0, 4, getProperty('healthBar.y') + 52)
-	setObjectCamera('creditsText', 'camHUD')
-	setTextAlignment('creditsText', 'center')
-	setTextFont('creditsText', 'comic.ttf')
-	setTextSize('creditsText', 16)
-	setTextBorder('creditsText', 1.5, '000000')
-	setProperty('creditsText.antialiasing', false)
-	updateHitbox('creditsText')
-	addLuaText('creditsText')
-
-	if string.lower(songName) == 'disruption' then setProperty('creditsText.text', 'Screw you!') end
+	if string.lower(songName) == 'disruption' then setProperty('creditsWatermark.text', 'Screw you!') end
 
 	if not lowQuality and string.lower(songName) ~= 'kooky' then
 		makeLuaSprite('healthBarBGnew', 'healthBarOverlay', getProperty('healthBar.x'), getProperty('healthBar.y') +5)
-		--scaleObject('healthBarBGnew', getProperty('healthBar.scale.x'), getProperty('healthBar.scale.y'))
 		setObjectCamera('healthBarBGnew', 'hud')
 		addLuaSprite('healthBarBGnew', false)
 		setObjectOrder('healthBarBGnew', getObjectOrder("healthBar"))
@@ -379,8 +380,8 @@ function checkIfNoteTypeCanChange(noteGroup, noteID)
 	return false;
 end
 
-function math.lerp(from, to, t)
-	return from + (to - from) * math.clamp(t, 0, 1)
+function math.lerp(a, b, ratio)
+	return a + ratio * (b - a);
 end
 function math.clamp(x,min,max)return math.max(min,math.min(x,max))end
 function string.duplicate(s, i)
@@ -453,12 +454,13 @@ function onUpdate(elapsed)
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
 	songPos = math.toTime(getSongPosition() / 1000)
 
-	if string.lower(songName) == "apple-leak" then setProperty("songLength", 786000) end
-	if string.lower(songName) == "apple-leak" then actualSongLength = "13:06" end
-	if string.lower(songName) == "apple-leak" and curStep >= 8608 then actualSongLength = "17:25" end
-
-	local curTime = math.max(0, getSongPosition() - noteOffset)
-	setProperty("songPercent", curTime / getProperty("songLength"))
+	if string.lower(songName) == "apple-leak" then
+		setProperty("songLength", 786000)
+		actualSongLength = "13:06"
+		if curStep >= 8608 then actualSongLength = "17:25" end
+		local curTime = math.max(0, getSongPosition() - noteOffset)
+		setProperty("songPercent", curTime / getProperty("songLength"))
+	end
 
 	setTextString('timeTxt', songPos.." / "..actualSongLength)
 	updateHitbox("timeTxt")
@@ -484,12 +486,7 @@ function onUpdatePost(elapsed)
 		end
 		setProperty('scoreTxt.y', getProperty('healthBar.y') + 36)
 		if songName ~= 'main-menu' then
-			if getProperty('creditsText.text') == '' then
-				setProperty('creditsWatermark.y', getProperty('healthBar.y') + 46)
-			elseif string.lower(songName) ~= 'kooky' then
-				setProperty("creditsWatermark.y", getProperty("healthBar.y") + 30)
-			end
-			setProperty('creditsText.y', getProperty('creditsWatermark.y') + 16)
+			if getProperty('creditsWatermark.text') == '' then setProperty('kadeEngineWatermark.y', getProperty('healthBar.y') + 48) elseif string.lower(songName) ~= 'kooky' then setProperty("kadeEngineWatermark.y", getProperty("healthBar.y") + 28) end
 		end
 	end
 
@@ -515,8 +512,9 @@ function onUpdatePost(elapsed)
 			setVar("playerIconPos", game.healthBar.x + (game.healthBar.width * (FlxMath.remapToRange(game.healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * game.iconP1.scale.x - 150) / 2 - iconOffset);
 			setVar("dadIconPos", game.healthBar.x + (game.healthBar.width * (FlxMath.remapToRange(game.healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * game.iconP2.scale.x) / 2 - iconOffset * 2);
 		]])
-		doTweenX("iconMovementP12vhv", "iconP12", getProperty("playerIconPos"), 0.04, "sineInOut")
-		doTweenX("iconMovementP22hvh", "iconP22", getProperty("dadIconPos"), 0.04, "sineInOut")
+		local iconOffsetTwo = 0; if string.lower(songName) == "deformation" then iconOffsetTwo = 92; end
+		setProperty("iconP12.x", math.lerp(getProperty("playerIconPos"), getProperty("iconP12.x"), 0.85))
+		setProperty("iconP22.x", math.lerp(getProperty("dadIconPos") -iconOffsetTwo, getProperty("iconP22.x"), 0.85))
 		iconPropertys()
 	end
 end
