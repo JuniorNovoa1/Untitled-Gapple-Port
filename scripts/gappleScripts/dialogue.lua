@@ -306,8 +306,8 @@ end
 
 local canUpdate = true;
 function onUpdatePost(elapsed) --delayed uhghhh
-	if not canUpdate then return; end
-	if getProperty("isTyping") then
+	if not canUpdate and inDialogue then return; end
+	if getProperty("isTyping") == true then
 		playSound("pixelText")
 	end
 	canUpdate = false;

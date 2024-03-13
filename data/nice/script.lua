@@ -3,7 +3,20 @@ local zoomCam = false;
 local zoomCamVal = 1;
 local zoomCamTime = 1;
 
-function onCreate() precacheImage("modly_pad_notes") end
+function doTweenDefaultCamZoom(tag, value, duration)
+    runHaxeCode([[
+        PlayState.instance.modchartTweens.set("]]..tag..[[", FlxTween.num(game.defaultCamZoom, ]]..value..[[, ]]..duration..[[, {
+            onUpdate: function(twn) {
+                game.defaultCamZoom = twn.value;
+            }, onComplete: function(twn) {
+                PlayState.instance.modchartTweens.remove("]]..tag..[[");
+                PlayState.instance.callOnLuas('onTweenCompleted', ["]]..tag..[["]);
+            }
+        }));
+    ]])
+end
+
+function onCreate() precacheImage("ui/notes/modly_pad_notes") end
 
 function onUpdate(elapsed)
     if lockCam then moveCam(650, 450) end
@@ -21,17 +34,14 @@ function onStepHit()
         cameraFlash('other', 'FFFFFF', 1 / playbackRate) --cam flash simulator dlc
     end
     if curStep == 512 then
-        zoomCamVal = getProperty("defaultCamZoom") + 0.2;
-        zoomCamTime = 3;
-        zoomCam = true;
+        doTweenDefaultCamZoom("cameraTween", getProperty("defaultCamZoom") + 0.2, 3 / playbackRate)
     end
 
     if curStep == 544 then
-        zoomCamVal = getProperty("defaultCamZoom") - 0.2;
-        zoomCamTime = 3;
+        doTweenDefaultCamZoom("cameraTween", getProperty("defaultCamZoom") - 0.2, 3 / playbackRate)
     end
 
-    if curStep == 555 then zoomCam = false; end
+    --if curStep == 555 then zoomCam = false; end
 
     if curStep == 1364 then
         setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.2)
@@ -41,8 +51,8 @@ function onStepHit()
         setProperty("defaultCamZoom", getProperty("defaultCamZoom") - 0.2)
     end
 
-    if curStep == 2096 then 
-        lockCam = true; 
+    if curStep == 2096 then
+        lockCam = true;
         setProperty("defaultCamZoom", getProperty("defaultCamZoom") + 0.2)
     end
 
@@ -51,6 +61,7 @@ function onStepHit()
         setProperty("dad.visible", false)
         playAnim("schoolEntrance", "animEnter", true)
         setDataFromSave("UnNamedGapplePortSettings", 'newCamZoom', true) --this is where this shit needs to kick in
+        lockCam = false;
     end
 
     if curStep == 2144 then
@@ -58,7 +69,6 @@ function onStepHit()
         setProperty("boyfriend.visible", true)
         setProperty("dad.visible", true)
         setProperty("defaultCamZoom", 0.9)
-        lockCam = false;
     end
 
     if curStep == 3290 then
@@ -71,7 +81,7 @@ function onStepHit()
         lockCam = true;
     end
 
-    if curStep == 3296 then 
+    if curStep == 3296 then
         setProperty("boyfriend.visible", true)
         setProperty("dad.visible", true)
         setProperty("defaultCamZoom", 0.65)
@@ -118,31 +128,27 @@ function onStepHit()
 
     if curStep == 5071 then
         doTweenAlpha("bf", "bfCutscene", 0, 0.2 / playbackRate, "")
-        zoomCamVal = getProperty("defaultCamZoom") + 0.3;
-        zoomCam = true;
+        doTweenDefaultCamZoom("cameraTween", getProperty("defaultCamZoom") + 0.3, 3 / playbackRate)
     end
 
     --5080 bambi screamm
 
     if curStep == 5087 then
-        zoomCamVal = zoomCamVal - 0.25;
-        zoomCamTime = 2;
+        doTweenDefaultCamZoom("cameraTween", getProperty("defaultCamZoom") - 0.25, 2 / playbackRate)
     end
 
-    if curStep == 5160 then zoomCam = false; end
+    if curStep == 5160 then setProperty("defaultCamZoom", getProperty("defaultCamZoom") + (0.3 - 0.25)) end
 
     if curStep == 5471 then
-        zoomCamVal = getProperty("defaultCamZoom") + 0.25;
-        zoomCamTime = 2.25;
-        zoomCam = true;
+        doTweenDefaultCamZoom("cameraTween", getProperty("defaultCamZoom") + 0.3, 2.25 / playbackRate)
     end
 
     if curStep == 5727 then
-        zoomCamVal = zoomCamVal - 0.25;
+        doTweenDefaultCamZoom("cameraTween", getProperty("defaultCamZoom") - 0.25, 2.25 / playbackRate)
     end
 
     if curStep == 5791 then
-        zoomCam = false;
+        setProperty("defaultCamZoom", getProperty("defaultCamZoom") + (0.3 - 0.25))
         doTweenY("phone", "phone", -150, 0.8 / playbackRate, "")
         for i = 0, getProperty("strumLineNotes.length") do
             noteTweenAlpha("notes"..i, i, 0, 0.8 / playbackRate, "")
@@ -177,6 +183,7 @@ function onStepHit()
             setPropertyFromGroup("playerStrums", i, 'x', getPropertyFromGroup("playerStrums", i, 'x') + 275)
             setPropertyFromGroup("playerStrums", i, 'y', getPropertyFromGroup("playerStrums", i, 'y') - 135)
             if downscroll then setPropertyFromGroup("playerStrums", i, 'y', getPropertyFromGroup("playerStrums", i, 'y') + (215 + 135)) end
+            setPropertyFromGroup('playerStrums', i, 'texture', 'ui/notes/NOTE_assets')
         end
         changeNoteSkin(false, 'NOTE_assets')
     end

@@ -49,46 +49,46 @@ end
 function onStepHit()
     if curStep == 256 or curStep == 384 or curStep == 512 or curStep == 640 or curStep == 768 or curStep == 1152 or curStep == 1216 or curStep == 1280 
     or curStep == 1344 or curStep == 1408 or curStep == 1472 or curStep == 1536 or curStep == 1664 then
-        cameraFlash("game", "FFFFFF", 1)
-        if curStep == 1152 then doTweenAlpha("redVG", "redVG", 0.6, .5, "") end
+        cameraFlash("game", "FFFFFF", 1 / playbackRate)
+        if curStep == 1152 then doTweenAlpha("redVG", "redVG", 0.6, .5  / playbackRate, "") end
     end
 
     if curStep == 898 then
-        doTweenDefaultCamZoom("cameraTween", 1.1, 1.5)
-        doTweenAlpha("thunderBlack", "thunderBlack", 0.6, 1.5, "")
+        doTweenDefaultCamZoom("cameraTween", 1.1, 1.5 / playbackRate)
+        doTweenAlpha("thunderBlack", "thunderBlack", 0.6, 1.5 / playbackRate, "")
     end
     if curStep == 1144 then
-        doTweenDefaultCamZoom("cameraTween", 1, 1)
-        doTweenAlpha("thunderBlack", "thunderBlack", 0, 1, "")
+        doTweenDefaultCamZoom("cameraTween", 1, 1 / playbackRate)
+        doTweenAlpha("thunderBlack", "thunderBlack", 0, 1 / playbackRate, "")
     end
 
     if curStep == 1664 then
         setProperty("defaultCamZoom", 1.06)
-        doTweenAlpha("thunderBlack", "thunderBlack", 0.15, .5, "")
+        doTweenAlpha("thunderBlack", "thunderBlack", 0.15, .5 / playbackRate, "")
     end
 
     if curStep == 1680 then
         setProperty("defaultCamZoom", 1.12)
-        doTweenAlpha("thunderBlack", "thunderBlack", 0.25, .5, "")
+        doTweenAlpha("thunderBlack", "thunderBlack", 0.25, .5 / playbackRate, "")
     end
 
     if curStep == 1696 then
         setProperty("defaultCamZoom", 1.18)
-        doTweenAlpha("thunderBlack", "thunderBlack", 0.35, .5, "")
+        doTweenAlpha("thunderBlack", "thunderBlack", 0.35, .5 / playbackRate, "")
     end
 
     if curStep == 1712 then
         setProperty("defaultCamZoom", 1.24)
-        doTweenAlpha("thunderBlack", "thunderBlack", 0.45, .5, "")
+        doTweenAlpha("thunderBlack", "thunderBlack", 0.45, .5 / playbackRate, "")
     end
 
     if curStep == 1728 then
         setProperty("defaultCamZoom", 1.18)
-        doTweenAlpha("thunderBlack", "thunderBlack", 0, .5, "")
+        doTweenAlpha("thunderBlack", "thunderBlack", 0, .5 / playbackRate, "")
     end
 
     if curStep == 1744 then
-        doTweenDefaultCamZoom("cameraTween", 0.9, 1)
-        doTweenAlpha("redVG", "redVG", 0, .5, "")
+        doTweenDefaultCamZoom("cameraTween", 0.9 / playbackRate, 1)
+        doTweenAlpha("redVG", "redVG", 0, .5 / playbackRate, "")
     end
 end

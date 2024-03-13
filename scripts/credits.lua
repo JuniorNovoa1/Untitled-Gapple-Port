@@ -6,7 +6,7 @@ local songTxt = {
 	["algebra"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Lexicord',
 	["fresh-and-toasted"] = 'Song by Villezen\n\nVisuals by Lancey\n\nCharting by Project Tea',
 	["deformation"] = 'Song by Aadsta\n\nVisuals by Lancey\n\nCharting by Log Man',
-	["nice"] = "Song by Sky!\n\nVisuals by Lancey, Wildey\nand TecheVent\n\nCharting by Project Tea\n\nBased off Marcello's The Nice\nAND COLLECT\nOFGAMER AcT:ONE THE\nSTORE GAME MUN by\nMarcello_TimeNice30",
+	["nice"] = "Song by Sky!\n\nVisuals by Lancey, Wildey\nand TecheVent\n\nCharting by Project Tea\n\nBased off Marcello's The\nNice AND COLLECT\nOFGAMER AcT:ONE THE\nSTORE GAME MUN by\nMarcello_TimeNice30",
 	["ferocious"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Lexicord\n\nBased off Garrett\'s Funny\nAnimal Game\nby Jumpman25',
 	
 	["glamrock"] = 'Song by Sky!\n\nVisuals by Lancey\n\nCharting by Lexicord',
