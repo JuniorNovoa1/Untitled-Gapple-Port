@@ -2,13 +2,14 @@ local gappleMemoryCounter = true; --gapple doesn't have a memory counter... ITS 
 local volumeKeybind = {"PLUS","MINUS","ZERO"}
 
 local CharactersWith3D = {'bambi-unfair', 'bambi-piss-3d', 'bandu', 'bandu-sad', 'tunnel-dave', 'badai', 'unfair-junker', 'split-dave-3d', 'garrett', '3d-bf', '3d-bf-flipped', 'shoulder-bf', 'garrett-animal', 'playtime', 'palooseMen', 'garrett-ipad', 'wizard', 'piano-guy', 'pedophile', 'garrett-angry', 'garrett-car',
-'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 
-'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'too-shiny', 'dave-wide', 'awesomeBambiCrack',
-'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad', "3d-tristan", 'dambai', 'dambu', 'dale', 'dingle', 'froing', 'scratchman-3d', 'wug'}
+'bandu-candy', 'dinnerbambi', 'insanidave', 'bamb-root', 'sart-producer', 'sart-producer-glitch', 'ticking', 'fat-bandu-3d', 'gary', '3d-bambi-leak', 'bandu-trolled', 'sammy', 'duelExpunged', '3d-bambi-leak-finale', 'og-dave', 'og-dave-angey', 
+'spike', 'spike-bg', 'playrobot', 'playrobot-crazy', 'hall-monitor', 'diamond-man', 'too-shiny', 'dave-wide', 'awesomeBambiCrack', 'brob', 'barbu', 'gfreddy', 'cameo', 'facecam', 'bandu-card', 'alge', 'butch', 'bad', "3d-tristan", 'dambai', 'dambu', 
+'dale', 'dingle', 'froing', 'scratchman-3d', 'wug', 'jambi', 'brob-cyber', 'brob-fucked', 'barbu-cyber', 'barbu-fucked'}
 
 local badaiSongs = {
 	["applecore"] = 'bambi-piss-3d',
 	["fresh-and-toasted"] = 'barbu',
+	["jambino"] = 'brob-cyber',
 	["resumed"] = 'dambu',
 	["the-big-dingle"] = 'donk',
 	['apple-leak'] = "cheating-4-leak2d"
@@ -668,10 +669,10 @@ end
 function opponentNoteHit(membersIndex, noteData, noteType, isSustainNote)
 	local suffix = "";
 	if string.lower(noteType) == "altanim" or altAnim then suffix = "-alt" end
-	if getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
+	if getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) and getDataFromSave("UnNamedGapplePortSettings", "canSing", true) then
 		setProperty("badai.holdTimer", 0)
 		badaiPlayAnim(singAnims[noteData + 1]..suffix)
-	elseif string.lower(songName) ~= "ataefull" and string.lower(noteType) ~= "no animation" then
+	elseif string.lower(songName) ~= "ataefull" and string.lower(noteType) ~= "no animation" and not getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
 		setProperty("dad.holdTimer", 0)
 		playAnim("dad", singAnims[noteData + 1]..suffix, true)
 	end

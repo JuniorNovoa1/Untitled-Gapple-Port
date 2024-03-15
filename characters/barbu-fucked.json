@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-40,
+				-60
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "LEFT"
+		},
+		{
+			"offsets": [
+				0,
+				30
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "DOWN"
+		},
+		{
+			"offsets": [
+				255,
+				40
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "RIGHT"
+		},
+		{
+			"offsets": [
+				40,
+				-120
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "UP"
+		},
+		{
+			"offsets": [
+				-200,
+				-340
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "stare",
+			"indices": [],
+			"name": "STAND"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "IDLE"
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/main/jambino/barbu_crazy",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "crazey-barb",
+	"flip_x": false,
+	"healthbar_colors": [
+		10,
+		21,
+		126
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

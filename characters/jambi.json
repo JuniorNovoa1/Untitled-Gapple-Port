@@ -1,0 +1,122 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				170,
+				-90
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "electric_left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-160,
+				-300
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "electric_down0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-100,
+				60
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "electric_up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-210,
+				-10
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "electric_right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				350,
+				60
+			],
+			"anim": "singLEFT-alt",
+			"fps": 24,
+			"name": "evil_left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-180,
+				-300
+			],
+			"anim": "singDOWN-alt",
+			"fps": 24,
+			"name": "evil_down0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				170,
+				470
+			],
+			"anim": "singUP-alt",
+			"fps": 24,
+			"name": "evil_up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-510,
+				80
+			],
+			"anim": "singRIGHT-alt",
+			"fps": 24,
+			"name": "evil_right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "electric_idle",
+			"indices": []
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/main/jambino/jamb-jambino",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "jambi",
+	"flip_x": false,
+	"healthbar_colors": [
+		51,
+		51,
+		51
+	],
+	"camera_position": [
+		80,
+		120
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

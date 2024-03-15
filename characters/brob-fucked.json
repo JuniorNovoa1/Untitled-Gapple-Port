@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "IDLE",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				10,
+				-20
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "LEFT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				40
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "DOWN",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				150,
+				-20
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "RIGHT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				20,
+				-20
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "UP",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-170,
+				-180
+			],
+			"anim": "stand",
+			"fps": 0,
+			"name": "IDLE",
+			"indices": []
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/main/jambino/brob_crazy",
+	"position": [
+		0,
+		250
+	],
+	"healthicon": "crazey-brob",
+	"flip_x": false,
+	"healthbar_colors": [
+		7,
+		40,
+		74
+	],
+	"camera_position": [
+		100,
+		50
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

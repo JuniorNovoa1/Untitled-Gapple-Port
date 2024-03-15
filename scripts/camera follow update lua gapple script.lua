@@ -35,6 +35,10 @@ function onUpdate() --camera now follows characters!!!!
 	if luaSpriteExists("badai") then
 		badaiCamIdle[1] = getMidpointX('badai') + 150 + getProperty('badai.cameraPosition[0]') + getProperty('opponentCameraOffset[0]')
 		badaiCamIdle[2] = getMidpointY('badai') - 100 + getProperty('badai.cameraPosition[1]') + getProperty('opponentCameraOffset[1]')
+		if getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) and not getDataFromSave("UnNamedGapplePortSettings", "canSing", true) then --legit only for jambino
+			badaiCamIdle[1] = getMidpointX('barbu') + 150 + getProperty('barbu.cameraPosition[0]') + getProperty('opponentCameraOffset[0]')
+			badaiCamIdle[2] = getMidpointY('barbu') - 100 + getProperty('barbu.cameraPosition[1]') + getProperty('opponentCameraOffset[1]')
+		end
 	end
 
 	if string.lower(songName) == 'fresh-and-toasted' and curStep >= 2767 then

@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "IDLE"
+		},
+		{
+			"offsets": [
+				20,
+				-30
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "LEFT"
+		},
+		{
+			"offsets": [
+				-3,
+				1
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "DOWN"
+		},
+		{
+			"offsets": [
+				154,
+				-14
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "RIGHT"
+		},
+		{
+			"offsets": [
+				-8,
+				2
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "UP"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/main/jambino/brob_cyber",
+	"position": [
+		-50,
+		300
+	],
+	"healthicon": "brob",
+	"flip_x": false,
+	"healthbar_colors": [
+		102,
+		184,
+		147
+	],
+	"camera_position": [
+		150,
+		200
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

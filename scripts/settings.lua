@@ -39,6 +39,7 @@ function onCreate()
     --cross script shit
     setDataFromSave("UnNamedGapplePortSettings", "canFloat", true)
     setDataFromSave("UnNamedGapplePortSettings", "badaiTime", false)
+    setDataFromSave("UnNamedGapplePortSettings", "canSing", true)
 
     if debugMode then
         setDataFromSave("UnNamedGapplePortSettings", 'dialogue', false)

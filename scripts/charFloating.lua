@@ -16,6 +16,10 @@ local elapsedtime = 0.0;
 local elapsedtimeBF = 0.0;
 local elapsedtimeDAD = 0.0;
 local elapsedtimeBADAI = 0.0;
+
+local banduJunk = 0;
+local hasJunked = false;
+
 function onUpdate(elapsed)
     if not getDataFromSave("UnNamedGapplePortSettings", "canFloat", true) then return; end
     elapsedtime = elapsedtime + elapsed;
@@ -25,6 +29,7 @@ function onUpdate(elapsed)
     bfNameLowerCase = string.lower(boyfriendName)
     dadNameLowerCase = string.lower(dadName)
     if luaSpriteExists("badai") then badaiNameLowerCase = string.lower(getProperty("badai.curCharacter")) end
+    banduJunk = banduJunk + (elapsed * 2);
 
     --char floating
     if bfNameLowerCase == 'tunnel-bf' then
@@ -63,6 +68,21 @@ function onUpdate(elapsed)
     end
 
     --char floating
+    if dadNameLowerCase == 'bandu' or dadNameLowerCase == 'bandu-sad' then
+        local shitterPos = getProperty("dad.x")
+        setProperty("dad.x", getProperty("boyfriend.x") + (math.sin(elapsedtimeDAD * 2) * 450) - 350)
+        if dadNameLowerCase == 'bandu-sad' then setProperty("dad.x", getProperty("dad.x") + 20) end
+        if ((math.sin(banduJunk) >= 0.95 or math.sin(banduJunk) <= -0.95) and not hasJunked) then
+            if getObjectOrder("dadGroup") == (getObjectOrder('gfGroup') +1) then
+                setObjectOrder('dadGroup', getObjectOrder('boyfriendGroup') +1)
+            else
+                setObjectOrder('dadGroup', getObjectOrder('gfGroup') +1)
+            end
+            dadFront = not dadFront;
+            hasJunked = true;
+        end
+        if (hasJunked and not(math.sin(banduJunk) >= 0.95 or math.sin(banduJunk) <= -0.95)) then hasJunked = false; end
+    end
     if dadNameLowerCase == 'tunnel-bf' then
         setProperty("dad.y", getProperty("dad.y") + (math.sin(elapsedtimeDAD) * 0.6))
     end
@@ -72,7 +92,6 @@ function onUpdate(elapsed)
     elseif dadNameLowerCase == 'dambai' and getDataFromSave("UnNamedGapplePortSettings", "badaiTime", false) then
         setProperty("dad.y", getProperty("dad.y") + (math.sin(elapsedtimeDAD) * 0.6))
     end
-
     if dadNameLowerCase == 'bad' then
         setProperty("dad.y", getProperty("dad.y") - (math.sin(elapsedtimeDAD) * 0.325))
     end
@@ -112,13 +131,13 @@ end
 
 function onEvent(eventName, value1, value2, strumTime)
     if eventName == 'Change Character' then
-        if value1 == 'bf' then
+        if string.lower(value1) == 'bf' then
             elapsedtimeBF = 0;
         end
-        if value1 == 'dad' then
+        if string.lower(value1) == 'dad' then
             elapsedtimeDAD = 0;
         end
-        if value1 == 'badai' then
+        if string.lower(value1) == 'badai' then
             elapsedtimeBADAI = 0;
         end
     end

@@ -87,7 +87,7 @@ local extrasSprs = {"extra", "secret", "iykyk", "joke", "peenut", "ocs", "covers
 local curState = "";
 
 local storyimagePaths = {"story mode", "settings", "credits", "discord"}
-local storySongs = {"disruption", "applecore", "disability", "wireframe", "algebra", "fresh-and-toasted", "deformation", "ferocious", "nice"}
+local storySongs = {"disruption", "applecore", "disability", "wireframe", "algebra", "fresh-and-toasted", "jambino", "deformation", "ferocious", "nice"}
 local storySongDifs = {
 	["disruption"] = "hard",
 	["applecore"] = "extreme",
@@ -95,6 +95,7 @@ local storySongDifs = {
 	["wireframe"] = "normal",
 	["algebra"] = "hard",
 	["fresh-and-toasted"] = "normal",
+	["jambino"] = "hard",
 	["deformation"] = "hard",
 	["ferocious"] = "hard",
 	["nice"] = "hard",
