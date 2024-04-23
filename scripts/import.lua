@@ -16,6 +16,7 @@ function onCreate()
 	addHaxeLibrary("FlxTween", 'flixel.tweens')
     addHaxeLibrary("FlxColor", 'flixel.util')
     addHaxeLibrary('FlxTypeText', 'flixel.addons.text')
+    addHaxeLibrary('FlxBackdrop', 'flixel.addons.display')
     addHaxeLibrary('FlxSound', 'flixel.system')
     if stringStartsWith(version, '0.6') then
         addHaxeLibrary("Rating", 'Conductor')

@@ -1,25 +1,28 @@
 function onCreate()
-    precacheImage("extras/scratches/scrt")
+    if not lowQuality then
+        makeAnimatedLuaSprite("discordAnimated", "extras/scratches/scrt", 0, 0)
+        addAnimationByPrefix("discordAnimated", "idle", "transition thing", 24, false)
+        setObjectCamera("discordAnimated", 'other')
+        addLuaSprite("discordAnimated", false)
+        setProperty("discordAnimated.visible", false)
+    end
 end
 
 function onStepHit()
     if curStep == 799 then
+        playAnim("discordAnimated", "idle", true)
+        setProperty("discordAnimated.visible", true)
         makeLuaSprite("discordBG", "extras/scratches/disc-1", -20.5, -320.5)
         addLuaSprite("discordBG", false)
         makeLuaSprite("discord", "extras/scratches/skyfunny", -20.5, -320.5)
         addLuaSprite("discord", true)
         setProperty("defaultCamZoom", 1.5)
-    
-        makeAnimatedLuaSprite("discordAnimated", "extras/scratches/scrt", 0, 0)
-        addAnimationByPrefix("discordAnimated", "idle", "transition thing", 24, false)
-        setObjectCamera("discordAnimated", 'other')
-        addLuaSprite("discordAnimated", false)
     end
 
     if curStep == 815 and flashingLights then
         cameraFlash("hud", "FFFFFF", 1 / playbackRate)
     end
-    if curStep >= 815 and luaSpriteExists("discordAnimated") then
+    if curStep == 815 and luaSpriteExists("discordAnimated") then
         removeLuaSprite("discordAnimated", true)
     end
 

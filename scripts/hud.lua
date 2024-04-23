@@ -1,3 +1,4 @@
+local canChangeNotes = false;
 local gappleMemoryCounter = true; --gapple doesn't have a memory counter... ITS REAL LANCE YPOSTED  IYT OPMGGGG	--doesnt matter
 local volumeKeybind = {"PLUS","MINUS","ZERO"}
 
@@ -16,6 +17,7 @@ local badaiSongs = {
 }
 
 function onCreate()
+	canChangeNotes = lowQuality;
 	if stringStartsWith(version, '0.7') then setProperty("SONG.disableNoteRGB", true) end
 	makeLuaSprite('thunderBlack', '', 0, 0)
 	makeGraphic('thunderBlack', '1280', '720', '000000')
@@ -174,8 +176,8 @@ function onCreatePost()
 	makeLuaText("ratingTxt", "Sick!\n1", 0, 0.0, 64)
     setTextFont("ratingTxt", "comic.ttf")
     screenCenter("ratingTxt", 'x')
-    setProperty("ratingTxt.x", getProperty("ratingTxt.x") - 10)
-    setTextSize("ratingTxt", 36)
+    setProperty("ratingTxt.x", getProperty("ratingTxt.x") - 15)
+    setTextSize("ratingTxt", 34)
     setTextBorder("ratingTxt", 2, "000000")
     addLuaText("ratingTxt")
     setProperty("ratingTxt.alpha", 0)
@@ -215,69 +217,38 @@ function onStrumsCreate()
 	donezo = true;
 end
 
-function changeNoteSkinsOnChange(idForPerson, onlyNotes)
-	if string.lower(songName) == "apple-leak" or string.lower(songName) == 'kooky' or lowQuality then return; end
+function changeNoteSkinsOnChange()
+	if string.lower(songName) == "apple-leak" or string.lower(songName) == 'kooky' or string.lower(songName) == 'ferocious' or canChangeNotes then return; end
 	local chars3D = {false, false}
 
-	if idForPerson == 1 or idForPerson == nil then
-		for i = 1, #CharactersWith3D do
-			if string.lower(CharactersWith3D[i]) == string.lower(getProperty("boyfriend.curCharacter")) then
-				setProperty("boyfriend.antialiasing", false)
-				changeNoteSkin(true, 'NOTE_assets_3D', onlyNotes)
-				for i = 0, 3 do
-					setPropertyFromGroup("playerStrums", i, "antialiasing", false)
-				end
-				chars3D[1] = true;
-				break;
-			else
-				changeNoteSkin(true, 'NOTE_assets', onlyNotes)
-				for i = 0, 3 do
-					setPropertyFromGroup("playerStrums", i, "antialiasing", true)
-				end
-			end
+	for i = 1, #CharactersWith3D do --this method is so performance expensive I need to find a way optimize it.
+		if string.lower(CharactersWith3D[i]) == string.lower(boyfriendName) then
+			changeNoteSkin(true, 'NOTE_assets_3D', false)
+			setProperty("boyfriend.antialiasing", false)
+			chars3D[1] = true;
+		elseif not chars3D[1] then
+			changeNoteSkin(true, 'NOTE_assets', true)
 		end
-	end
-	if idForPerson == 2 or idForPerson == nil then
+
 		for i = 1, #CharactersWith3D do
-			if string.lower(CharactersWith3D[i]) == string.lower(getProperty("dad.curCharacter")) then
+			if string.lower(CharactersWith3D[i]) == string.lower(dadName) then
+				changeNoteSkin(false, 'NOTE_assets_3D', false)
 				setProperty("dad.antialiasing", false)
-				changeNoteSkin(false, 'NOTE_assets_3D', onlyNotes)
-				for i = 0, 3 do
-					setPropertyFromGroup("opponentStrums", i, "antialiasing", false)
-				end
 				chars3D[2] = true;
-				break;
-			else
-				changeNoteSkin(false, 'NOTE_assets', onlyNotes)
-				for i = 0, 3 do
-					setPropertyFromGroup("opponentStrums", i, "antialiasing", true)
-				end
+			elseif not chars3D[2] then
+				changeNoteSkin(false, 'NOTE_assets', true)
 			end
 		end
-	end
-	for i = 0, getProperty('unspawnNotes.length')-1 do --one off thing
-		if checkIfNoteTypeCanChange("unspawnNotes", i) then 
-			if ((chars3D[2] or chars3D[1]) and ((getPropertyFromGroup('unspawnNotes', i, 'strumTime') / 50) % 20 > 10)) then
-				setPropertyFromGroup('unspawnNotes', i, 'texture', 'ui/notes/NOTE_assets_3D')
-			end
+
+		if chars3D[1] and chars3D[2] then
+			break;
 		end
 	end
 end
 
 function onEvent(eventName, value1, value2, strumTime)
 	if eventName == 'Change Character' and string.lower(songName) ~= 'badcorn' then
-		if string.lower(value1) == "bf" then 
-			changeNoteSkinsOnChange(1, false)
-			changeNoteSkinsOnChange(2, true)
-		end
-		if string.lower(value1) == "dad" then 
-			changeNoteSkinsOnChange(1, true)
-			changeNoteSkinsOnChange(2, false)
-		end
-		--[[changeNoteSkinsOnChange(1)
-		changeNoteSkinsOnChange(2)--]]
-		--[[if string.lower(value1) == "bf" then changeNoteSkinsOnChange(1) end --changing both because of one character change = lag --nvm this was incase other character was 3d
-		if string.lower(value1) == "dad" then changeNoteSkinsOnChange(2) end--]]
+		changeNoteSkinsOnChange()
 		if string.lower(value1) == 'badai' then
 			runHaxeCode([[
 				game.getLuaObject('badai', false).destroy();
@@ -343,19 +314,21 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == "gappleSoundTrayExit" then doTweenX("gappleSoundTrayExit", "gappleSoundTray", screenWidth + 150, 1, "") end
 end
 
-function changeNoteSkin(player, skin, onlyNotes)
-	if player == true and not onlyNotes then
+function changeNoteSkin(player, skin, antialias)
+	if player == true then
 		for i = 0, 4, 1 do
 			setPropertyFromGroup('playerStrums', i, 'texture', 'ui/notes/'..skin)
+			setPropertyFromGroup("playerStrums", i, "antialiasing", antialias)
 			if stringStartsWith(version, '0.7') then
 				setPropertyFromGroup('playerStrums', i, 'rgbShader.enabled', false)
 				setPropertyFromGroup('playerStrums', i, 'useRGBShader', false)
 			end
 		end
 	end
-    if not player and not onlyNotes then
+    if not player then
 		for i = 0, 4, 1 do
 			setPropertyFromGroup('opponentStrums', i, 'texture', 'ui/notes/'..skin)
+			setPropertyFromGroup("opponentStrums", i, "antialiasing", antialias)
 			if stringStartsWith(version, '0.7') then
 				setPropertyFromGroup('opponentStrums', i, 'rgbShader.enabled', false)
 				setPropertyFromGroup('opponentStrums', i, 'useRGBShader', false)
@@ -415,9 +388,7 @@ end
 --NO MORE INTERNET NEEDED
 
 local singAnims = {'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'}
-local boyfriendHasMissAnims = false;
 local actualSongLength = 0;
-local songPos = 0;
 
 local alphaTimer = 0.0;
 function onUpdate(elapsed)
@@ -453,7 +424,6 @@ function onUpdate(elapsed)
     end
 	setProperty('healthBarBGnew.alpha', getProperty('healthBar.alpha'))
 	actualSongLength = math.toTime(getProperty("songLength") / 1000);
-	songPos = math.toTime(getSongPosition() / 1000)
 
 	if string.lower(songName) == "apple-leak" then
 		setProperty("songLength", 786000)
@@ -463,11 +433,10 @@ function onUpdate(elapsed)
 		setProperty("songPercent", curTime / getProperty("songLength"))
 	end
 
-	setTextString('timeTxt', songPos.." / "..actualSongLength)
+	setTextString('timeTxt', math.toTime(getSongPosition() / 1000).." / "..actualSongLength)
 	updateHitbox("timeTxt")
 	screenCenter("timeTxt", 'x')
 
-	boyfriendHasMissAnims = getProperty('boyfriend.hasMissAnimations')
 	if getProperty('boyfriend.animation.curAnim.name') == 'idle' and getProperty('boyfriend.color') == getColorFromHex('9400d3') then
 		setProperty('boyfriend.color', getColorFromHex('FFFFFF'))
 	end
@@ -529,12 +498,6 @@ function iconPropertys()
 end
 
 function onStepHit()
-	if stringStartsWith(version, '0.7') then
-		changeDiscordPresence(songName.." - Untitled Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
-    else
-		changePresence(songName.." - Untitled Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
-	end --trying to optimize --if psych can do it, so can I!
-
 	--setObjectOrder('strumLineNotes', getObjectOrder('notes') +1) --puts notes under strumlinenotes
 
 	if string.lower(songName) == 'disruption' or string.lower(songName) == 'applecore' or string.lower(songName) == 'nice' then
@@ -566,6 +529,12 @@ function onSectionHit()
 end
 
 function onBeatHit()
+	if stringStartsWith(version, '0.7') then
+		changeDiscordPresence(songName.." - Untitled Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
+    else
+		changePresence(songName.." - Untitled Gapple Port", "S: "..tostring(score).." | M: "..tostring(getProperty('songMisses')).." | A: "..tostring(math.floor(getProperty('ratingPercent') * 100, 2)).."%".." ("..songPos.." / "..actualSongLength..")")
+	end
+	
 	if curBeat % 2 == 0 then
 		if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
 			characterDance("bf")
@@ -696,13 +665,10 @@ function noteMiss(id, direction, noteType, isSustainNote)
 end
 
 function noteMissedStuff(direction)
-	if boyfriendHasMissAnims ~= false then
-		return;
-	end
+	if getProperty('boyfriend.hasMissAnimations') then return; end
 	playAnim('boyfriend', singAnims[direction+1], true);
 	setProperty('boyfriend.color', getColorFromHex('9400d3'))
 	setProperty('boyfriend.holdTimer', 0)
-	prevAnim = getProperty('boyfriend.animation.curAnim.name')
 end
 
 function onDestroy()

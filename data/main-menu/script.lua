@@ -12,12 +12,14 @@ local freeplayStateSongs = {
 	["extra"] = {"glamrock", "sugar-rush", "gift-card", "ready-loud", "bookworm", "cuberoot", "apprentice", "too-shiny", "resumed", "mine", "dale", "the-big-dingle", "ataefull", "the-scratches", "sart-producer"},
 	["secret"] = {"ticking"},
 	["iykyk"] = {"og", "apple-leak"},
+	["joke"] = {"screwedathon"},
 	["peenut"] = {"kooky"}
 }
 local freeplayStateIcons = {
 	["extra"] = {"glamrock", "cigar-rush", "card", "flumpt", "bookworm", "disability", "tristan", "diamond", "dambu", "dinner", "dale", "dingle_static", "atae", "man", "sartys_icon_static"},
 	["secret"] = {"ouch"},
 	["iykyk"] = {"prealpha", "brob"},
+	["joke"] = {"bambiMad"},
 	["peenut"] = {"rubber"}
 }
 
@@ -155,7 +157,7 @@ function changeState(newState)
 		addLuaSprite("menuBG", false)
 		table.insert(prevObjects, "menuBG")
 
-		if not lowQuality then
+		if not lowQuality then -- i don't blame you
 			makeLuaSprite("menuBGOverlay", "", 0, 0)
 			makeGraphic("menuBGOverlay", 1280, 720, '00ff00')
 			setObjectCamera("menuBGOverlay", 'hud')
@@ -183,7 +185,6 @@ function changeState(newState)
 				setProperty("checkeredBG"..i..".offset.y", 160)
 				table.insert(prevObjects, "checkeredBG"..i)
 			end
-	
 		end
 		makeLuaSprite("blackBG", "storymenu/black_border_overlay", 50, 35)
 		scaleObject("blackBG", 2, 2, true)
@@ -250,7 +251,7 @@ function changeState(newState)
 		setObjectCamera("blackScreenBG", 'hud')
 		addLuaSprite("blackScreenBG", false)
 		table.insert(prevObjects, "blackScreenBG")
-		if not lowQuality then
+		if not lowQuality then -- i don't blame you
 			makeLuaSprite("blackScreenBG", "", 0, 0)
 			makeGraphic("blackScreenBG", 1280, 720, 'FFFFFF')
 			setObjectCamera("blackScreenBG", 'hud')
